@@ -81,7 +81,7 @@ angular.module('app')
 			keyName = Wallet.accounts[signer].alias;
 		}
 
-		return $ionicPopup.show({
+		$ionicPopup.show({
 			template: '<input type="password" ng-model="data.password">',
 			title: 'Enter Password for ' + keyName,
 			scope: scope,
