@@ -1,0 +1,32 @@
+<div style="padding:8px 16px; height:40px">
+	<span>Activity</span>
+</div>
+
+<div class="feed" style="margin-bottom: 80px">
+
+	<div ng-show="history.length === 0">
+		<div style="text-align: center" class="text-gray">No activity yet</div>
+	</div>
+
+	<a ng-href="#/account/transaction/{{tx.id}}" ng-repeat="tx in history | limitTo:limit">
+		<div class="feed-item">
+			<div style="display:table-cell;vertical-align:middle">
+				<tx-icon tx="tx"></tx-icon>
+			</div>
+
+			<div style="display:table-cell;vertical-align:middle;">
+				<div style="color:#444;padding-left:16px">
+					<tx-comment tx="tx"></tx-comment>
+				</div>
+			</div>
+
+			<div class="payment">
+				<div style="text-align:right;color:#444;">{{ tx.desc }}</div>
+				<div style="text-align:right">
+					<timestamp time="{{tx.timestamp}}" class="text-gray"></timestamp>
+				</div>
+			</div>
+			<div class="more">&raquo;</div>
+		</div>
+	</a>
+</div>

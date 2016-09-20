@@ -1,0 +1,10 @@
+<wallet-header></wallet-header>
+<ion-content>
+	<ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+	<account-balance account="wallet.current"></account-balance>
+	<div class="camera-icon" style="position: relative">
+		<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
+	</div>
+	<account-activity account="wallet.current" limit="100" filter="payments"></account-activity>
+</ion-content>
+<wallet-footer></wallet-footer>

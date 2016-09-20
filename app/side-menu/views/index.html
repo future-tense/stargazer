@@ -1,0 +1,45 @@
+<div class="sidebar" ng-controller="MainMenuCtrl">
+	<header>
+		<div style="display: flex;flex-direction: column; align-items: center; color:#ECECEC;padding:20px 0;border-bottom: 1px solid #4B6178;">
+			<h1 style="color:#ECECEC">Stargazer</h1>
+			<div>v1.0.0</div>
+		</div>
+	</header>
+
+	<div class="content">
+		<ul>
+			<li ng-repeat="account in getAccounts()" ng-class="{selected: account.id === wallet.current.id}">
+				<a href="#/account/{{account.id}}" menu-toggle>
+					{{account.alias}}
+				</a>
+			</li>
+
+			<li>
+				<a href="#/side-menu/add-account" menu-toggle>
+					<span>Add account</span>
+					<div class="pull-right">
+						<span>&raquo;</span>
+					</div>
+				</a>
+			</li>
+
+			<li ng-if="advanced">
+				<a href="#/side-menu/signatures" menu-toggle>
+					<span>Signatures</span>
+					<div class="pull-right">
+						<span>&raquo;</span>
+					</div>
+				</a>
+			</li>
+
+			<li ng-if="advanced">
+				<a href="#/side-menu/global-settings" menu-toggle>
+					<span>Settings</span>
+					<div class="pull-right">
+						<span>&raquo;</span>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>

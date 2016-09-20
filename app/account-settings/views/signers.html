@@ -1,0 +1,7 @@
+<section id="wallet-settings">
+	<config-navbar heading="Signers" back="&lt;&nbsp;Back"></config-navbar>
+
+	<div ng-repeat="signer in getSigners()">
+		{{signer.public_key}} - {{signer.weight}} <br>
+	</div>
+</section>

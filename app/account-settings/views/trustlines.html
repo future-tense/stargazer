@@ -1,0 +1,16 @@
+<config-navbar heading="Trustlines" back="&lt;&nbsp;Back"></config-navbar>
+
+<ion-content class="has-header">
+
+	<div class="list">
+		<div class="item item-divider">futuretense.io</div>
+		<div class="item" ng-repeat="balance in getTrustlines()">
+			{{balance.asset_code}}
+		</div>
+	</div>
+
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="addAnchor()">Add Anchor</button>
+	</div>
+
+</ion-content>

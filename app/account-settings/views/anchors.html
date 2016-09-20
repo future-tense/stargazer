@@ -1,0 +1,20 @@
+<config-navbar heading="Anchors" back="&lt;&nbsp;Back"></config-navbar>
+
+<ion-content class="has-header">
+	<div class="list">
+		<div ng-repeat="anchor in anchors">
+			<div class="item item-divider">{{anchor.name}}</div>
+		</div>
+	</div>
+
+	<div class="list">
+		<div class="item" ng-repeat="balance in getTrustlines()">
+			{{balance.asset_code}} - {{balance.asset_issuer}}
+		</div>
+	</div>
+
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="addAnchor()">Add Anchor</button>
+	</div>
+
+</ion-content>

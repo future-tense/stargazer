@@ -1,0 +1,46 @@
+<wallet-header></wallet-header>
+<ion-content>
+	<div class="list">
+		<div class="item item-divider">
+			Recipient information
+		</div>
+
+		<form name="$parent.sendForm">
+			<label class="item item-input item-inset item-stacked-label">
+				<span class="input-label">Send to</span>
+				<input type="text" name="destination" ng-model="send.destination" placeholder="Recipient Address" valid-address>
+				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
+					<i class="glyphicon glyphicon-book"></i>
+				</a>
+			</label>
+
+			<div ng-show="flags.hasValidDestination">
+				<label class="item item-input item-stacked-label">
+					<span class="input-label">Amount to receive</span>
+					<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options='{debounce: 200}' placeholder="Amount" min="{{send.minAmount}}">
+				</label>
+
+				<label class="item item-input item-select">
+					<select ng-model="send.asset" ng-change="onAsset()" ng-options="getAssetDescription(asset) for asset in assets"></select>
+				</label>
+			</div>
+		</form>
+	</div>
+
+	<div ng-show="flags.hasPath" style="margin-bottom: 100px">
+
+		<div class="list">
+			<div class="item item-divider">
+				Send as
+			</div>
+			<div class="item" style="text-align:center" ng-repeat="path in send.pathRecords">
+				<p>{{ path.source_amount | normalize }}</p>
+				<p>{{ getSourceAssetDescription(path) }}</p>
+				<button type="button" class="btn btn-success" ng-click="submit($index)">Send</button>
+			</div>
+		</div>
+	</div>
+
+</ion-content>
+
+<wallet-footer></wallet-footer>

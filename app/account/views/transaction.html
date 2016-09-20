@@ -1,0 +1,80 @@
+<config-navbar heading="Transaction Details" back="Done"></config-navbar>
+<ion-content class="has-header">
+
+	<div class="list">
+
+		<div class="item activity-header" ng-show="type==='send'">
+
+			<div class="circle circle-red" style="margin-bottom:8px">
+				<i class="icon ion-ios-upload-outline"></i>
+			</div>
+			<div class="text-gray" style="margin-bottom:8px">
+				Sent
+			</div>
+			<div style="font-size:24px;margin-bottom:8px">
+				{{ amount | normalize }} {{ code}}
+			</div>
+		</div>
+
+		<div class="item activity-header" ng-show="type==='recv'">
+			<div class="circle circle-green" style="margin-bottom:8px">
+				<i class="icon ion-ios-download-outline"></i>
+			</div>
+			<div class="text-gray" style="margin-bottom:8px">
+				Received
+			</div>
+			<div style="font-size:24px;margin-bottom:8px">
+				{{ amount | normalize }} {{ code}}
+			</div>
+		</div>
+
+		<div class="item activity-header" ng-show="type==='trade'">
+			<div class="circle circle-blue" style="margin-bottom:8px">
+				<i class="fa fa-exchange"></i>
+			</div>
+			<div class="text-gray" style="margin-bottom:8px">
+				Traded
+			</div>
+			<div style="font-size:24px;margin-bottom:8px">
+				+{{ bought_amount | normalize }} {{ bought_code}}
+			</div>
+			<div style="font-size:24px;margin-bottom:8px">
+				-{{ sold_amount | normalize }} {{ sold_code}}
+			</div>
+		</div>
+
+		<div class="item item-divider">
+			Details
+		</div>
+
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="type!=='trade'">
+			<label class="item-input" style="padding-left:0;justify-content: space-between;">
+				<span class="input-label" ng-show="type==='send'">To</span>
+				<span class="input-label" ng-show="type==='recv'">From</span>
+				<span class="text-gray"><account-name id="{{::counterparty}}" network="{{::network}}"></account-name></span>
+			</label>
+		</div>
+
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;">
+			<label class="item-input" style="padding-left:0;justify-content: space-between;">
+				<span class="input-label">Date</span>
+				<span class="text-gray">{{::effect.date}}</span>
+			</label>
+		</div>
+
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="effect.comment">
+			<label class="item-input" style="padding-left:0;justify-content: space-between;">
+				<span class="input-label">Comment</span>
+				<span class="text-gray">{{effect.comment}}</span>
+			</label>
+		</div>
+
+		<div style="padding-left:16px;padding-right:16px">
+			<button class="button button-block button-positive" on-tap="editComment()">{{buttonText()}}</button>
+		</div>
+
+		<div style="padding-left:16px;padding-right:16px" ng-if="!isContact && type!=='trade'">
+			<button class="button button-block button-positive" on-tap="addContact()">Add to Contacts</button>
+		</div>
+	</div>
+</ion-content>

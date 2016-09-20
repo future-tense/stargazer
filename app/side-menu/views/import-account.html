@@ -1,0 +1,27 @@
+<config-navbar heading="Import an Account" back="&lt;&nbsp;Back"></config-navbar>
+<ion-content class="has-header">
+	<form name="importAccountForm">
+		<div class="list">
+			<div class="item item-divider"></div>
+			<label class="item item-input item-inset item-stacked-label">
+				<span class="input-label">Account Name</span>
+				<input type="text" ng-model="account.alias" required>
+			</label>
+			<label class="item item-input item-inset item-stacked-label" ng-if="!scanned">
+				<span class="input-label">Account Seed</span>
+				<input type="text" ng-model="account.seed" required valid-seed>
+			</label>
+			<label class="item item-input item-inset item-stacked-label" ng-if="encrypted">
+				<span class="input-label">Account Password</span>
+				<input type="password" ng-model="account.password" required>
+			</label>
+			<label class="item item-input item-select" ng-if="advanced&&!scanned">
+				<span class="input-label">Network</span>
+				<select ng-model="account.network" ng-options="network.title for network in networks"></select>
+			</label>
+			<div style="padding-left:16px;padding-right:16px">
+				<button class="button button-block button-positive" on-tap="import()" ng-disabled="importAccountForm.$invalid">Import Account</button>
+			</div>
+		</div>
+	</form>
+</ion-content>

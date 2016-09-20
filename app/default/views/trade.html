@@ -1,0 +1,35 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			TRADE
+		</div>
+	</div>
+	<div class="row">
+		<div class="bids col-xs-6">
+			<table class="table table-responsive">
+				<caption>Bids:</caption>
+				<tr>
+					<th>Amount</th>
+					<th>Price</th>
+				</tr>
+				<tr ng-repeat="bid in bids|limitTo:10">
+					<td>{{ bid.amount }}</td>
+					<td>{{ bid.price }}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-xs-6">
+			<table class="table table-responsive">
+				<caption>Asks:</caption>
+				<tr>
+					<th>Price</th>
+					<th>Amount</th>
+				</tr>
+				<tr ng-repeat="ask in asks|limitTo:10">
+					<td>{{ ask.price }}</td>
+					<td>{{ ask.amount }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

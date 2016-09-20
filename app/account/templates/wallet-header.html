@@ -1,0 +1,12 @@
+<ion-header-bar align-title="center" class="tab-bar">
+	<button
+		on-tap="toggleLeftMenu()"
+		class="button button-clear button-white fa fa-bars"
+		ng-show="physicalScreenWidth < 768">
+	</button>
+	<h1 class="title ellipsis">{{ wallet.alias }}</h1>
+	<button
+		on-tap="openSettings()"
+		class="button button-clear button-white fa fa-cog">
+	</button>
+</ion-header-bar>

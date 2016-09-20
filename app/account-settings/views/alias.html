@@ -1,0 +1,17 @@
+<config-navbar heading="Alias" back="&lt;&nbsp;Back"></config-navbar>
+
+<ion-content class="has-header">
+	<form class="list" ng-submit="save()">
+		<div class="item item-divider"></div>
+		<label class="item item-input item-stacked-label">
+			<span class="input-label">Alias for <i style="font-style: italic">{{oldName}}</i></span>
+			<input type="text" id="alias" type="text" name="alias" ng-model="newName">
+		</label>
+
+		<div style="padding-left:16px;padding-right:16px">
+			<button type="submit" class="button button-block button-positive">
+				Save
+			</button>
+		</div>
+	</form>
+</ion-content>

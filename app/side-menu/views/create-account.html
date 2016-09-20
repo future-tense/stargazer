@@ -1,0 +1,37 @@
+<config-navbar heading="Create a new Account" back="&lt;&nbsp;Back"></config-navbar>
+<ion-content class="has-header">
+	<form name="createAccountForm">
+		<div class="list">
+			<div class="item item-divider"></div>
+			<label class="item item-input item-inset item-stacked-label">
+				<span class="input-label">Account Name</span>
+				<input type="text" ng-model="account.alias" required>
+			</label>
+			<label class="item item-input item-select" ng-if="advanced">
+				<span class="input-label">Network</span>
+				<select ng-model="account.network" ng-options="network.title for network in networks"></select>
+			</label>
+			<div class="item item-divider">
+				Funding Information
+			</div>
+			<label class="item item-input item-inset item-stacked-label">
+				<span class="input-label">Funding Account</span>
+				<input type="text" ng-model="account.funder" placeholder="None" valid-funder>
+				<a on-tap="selectAccount()" style="position:absolute;right:16px;top:40px">
+					<i class="glyphicon glyphicon-book"></i>
+				</a>
+			</label>
+			<label class="item item-input item-stacked-label" ng-show="account.funder">
+				<span class="input-label">Initial amount of XLM</span>
+				<input type="number" ng-model="account.amount" placeholder="Amount" min="20">
+			</label>
+			<div style="padding-left:16px;padding-right:16px">
+				<button class="button button-block button-positive" on-tap="create()" ng-disabled="createAccountForm.$invalid">Add Account</button>
+			</div>
+		</div>
+	</form>
+
+	<div style="text-align:center" class="text-gray">
+		Accounts needs to be funded to be a part of a Stellar network ledger.
+	</div>
+</ion-content>

@@ -1,0 +1,76 @@
+<config-navbar heading="Account Settings" back="Done"></config-navbar>
+
+<ion-content class="has-header">
+	<div class="list">
+		<div class="item item-divider"></div>
+
+		<a href="#/account-settings/alias">
+			<div class="item">
+				Account Name
+				<div class="pull-right text-gray">
+					{{account.alias}}
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<a href="#/account-settings/anchors" ng-if="!advanced">
+			<div class="item">
+				Anchors
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<a href="#/account-settings/trustlines" ng-if="advanced">
+			<div class="item">
+				Trustlines
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<a href="#/account-settings/export">
+			<div class="item">
+				Export Account
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<a href="#/account-settings/delete">
+			<div class="item">
+				Delete Account
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<div class="item item-divider">Account Security</div>
+
+		<div class="item item-toggle">
+			Password Protection
+			<div class="pull-right text-gray">
+				<label class="toggle">
+					<input type="checkbox" ng-model="hasPassword" ng-change="togglePassword()">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</div>
+		</div>
+
+		<a href="#/account-settings/signers" ng-if="advanced">
+			<div class="item">
+				Signers
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+	</div>
+</ion-content>

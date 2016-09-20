@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Stargazer Wallet 1.0.0</title>
+		<link rel="stylesheet" type="text/css" href="css/ionic.min.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/icons.css">
+		<link rel="stylesheet" type="text/css" href="css/glyphicons.css">
+		<link rel="stylesheet" type="text/css" href="css/roboto.css">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+
+	<body ng-app="app" ng-controller="IndexCtrl">
+		<ion-side-menus class="page">
+			<!-- Left menu -->
+			<ion-side-menu side="left" expose-aside-when="large">
+				<div ng-include="'app/side-menu/views/index.html'"></div>
+			</ion-side-menu>
+
+			<!-- Main content -->
+			<ion-side-menu-content drag-content="true">
+				<div notifications="right top"></div>
+				<div id="sectionContainer">
+					<div id="mainSection">
+						<div ng-view=""></div>
+					</div>
+				</div>
+			</ion-side-menu-content>
+		</ion-side-menus>
+
+		<script src="js/lodash.min.js"></script>
+		<script src="js/ionic.bundle.js"></script>
+		<!-- cordova script (this will be a 404 during development) -->
+		<script src="cordova.js"></script>
+		<script src="js/vendor.js"></script>
+		<script src="js/stargazer.js"></script>
+	</body>
+</html>

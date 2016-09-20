@@ -1,0 +1,10 @@
+<div style="background-color:#00BCD4;color:#FFFFFF;height:160px;font-size:18px">
+	<div class="Aligner">
+		<div class="Aligner-item Aligner-item--fixed">
+			<div style="text-align:center" ng-repeat="asset in getAssets()">
+				{{ asset.balance | normalize }}
+				{{ asset.asset_code }}
+			</div>
+		</div>
+	</div>
+</div>

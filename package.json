@@ -1,0 +1,33 @@
+{
+  "name": "Stargazer",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.html",
+  "private": true,
+  "single-instance": false,
+  "window": {
+    "resizeable": false,
+    "width": 800,
+    "height": 600,
+    "min_width": 800,
+    "min_height": 600,
+    "max_width": 800,
+    "max_height": 600,
+    "position": "center"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-nw-builder": "^3.1.0",
+    "grunt-replace": "^1.0.1",
+    "jit-grunt": "^0.10.0",
+    "webrtc-explorer": "^1.1.1"
+  }
+}
