@@ -35,41 +35,47 @@ angular.module('app')
 
 	$scope.create = function () {
 
-		var newAccount = Wallet.createEmptyAccount(
-			$scope.account.alias,
-			$scope.account.network.phrase
-		);
+		var network = $scope.account.network.phrase;
 
 		var accounts = {};
 		Object.keys(Wallet.accounts).forEach(function (key) {
 			var account = Wallet.accounts[key];
-			if (account.network === newAccount.network) {
+			if (account.network === network) {
 				accounts[account.alias] = account;
 			}
 		});
 
 		var funderName = $scope.account.funder;
 		if (funderName in accounts) {
-			var funder = accounts[funderName];
+
+			var newAccount	= StellarSdk.Keypair.random();
+			var funder		= accounts[funderName];
 
 			funder.horizon().loadAccount(funder.id)
 			.then(function (account) {
 				var tx = new StellarSdk.TransactionBuilder(account)
 				.addOperation(StellarSdk.Operation.createAccount({
-					destination: newAccount.id,
+					destination: newAccount.accountId(),
 					startingBalance: $scope.account.amount.toString()
 				}))
 				.build();
 
 				return {
 					tx: tx,
-					network: funder.network
+					network: network
 				};
 			})
 			.then(Signer.sign)
 			.then(Submitter.submit)
+
 			.then(
 				function (res) {
+					Wallet.importAccount(
+						newAccount.accountId(),
+						newAccount.seed(),
+						$scope.account.alias,
+						network
+					);
 					$location.path('/');
 				},
 				function (err) {
@@ -77,7 +83,12 @@ angular.module('app')
 				}
 			);
 		}
+
 		else {
+			Wallet.createEmptyAccount(
+				$scope.account.alias,
+				network
+			);
 			$location.path('/');
 		}
 	};
@@ -87,17 +98,19 @@ angular.module('app')
 
 	return {
 		require: 'ngModel',
+		scope: {
+			network: '='
+		},
 		link: function(scope, element, attributes, ngModel) {
 			ngModel.$validators.validFunder = function (name) {
 
-				var network = Wallet.current.network;
 				if (!name) {
 					return true;
 				}
 
 				var names = {};
 				Object.keys(Wallet.accounts).forEach(function (key) {
-					if (Wallet.account[key].network === network) {
+					if (Wallet.accounts[key].network === scope.network) {
 						var accountName = Wallet.accounts[key].alias;
 						names[accountName] = 1;
 					}

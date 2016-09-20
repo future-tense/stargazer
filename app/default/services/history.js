@@ -182,7 +182,9 @@
 			.call()
 			.then(function (effects) {
 
-				account.pagingToken = effects.records[0].paging_token;
+				if (effects.records.length !== 0) {
+					account.pagingToken = effects.records[0].paging_token;
+				}
 
 				//	filter out effects we already have recorded
 				var records = effects.records.filter(function (fx) {
