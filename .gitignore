@@ -1,4 +1,8 @@
-node_modules
 bower_components
 build
+cache
 dist
+ionic
+node_modules
+nwjs
+webkitbuilds
