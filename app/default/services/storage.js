@@ -15,7 +15,7 @@ angular.module('app')
 
 	function setItem(key, value) {
 		$window.localStorage.setItem(key, JSON.stringify(value, function (key, value) {
-			if (key.startsWith('$$')) {
+			if (key.slice(0, 2) === '$$') {
 				return undefined;
 			}
 
