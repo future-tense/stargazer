@@ -54,6 +54,53 @@ things to and from. NB: *These are both on testnet*.
 * Otherwise, the way I recommend is to use either one of the desktop apps to import seeds into, to then
 export to the mobile app.
 
+# QR code format
+
+## Contact
+
+```
+{
+	stellar: {
+		account: {
+			id: ACCOUNT_ID,
+			network: NETWORK_PASSPHRASE
+		}
+	}
+}
+```
+
+Network is only needed if not stellar.org live network
+
+## Payment request
+
+```
+{
+	stellar: {
+		payment: {
+			destination:	ACCOUNT_ID,
+			amount:			AMOUNT,
+			asset: {
+				code:		ASSET_CODE,
+				issuer:		ASSET_ISSER
+			}
+		}
+	}
+}
+```
+Asset is only needed if not XLM
+
+## Account export/import
+
+```
+{
+	stellar: {
+		account: {
+			network: NETWORK_PASSPHRASE
+		},
+		key: SEED or encrypted seed
+	}
+}
+```
 
 Android:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer.apk
