@@ -1,9 +1,9 @@
 # The Stargazer Wallet is a mobile/desktop wallet for the Stellar payments network.
 
 It's heavily inspired by the UX of bitcoin wallet Copay, which I just have to say I love.
-It fulfills all the basic requirements set up for the Stellar Build Challange, and adds some extra features on top of that.
+It fulfills all the basic requirements set up for the Stellar Build Challenge, and adds some extra features on top of that.
 Currently it's a bit tied down in terms of what functionality is actually exposed to the end-user though,
-because UX is just too danmed hard to get right.
+because UX is just too damned hard to get right.
 
 * Android
 * OS X
