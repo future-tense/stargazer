@@ -5,10 +5,12 @@ angular.module('app')
 	'use strict';
 
 	$scope.oldName = Wallet.current.alias;
-	$scope.newName = $scope.oldName;
+	$scope.data = {
+		newName: $scope.oldName
+	};
 
 	$scope.save = function () {
-		Wallet.renameAccount(Wallet.current, $scope.newName);
+		Wallet.renameAccount(Wallet.current, $scope.data.newName);
 		$rootScope.goBack();
 	};
 });
