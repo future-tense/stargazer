@@ -1,4 +1,4 @@
-The Stargazer Wallet is a mobile/desktop wallet for the Stellar payments network.
+# The Stargazer Wallet is a mobile/desktop wallet for the Stellar payments network.
 
 It's heavily inspired by the UX of bitcoin wallet Copay, which I just have to say I love.
 It fulfills all the basic requirements set up for the Stellar Build Challange, and adds some extra features on top of that.
@@ -56,14 +56,16 @@ export to the mobile app.
 
 # QR code format
 
+The QR codes contain JSON encoded data structures.
+
 ## Contact
 
 ```
 {
-	stellar: {
-		account: {
-			id: ACCOUNT_ID,
-			network: NETWORK_PASSPHRASE
+	"stellar": {
+		"account": {
+			"id": ACCOUNT_ID,
+			"network": NETWORK_PASSPHRASE
 		}
 	}
 }
@@ -75,13 +77,13 @@ Network is only needed if not stellar.org live network
 
 ```
 {
-	stellar: {
-		payment: {
-			destination:	ACCOUNT_ID,
-			amount:			AMOUNT,
-			asset: {
-				code:		ASSET_CODE,
-				issuer:		ASSET_ISSER
+	"stellar": {
+		"payment": {
+			"destination":	ACCOUNT_ID,
+			"amount":			AMOUNT,
+			"asset": {
+				"code":		ASSET_CODE,
+				"issuer":		ASSET_ISSER
 			}
 		}
 	}
@@ -93,14 +95,16 @@ Asset is only needed if not XLM
 
 ```
 {
-	stellar: {
-		account: {
-			network: NETWORK_PASSPHRASE
+	"stellar": {
+		"account": {
+			"network": NETWORK_PASSPHRASE
 		},
-		key: SEED or encrypted seed
+		"key": SEED or encrypted seed
 	}
 }
 ```
+
+# Binaries
 
 Android:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer.apk
@@ -113,3 +117,6 @@ OS X:
 Win64:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer-win64.zip
 * 9516fd93c049631d2c566b05609cbeff603b4f4f458e4306deec140ce5474d56 (sha-256)
+
+The Android app currently has to be sideloaded into the device. I'm personally using the app AirDrop for doing that,
+but there are other ways, see e.g. http://www.digitalcitizen.life/how-sideload-apps-using-apk-files-android-devices
