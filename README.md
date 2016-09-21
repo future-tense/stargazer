@@ -46,7 +46,7 @@ NB: This is very much a pre-release Beta version. I'd suggest you don't try this
 
 Android:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer.apk
-* 00a15b077ef89213ee7371dd78c1be3baca771434a737a7604b95bff5aec3d98 (sha-256)
+* fd1d623bf073b5354ee950043facd15a892d86e42ae6b6696cba9b80a3943759 (sha-256)
 
 OS X:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer-osx.zip
