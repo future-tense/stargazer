@@ -46,12 +46,12 @@ NB: This is very much a pre-release Beta version. I'd suggest you don't try this
 
 Android:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer.apk
-* fd1d623bf073b5354ee950043facd15a892d86e42ae6b6696cba9b80a3943759 (sha-256)
+* bd0d2af696ccf2fd847fea17d7e46c2cfb11dc9c0e27aa91712d7d00d9c440ea (sha-256)
 
 OS X:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer-osx.zip
-* 87fc230c67ed8414ceca82e00ae7f1936d22b1f3a5cf32885c91960fda8a01c3 (sha-256)
+* 3b09ddb48be4a98c49a7d6ea913b14fcc0aa9427ca4d62cb31a70152dc3fb76a (sha-256)
 
 Win64:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer-win64.zip
-* fdff9cc50f854bac7dcbe36637889e1f6241650c9ce6948833e8b55d34c239b7 (sha-256)
+* 9516fd93c049631d2c566b05609cbeff603b4f4f458e4306deec140ce5474d56 (sha-256)
