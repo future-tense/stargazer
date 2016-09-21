@@ -9,7 +9,8 @@ because UX is just too danmed hard to get right.
 * OS X
 * (win64)
 
-A quick run-down:
+
+# A quick feature run-down:
 
 * Multiple accounts
 
@@ -34,15 +35,25 @@ A quick run-down:
 
 * Federated addresses
 
-Known issues:
+# Known issues:
 
-*	Paths. They just don't work the way you'd think they do. Make sure you actually have the required amount of assets before trying to press "send".
-*	I have to admit that adding anchors is a sucky experience, but it was that or nothing.
-*	As always, error handling.
+* Paths. They just don't work the way you'd think they do. Make sure you actually have the required amount of assets before trying to press "send".
+* I have to admit that adding anchors is a sucky experience, but it was that or nothing.
+* As always, error handling.
 * Account ID in mobile. Better forget about it, it's complicated to get it out of there onto the clipboard, and writing it down manually is too much work. Scan the QR
  code instead.
 
 NB: This is very much a pre-release Beta version. I'd suggest you don't try this out if you're not in the jury.
+
+
+# Testing
+
+* Test folder contains two QR codes to scan, to get a couple of accounts into the wallet, so you can send 
+things to and from. NB: *These are both on testnet*.
+
+* Otherwise, the way I recommend is to use either one of the desktop apps to import seeds into, to then
+export to the mobile app.
+
 
 Android:
 * https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer.apk
