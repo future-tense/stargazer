@@ -56,21 +56,40 @@ angular.module('app')
 	};
 
 	$scope.getPaths = function () {
-		var asset = createAsset($scope.send.asset);
 
 		var currentAccount = Wallet.current;
 		var source = currentAccount.id;
+
+		//	check if we're the issuing account for this asset
+		if ($scope.send.asset.asset_type !== 'native' && $scope.send.asset.asset_issuer === source) {
+
+			var amount	= $scope.send.amount.toString();
+			var code	= $scope.send.asset.asset_code;
+			$scope.send.pathRecords = [{
+				destination_amount: amount,
+				destination_asset_code: code,
+				destination_asset_issuer: source,
+				source_amount: amount,
+				source_asset_code: code,
+				source_asset_issuer: source,
+				path: []
+			}];
+
+			$scope.flags.hasPath = true;
+			$scope.$apply();
+
+			return;
+		}
 
 		DestinationCache.lookup($scope.send.destination)
 		.then(function (destInfo) {
 			$scope.flags.hasPath = false;
 
+			var asset = createAsset($scope.send.asset);
 			var dest = destInfo.account_id.trim();
 			currentAccount.horizon().paths(source, dest, asset, $scope.send.amount)
 			.call()
 			.then(function (res) {
-
-				console.log(JSON.stringify(res));
 
 				//	if we're going to createAccount we can only send XLM, so filter
 				//	all paths involving any not-native currencies

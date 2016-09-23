@@ -291,7 +291,9 @@ angular.module('app')
 
 		else if (fx.type === 'account_debited') {
 			asset = getAccountAsset(account, fx.asset_code, fx.asset_issuer);
-			asset.balance = minus(asset.balance, fx.amount);
+			if (asset) {			//	if issuing asset, we don't track balances
+				asset.balance = minus(asset.balance, fx.amount);
+			}
 		}
 
 		else if (fx.type === 'trade') {
