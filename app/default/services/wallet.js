@@ -82,15 +82,17 @@ angular.module('app')
 
 		var self = this;
 		return this.getAccountInfo()
-		.catch(function (err) {
-			console.log(err);
-		})
-		.then(function () {
-			return History.getTransactions(self, 20)
-			.then(function () {
-				History.subscribe(self);
-			});
-		});
+		.then(
+			function () {
+				return History.getTransactions(self, 20)
+				.then(function () {
+					History.subscribe(self);
+				});
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
 	};
 
 	//------------------------------------------------------------------------------------------------------------------
