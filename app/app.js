@@ -3,7 +3,10 @@
 angular.module('app', [
 	'ngRoute',
 	'ionic'
-])
+], function ($compileProvider) {
+	'use strict';
+	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|file|chrome-extension|tel):)|#/);
+})
 .run(function ($rootScope, $window) {
 	'use strict';
 	$rootScope.goBack = function() {
