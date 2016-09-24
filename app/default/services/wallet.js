@@ -76,9 +76,8 @@ angular.module('app')
 
 		console.log('refreshing ' + this.alias);
 
-		if (this.eventsource) {
-			this.eventsource.close();
-			this.eventsource.onmessage = null;
+		if (this.closeStream) {
+			this.closeStream();
 		}
 
 		var self = this;
@@ -203,6 +202,10 @@ angular.module('app')
 
 	Wallet.removeAccount = function (account) {
 
+		if (account.closeStream) {
+			account.closeStream();
+		}
+
 		var accountId = account.id;
 		var index = accountList.indexOf(account.alias);
 		accountList.splice(index, 1);
@@ -218,8 +221,9 @@ angular.module('app')
 		});
 
 		Wallet.current = accountByName[currentName];
-		delete accounts[accountId];
+		Storage.removeItem('account.' + account.alias);
 
+		delete accounts[accountId];
 		Storage.removeItem('account.' + account.alias);
 	};
 

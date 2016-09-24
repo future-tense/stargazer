@@ -113,18 +113,18 @@
 
 			var accountEffects = History.effects[account.alias];
 
-			var deferred = $q.defer();
-			effect.operation()
+			return effect.operation()
 			.then(function (operation) {
-				operation.transaction()
+				return operation.transaction()
 				.then(function (transaction) {
 					var res = _parseEffect(effect, operation, transaction);
 					accountEffects[res.id] = res;
-					deferred.resolve({res:res, address:account.id});
+					return {
+						res:		res,
+						address:	account.id
+					};
 				});
 			});
-
-			return deferred.promise;
 		}
 
 		var History = {};
@@ -134,51 +134,36 @@
 		accountList.forEach(function (name) {
 			History.effects[name] = Storage.getItem('history.' + name) || {};
 		});
-/*
-		var effects = Storage.getItem('history');
-		if (!effects) {
-			effects = {};
-		}
-*/
 
 		History.subscribe = function (account) {
 
+			var promise = $q.when();
+
 			function onmessage(msg) {
-				console.log(msg);
-
-				addEffect(msg, account)
-				.then(function (effect) {
-					account.pagingToken = msg.paging_token;
-					console.log(effect);
-					$rootScope.$broadcast('accountInfoLoaded');
-					$rootScope.$broadcast('newTransaction', effect);
-					Storage.setItem('history.' + account.alias, History.effects[account.alias]);
-				});
-			}
-
-			function onerror(event) {
-				if (event.target.readyState === EventSource.CLOSED) {
-					connect();
-				}
-			}
-
-			function connect() {
-
-				if (account.eventsource) {
-					account.eventsource.close();
-					account.eventsource.onmessage = null;
+				if (msg.id in History.effects[account.alias]) {
+					return;
 				}
 
-				account.eventsource = account.horizon().effects()
-				.forAccount(account.id)
-				.cursor(account.pagingToken)
-				.stream({
-					onerror: onerror,
-					onmessage: onmessage
-				});
+				function add() {
+					addEffect(msg, account)
+					.then(function (effect) {
+						account.pagingToken = msg.paging_token;
+						$rootScope.$broadcast('accountInfoLoaded');
+						$rootScope.$broadcast('newTransaction', effect);
+						Storage.setItem('history.' + account.alias, History.effects[account.alias]);
+						Storage.setItem('account.' + account.alias, account);
+					});
+				}
+
+				promise = promise.then(add);
 			}
 
-			connect();
+			account.closeStream = account.horizon().effects()
+			.forAccount(account.id)
+			.cursor(account.pagingToken)
+			.stream({
+				onmessage: onmessage
+			});
 		};
 
 		History.getTransactions = function (account, limit) {

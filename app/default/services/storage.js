@@ -19,10 +19,6 @@ angular.module('app')
 				return undefined;
 			}
 
-			if (key === 'eventsource') {
-				return undefined;
-			}
-
 			return value;
 		}));
 	}
