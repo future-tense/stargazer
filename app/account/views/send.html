@@ -8,7 +8,7 @@
 		<form name="$parent.sendForm">
 			<label class="item item-input item-inset item-stacked-label">
 				<span class="input-label">Send to</span>
-				<input type="text" name="destination" ng-model="send.destination" placeholder="Recipient Address" valid-address>
+				<input type="text" name="destination" ng-model="send.destination" placeholder="Recipient Address" autocapitalize="none" valid-address>
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
