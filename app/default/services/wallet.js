@@ -115,36 +115,11 @@ angular.module('app')
 
 	Wallet.createEmptyAccount = function (name, network) {
 
-		if (!network) {
-			network = Horizon.livenet;
-		}
-
 		var keys = StellarSdk.Keypair.random();
 		var accountId = keys.accountId();
 		var seed = keys.seed();
 
-		Keychain.addKey(accountId, seed);
-
-		var opts = {
-			id:			accountId,
-			network:	network,
-			alias:		name,
-			balances: [{
-				asset_type: 'native',
-				asset_code: 'XLM',
-				balance: '0'
-			}]
-		};
-
-		var self = new Account(opts);
-		accounts[self.id] = self;
-		Storage.setItem('account.' + self.alias, self);
-
-		accountList.push(self.alias);
-		Storage.setItem('accounts', accountList);
-
-		Wallet.current = self;
-		return self;
+		return Wallet.importAccount(accountId, seed, name, network);
 	};
 
 	Wallet.importAccount = function (accountId, seed, name, network) {
