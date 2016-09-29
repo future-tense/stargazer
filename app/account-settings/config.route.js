@@ -21,6 +21,10 @@ angular.module('app')
 		templateUrl: 'app/account-settings/views/export.html',
 		controller: 'ExportAccountCtrl'
 	})
+	.when('/account-settings/federation', {
+		templateUrl: 'app/account-settings/views/federation.html',
+		controller: 'AccountFederationCtrl'
+	})
 	.when('/account-settings/signers', {
 		templateUrl: 'app/account-settings/views/signers.html',
 		controller: 'AccountSignersCtrl'

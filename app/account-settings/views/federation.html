@@ -1,0 +1,18 @@
+<config-navbar heading="Federation" back="&lt;&nbsp;Back"></config-navbar>
+
+<ion-content class="has-header">
+	<form name="federationForm" class="list" ng-submit="save()">
+		<div class="item item-divider"></div>
+		<label class="item item-input item-stacked-label">
+			<span class="input-label">Federated name for <i style="font-style: italic">{{name}}</i></span>
+			<input type="text" id="alias" type="text" name="alias" ng-model="data.federation"
+				   placeholder="Name" autocomplete="off" valid-federation accountid="{{accountId}}">
+		</label>
+
+		<div style="padding-left:16px;padding-right:16px">
+			<button type="submit" class="button button-block button-positive" ng-disabled="federationForm.$invalid || federationForm.$pending">
+				Save
+			</button>
+		</div>
+	</form>
+</ion-content>
