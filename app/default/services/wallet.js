@@ -180,6 +180,9 @@ angular.module('app')
 	Wallet.renameAccount = function (account, newName) {
 
 		var oldName = account.alias;
+		if (oldName === newName) {
+			return;
+		}
 
 		History.effects[newName] = History.effects[oldName];
 		account.alias = newName;
