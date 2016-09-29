@@ -27,7 +27,7 @@ because UX is just too damned hard to get right.
 	* QR
 	* Manual input
 
-* Create/recieve payment requests using QR
+* Create/receive payment requests using QR
 
 * Add contacts using QR
 
