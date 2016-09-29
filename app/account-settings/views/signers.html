@@ -1,7 +1,11 @@
-<section id="wallet-settings">
-	<config-navbar heading="Signers" back="&lt;&nbsp;Back"></config-navbar>
+<config-navbar heading="Signers" back="&lt;&nbsp;Back"></config-navbar>
 
-	<div ng-repeat="signer in getSigners()">
-		{{signer.public_key}} - {{signer.weight}} <br>
+<ion-content class="has-header">
+	<div class="list">
+		<div class="item item-divider"></div>
+		<div class="item" ng-repeat="signer in getSigners()">
+			<span>{{signer.public_key}}</span>
+			<span class="pull-right">{{signer.weight}}</span>
+		</div>
 	</div>
-</section>
+</ion-content>
