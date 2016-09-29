@@ -2,10 +2,29 @@
 
 <ion-content class="has-header">
 
-	<div class="list">
-		<div class="item item-divider">futuretense.io</div>
-		<div class="item" ng-repeat="balance in getTrustlines()">
-			{{balance.asset_code}}
+	<div class="list" ng-repeat="anchor in anchors">
+		<div class="item item-divider">
+			{{ anchor.id }}
+		</div>
+
+		<div ng-repeat="trustline in anchor.trustlines">
+
+			<div class="item" ng-show="hasBalance(trustline)">
+				<span>{{ trustline.object.asset_code }}</span>
+				<span class="pull-right">{{ trustline.object.balance | normalize }}</span>
+			</div>
+
+			<div class="item item-toggle" ng-hide="hasBalance(trustline)">
+				{{ trustline.object.asset_code }}
+				<div class="pull-right text-gray">
+					<label class="toggle">
+						<input type="checkbox" ng-model="trustline.state">
+						<div class="track">
+							<div class="handle"></div>
+						</div>
+					</label>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -13,4 +32,7 @@
 		<button class="button button-block button-positive" on-tap="addAnchor()">Add Anchor</button>
 	</div>
 
+	<div style="padding-left:16px;padding-right:16px" ng-show="isDirty()">
+		<button class="button button-block button-positive" on-tap="updateTrustlines()">Update Trustlines</button>
+	</div>
 </ion-content>

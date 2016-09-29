@@ -13,10 +13,6 @@ angular.module('app')
 		templateUrl: 'app/account-settings/views/alias.html',
 		controller: 'AccountAliasCtrl'
 	})
-	.when('/account-settings/anchors', {
-		templateUrl: 'app/account-settings/views/anchors.html',
-		controller: 'AccountAnchorsCtrl'
-	})
 	.when('/account-settings/delete', {
 		templateUrl: 'app/account-settings/views/delete.html',
 		controller: 'DeleteAccountCtrl'
