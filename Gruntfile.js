@@ -8,7 +8,8 @@ module.exports = function (grunt) {
 */
 	// Automatically load required Grunt tasks
 	require('jit-grunt')(grunt, {
-		nwjs: 'grunt-nw-builder'
+		nwjs: 'grunt-nw-builder',
+		sloc: 'grunt-file-sloc'
 	});
 
 	// Define the configuration for all the tasks
@@ -122,6 +123,14 @@ module.exports = function (grunt) {
 				buildDir: './webkitbuilds'		// Where the build version of my NW.js app is saved
 			},
 			src: ['./nwjs/**'] // Your NW.js app
+		},
+
+		sloc: {
+			'style3': {
+				files: [
+					{ src: ['app/**/*.js'] }
+				]
+			}
 		}
 	});
 
