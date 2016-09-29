@@ -256,6 +256,11 @@ angular.module('app')
 
 	return {
 		sign: sign,
-		hasEnoughSignatures: hasEnoughSignatures
+		hasEnoughSignatures: hasEnoughSignatures,
+		hasExternalSigners: function (context) {
+			var signers = Object.keys(context.signers);
+			var localSigners = signers.filter(Keychain.signsFor);
+			return (signers.length !== localSigners.length);
+		}
 	};
 });
