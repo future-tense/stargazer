@@ -2,7 +2,7 @@
 	<div class="Aligner">
 		<div class="Aligner-item Aligner-item--fixed">
 			<div style="text-align:center" ng-repeat="asset in getAssets()">
-				{{ asset.balance | normalize }}
+				{{ asset.balance | normalize | number }}
 				{{ asset.asset_code }}
 			</div>
 		</div>
