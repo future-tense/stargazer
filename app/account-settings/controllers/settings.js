@@ -4,9 +4,7 @@ angular.module('app')
 .controller('AccountSettingsCtrl', function ($ionicPopup, $q, $scope, $timeout, Wallet, Keychain) {
 	'use strict';
 
-	function hasPassword(accountId) {
-		return (typeof Keychain.getKeyInfo(accountId) === 'object');
-	}
+	var hasPassword = Keychain.isEncrypted;
 
 	$scope.account = Wallet.current;
 	$scope.flag = {
@@ -77,7 +75,6 @@ angular.module('app')
 
 		var accountId = Wallet.current.id;
 		if (hasPassword(accountId)) {
-			console.log('removing password');
 			removePassword(accountId)
 			.then(
 				function (password) {
@@ -88,7 +85,6 @@ angular.module('app')
 				}
 			);
 		} else {
-			console.log('setting password');
 			setPassword(accountId)
 			.then(
 				function (password) {

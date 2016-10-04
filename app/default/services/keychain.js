@@ -82,9 +82,7 @@ angular.module('app')
 
 		removePassword: function (signer, password) {
 			var keyStore = keychain[signer];
-			console.log(keyStore);
 			keyStore = decrypt(keyStore, password);
-			console.log(keyStore);
 			keychain[signer] = keyStore;
 			Storage.setItem('key.' + signer, keyStore);
 		},
@@ -121,6 +119,10 @@ angular.module('app')
 				});
 			});
 
+		},
+
+		isEncrypted: function (signer) {
+			return (typeof keychain[signer] === 'object');
 		},
 
 		signsFor: function (signer) {
