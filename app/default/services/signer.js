@@ -220,22 +220,24 @@ angular.module('app')
 		var accounts = context.accounts;
 		var signers = context.signers;
 
-		var localSigners = Object.keys(signers).filter(Keychain.signsFor);
+		var localSigners = Object.keys(signers).filter(Keychain.isLocalSigner);
 		var txHash = transactionHash(context.tx, context.network);
 
 		return localSigners.forEachThen(function (signer) {
-			return Keychain.getKey(signer)
-			.then(function (key) {
-				signTransaction(context.tx, txHash, key);
-				var sources = signers[signer];
-				sources.forEach(function (source) {
-					accounts[source.account].sum += source.weight;
-				});
+			return Keychain.signTransaction(signer, context.tx, txHash)
+			.then(
+				function () {
+					var sources = signers[signer];
+					sources.forEach(function (source) {
+						accounts[source.account].sum += source.weight;
+					});
 
-				delete signers[signer];
-			}, function (err) {
-				console.log(err);
-			});
+					delete signers[signer];
+				},
+				function (err) {
+					console.log(err);
+				}
+			);
 		})
 		.then(function () {
 			console.log(context.tx);
@@ -259,7 +261,7 @@ angular.module('app')
 		hasEnoughSignatures: hasEnoughSignatures,
 		hasExternalSigners: function (context) {
 			var signers = Object.keys(context.signers);
-			var localSigners = signers.filter(Keychain.signsFor);
+			var localSigners = signers.filter(Keychain.isLocalSigner);
 			return (signers.length !== localSigners.length);
 		}
 	};

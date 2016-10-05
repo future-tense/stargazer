@@ -59,6 +59,28 @@ angular.module('app')
 
 	/* */
 
+	function getKey(signer) {
+
+		var keyStore = keychain[signer];
+		if (typeof keyStore === 'string') {
+			var keys =  StellarSdk.Keypair.fromSeed(keyStore);
+			return $q.when(keys);
+		}
+
+		return $q(function(resolve, reject) {
+			$rootScope.$emit('password.request', signer, function (err, password) {
+				if (err) {
+					reject(err);
+				} else {
+					var seed = decrypt(keyStore, password);
+					resolve(StellarSdk.Keypair.fromSeed(seed));
+				}
+			});
+		});
+	}
+
+	/* */
+
 	var keychain = {};
 	var keys = Storage.getItem('keys');
 	if (keys) {
@@ -97,35 +119,32 @@ angular.module('app')
 			return keychain[signer];
 		},
 
-		getKey: function (signer, keyStore) {
-
-			if (!keyStore) {
-				keyStore = keychain[signer];
-			}
-
-			if (typeof keyStore === 'string') {
-				var keys =  StellarSdk.Keypair.fromSeed(keyStore);
-				return $q.when(keys);
-			}
-
-			return $q(function(resolve, reject) {
-				$rootScope.$emit('password.request', signer, function (err, password) {
-					if (err) {
-						reject(err);
-					} else {
-						var seed = decrypt(keyStore, password);
-						resolve(StellarSdk.Keypair.fromSeed(seed));
-					}
-				});
+		signMessage: function (signer, message) {
+			return getKey(signer)
+			.then(function (key) {
+				var hash = StellarSdk.hash(message);
+				return key.sign(hash).toString('base64');
 			});
+		},
 
+		signTransaction: function (signer, tx, txHash) {
+			return getKey(signer)
+			.then(
+				function (key) {
+					var sig = key.signDecorated(txHash);
+					tx.signatures.push(sig);
+				},
+				function (err) {
+					return $q.reject(err);
+				}
+			);
 		},
 
 		isEncrypted: function (signer) {
 			return (typeof keychain[signer] === 'object');
 		},
 
-		signsFor: function (signer) {
+		isLocalSigner: function (signer) {
 			return (signer in keychain);
 		}
 	};

@@ -15,12 +15,10 @@ angular.module('app')
 	$scope.save = function () {
 
 		var signer = Wallet.current.id;
-		Keychain.getKey(signer)
-		.then(function (keys) {
-			var url = baseUrl + $scope.data.federation;
-			var hash = StellarSdk.hash(url);
-			var sig = keys.sign(hash).toString('base64');
 
+		var url = baseUrl + $scope.data.federation;
+		Keychain.signMessage(signer, url)
+		.then(function (sig) {
 			return $http.post(url, {
 				id:		signer,
 				sig:	sig

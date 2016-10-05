@@ -7,9 +7,7 @@ angular.module('app')
 	var data;
 	if ($routeParams.data) {
 		data = JSON.parse(window.atob($routeParams.data));
-		if (typeof data.key !== 'string') {
-			$scope.encrypted = true;
-		}
+		$scope.encrypted = (typeof data.key === 'object');
 		$scope.scanned = true;
 	}
 
