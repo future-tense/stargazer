@@ -6,14 +6,7 @@ angular.module('app')
 	'use strict';
 
 	function link(scope, element, attrs) {
-
-		var accountId	= scope.id;
-
-		scope.name = accountId;
-		Reverse.lookup(accountId, scope.network)
-		.then(function (res) {
-			scope.name = res;
-		});
+		Reverse.lookupAndFill(scope.name, scope.id, scope.network);
 	}
 
 	return {

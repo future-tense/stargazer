@@ -64,7 +64,15 @@ angular.module('app')
 	}
 
 	return {
-		lookup: lookup
+		lookup: lookup,
+		lookupAndFill: function (target, accountId, network) {
+			target = accountId;
+			lookup(accountId, network)
+			.then(function (res) {
+				target = res;
+			});
+
+		}
 	};
 
 });
