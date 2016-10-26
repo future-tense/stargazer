@@ -162,7 +162,8 @@
 			.forAccount(account.id)
 			.cursor(account.pagingToken)
 			.stream({
-				onmessage: onmessage
+				onmessage: onmessage,
+				onerror: function (err) {return err;}
 			});
 		};
 
