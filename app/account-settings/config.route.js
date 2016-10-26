@@ -9,6 +9,10 @@ angular.module('app')
 		templateUrl: 'app/account-settings/views/settings.html',
 		controller: 'AccountSettingsCtrl'
 	})
+	.when('/account-settings/advanced', {
+		templateUrl: 'app/account-settings/views/advanced.html',
+		controller: 'AccountAdvancedCtrl'
+	})
 	.when('/account-settings/alias', {
 		templateUrl: 'app/account-settings/views/alias.html',
 		controller: 'AccountAliasCtrl'
@@ -24,6 +28,10 @@ angular.module('app')
 	.when('/account-settings/federation', {
 		templateUrl: 'app/account-settings/views/federation.html',
 		controller: 'AccountFederationCtrl'
+	})
+	.when('/account-settings/inflation', {
+		templateUrl: 'app/account-settings/views/inflation.html',
+		controller: 'AccountInflationCtrl'
 	})
 	.when('/account-settings/signers', {
 		templateUrl: 'app/account-settings/views/signers.html',

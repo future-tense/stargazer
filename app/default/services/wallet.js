@@ -47,6 +47,7 @@ angular.module('app')
 			.then(function (res) {
 				self.balances		= parseBalances(res);
 				self.flags			= res.flags;
+				self.inflationDest	= res.inflation_destination;
 				self.sequence		= res.sequence;
 				self.signers		= res.signers;
 				self.subentryCount	= res.subentry_count;

@@ -1,0 +1,21 @@
+<config-navbar heading="Inflation Destination" back="&lt;&nbsp;Back"></config-navbar>
+
+<ion-content class="has-header">
+	<div class="list">
+		<div class="item item-divider">
+		</div>
+		<form name="inflationForm">
+			<label class="item item-input item-inset item-stacked-label" style="padding-right:32px;">
+				<span class="input-label">Set Inflation destination</span>
+				<input type="text" name="destination" ng-model="send.destination" placeholder="Destination Address" autocapitalize="none" valid-address>
+				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
+					<i class="glyphicon glyphicon-book"></i>
+				</a>
+			</label>
+		</form>
+	</div>
+
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="setInflation()" ng-disabled="inflationForm.$invalid || inflationForm.$pending">Set Inflation Dest</button>
+	</div>
+</ion-content>
