@@ -6,7 +6,11 @@ angular.module('app')
 	'use strict';
 
 	function link(scope, element, attrs) {
-		Reverse.lookupAndFill(scope.name, scope.id, scope.network);
+		Reverse.lookupAndFill(
+			function (res) {scope.name = res;},
+			scope.id,
+			scope.network
+		);
 	}
 
 	return {

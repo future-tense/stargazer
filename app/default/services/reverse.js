@@ -65,13 +65,10 @@ angular.module('app')
 
 	return {
 		lookup: lookup,
-		lookupAndFill: function (target, accountId, network) {
-			target = accountId;
+		lookupAndFill: function (setter, accountId, network) {
+			setter(accountId);
 			lookup(accountId, network)
-			.then(function (res) {
-				target = res;
-			});
-
+			.then(setter);
 		}
 	};
 

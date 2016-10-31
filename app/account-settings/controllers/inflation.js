@@ -9,7 +9,10 @@ angular.module('app')
 
 	var inflationDest = Wallet.current.inflationDest;
 	if (inflationDest) {
-		Reverse.lookupAndFill($scope.send.destination, inflationDest);
+		Reverse.lookupAndFill(
+			function (res) {$scope.send.destination = res;},
+			inflationDest
+		);
 	}
 
 	$scope.selectRecipient = function () {

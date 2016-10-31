@@ -6,6 +6,9 @@ angular.module('app')
 
 	var inflationDest = Wallet.current.inflationDest;
 	if (inflationDest) {
-		Reverse.lookupAndFill($scope.inflationDest, inflationDest);
+		Reverse.lookupAndFill(
+			function (res) {$scope.inflationDest = res;},
+			inflationDest
+		);
 	}
 });
