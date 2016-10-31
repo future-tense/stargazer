@@ -11,7 +11,7 @@
 
 			<div class="item" ng-show="hasBalance(trustline)">
 				<span>{{ trustline.object.asset_code }}</span>
-				<span class="pull-right">{{ trustline.object.balance | normalize }}</span>
+				<span class="pull-right">{{ trustline.object.balance | formatAmount }}</span>
 			</div>
 
 			<div class="item item-toggle" ng-hide="hasBalance(trustline)">

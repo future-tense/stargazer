@@ -2,12 +2,10 @@
 /* global angular */
 
 angular.module('app')
-.directive('accountActivity', function (History, Wallet) {
+.directive('accountActivity', function ($filter, History, Wallet) {
 	'use strict';
 
-	function normalizeNumber(x) {
-		return (x * 1).toString();
-	}
+	var formatAmount = $filter('formatAmount');
 
 	function link(scope, iElement, iAttrs) {
 
@@ -33,15 +31,15 @@ angular.module('app')
 
 			filtered.forEach(function (fx) {
 				if (fx.type === 'account_debited') {
-					fx.desc = '-' + normalizeNumber(fx.amount) + ' ' + fx.asset_code;
+					fx.desc = '-' + formatAmount(fx.amount) + ' ' + fx.asset_code;
 				}
 
 				else if (fx.type === 'account_credited') {
-					fx.desc = '+' + normalizeNumber(fx.amount) + ' ' + fx.asset_code;
+					fx.desc = '+' + formatAmount(fx.amount) + ' ' + fx.asset_code;
 				}
 
 				else if (fx.type === 'account_created') {
-					fx.desc = '+' + normalizeNumber(fx.amount) + ' XLM';
+					fx.desc = '+' + formatAmount(fx.amount) + ' XLM';
 				}
 
 				else if (fx.type === 'trade') {
@@ -53,8 +51,8 @@ angular.module('app')
 						fx.bought_asset_code = 'XLM';
 					}
 
-					fx.desc = '-' + normalizeNumber(fx.sold_amount) + ' ' + fx.sold_asset_code +
-						' / +' + normalizeNumber(fx.bought_amount) + ' ' + fx.bought_asset_code;
+					fx.desc = '-' + formatAmount(fx.sold_amount) + ' ' + fx.sold_asset_code +
+						' / +' + formatAmount(fx.bought_amount) + ' ' + fx.bought_asset_code;
 				}
 
 				var date = new Date(fx.date);

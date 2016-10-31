@@ -12,7 +12,7 @@
 				Sent
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				{{ amount | normalize }} {{ code}}
+				{{ amount | formatAmount }} {{ code}}
 			</div>
 		</div>
 
@@ -24,7 +24,7 @@
 				Received
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				{{ amount | normalize }} {{ code}}
+				{{ amount | formatAmount }} {{ code}}
 			</div>
 		</div>
 
@@ -36,10 +36,10 @@
 				Traded
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				+{{ bought_amount | normalize }} {{ bought_code}}
+				+{{ bought_amount | formatAmount }} {{ bought_code}}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				-{{ sold_amount | normalize }} {{ sold_code}}
+				-{{ sold_amount | formatAmount }} {{ sold_code}}
 			</div>
 		</div>
 

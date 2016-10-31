@@ -34,7 +34,7 @@
 				Send as
 			</div>
 			<div class="item" style="text-align:center" ng-repeat="path in send.pathRecords">
-				<p>{{ path.source_amount | normalize }}</p>
+				<p>{{ path.source_amount | formatAmount }}</p>
 				<p>{{ getSourceAssetDescription(path) }}</p>
 				<button type="button" class="btn btn-success" ng-click="submit($index)">Send</button>
 			</div>
