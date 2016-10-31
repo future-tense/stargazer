@@ -1,9 +1,15 @@
 <config-navbar heading="Delete Account" back="&lt;&nbsp;Back"></config-navbar>
 
 <ion-content class="has-header">
-	<form ng-submit="delete()">
+	<form name="deleteForm"ng-submit="delete()">
+		<div class="item item-divider"></div>
+		<label class="item item-input item-inset item-stacked-label" ng-show="isEncrypted">
+			<span class="input-label">Account Password</span>
+			<input type="password" ng-model="account.password" required valid-password signer="{{account.id}}">
+		</label>
+
 		<div style="padding-left:16px;padding-right:16px">
-			<button type="submit" class="button button-block button-positive">
+			<button type="submit" class="button button-block button-positive" ng-disabled="isEncrypted && deleteForm.$invalid">
 				Delete
 			</button>
 		</div>

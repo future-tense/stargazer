@@ -140,6 +140,21 @@ angular.module('app')
 			);
 		},
 
+		isValidPassword: function (signer, password) {
+			var keyStore = keychain[signer];
+			if (typeof keyStore === 'string') {
+				return true;
+			}
+
+			var seed = decrypt(keyStore, password);
+			try {
+				var keypair = StellarSdk.Keypair.fromSeed(seed);
+				return true;
+			} catch (error) {
+				return false;
+			}
+		},
+
 		isEncrypted: function (signer) {
 			return (typeof keychain[signer] === 'object');
 		},
