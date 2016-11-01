@@ -33,7 +33,7 @@ angular.module('app', [
 
 		// create MacBuiltin
 		try {
-			menu.createMacBuiltin('Sample App', {
+			menu.createMacBuiltin('Stargazer', {
 				hideEdit: false,
 				hideWindow: true
 			});
