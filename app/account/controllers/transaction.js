@@ -17,6 +17,7 @@
 			$scope.code = 'XLM';
 			$scope.amount = effect.amount;
 			$scope.counterparty = effect.from;
+			$scope.counterpartyLabel = 'From';
 		}
 
 		else if (effect.type === 'account_credited') {
@@ -24,6 +25,7 @@
 			$scope.code = effect.asset_code;
 			$scope.amount = effect.amount;
 			$scope.counterparty = effect.from;
+			$scope.counterpartyLabel = 'From';
 		}
 
 		else if (effect.type === 'account_debited') {
@@ -31,6 +33,7 @@
 			$scope.code = effect.asset_code;
 			$scope.amount = effect.amount;
 			$scope.counterparty = effect.to;
+			$scope.counterpartyLabel = 'To';
 		}
 
 		else if (effect.type === 'trade') {

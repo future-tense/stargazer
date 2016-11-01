@@ -49,9 +49,10 @@
 
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="type!=='trade'">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
-				<span class="input-label" ng-show="type==='send'">To</span>
-				<span class="input-label" ng-show="type==='recv'">From</span>
-				<span class="text-gray"><account-name id="{{::counterparty}}" network="{{::network}}"></account-name></span>
+				<span class="input-label" style="padding-right:20px;flex-shrink:0;width:auto">{{::counterpartyLabel}}</span>
+				<span class="text-gray" style="flex-shrink:1;justify-content:flex-end;text-overflow:ellipsis;overflow:hidden">
+					<account-name id="{{::counterparty}}" network="{{::network}}"></account-name>
+				</span>
 			</label>
 		</div>
 
