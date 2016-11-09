@@ -8,11 +8,11 @@
 		<form name="qrForm">
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">Amount to receive</span>
-				<input type="number" ng-model="send.amount" placeholder="Amount" min="0" required>
+				<input type="number" ng-model="model.amount" placeholder="Amount" min="0" required>
 			</label>
 
 			<label class="item item-input item-select">
-				<select ng-model="send.asset" ng-init="send.asset=balances[0]" ng-options="getAssetDescription(asset) for asset in balances"></select>
+				<select ng-model="model.asset" ng-init="model.asset=balances[0]" ng-options="getAssetDescription(asset) for asset in balances"></select>
 			</label>
 
 			<div style="padding-left:16px;padding-right:16px">

@@ -4,7 +4,7 @@
 	'use strict';
 
 	angular.module('app')
-	.controller('TransactionCtrl', function ($ionicModal, $q, $route, $scope, Contacts, History, Storage, Wallet) {
+	.controller('TransactionCtrl', function ($q, $route, $scope, Contacts, History, Modal, Wallet) {
 
 		$scope.network  = Wallet.current.network;
 		var accountName	= Wallet.current.alias;
@@ -45,57 +45,42 @@
 		}
 
 		$scope.effect = effect;
-
 		$scope.buttonText = function() {
 			return effect.comment? 'Edit Comment' : 'Add Comment';
 		};
 
-		$scope.cancelComment = function () {
-			$scope.modal.remove();
-		};
-
-		$scope.saveComment = function (comment) {
-			$scope.modal.remove();
-			effect.comment = comment;
-			Storage.setItem('history.' + accountName, History.effects[accountName]);
-		};
-
 		$scope.editComment = function () {
 
-			$ionicModal.fromTemplateUrl('app/account/views/tx-comment.html', {
-				scope: $scope,
-				animation: 'slide-in-up'
-			}).then(function (modal) {
-				$scope.modal = modal;
-				$scope.modal.comment = effect.comment;
-				$scope.modal.show();
-			});
+			$scope.model = {
+				comment: effect.comment
+			};
+
+			Modal.show('app/account/views/edit-txcomment.html', $scope);
 		};
 
 		/* ADD CONTACT */
 
-		if ($scope.counterparty in Wallet.accounts) {
-			$scope.isContact = true;
-		}
-
-		if (Contacts.lookup($scope.counterparty, Wallet.current.network)) {
-			$scope.isContact = true;
-		}
-
-		$scope.saveContact = function (name) {
-			Contacts.add(name, $scope.counterparty, Wallet.current.network);
-			$scope.modal.remove();
-			$route.reload();
-		};
+		$scope.isContact = ($scope.counterparty in Wallet.accounts) ||
+			Contacts.lookup($scope.counterparty, Wallet.current.network);
 
 		$scope.addContact = function () {
-			$ionicModal.fromTemplateUrl('app/account/views/add-contact.html', {
-				scope: $scope,
-				animation: 'slide-in-up'
-			}).then(function (modal) {
-				$scope.modal = modal;
-				$scope.modal.show();
-			});
+
+			$scope.model = {
+				id:			$scope.counterparty,
+				network:	Wallet.current.network
+			};
+
+			if ($scope.type === 'send') {
+				Wallet.current.horizon().transactions().transaction(effect.hash).call()
+				.then(function (res) {
+					if (res.operation_count === 1) {
+						$scope.model.meta		= res.meta;
+						$scope.model.meta_type	= res.meta_type;
+					}
+				});
+			}
+
+			Modal.show('app/account/views/add-contact.html', $scope);
 		};
 	});
 })();

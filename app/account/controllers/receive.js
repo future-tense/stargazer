@@ -1,14 +1,11 @@
 /* global angular, console, require */
 
 angular.module('app')
-.controller('ReceiveCtrl', function ($ionicModal, $ionicPopup, $ionicLoading, $q, $scope, $timeout, Horizon, platformInfo, Wallet) {
+.controller('ReceiveCtrl', function ($ionicLoading, $q, $scope, $timeout, Horizon, Modal, platformInfo, Wallet) {
 	'use strict';
 
 	$scope.wallet = Wallet;
-	$scope.basic = true;
-	$scope.send = {};
-	$scope.qr = {};
-	$scope.qr2 = {};
+	$scope.qrtext = '';
 
 	$scope.accountId = Wallet.current.id;
 	$scope.balances = Wallet.current.balances;
@@ -22,19 +19,8 @@ angular.module('app')
 	};
 
 	$scope.request = function () {
-
-		$ionicModal.fromTemplateUrl('app/account/views/payment-request.html', {
-			scope: $scope,
-			animation: 'slide-in-up'
-		}).then(function (modal) {
-			$scope.modal = modal;
-			$scope.modal.show();
-		});
+		Modal.show('app/account/views/payment-request.html', $scope);
 	};
-
-	$scope.$on('modal.removed', function() {
-		// Execute action
-	});
 
 	$scope.copyToClipboard = function (text) {
 
@@ -78,8 +64,7 @@ angular.module('app')
 			}
 		};
 
-		$scope.qr.text = JSON.stringify(text);
-		$scope.basic = true;
+		$scope.qrtext = JSON.stringify(text);
 	};
 
 	$scope.showAddress();

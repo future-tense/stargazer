@@ -104,7 +104,6 @@ angular.module('app')
 
 	$scope.cancel = function() {
 		_scanStop();
-		$scope.scannerModal.hide();
-		$scope.scannerModal.remove();
+		$scope.closeModalService();
 	};
 });

@@ -4,6 +4,12 @@ angular.module('app')
 .factory('Contacts', function (Horizon, Storage) {
 	'use strict';
 
+	function ignoreCase(a, b) {
+		var nameA = a.toUpperCase();
+		var nameB = b.toUpperCase();
+		return (nameA > nameB) - (nameA < nameB);
+	}
+
 	var contacts = Storage.getItem('contacts') || {};
 
 	return {
@@ -23,20 +29,25 @@ angular.module('app')
 			return res;
 		},
 
+		getNames: function () {
+			return Object.keys(contacts).sort(ignoreCase);
+		},
+
 		get: function (name) {
 			return contacts[name];
 		},
 
-		add: function (name, accountId, network) {
-			var contact = {
-				id: accountId
-			};
-
-			if (network !== Horizon.livenet) {
-				contact.network = network;
+		add: function (name, contact) {
+			if (contact.network === Horizon.livenet) {
+				delete contact.network;
 			}
 
 			contacts[name] = contact;
+			Storage.setItem('contacts', contacts);
+		},
+
+		delete: function (name) {
+			delete contacts[name];
 			Storage.setItem('contacts', contacts);
 		},
 

@@ -1,7 +1,7 @@
 /* global angular, cloudSky, cordova */
 
 angular.module('app')
-.directive('qrScanner', function($rootScope, $timeout, $ionicModal, platformInfo) {
+.directive('qrScanner', function($rootScope, $timeout, Modal, platformInfo) {
 	'use strict';
 
 	var isCordova	= platformInfo.isCordova;
@@ -47,14 +47,7 @@ angular.module('app')
 		};
 
 		$scope.modalOpenScanner = function() {
-			$ionicModal.fromTemplateUrl('app/default/views/modals/scanner.html', {
-				scope: $scope,
-				animation: 'slide-in-up'
-			})
-			.then(function(modal) {
-				$scope.scannerModal = modal;
-				$scope.scannerModal.show();
-			});
+			Modal.show('app/default/views/modals/scanner.html', $scope);
 		};
 
 		$scope.openScanner = function() {

@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('IndexCtrl', function ($ionicModal, $ionicPopup, $location, $q, $rootScope, $scope, Horizon, Contacts, Wallet) {
+.controller('IndexCtrl', function ($ionicPopup, $location, $q, $rootScope, $scope, Contacts, Horizon, Modal, Wallet) {
 	'use strict';
 
 	$scope.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
@@ -19,19 +19,19 @@ angular.module('app')
 
 	function handleAccount(account) {
 
-		$scope.saveContact = function (name) {
-			Contacts.add(name, account.id, account.network);
-			$scope.modal.remove();
-		};
-
 		if (!(account.id in Wallet.accounts) && !Contacts.lookup(account.id, account.network)) {
-			$ionicModal.fromTemplateUrl('app/account/views/add-contact.html', {
-				scope: $scope,
-				animation: 'slide-in-up'
-			}).then(function (modal) {
-				$scope.modal = modal;
-				$scope.modal.show();
-			});
+
+			$scope.model = {
+				id:			account.id,
+				meta:		account.meta,
+				meta_type:	account.meta_type
+			};
+
+			if (account.network) {
+				$scope.model.network = account.network;
+			}
+
+			Modal.show('app/account/views/add-contact.html', $scope);
 		}
 	}
 

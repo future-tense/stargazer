@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('CreateAccountCtrl', function ($ionicModal, $location, $scope, Signer, Submitter, Wallet) {
+.controller('CreateAccountCtrl', function ($location, $scope, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	//	:TODO: get these from Horizon
@@ -24,13 +24,7 @@ angular.module('app')
 
 	$scope.selectAccount = function () {
 		$scope.account.funder = '';
-		$ionicModal.fromTemplateUrl('app/side-menu/views/modals/select-account.html', {
-			scope: $scope,
-			animation: 'slide-in-up'
-		}).then(function (modal) {
-			$scope.modal = modal;
-			$scope.modal.show();
-		});
+		Modal.show('app/side-menu/views/modals/select-account.html', $scope);
 	};
 
 	$scope.create = function () {

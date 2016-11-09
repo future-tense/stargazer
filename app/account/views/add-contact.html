@@ -1,18 +1,18 @@
-<ion-modal-view>
+<ion-modal-view ng-controller="AddContactFromTxCtrl">
 	<ion-header-bar align-title="center" class="tab-bar">
-		<button on-tap="cancelComment()" class="button button-clear button-white">Close</button>
+		<button on-tap="cancelModal()" class="button button-clear button-white">Close</button>
 		<h1 class="title ellipsis">Add Contact</h1>
 	</ion-header-bar>
 
 	<ion-content class="modal-content fix-modals-touch">
-		<form name="commentForm">
+		<form name="contactForm">
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">Name</span>
-				<input type="text" ng-model="modal.contact" placeholder="Contact Name" required>
+				<input type="text" ng-model="model.name" placeholder="Contact Name" required>
 			</label>
 
 			<div style="padding-left:16px;padding-right:16px">
-				<button class="button button-block button-positive" on-tap="saveContact(modal.contact)" ng-disabled="commentForm.$invalid">Save</button>
+				<button class="button button-block button-positive" on-tap="saveContact()" ng-disabled="contactForm.$invalid">Save</button>
 			</div>
 		</form>
 	</ion-content>

@@ -1,7 +1,7 @@
 /* global angular, console, Decimal, StellarSdk */
 
 angular.module('app')
-.controller('SendCtrl', function ($ionicModal, $location, $q, $scope, DestinationCache, Keychain, Signer, Submitter, Wallet) {
+.controller('SendCtrl', function ($location, $q, $scope, DestinationCache, Keychain, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.assets = [];
@@ -43,16 +43,10 @@ angular.module('app')
 	$scope.selectRecipient = function () {
 
 		//	invalidate form records first
-		$scope.send.destination = '';
 		$scope.send.pathRecords = [];
 
-		$ionicModal.fromTemplateUrl('app/default/views/select-contact.html', {
-			scope: $scope,
-			animation: 'slide-in-up'
-		}).then(function (modal) {
-			$scope.modal = modal;
-			$scope.modal.show();
-		});
+		$scope.send.destination = '';
+		Modal.show('app/default/views/select-contact.html', $scope);
 	};
 
 	$scope.getPaths = function () {

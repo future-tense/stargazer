@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('AccountInflationCtrl', function ($ionicModal, $q, $rootScope, $scope, DestinationCache, Reverse, Signer, Submitter, Wallet) {
+.controller('AccountInflationCtrl', function ($q, $rootScope, $scope, DestinationCache, Modal, Reverse, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.oldName = Wallet.current.alias;
@@ -20,13 +20,7 @@ angular.module('app')
 		//	invalidate form records first
 		$scope.send.destination = '';
 
-		$ionicModal.fromTemplateUrl('app/default/views/select-contact.html', {
-			scope: $scope,
-			animation: 'slide-in-up'
-		}).then(function (modal) {
-			$scope.modal = modal;
-			$scope.modal.show();
-		});
+		Modal.show('app/default/views/select-contact.html', $scope);
 	};
 
 	$scope.setInflation = function () {
