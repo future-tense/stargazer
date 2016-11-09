@@ -15,5 +15,13 @@ angular.module('app')
 	.when('/side-menu/create-account', {
 		templateUrl: 'app/side-menu/views/create-account.html',
 		controller: 'CreateAccountCtrl'
+	})
+	.when('/side-menu/contacts', {
+		templateUrl: 'app/side-menu/views/contact-list.html',
+		controller: 'ContactListCtrl'
+	})
+	.when('/side-menu/contact/:name', {
+		templateUrl: 'app/side-menu/views/edit-contact.html',
+		controller: 'EditContactCtrl'
 	});
 });

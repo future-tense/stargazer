@@ -1,0 +1,26 @@
+<config-navbar heading="Edit Contact" back="&lt;&nbsp;Back"></config-navbar>
+
+<ion-content class="has-header">
+
+	<form name="contactForm">
+		<div class="item item-divider">
+		</div>
+		<label class="item item-input item-stacked-label">
+			<span class="input-label">Name</span>
+			<input type="text" ng-model="model.name" placeholder="Contact Name" required>
+		</label>
+
+		<label class="item item-input item-stacked-label">
+			<span class="input-label">Address</span>
+			<input type="text" ng-model="model.id" placeholder="Contact Address" required autocapitalize="none" valid-address>
+		</label>
+
+		<div style="padding-left:16px;padding-right:16px">
+			<button class="button button-block button-positive" on-tap="updateContact()">Update Contact</button>
+		</div>
+
+		<div style="padding-left:16px;padding-right:16px">
+			<button class="button button-block button-positive" on-tap="deleteContact()">Delete Contact</button>
+		</div>
+	</form>
+</ion-content>

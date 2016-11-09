@@ -1,0 +1,21 @@
+<config-navbar heading="Contact List" back="Done"></config-navbar>
+
+<ion-content class="has-header">
+	<div class="list">
+		<div class="item item-divider">
+		</div>
+		<a ng-href="#/side-menu/contact/{{name}}" ng-repeat="name in names">
+			<div class="item">
+				<span>{{name}}</span>
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+	</div>
+
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="addContact()">Add Contact</button>
+	</div>
+
+</ion-content>

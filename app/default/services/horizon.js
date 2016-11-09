@@ -14,6 +14,16 @@ angular.module('app')
 	return {
 		livenet: livenet,
 		testnet: testnet,
+
+		getNetworks: function () {
+			return Object.keys(networks).map(function (key) {
+				return {
+					name: key,
+					url: networks[key]
+				};
+			});
+		},
+
 		getServer: function (network) {
 			var url = networks[network];
 			return new StellarSdk.Server(url);
