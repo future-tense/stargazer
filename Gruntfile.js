@@ -60,12 +60,12 @@ module.exports = function (grunt) {
 			'font-awesome': {
 				files: [{
 					src: 'bower_components/font-awesome/css/font-awesome.min.css',
-					dest: 'content/css/font-awesome.min.css'
+					dest: 'dist/css/font-awesome.min.css'
 				},{
 					expand: true,
 					cwd: 'bower_components/font-awesome/fonts/',
 					src: ['fontawesome-webfont.*'],
-					dest: 'content/fonts/'
+					dest: 'dist/fonts/'
 				}]
 			},
 			ionic: {
@@ -76,10 +76,10 @@ module.exports = function (grunt) {
 					expand: true,
 					cwd: 'bower_components/ionic/release/fonts/',
 					src: ['*'],
-					dest: 'content/fonts/'
+					dest: 'dist/fonts/'
 				}, {
 					src: 'bower_components/ionic/release/css/ionic.min.css',
-					dest: 'content/css/ionic.min.css'
+					dest: 'dist/css/ionic.min.css'
 				}]
 			},
 			lodash: {
