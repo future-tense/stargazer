@@ -1,6 +1,7 @@
 /* global nw, angular, console, require, Peer, StellarSdk */
 
 angular.module('app', [
+	'pascalprecht.translate',
 	'ngRoute',
 	'ionic'
 ], function ($compileProvider) {
@@ -39,4 +40,17 @@ angular.module('app', [
 			});
 		} catch (e) {}
 	}
-});
+})
+
+.config(['$translateProvider', function ($translateProvider) {
+	'use strict';
+
+	$translateProvider
+	.useSanitizeValueStrategy('escape')
+	.addInterpolation('$translateMessageFormatInterpolation')
+	.useStaticFilesLoader({
+		prefix: 'i18n/',
+		suffix: '.json'
+	})
+	.fallbackLanguage('en');
+}]);

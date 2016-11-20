@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('CreateAccountCtrl', function ($location, $scope, Modal, Signer, Submitter, Wallet) {
+.controller('CreateAccountCtrl', function ($location, $scope, $translate, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	//	:TODO: get these from Horizon
@@ -14,17 +14,20 @@ angular.module('app')
 	}];
 
 	var numAccounts = Object.keys(Wallet.accounts).length;
-	$scope.account = {
-		alias: 'Personal Account #' + (numAccounts + 1),
-		amount: 20,
-		network: $scope.networks[0]
-	};
+	$translate('account.defaultname', {number: numAccounts + 1})
+	.then(function (res) {
+		$scope.account = {
+			alias: res,
+			amount: 20,
+			network: $scope.networks[0]
+		};
+	});
 
 	$scope.wallet = Wallet;
 
 	$scope.selectAccount = function () {
 		$scope.account.funder = '';
-		Modal.show('app/side-menu/views/modals/select-account.html', $scope);
+		Modal.show('app/side-menu/modals/select-account.html', $scope);
 	};
 
 	$scope.create = function () {

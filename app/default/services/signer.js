@@ -122,7 +122,6 @@ angular.module('app')
 		tx.signatures.push(sig);
 	}
 
-
 	function getAccountInfo(context) {
 
 		var accounts = context.accounts;

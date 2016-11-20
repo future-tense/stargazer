@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('ImportAccountCtrl', function ($location, $routeParams, $scope, Keychain, Wallet) {
+.controller('ImportAccountCtrl', function ($location, $routeParams, $scope, $translate, Keychain, Wallet) {
 	'use strict';
 
 	var data;
@@ -21,10 +21,13 @@ angular.module('app')
 	}];
 
 	var numAccounts = Object.keys(Wallet.accounts).length;
-	$scope.account = {
-		alias:		'Personal Account #' + (numAccounts + 1),
-		network:	$scope.networks[0]
-	};
+	$translate('account.defaultname', {number: numAccounts + 1})
+	.then(function (res) {
+		$scope.account = {
+			alias: res,
+			network: $scope.networks[0]
+		};
+	});
 
 	$scope.import = function () {
 

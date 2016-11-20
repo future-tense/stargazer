@@ -86,7 +86,7 @@ angular.module('app')
 			.then(function (res) {
 
 				//	if we're going to createAccount we can only send XLM, so filter
-				//	all paths involving any not-native currencies
+				//	all paths involving any non-native currencies
 
 				if ($scope.flags.createAccount) {
 					$scope.send.pathRecords = res.records.filter(function (record) {

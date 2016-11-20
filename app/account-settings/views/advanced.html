@@ -1,4 +1,4 @@
-<config-navbar heading="Advanced" back="&lt;&nbsp;Back"></config-navbar>
+<config-navbar heading="{{'account.settings.advanced' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
 	<div class="list">
@@ -6,7 +6,9 @@
 
 		<a href="#/account-settings/inflation">
 			<div class="item" style="display:flex;justify-content:space-between">
-				<div style="padding-right:20px;flex-shrink:0">Inflation Destination</div>
+				<div style="padding-right:20px;flex-shrink:0">
+					{{'account.settings.inflation' | translate}}
+				</div>
 				<div class="text-gray" style="display:flex;justify-content:flex-end;text-overflow:ellipsis;overflow:hidden">
 					<div style="flex-shrink:1;text-overflow:ellipsis;overflow:hidden;min-width:0">
 						{{inflationDest}}
@@ -18,7 +20,9 @@
 
 		<a href="#/account-settings/export">
 			<div class="item">
-				Export Account
+				<span>
+					{{'account.settings.export' | translate}}
+				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
 				</div>
@@ -27,7 +31,9 @@
 
 		<a href="#/account-settings/delete">
 			<div class="item">
-				Delete Account
+				<span>
+					{{'account.settings.delete' | translate}}
+				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
 				</div>

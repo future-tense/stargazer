@@ -1,7 +1,7 @@
 /* global angular, console, require */
 
 angular.module('app')
-.controller('ReceiveCtrl', function ($ionicLoading, $q, $scope, $timeout, Horizon, Modal, platformInfo, Wallet) {
+.controller('ReceiveCtrl', function ($ionicLoading, $q, $scope, $timeout, $translate, Horizon, Modal, platformInfo, Wallet) {
 	'use strict';
 
 	$scope.wallet = Wallet;
@@ -19,29 +19,32 @@ angular.module('app')
 	};
 
 	$scope.request = function () {
-		Modal.show('app/account/views/payment-request.html', $scope);
+		Modal.show('app/account/modals/payment-request.html', $scope);
 	};
 
 	$scope.copyToClipboard = function (text) {
 
 		var showPopover = function () {
-			$ionicLoading.show({
-				template: 'Copied to clipboard'
+			$translate('account.receive.copy')
+			.then(function (text) {
+				return $ionicLoading.show({
+					template: text
+				});
 			})
 			.then(function () {
 				return $timeout(700);
 			})
-			.then(function () {
-				$ionicLoading.hide();
-			});
+			.then($ionicLoading.hide);
 		};
 
 		if (platformInfo.isCordova) {
 /*
 			window.cordova.plugins.clipboard.copy(text);
-			window.plugins.toast.showShortCenter('Copied to clipboard');
-*/
-		} else if (platformInfo.isNW) {
+ */
+			showPopover();
+		}
+
+		else if (platformInfo.isNW) {
 			var gui = require('nw.gui');
 			gui.Clipboard.get().set(text);
 			showPopover();

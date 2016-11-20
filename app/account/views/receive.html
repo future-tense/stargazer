@@ -1,13 +1,15 @@
 <wallet-header></wallet-header>
 <ion-content>
 	<div style="display:flex; flex-direction: column; align-items: center;">
-		<h1>My Stellar address</h1>
+		<h1>
+			{{'account.receive.heading' | translate}}
+		</h1>
 		<qrcode text="qrtext" ng-click="copyToClipboard(accountId)"></qrcode>
 		<h6 ng-click="copyToClipboard(accountId)">{{accountId}}</h6>
 	</div>
 	<div style="padding-left:16px;padding-right:16px">
 		<button class="button button-block button-positive" on-tap="request()">
-			Request a specific amount
+			{{'account.receive.button' | translate}}
 		</button>
 	</div>
 </ion-content>

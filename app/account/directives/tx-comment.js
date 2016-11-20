@@ -2,7 +2,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.directive('txComment', function ($q, Contacts, Wallet) {
+.directive('txComment', function ($q, $translate, Contacts, Wallet) {
 	'use strict';
 
 	function link(scope, element, attrs) {
@@ -17,13 +17,19 @@ angular.module('app')
 			}
 		}
 
-		function txDescription(tx) {
-			return {
-				'account_debited':	'Sent',
-				'account_credited': 'Received',
-				'account_created':	'Received',
-				'trade':			'Traded'
+		function setTxDescription(tx) {
+
+			var key = {
+				'account_debited':	'account.transaction.sent',
+				'account_credited': 'account.transaction.received',
+				'account_created':	'account.transaction.received',
+				'trade':			'account.transaction.traded'
 			}[tx.type];
+
+			$translate(key)
+			.then(function (res) {
+				scope.comment = res;
+			});
 		}
 
 		var tx = scope.tx;
@@ -45,7 +51,7 @@ angular.module('app')
 			if (name) {
 				scope.comment = name;
 			} else {
-				scope.comment = txDescription(tx);
+				setTxDescription(tx);
 			}
 		}
 	}

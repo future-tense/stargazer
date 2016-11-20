@@ -1,4 +1,4 @@
-<config-navbar heading="Transaction Details" back="Done"></config-navbar>
+<config-navbar heading="{{'account.transaction.heading' | translate}}" back="{{'global.done' | translate}}"></config-navbar>
 <ion-content class="has-header">
 
 	<div class="list">
@@ -9,7 +9,7 @@
 				<i class="icon ion-ios-upload-outline"></i>
 			</div>
 			<div class="text-gray" style="margin-bottom:8px">
-				Sent
+				{{'account.transaction.sent' | translate}}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				{{ amount | formatAmount }} {{ code}}
@@ -21,7 +21,7 @@
 				<i class="icon ion-ios-download-outline"></i>
 			</div>
 			<div class="text-gray" style="margin-bottom:8px">
-				Received
+				{{'account.transaction.received' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				{{ amount | formatAmount }} {{ code}}
@@ -33,7 +33,7 @@
 				<i class="fa fa-exchange"></i>
 			</div>
 			<div class="text-gray" style="margin-bottom:8px">
-				Traded
+				{{'account.transaction.traded' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				+{{ bought_amount | formatAmount }} {{ bought_code}}
@@ -44,12 +44,14 @@
 		</div>
 
 		<div class="item item-divider">
-			Details
+			{{'account.transaction.details' | translate }}
 		</div>
 
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="type!=='trade'">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
-				<span class="input-label" style="padding-right:20px;flex-shrink:0;width:auto">{{::counterpartyLabel}}</span>
+				<span class="input-label" style="padding-right:20px;flex-shrink:0;width:auto">
+					{{::counterpartyLabel | translate}}
+				</span>
 				<span class="text-gray" style="flex-shrink:1;justify-content:flex-end;text-overflow:ellipsis;overflow:hidden">
 					<account-name id="{{::counterparty}}" network="{{::network}}"></account-name>
 				</span>
@@ -58,24 +60,36 @@
 
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
-				<span class="input-label">Date</span>
-				<span class="text-gray">{{::effect.date}}</span>
+				<span class="input-label">
+					{{'account.transaction.date' | translate}}
+				</span>
+				<span class="text-gray">
+					{{::effect.date | formatDate}}
+				</span>
 			</label>
 		</div>
 
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="effect.comment">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
-				<span class="input-label">Comment</span>
-				<span class="text-gray">{{effect.comment}}</span>
+				<span class="input-label">
+					{{'account.transaction.comment' | translate}}
+				</span>
+				<span class="text-gray">
+					{{effect.comment}}
+				</span>
 			</label>
 		</div>
 
 		<div style="padding-left:16px;padding-right:16px">
-			<button class="button button-block button-positive" on-tap="editComment()">{{buttonText()}}</button>
+			<button class="button button-block button-positive" on-tap="editComment()">
+				{{buttonText() | translate}}
+			</button>
 		</div>
 
 		<div style="padding-left:16px;padding-right:16px" ng-if="!isContact && type!=='trade'">
-			<button class="button button-block button-positive" on-tap="addContact()">Add to Contacts</button>
+			<button class="button button-block button-positive" on-tap="addContact()">
+				{{'account.transaction.contact.add' | translate}}
+			</button>
 		</div>
 	</div>
 </ion-content>

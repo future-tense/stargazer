@@ -9,7 +9,7 @@ angular.module('app')
 	};
 
 	$scope.buttonText = function() {
-		return $scope.effect.comment? 'Edit Comment' : 'Add Comment';
+		return $scope.effect.comment? 'modal.comment.edit' : 'modal.comment.add';
 	};
 
 	$scope.saveComment = function () {

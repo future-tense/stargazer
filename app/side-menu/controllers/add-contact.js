@@ -33,7 +33,7 @@ angular.module('app')
 			}
 
 			Contacts.add($scope.model.name, contact);
-			$scope.modal.remove();
+			$scope.closeModalService();
 			$route.reload();
 		});
 	};

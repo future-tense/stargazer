@@ -1,13 +1,17 @@
 <ion-modal-view ng-controller="SelectFundingAccountCtrl">
 	<ion-header-bar align-title="center" class="tab-bar">
-		<button on-tap="cancel()" class="button button-clear button-white">Close</button>
-		<h1 class="title ellipsis">Select Account</h1>
+		<button on-tap="cancel()" class="button button-clear button-white">
+			{{'modal.close' | translate}}
+		</button>
+		<h1 class="title ellipsis">
+			{{'modal.account.heading' | translate}}
+		</h1>
 	</ion-header-bar>
 
 	<ion-content class="modal-content text-center fix-modals-touch">
 		<div class="list">
 			<div class="item item-divider" ng-if="accounts.length">
-				Wallet Accounts
+				{{'modal.account.wallets' | translate}}
 			</div>
 			<a on-tap="select(account)" ng-repeat="account in accounts">
 				<div class="item">

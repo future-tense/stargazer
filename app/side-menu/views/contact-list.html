@@ -1,4 +1,4 @@
-<config-navbar heading="Contact List" back="Done"></config-navbar>
+<config-navbar heading="{{'sidemenu.settings.contacts' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
 	<div class="list">
@@ -6,7 +6,9 @@
 		</div>
 		<a ng-href="#/side-menu/contact/{{name}}" ng-repeat="name in names">
 			<div class="item">
-				<span>{{name}}</span>
+				<span>
+					{{name}}
+				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
 				</div>
@@ -15,7 +17,8 @@
 	</div>
 
 	<div style="padding-left:16px;padding-right:16px">
-		<button class="button button-block button-positive" on-tap="addContact()">Add Contact</button>
+		<button class="button button-block button-positive" on-tap="addContact()">
+			{{'sidemenu.settings.contacts.add' | translate}}
+		</button>
 	</div>
-
 </ion-content>

@@ -2,13 +2,15 @@
 <ion-content>
 	<div class="list">
 		<div class="item item-divider">
-			Recipient information
+			{{'account.send.info.heading' | translate}}
 		</div>
 
 		<form name="$parent.sendForm">
 			<label class="item item-input item-inset item-stacked-label">
-				<span class="input-label">Send to</span>
-				<input type="text" name="destination" ng-model="send.destination" placeholder="Recipient Address" autocapitalize="none" valid-address>
+				<span class="input-label">
+					{{'account.send.destination.label' | translate}}
+				</span>
+				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'account.send.destination.placeholder' | translate}}" autocapitalize="none" valid-address>
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
@@ -16,8 +18,10 @@
 
 			<div ng-show="flags.hasValidDestination">
 				<label class="item item-input item-stacked-label">
-					<span class="input-label">Amount to receive</span>
-					<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options='{debounce: 200}' placeholder="Amount" min="{{send.minAmount}}">
+					<span class="input-label">
+						{{'account.send.amount.label' | translate}}
+					</span>
+					<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options='{debounce: 200}' placeholder="{{'account.send.amount.placeholder' | translate}}" min="{{send.minAmount}}">
 				</label>
 
 				<label class="item item-input item-select">
@@ -31,12 +35,14 @@
 
 		<div class="list">
 			<div class="item item-divider">
-				Send as
+				{{'account.send.paths.heading' | translate}}
 			</div>
 			<div class="item" style="text-align:center" ng-repeat="path in send.pathRecords">
 				<p>{{ path.source_amount | formatAmount }}</p>
 				<p>{{ getSourceAssetDescription(path) }}</p>
-				<button type="button" class="btn btn-success" ng-click="submit($index)">Send</button>
+				<button type="button" class="btn btn-success" ng-click="submit($index)">
+					{{'account.send' | translate}}
+				</button>
 			</div>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('IndexCtrl', function ($ionicPopup, $location, $q, $rootScope, $scope, Contacts, Horizon, Modal, Wallet) {
+.controller('IndexCtrl', function ($ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Language, Modal, Wallet) {
 	'use strict';
 
 	$scope.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
@@ -81,29 +81,36 @@ angular.module('app')
 			keyName = Wallet.accounts[signer].alias;
 		}
 
-		$ionicPopup.show({
-			template: '<input type="password" ng-model="data.password">',
-			title: 'Enter Password for ' + keyName,
-			scope: scope,
-			buttons: [
-				{
-					text: 'Cancel',
-					onTap: function (e) {
-						cb('cancel');
-					}
-				},
-				{
-					text: '<b>OK</b>',
-					type: 'button-positive',
-					onTap: function (e) {
-						if (!scope.data.password) {
-							e.preventDefault();
-						} else {
-							cb(undefined, scope.data.password);
+		$q.all([
+			$translate('popup.enter-password.heading', {name: keyName}),
+			$translate('global.cancel'),
+			$translate('global.ok')
+		])
+		.then(function (res) {
+			$ionicPopup.show({
+				template: '<input type="password" ng-model="data.password">',
+				title: res[0],
+				scope: scope,
+				buttons: [
+					{
+						text: res[1],
+						onTap: function (e) {
+							cb('cancel');
+						}
+					},
+					{
+						text: '<b>' + res[2] + '</b>',
+						type: 'button-positive',
+						onTap: function (e) {
+							if (!scope.data.password) {
+								e.preventDefault();
+							} else {
+								cb(undefined, scope.data.password);
+							}
 						}
 					}
-				}
-			]
+				]
+			});
 		});
 	});
 

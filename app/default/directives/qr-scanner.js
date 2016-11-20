@@ -1,7 +1,7 @@
 /* global angular, cloudSky, cordova */
 
 angular.module('app')
-.directive('qrScanner', function($rootScope, $timeout, Modal, platformInfo) {
+.directive('qrScanner', function($rootScope, $timeout, $translate, Modal, platformInfo) {
 	'use strict';
 
 	var isCordova	= platformInfo.isCordova;
@@ -11,30 +11,33 @@ angular.module('app')
 	var controller = function($scope) {
 
 		var onSuccess = function(result) {
-			$timeout(function() {
-				window.plugins.spinnerDialog.hide();
-			}, 100);
+			$timeout(100).then(window.plugins.spinnerDialog.hide);
+
 			if (isWP && result.cancelled) {
 				return;
 			}
 
-			$timeout(function() {
+			$timeout(1000)
+			.then(function() {
 				var data = isIOS ? result : result.text;
 				$scope.onScan({
 					data: data
 				});
-			}, 1000);
+			});
 		};
 
 		var onError = function(error) {
-			$timeout(function() {
-				window.plugins.spinnerDialog.hide();
-			}, 100);
+			$timeout(100).then(window.plugins.spinnerDialog.hide);
 		};
 
 		$scope.cordovaOpenScanner = function() {
-			window.plugins.spinnerDialog.show(null, 'Preparing camera...', true);
-			$timeout(function() {
+
+			$translate('default.camera')
+			.then(function (res) {
+				window.plugins.spinnerDialog.show(null, res, true);
+				return $timeout(100);
+			})
+			.then(function () {
 				if (isIOS) {
 					cloudSky.zBar.scan({}, onSuccess, onError);
 				} else {
@@ -43,7 +46,7 @@ angular.module('app')
 				if ($scope.beforeScan) {
 					$scope.beforeScan();
 				}
-			}, 100);
+			});
 		};
 
 		$scope.modalOpenScanner = function() {

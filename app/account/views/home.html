@@ -1,6 +1,6 @@
 <wallet-header></wallet-header>
 <ion-content>
-	<ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()"></ion-refresher>
+	<ion-refresher pulling-text="{{'account.pull' | translate}}" on-refresh="doRefresh()"></ion-refresher>
 	<account-balance account="wallet.current"></account-balance>
 	<div class="camera-icon" style="position: relative">
 		<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>

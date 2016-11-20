@@ -1,8 +1,10 @@
-<config-navbar heading="Export Account" back="&lt;&nbsp;Back"></config-navbar>
+<config-navbar heading="{{'account.settings.export' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
 	<div class="list">
-		<div class="item item-divider">QR Code</div>
+		<div class="item item-divider">
+			{{'global.qr-code' | translate}}
+		</div>
 		<div class="item" style="display:flex; flex-direction: column; align-items: center;">
 			<qrcode text="text"></qrcode>
 		</div>

@@ -1,4 +1,4 @@
-<config-navbar heading="Edit Contact" back="&lt;&nbsp;Back"></config-navbar>
+<config-navbar heading="{{'contact.edit' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
 
@@ -6,21 +6,29 @@
 		<div class="item item-divider">
 		</div>
 		<label class="item item-input item-stacked-label">
-			<span class="input-label">Name</span>
-			<input type="text" ng-model="model.name" placeholder="Contact Name" required>
+			<span class="input-label">
+				{{'contact.name.label' | translate}}
+			</span>
+			<input type="text" ng-model="model.name" placeholder="{{'contact.name.placeholder' | translate}}" required>
 		</label>
 
 		<label class="item item-input item-stacked-label">
-			<span class="input-label">Address</span>
-			<input type="text" ng-model="model.id" placeholder="Contact Address" required autocapitalize="none" valid-address>
+			<span class="input-label">
+				{{'contact.address.label' | translate}}
+			</span>
+			<input type="text" ng-model="model.id" placeholder="{{'contact.address.placeholder' | translate}}" required autocapitalize="none" valid-address>
 		</label>
 
 		<div style="padding-left:16px;padding-right:16px">
-			<button class="button button-block button-positive" on-tap="updateContact()">Update Contact</button>
+			<button class="button button-block button-positive" on-tap="updateContact()">
+				{{'contact.update' | translate}}
+			</button>
 		</div>
 
 		<div style="padding-left:16px;padding-right:16px">
-			<button class="button button-block button-positive" on-tap="deleteContact()">Delete Contact</button>
+			<button class="button button-block button-positive" on-tap="deleteContact()">
+				{{'contact.delete' | translate}}
+			</button>
 		</div>
 	</form>
 </ion-content>

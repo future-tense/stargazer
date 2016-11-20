@@ -1,14 +1,19 @@
-/* global angular */
+/* global angular, console */
 
 angular.module('app')
-.filter('formatAmount', function () {
+.filter('formatAmount', function (Language) {
 	'use strict';
 
-	var formatter = new Intl.NumberFormat("en-US");
-
 	return function (number) {
-		number = (number * 1).toString();
-		var parts = number.split(".");
-		return formatter.format(parts[0]) + (parts[1] ? "." + parts[1] : "");
+		var parts = (number * 1).toString().split('.');
+		if (parts.length === 2) {
+			var numDecimals = parts[1].length;
+			return (number * 1).toLocaleString(Language.getLocale(), {
+				minimumFractionDigits: numDecimals,
+				maximumFractionDigits: numDecimals
+			});
+		} else {
+			return parseInt(parts[0]).toLocaleString(Language.getLocale());
+		}
 	};
 });

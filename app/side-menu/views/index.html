@@ -16,7 +16,7 @@
 
 			<li>
 				<a href="#/side-menu/add-account" menu-toggle>
-					<span>Add account</span>
+					<span>{{'sidemenu.account' | translate }}</span>
 					<div class="pull-right">
 						<span>&raquo;</span>
 					</div>
@@ -24,8 +24,8 @@
 			</li>
 
 			<li>
-				<a href="#/side-menu/contacts" menu-toggle>
-					<span>Contacts</span>
+				<a href="#/side-menu/settings" menu-toggle>
+					<span>{{'sidemenu.settings' | translate}}</span>
 					<div class="pull-right">
 						<span>&raquo;</span>
 					</div>
@@ -35,15 +35,6 @@
 			<li ng-if="advanced">
 				<a href="#/side-menu/signatures" menu-toggle>
 					<span>Signatures</span>
-					<div class="pull-right">
-						<span>&raquo;</span>
-					</div>
-				</a>
-			</li>
-
-			<li ng-if="advanced">
-				<a href="#/side-menu/global-settings" menu-toggle>
-					<span>Settings</span>
 					<div class="pull-right">
 						<span>&raquo;</span>
 					</div>

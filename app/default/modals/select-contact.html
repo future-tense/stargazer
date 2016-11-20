@@ -1,13 +1,17 @@
 <ion-modal-view ng-controller="SelectContactCtrl">
 	<ion-header-bar align-title="center" class="tab-bar">
-		<button on-tap="cancel()" class="button button-clear button-white">Close</button>
-		<h1 class="title ellipsis">Select Recipient</h1>
+		<button on-tap="cancel()" class="button button-clear button-white">
+			{{'modal.close' | translate}}
+		</button>
+		<h1 class="title ellipsis">
+			{{'modal.recipient.heading' | translate}}
+		</h1>
 	</ion-header-bar>
 
 	<ion-content class="modal-content text-center fix-modals-touch" ng-init="init()">
 		<div class="list">
 			<div class="item item-divider">
-				Wallet Accounts
+				{{'modal.recipient.wallets' | translate}}
 			</div>
 			<a on-tap="select(account)" ng-repeat="account in accounts">
 				<div class="item">
@@ -15,7 +19,7 @@
 				</div>
 			</a>
 			<div class="item item-divider">
-				Contacts
+				{{'modal.recipient.contacts' | translate}}
 			</div>
 			<a on-tap="select(contact)" ng-repeat="contact in contacts">
 				<div class="item">

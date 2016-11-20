@@ -1,14 +1,20 @@
 <ion-modal-view ng-controller="PaymentRequestCtrl" style="height:390px">
 	<ion-header-bar align-title="center" class="tab-bar">
-		<button on-tap="cancel()" class="button button-clear button-white">Close</button>
-		<h1 class="title ellipsis">Payment Request</h1>
+		<button on-tap="cancel()" class="button button-clear button-white">
+			{{'modal.close' | translate}}
+		</button>
+		<h1 class="title ellipsis">
+			{{'modal.request.heading' | translate}}
+		</h1>
 	</ion-header-bar>
 
 	<ion-content ng-hide="showResult" class="modal-content fix-modals-touch">
 		<form name="qrForm">
 			<label class="item item-input item-stacked-label">
-				<span class="input-label">Amount to receive</span>
-				<input type="number" ng-model="model.amount" placeholder="Amount" min="0" required>
+				<span class="input-label">
+					{{'modal.request.amount.label' | translate}}
+				</span>
+				<input type="number" ng-model="model.amount" placeholder="{{'modal.request.amount.placeholder' | translate}}" min="0" required>
 			</label>
 
 			<label class="item item-input item-select">
@@ -16,14 +22,18 @@
 			</label>
 
 			<div style="padding-left:16px;padding-right:16px">
-				<button class="button button-block button-positive" on-tap="generateQrCode()" ng-disabled="qrForm.$invalid">Generate QR code</button>
+				<button class="button button-block button-positive" on-tap="generateQrCode()" ng-disabled="qrForm.$invalid">
+					{{'modal.request.button' | translate}}
+				</button>
 			</div>
 		</form>
 	</ion-content>
 
 	<ion-content ng-show="showResult" class="modal-content fix-modals-touch">
 		<div class="list">
-			<div class="item item-divider">QR Code</div>
+			<div class="item item-divider">
+				{{'global.qr-code' | translate}}
+			</div>
 			<div class="item" style="display:flex; flex-direction: column; align-items: center;">
 				<qrcode text="text"></qrcode>
 			</div>

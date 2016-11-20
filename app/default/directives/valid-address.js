@@ -1,4 +1,4 @@
-/* global angular, StellarSdk */
+/* global angular */
 
 angular.module('app')
 .directive('validAddress', function (DestinationCache) {

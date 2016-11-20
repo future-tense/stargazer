@@ -1,0 +1,34 @@
+<ion-modal-view ng-controller="AddContactCtrl">
+	<ion-header-bar align-title="center" class="tab-bar">
+		<button on-tap="cancel()" class="button button-clear button-white">
+			{{'modal.close' | translate}}
+		</button>
+		<h1 class="title ellipsis">
+			{{'modal.contact.heading' | translate}}
+		</h1>
+	</ion-header-bar>
+
+	<ion-content class="modal-content fix-modals-touch">
+		<form name="contactForm">
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">
+					{{'modal.contact.name.label' | translate}}
+				</span>
+				<input type="text" ng-model="model.name" placeholder="{{'modal.contact.name.placeholder' | translate}}" required>
+			</label>
+
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">
+					{{'modal.contact.address.label' | translate}}
+				</span>
+				<input type="text" ng-model="model.address" placeholder="{{'modal.contact.address.placeholder' | translate}}" required autocapitalize="none" valid-address>
+			</label>
+
+			<div style="padding-left:16px;padding-right:16px">
+				<button class="button button-block button-positive" on-tap="saveContact()" ng-disabled="contactForm.$invalid || contactForm.$pending">
+					{{'global.save' | translate}}
+				</button>
+			</div>
+		</form>
+	</ion-content>
+</ion-modal-view>

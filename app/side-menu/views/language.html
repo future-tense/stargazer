@@ -1,0 +1,14 @@
+<config-navbar heading="{{'sidemenu.settings.language' | translate}}" back="{{'global.done' | translate}}"></config-navbar>
+
+<ion-content class="has-header">
+	<div class="list">
+		<div class="item item-divider"></div>
+		<ion-radio
+			ng-model="choice"
+			ng-repeat="t in languages"
+			ng-change="setLanguage(t.code)"
+			ng-value="t.code">
+			{{t.name}}
+		</ion-radio>
+	</div>
+</ion-content>

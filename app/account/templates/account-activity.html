@@ -1,11 +1,15 @@
 <div style="padding:8px 16px; height:40px">
-	<span>Activity</span>
+	<span>
+		{{'account.activity' | translate}}
+	</span>
 </div>
 
 <div class="feed" style="margin-bottom: 80px">
 
 	<div ng-show="history.length === 0">
-		<div style="text-align: center" class="text-gray">No activity yet</div>
+		<div style="text-align: center" class="text-gray">
+			{{'account.activity.empty' | translate}}
+		</div>
 	</div>
 
 	<a ng-href="#/account/transaction/{{tx.id}}" ng-repeat="tx in history | limitTo:limit">

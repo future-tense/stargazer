@@ -1,4 +1,4 @@
-<config-navbar heading="Account Settings" back="Done"></config-navbar>
+<config-navbar heading="{{'account.settings' |translate}}" back="{{'global.done' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
 	<div class="list">
@@ -6,7 +6,9 @@
 
 		<a href="#/account-settings/alias">
 			<div class="item">
-				Account Name
+				<span>
+					{{'account.settings.name' | translate}}
+				</span>
 				<div class="pull-right text-gray">
 					{{account.alias}}
 					<span>&raquo;</span>
@@ -16,7 +18,9 @@
 
 		<a href="#/account-settings/federation">
 			<div class="item">
-				Federated Name
+				<span>
+					{{'account.settings.federation' | translate}}
+				</span>
 				<div class="pull-right text-gray">
 					{{account.federation}}
 					<span>&raquo;</span>
@@ -26,7 +30,9 @@
 
 		<a href="#/account-settings/trustlines">
 			<div class="item">
-				Trustlines
+				<span>
+					{{'account.settings.trustlines' | translate}}
+				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
 				</div>
@@ -35,17 +41,23 @@
 
 		<a href="#/account-settings/advanced">
 			<div class="item">
-				Advanced
+				<span>
+					{{'account.settings.advanced' | translate}}
+				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
 				</div>
 			</div>
 		</a>
 
-		<div class="item item-divider">Account Security</div>
+		<div class="item item-divider">
+			{{'account.settings.security' | translate}}
+		</div>
 
 		<div class="item item-toggle">
-			Password Protection
+			<span>
+				{{'account.settings.password' | translate}}
+			</span>
 			<div class="pull-right text-gray">
 				<label class="toggle">
 					<input type="checkbox" ng-model="flag.hasPassword" ng-change="togglePassword()">
@@ -58,7 +70,9 @@
 
 		<a href="#/account-settings/signers" ng-if="advanced">
 			<div class="item">
-				Signers
+				<span>
+					{{'account.settings.signers' | translate}}
+				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
 				</div>

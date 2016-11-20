@@ -23,5 +23,14 @@ angular.module('app')
 	.when('/side-menu/contact/:name', {
 		templateUrl: 'app/side-menu/views/edit-contact.html',
 		controller: 'EditContactCtrl'
-	});
+	})
+	.when('/side-menu/language', {
+		templateUrl: 'app/side-menu/views/language.html',
+		controller: 'LanguageCtrl'
+	})
+	.when('/side-menu/settings', {
+		templateUrl: 'app/side-menu/views/settings.html',
+		controller: 'GlobalSettingsCtrl'
+	})
+	;
 });

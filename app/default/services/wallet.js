@@ -1,7 +1,7 @@
 /* global _, angular, console, Decimal, StellarSdk */
 
 angular.module('app')
-.factory('Wallet', function ($http, $q, $rootScope, $timeout, $window, History, Horizon, Keychain, Storage) {
+.factory('Wallet', function ($http, $q, $rootScope, $timeout, $translate, $window, History, Horizon, Keychain, Storage) {
 	'use strict';
 
 	//------------------------------------------------------------------------------------------------------------------
@@ -232,7 +232,10 @@ angular.module('app')
 
 	else {
 		accountList = [];
-		Wallet.createEmptyAccount('Personal Account');
+		$translate('account.initialname')
+		.then(function (res) {
+			Wallet.createEmptyAccount(res);
+		});
 	}
 
 	//------------------------------------------------------------------------------------------------------------------

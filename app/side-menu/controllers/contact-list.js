@@ -7,17 +7,7 @@ angular.module('app')
 	$scope.names = Contacts.getNames();
 
 	$scope.addContact = function () {
-		Modal.show('app/side-menu/views/modals/add-contact.html', $scope);
+		Modal.show('app/side-menu/modals/add-contact.html', $scope);
 	};
-/*
-		$ionicModal.fromTemplateUrl('app/side-menu/views/modals/add-contact.html', {
-			scope: $scope,
-			animation: 'slide-in-up'
-		}).then(function (modal) {
-			$scope.modal = modal;
-			$scope.modal.show();
-		});
- */
-
 });
 

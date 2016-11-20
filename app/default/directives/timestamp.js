@@ -2,7 +2,7 @@
 /* global angular */
 
 angular.module('app')
-.directive('timestamp', function ($interval) {
+.directive('timestamp', function ($interval, $translate) {
 	'use strict';
 
 	function link(scope, element, attrs) {
@@ -11,32 +11,28 @@ angular.module('app')
 			var now = new Date().getTime() / 1000;
 			var delta = now - attrs.time;
 
-			function inner(delta, interval) {
-				var d = Math.floor(delta);
-				if (d !== 1) {
-					interval += 's';
-				}
-				return d + ' ' + interval + ' ago';
-			}
-
-			var res;
+			var message;
 			if (delta < 60) {
-				res = inner(delta, 'second');
+				message = 'timestamp.seconds';
 			}
 			else if (delta < 3600) {
 				delta /= 60;
-				res = inner(delta, 'minute');
+				message = 'timestamp.minutes';
 			}
 			else if (delta < 86400) {
 				delta /= 3600;
-				res = inner(delta, 'hour');
+				message = 'timestamp.hours';
 			}
 			else {
 				delta /= 86400;
-				res = inner(delta, 'day');
+				message = 'timestamp.days';
 			}
 
-			element.text(res);
+			var d = Math.floor(delta);
+			$translate(message, {RES: d}, 'messageformat')
+			.then(function (res){
+				element.text(res);
+			});
 		}
 
 		updateTime();

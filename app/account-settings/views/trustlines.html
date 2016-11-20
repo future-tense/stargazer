@@ -1,4 +1,4 @@
-<config-navbar heading="Trustlines" back="&lt;&nbsp;Back"></config-navbar>
+<config-navbar heading="{{'account.settings.trustlines' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
 
@@ -29,10 +29,14 @@
 	</div>
 
 	<div style="padding-left:16px;padding-right:16px">
-		<button class="button button-block button-positive" on-tap="addAnchor()">Add Anchor</button>
+		<button class="button button-block button-positive" on-tap="addAnchor()">
+			{{'account.settings.trustlines.add' | translate}}
+		</button>
 	</div>
 
 	<div style="padding-left:16px;padding-right:16px" ng-show="isDirty()">
-		<button class="button button-block button-positive" on-tap="updateTrustlines()">Update Trustlines</button>
+		<button class="button button-block button-positive" on-tap="updateTrustlines()">
+			{{'global.update' | translate}}
+		</button>
 	</div>
 </ion-content>
