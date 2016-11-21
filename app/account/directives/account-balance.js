@@ -14,7 +14,7 @@ angular.module('app')
 					if (e.asset_type === 'native') {
 						return true;
 					} else {
-						return (parseInt(e.balance) !== 0);
+						return (e.balance !== '0.0000000');
 					}
 				});
 			} else {
