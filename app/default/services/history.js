@@ -20,9 +20,6 @@
 
 	function _parseEffect(fx, op, tx) {
 
-//		console.log(fx.type, tx.created_at);
-
-//			opType:	op.type,
 		var res = {
 			id:		fx.id,
 			type:	fx.type,
@@ -32,23 +29,31 @@
 
 		var handlers = {
 			'account_created': function () {
-				res.from			= op.funder;
-				res.amount			= fx.starting_balance;
+				res.from	= op.funder;
+				res.amount	= fx.starting_balance;
 			},
 			'account_removed': function () {
 			},
 			'account_credited': function () {
-				res.from			= op.from;
-				_copyAmount(res, fx);
+				if (op.type === 'path_payment' && op.from === op.to) {
+					res = null;
+				} else {
+					res.from = op.from;
+					_copyAmount(res, fx);
+				}
 			},
 			'account_debited': function () {
-				res.to				= op.to || op.account;		// op.payment || op.create_account(?)
-				_copyAmount(res, fx);
+				if (op.type === 'path_payment' && op.from === op.to) {
+					res = null;
+				} else {
+					res.to = op.to || op.account;	// op.payment || op.create_account(?)
+					_copyAmount(res, fx);
+				}
 			},
 			'account_flags_updated': function () {
 			},
 			'account_home_domain_updated': function () {
-				res.domain			= fx.home_domain;
+				res.domain = fx.home_domain;
 			},
 			'account_thresholds_updated': function () {
 			},
@@ -65,17 +70,21 @@
 			'offer_updated': function () {
 			},
 			'signer_created': function () {
-				res.public_key		= fx.public_key;
-				res.weight			= fx.weight;
+				res.public_key	= fx.public_key;
+				res.weight		= fx.weight;
 			},
 			'signer_removed': function () {
-				res.public_key		= fx.public_key;
+				res.public_key = fx.public_key;
 			},
 			'signer_updated': function () {
 			},
 			'trade': function () {
-				_copyAmount(res, fx, 'sold_');
-				_copyAmount(res, fx, 'bought_');
+				if (op.type === 'path_payment' && op.from === fx.account) {
+					res = null;
+				} else {
+					_copyAmount(res, fx, 'sold_');
+					_copyAmount(res, fx, 'bought_');
+				}
 			},
 			'trustline_created': function () {
 				res.asset_code		= fx.asset_code;
@@ -118,11 +127,15 @@
 				return operation.transaction()
 				.then(function (transaction) {
 					var res = _parseEffect(effect, operation, transaction);
-					accountEffects[res.id] = res;
-					return {
-						res:		res,
-						address:	account.id
-					};
+					if (res) {
+						accountEffects[res.id] = res;
+						return {
+							res:		res,
+							address:	account.id
+						};
+					} else {
+						$q.reject();
+					}
 				});
 			});
 		}
@@ -151,6 +164,9 @@
 						$rootScope.$broadcast('accountInfoLoaded');
 						$rootScope.$broadcast('newTransaction', effect);
 						Storage.setItem('history.' + account.alias, History.effects[account.alias]);
+						Storage.setItem('account.' + account.alias, account);
+					}, function (err) {
+						account.pagingToken = msg.paging_token;
 						Storage.setItem('account.' + account.alias, account);
 					});
 				}
