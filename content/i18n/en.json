@@ -94,6 +94,14 @@
 	"modal.request.amount.placeholder":			"Amount",
 	"modal.request.button":						"Generate QR code",
 	"modal.request.heading":					"Payment Request",
+
+	"modal.password.confirm":					"Confirm Password",
+	"modal.password.label":						"Account Password",
+	"modal.password.placeholder":				"Password",
+	"modal.password.remove":					"Remove Password",
+	"modal.password.set":						"Set Password",
+	"modal.password.warning":					"Your account key will be encrypted. The account password can not be recovered. Please make sure to write it down.",
+
 	"modal.scanner":							"QR-Scanner",
 
 	"sidemenu.account":							"Add Account",
@@ -115,8 +123,6 @@
 	"contact.delete":							"Delete Contact",
 
 	"popup.enter-password.heading":				"Enter password for {{name}}",
-	"popup.remove-password.heading":			"Remove password for {{name}}",
-	"popup.set-password.heading":				"Set password for {{name}}",
 
 	"timestamp.seconds":						"{RES, plural, one {# second} other {# seconds}} ago",
 	"timestamp.minutes":						"{RES, plural, one {# minute} other {# minutes}} ago",

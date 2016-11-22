@@ -1,18 +1,29 @@
 /* global angular, StellarSdk */
 
 angular.module('app')
-.factory('Modal', function ($ionicModal, $rootScope) {
+.factory('Modal', function ($ionicModal, $q, $rootScope) {
 	'use strict';
 
 	return {
 		show: function (template, $scope) {
 			$scope = $scope || $rootScope.$new();
 
-			$scope.closeModalService = function() {
+			var deferred = $q.defer();
+			$scope.modalResolve = function (res) {
 				$scope.modal.remove();
+				deferred.resolve(res);
 			};
 
-			return $ionicModal.fromTemplateUrl(template, {
+			$scope.modalReject = function (err) {
+				$scope.modal.remove();
+				deferred.reject(err);
+			};
+
+			$scope.closeModalService = function() {
+				$scope.modalReject();
+			};
+
+			$ionicModal.fromTemplateUrl(template, {
 				scope: $scope,
 				animation: 'slide-in-up'
 			})
@@ -20,6 +31,8 @@ angular.module('app')
 				$scope.modal = modal;
 				modal.show();
 			});
+
+			return deferred.promise;
 		}
 	};
 });
