@@ -1,7 +1,7 @@
 /* global angular, console, sjcl, StellarSdk */
 
 angular.module('app')
-.factory('Keychain', function ($q, $rootScope, Storage) {
+.factory('Keychain', function ($q, $rootScope, Modal, Storage) {
 	'use strict';
 
 	function encryptSeed(seed, key, cipherName, modeName) {
@@ -67,15 +67,15 @@ angular.module('app')
 			return $q.when(keys);
 		}
 
-		return $q(function(resolve, reject) {
-			$rootScope.$emit('password.request', signer, function (err, password) {
-				if (err) {
-					reject(err);
-				} else {
-					var seed = decrypt(keyStore, password);
-					resolve(StellarSdk.Keypair.fromSeed(seed));
-				}
-			});
+		var scope = $rootScope.$new();
+		scope.signer = signer;
+
+		return Modal.show('app/default/modals/submit-password.html', scope)
+		.then(function (password) {
+			var seed = decrypt(keyStore, password);
+			return StellarSdk.Keypair.fromSeed(seed);
+		}, function (err) {
+			return $q.reject(err);
 		});
 	}
 

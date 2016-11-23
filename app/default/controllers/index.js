@@ -70,48 +70,4 @@ angular.module('app')
 			handlePayment(data.stellar.payment);
 		}
 	};
-
-	$rootScope.$on('password.request', function (event, signer, cb) {
-
-		var scope = $rootScope.$new();
-		scope.data = {};
-
-		var keyName = signer;
-		if (signer in Wallet.accounts) {
-			keyName = Wallet.accounts[signer].alias;
-		}
-
-		$q.all([
-			$translate('popup.enter-password.heading', {name: keyName}),
-			$translate('global.cancel'),
-			$translate('global.ok')
-		])
-		.then(function (res) {
-			$ionicPopup.show({
-				template: '<input type="password" ng-model="data.password">',
-				title: res[0],
-				scope: scope,
-				buttons: [
-					{
-						text: res[1],
-						onTap: function (e) {
-							cb('cancel');
-						}
-					},
-					{
-						text: '<b>' + res[2] + '</b>',
-						type: 'button-positive',
-						onTap: function (e) {
-							if (!scope.data.password) {
-								e.preventDefault();
-							} else {
-								cb(undefined, scope.data.password);
-							}
-						}
-					}
-				]
-			});
-		});
-	});
-
 });
