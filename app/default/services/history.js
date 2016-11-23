@@ -79,7 +79,7 @@
 			'signer_updated': function () {
 			},
 			'trade': function () {
-				if (op.type === 'path_payment' && op.from === fx.account) {
+				if (op.type === 'path_payment' && op.from !== op.to && op.from === fx.account) {
 					res = null;
 				} else {
 					_copyAmount(res, fx, 'sold_');
