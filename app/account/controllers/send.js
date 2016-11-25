@@ -10,9 +10,13 @@ angular.module('app')
 	$scope.flags = {};
 	$scope.flags.hasValidDestination = false;
 	$scope.flags.hasPath = false;
+	$scope.flags.pathPending = true;
+
 
 	$scope.onAmount = function () {
-		$scope.getPaths();
+		if ($scope.send.amount) {
+			$scope.getPaths();
+		}
 	};
 
 	$scope.onAsset = function () {
@@ -46,7 +50,7 @@ angular.module('app')
 		$scope.send.pathRecords = [];
 
 		$scope.send.destination = '';
-		Modal.show('app/default/views/select-contact.html', $scope);
+		Modal.show('app/default/modals/select-contact.html', $scope);
 	};
 
 	$scope.getPaths = function () {
@@ -77,6 +81,7 @@ angular.module('app')
 
 		DestinationCache.lookup($scope.send.destination)
 		.then(function (destInfo) {
+			$scope.flags.pathPending = true;
 			$scope.flags.hasPath = false;
 
 			var asset = createAsset($scope.send.asset);
@@ -85,18 +90,56 @@ angular.module('app')
 			.call()
 			.then(function (res) {
 
+				if (res.records.length === 0) {
+					/* empty statement */;
+				}
+
 				//	if we're going to createAccount we can only send XLM, so filter
 				//	all paths involving any non-native currencies
 
-				if ($scope.flags.createAccount) {
+				else if ($scope.flags.createAccount) {
 					$scope.send.pathRecords = res.records.filter(function (record) {
 						return (record.source_asset_type === 'native') && (record.path.length === 0);
 					});
-				} else {
-					$scope.send.pathRecords = res.records;
+					$scope.flags.hasPath = true;
 				}
 
-				$scope.flags.hasPath = true;
+				else {
+					var paths = {};
+					res.records.forEach(function (record) {
+						if (record.source_amount === '0.0000000') {
+							return;
+						}
+
+						var key = (record.source_asset_type === 'native')?
+							'native' : record.source_asset_issuer + record.source_asset_code;
+
+						if (key in paths) {
+							if ((paths[key].source_amount - record.source_amount) > 0) {
+								paths[key] = record;
+							}
+						} else {
+							paths[key] = record;
+						}
+					});
+
+					Wallet.current.balances.forEach(function (asset) {
+						var key = (asset.asset_code === 'XLM')?
+							'native' : asset.asset_issuer + asset.asset_code;
+
+						if (key in paths) {
+							paths[key].enabled = ((asset.balance - paths[key].source_amount) > 0);
+						}
+					});
+
+					$scope.send.pathRecords = Object.keys(paths).map(function (key) {
+						return paths[key];
+					});
+
+					$scope.flags.hasPath = ($scope.send.pathRecords.length !== 0);
+				}
+
+				$scope.flags.pathPending = false;
 				$scope.$apply();
 			});
 		});
@@ -186,7 +229,6 @@ angular.module('app')
 				network: currentAccount.network
 			};
 		})
-
 		.then(Signer.sign)
 		.then(Submitter.submit)
 
@@ -195,7 +237,8 @@ angular.module('app')
 				$location.path('/');
 			},
 			function (err) {
-				console.log(err);
+				console.log(err.title);
+				console.log(err.extras.result_codes);
 			}
 		);
 

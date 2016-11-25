@@ -31,7 +31,15 @@
 		</form>
 	</div>
 
-	<div ng-show="flags.hasPath" style="margin-bottom: 100px">
+	<div ng-show="!flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
+		<div class="list">
+			<div class="item item-divider">
+				{{'account.send.paths.empty' | translate}}
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
 
 		<div class="list">
 			<div class="item item-divider">
@@ -40,7 +48,7 @@
 			<div class="item" style="text-align:center" ng-repeat="path in send.pathRecords">
 				<p>{{ path.source_amount | formatAmount }}</p>
 				<p>{{ getSourceAssetDescription(path) }}</p>
-				<button type="button" class="btn btn-success" ng-click="submit($index)">
+				<button type="button" class="button button-small button-positive" ng-click="submit($index)" ng-disabled="!path.enabled">
 					{{'account.send' | translate}}
 				</button>
 			</div>

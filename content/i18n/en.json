@@ -41,6 +41,7 @@
 	"account.send.destination.placeholder":		"Recipient Address",
 	"account.send.info.heading":				"Recipient information",
 	"account.send.paths.heading":				"Send as",
+	"account.send.paths.empty":					"No paths found",
 
 	"account.settings":							"Account Settings",
 	"account.settings.advanced":				"Advanced",
