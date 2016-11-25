@@ -62,7 +62,6 @@ angular.module('app')
 			scope.history = filtered.sort(
 				function (a, b) {
 					return (a.id < b.id) - (a.id > b.id);
-//					return b.id.localeCompare(a.id);
 				}
 			);
 		}

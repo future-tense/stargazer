@@ -88,7 +88,7 @@
 	"modal.contact.name.placeholder":			"Contact Name",
 	"modal.contact.address.label":				"Address",
 	"modal.contact.address.placeholder":		"Contact Address",
-	"modal.recipient.heading":					"Select recipient",
+	"modal.recipient.heading":					"Select Recipient",
 	"modal.recipient.wallets":					"Wallet Accounts",
 	"modal.recipient.contacts":					"Contacts",
 	"modal.request.amount.label":				"Amount to receive",
