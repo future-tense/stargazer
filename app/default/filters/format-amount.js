@@ -5,10 +5,13 @@ angular.module('app')
 	'use strict';
 
 	return function (number) {
-		var parts = (number * 1).toString().split('.');
+		var parts = number.split('.');
 		if (parts.length === 2) {
 			var numDecimals = parts[1].length;
-			return (number * 1).toLocaleString(Language.getLocale(), {
+			while (parts[1][numDecimals-1] === '0') {
+				numDecimals -= 1;
+			}
+			return parseFloat(number).toLocaleString(Language.getLocale(), {
 				minimumFractionDigits: numDecimals,
 				maximumFractionDigits: numDecimals
 			});
