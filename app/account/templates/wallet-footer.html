@@ -5,7 +5,10 @@
 	<a href="#/account/recv" style="position:absolute;top:10px;left:16px">
 		{{'account.receive' | translate}}
 	</a>
-	<a href="#/account/send" style="position:absolute;top:10px;right:16px">
+	<a href="#/account/send" style="position:absolute;top:10px;right:16px" ng-show="canSend()">
 		{{'account.send' | translate}}
 	</a>
+	<span style="position:absolute;top:10px;right:16px" ng-hide="canSend()">
+		{{'account.send' | translate}}
+	</span>
 </div>
