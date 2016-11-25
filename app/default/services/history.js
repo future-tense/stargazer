@@ -134,7 +134,7 @@
 							address:	account.id
 						};
 					} else {
-						$q.reject();
+						return $q.reject();
 					}
 				});
 			});

@@ -20,17 +20,16 @@ angular.module('app')
 					});
 
 					return context.horizon.submitTransaction(context.tx)
-					.catch(function (err) {
-						$ionicLoading.hide();
-						$q.reject(err);
-					})
 					.then(function (res) {
 						$ionicLoading.hide();
 						return res;
+					}, function (err) {
+						$ionicLoading.hide();
+						return $q.reject(err);
 					});
 				});
 			} else {
-				$q.reject('Not enough signatures');
+				return $q.reject('Not enough signatures');
 			}
 		}
 
