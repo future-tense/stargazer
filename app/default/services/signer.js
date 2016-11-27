@@ -111,17 +111,6 @@ angular.module('app')
 		return StellarSdk.hash(base);
 	}
 
-	/*
-	// Signs the transaction with the given {@link Keypair}.
-	// @param {...Keypair} keypairs Keypairs of signers
-	// @returns {void}
-	*/
-
-	function signTransaction(tx, txHash, keys) {
-		var sig = keys.signDecorated(txHash);
-		tx.signatures.push(sig);
-	}
-
 	function getAccountInfo(context) {
 
 		var accounts = context.accounts;
