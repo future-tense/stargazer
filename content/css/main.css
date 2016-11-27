@@ -204,17 +204,26 @@ ion-side-menu-content {
 	font-size: 21px;
 }
 
-.sidebar {
+.sidebar .list {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.sidebar .item {
+	margin: 0;
+	border: 0;
+	border-bottom: 1px solid #495867;
+}
+.item-complex .item-content {
+	padding: 16px;
+}
+}
+
+.item > .item-content {
 	background-color: #2C3E50;
 }
 
-.sidebar ul {
-	margin-left: 0;
-	font-size: 14px;
-	padding-left: 0;
-}
-
-.sidebar li.selected {
+.item.selected > .item-content {
 	background-color: #122232;
 }
 
@@ -226,12 +235,6 @@ ion-side-menu-content {
 
 .sidebar a:hover {
 	text-decoration: none;
-}
-
-.sidebar ul li {
-	display: block;
-	border-bottom: 1px solid #495867;
-	list-style: none;
 }
 
 .sidebar span {
@@ -247,42 +250,6 @@ ion-side-menu-content {
 	background: #FFFFFF;
 	border-top: 1px solid #E2E7ED;
 }
-
-/*
-form .item {
-	border-color: #CCC;
-	color: #444;
-	position: relative;
-	z-index: 2;
-	display: block;
-
-	margin-top: 0;
-	margin-bottom: 16px;
-	margin-left: 16px;
-	margin-right: 16px;
-
-	padding-top: 16px;
-	padding-bottom: 0;
-	padding-right: 0;
-	padding-left: 0;
-
-	border-top-width: 0;
-	border-left-width: 0;
-	border-right-width: 0;
-	border-bottom-width: 1px;
-	border-style: solid;
-	font-size: 16px;
-}
-*/
-
-/*
-form .item,
-form .item-stacked-label input,
-form .item-stacked-label textarea,
-form .item-select select {
-	background-color: #ECECEC;
-}
-*/
 
 /* select in send.html */
 form .item-select select {
