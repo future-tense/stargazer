@@ -29,6 +29,7 @@
 	"account.activity":							"Activity",
 	"account.activity.empty":					"No activity yet",
 
+	"account.overview":							"Overview",
 	"account.receive":							"Receive",
 	"account.receive.button":					"Request a specific amount",
 	"account.receive.copy":						"Copied to clipboard",
