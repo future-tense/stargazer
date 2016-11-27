@@ -113,10 +113,11 @@
 	"sidemenu.account.import":					"Import an Account",
 
 	"sidemenu.settings":						"Settings",
-	"sidemenu.settings.heading":				"Global Settings",
-	"sidemenu.settings.language":				"Language",
+	"sidemenu.settings.advanced":				"Advanced Mode",
 	"sidemenu.settings.contacts":				"Contacts",
 	"sidemenu.settings.contacts.add":			"Add Contact",
+	"sidemenu.settings.heading":				"Global Settings",
+	"sidemenu.settings.language":				"Language",
 
 	"contact.address.label":					"Address",
 	"contact.address.placeholder":				"Contact Address",
