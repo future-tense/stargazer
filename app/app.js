@@ -48,9 +48,8 @@ angular.module('app', [
 	$translateProvider
 	.useSanitizeValueStrategy('escape')
 	.addInterpolation('$translateMessageFormatInterpolation')
-	.useStaticFilesLoader({
-		prefix: 'i18n/',
-		suffix: '.json'
-	})
 	.fallbackLanguage('en');
+
+	$translateProvider.translations('en', /* @include ../i18n/en.json */);
+	$translateProvider.translations('sv', /* @include ../i18n/sv.json */);
 }]);

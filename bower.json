@@ -31,7 +31,6 @@
     "angular-translate": "^2.13.0",
     "messageformat": "^1.0.2",
     "angular-translate-interpolation-messageformat": "^2.13.0",
-    "angular-translate-loader-static-files": "^2.13.0"
   },
   "resolutions": {
     "messageformat": "~0.3.1"

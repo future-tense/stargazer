@@ -27,6 +27,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-file-sloc": "0.0.1",
     "grunt-nw-builder": "^3.1.0",
+    "grunt-preprocess": "^5.1.0",
     "grunt-replace": "^1.0.1",
     "jit-grunt": "^0.10.0",
     "webrtc-explorer": "^1.1.1"

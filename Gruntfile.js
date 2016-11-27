@@ -38,7 +38,6 @@ module.exports = function (grunt) {
 					'bower_components/angular-translate/angular-translate.min.js',
 					'bower_components/messageformat/messageformat.js',
 					'bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js',
-					'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js',
 					'bower_components/buffer/buffer.min.js',
 					'bower_components/decimal.js/decimal.js',
 					'build/bower_components/jsqrcode/lib/qrcode-decoder.min.js',
@@ -52,8 +51,9 @@ module.exports = function (grunt) {
 			},
 			js: {
 				src: [
-					'app/app.js',
-					'app/**/*.js'
+					'build/app.js',
+					'app/**/*.js',
+					'!app/app.js'
 				],
 				dest: 'dist/js/stargazer.js'
 			}
@@ -106,6 +106,13 @@ module.exports = function (grunt) {
 			}
 		},
 
+		preprocess: {
+			app: {
+				src : 'app/app.js',
+				dest : 'build/app.js'
+			}
+		},
+
 		watch: {
 			options: {
 				spawn: false
@@ -140,6 +147,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('build', [
 		'replace:jsqrcode',
+		'preprocess:app',
 		'concat',
 		'copy'
 	]);
