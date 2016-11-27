@@ -6,6 +6,10 @@ angular.module('app')
 
 	$scope.wallet = Wallet;
 
+	$scope.getType = function (account) {
+		return account.isMultiSig()? 'ion-ios-people' : 'ion-ios-person';
+	};
+
 	$scope.getAccounts = function () {
 		return Object.keys(Wallet.accounts)
 		.map(function (id) {

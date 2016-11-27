@@ -126,6 +126,19 @@ angular.module('app')
 		return (weight < threshold);
 	};
 
+	Account.prototype.isMultiSig = function () {
+
+		if (!this.signers) {
+			return false;
+		}
+
+		var signers = this.signers.filter(function (signer) {
+			return (signer.weight !== 0);
+		});
+
+		return (signers.length !== 1);
+	};
+
 	//------------------------------------------------------------------------------------------------------------------
 	//	Wallet
 	//------------------------------------------------------------------------------------------------------------------

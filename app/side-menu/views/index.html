@@ -11,6 +11,7 @@
 					  ng-class="{selected: account.id === wallet.current.id}"
 					  ng-href="#/account/{{account.id}}"
 					  menu-toggle>
+				<i class="icon" ng-class="getType(account)"></i>
 				{{account.alias}}
 			</ion-item>
 

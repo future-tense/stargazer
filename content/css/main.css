@@ -217,6 +217,10 @@ ion-side-menu-content {
 .item-complex .item-content {
 	padding: 16px;
 }
+
+.icon.ion-ios-person:before,
+.icon.ion-ios-people:before {
+	width: 14px;
 }
 
 .item > .item-content {
