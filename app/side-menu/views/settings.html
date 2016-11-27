@@ -26,5 +26,20 @@
 				</div>
 			</div>
 		</a>
+
+		<div class="item item-toggle">
+			<span>
+				{{'sidemenu.settings.advanced' | translate}}
+			</span>
+			<div class="pull-right text-gray">
+				<label class="toggle">
+					<input type="checkbox" ng-model="flag.isAdvanced" ng-change="toggleAdvanced()">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</div>
+		</div>
+
 	</div>
 </ion-content>

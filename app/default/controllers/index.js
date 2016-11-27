@@ -1,12 +1,16 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('IndexCtrl', function ($ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Language, Modal, Wallet) {
+.controller('IndexCtrl', function ($ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Language, Modal, Storage, Wallet) {
 	'use strict';
 
 	$scope.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
 
-	$scope.advanced = false;
+	$scope.advanced = Storage.getItem('advanced') || false;
+	$scope.toggleAdvanced = function () {
+		$scope.advanced = !$scope.advanced;
+		Storage.setItem('advanced', $scope.advanced);
+	};
 
 	function handleAccountImport(account, key) {
 
