@@ -1,10 +1,17 @@
-<div style="background-color:#00BCD4;color:#FFFFFF;height:160px;font-size:18px">
-	<div class="Aligner">
-		<div class="Aligner-item Aligner-item--fixed">
-			<div style="text-align:center" ng-repeat="asset in getAssets()">
-				{{ asset.balance | formatAmount }}
-				{{ asset.asset_code }}
+<div style="background-color:#00BCD4;color:#FFFFFF">
+	<div style="height:120px;font-size:18px">
+		<div class="Aligner">
+			<div class="Aligner-item Aligner-item--fixed">
+				<div style="text-align:center" ng-repeat="asset in getAssets()">
+					{{ asset.balance | formatAmount }}
+					{{ asset.asset_code }}
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<div style="height:40px;margin-left:16px;margin-right:16px;margin-bottom:2px">
+		<i class="icon" ng-class="lockClass" style="position:relative;bottom:-16px;"></i>
+	</div>
 </div>
+

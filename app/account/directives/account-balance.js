@@ -7,10 +7,16 @@ angular.module('app')
 
 	function link(scope, iElement, iAttrs) {
 
+		var account = Wallet.current;
+
+		if (account.getNativeBalance() !== '0') {
+			scope.lockClass = account.isLocallySecure()? 'ion-ios-locked-outline' : 'ion-ios-unlocked-outline';
+		}
+
 		scope.getAssets = function () {
 
-			if (Wallet.current.balances) {
-				return Wallet.current.balances.filter(function (e) {
+			if (account.balances) {
+				return account.balances.filter(function (e) {
 					if (e.asset_type === 'native') {
 						return true;
 					} else {

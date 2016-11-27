@@ -96,6 +96,36 @@ angular.module('app')
 		);
 	};
 
+	//
+	//	is it possible to sign a medium threshold tx with only unencrypted local keys?
+	//
+
+	Account.prototype.isLocallySecure = function () {
+
+		var signers = this.signers
+		.filter(function (signer) {
+			return (signer.weight !== 0);
+		})
+		.filter(function (signer) {
+			return Keychain.isLocalSigner(signer.public_key);
+		})
+		.filter(function (signer) {
+			return !Keychain.isEncrypted(signer.public_key);
+		});
+
+		var weight = 0;
+		signers.forEach(function (signer) {
+			weight += signer.weight;
+		});
+
+		var threshold = this.thresholds.med_threshold;
+		if (threshold === 0) {
+			threshold = 1;
+		}
+
+		return (weight < threshold);
+	};
+
 	//------------------------------------------------------------------------------------------------------------------
 	//	Wallet
 	//------------------------------------------------------------------------------------------------------------------
