@@ -16,6 +16,9 @@ angular.module('app')
 		Wallet.current.refresh()
 		.then(function () {
 			$scope.$broadcast('scroll.refreshComplete');
+		}, function (err) {
+			$scope.$broadcast('scroll.refreshComplete');
+			// :TODO: Display some message about not being able to refresh
 		});
 	};
 });
