@@ -231,6 +231,10 @@ ion-side-menu-content {
 	background-color: #122232;
 }
 
+.sidebar .scroll {
+	background-color: #2C3E50;
+}
+
 .sidebar a {
 	color: #AAA;
 	display: block;
