@@ -369,3 +369,7 @@ ion-content.has-header {
 ion-side-menu.menu {
 	background-color: #2C3E50;
 }
+
+.bar .title {
+	margin-top:-2px;
+}
