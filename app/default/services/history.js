@@ -209,7 +209,10 @@
 				});
 
 				var promises = records.map(function (fx) {
-					return addEffect(fx, account);
+					return addEffect(fx, account)
+					.catch(function (err) {
+						return err;
+					});
 				});
 
 				return $q.all(promises)
