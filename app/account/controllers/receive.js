@@ -38,9 +38,7 @@ angular.module('app')
 		};
 
 		if (platformInfo.isCordova) {
-/*
 			window.cordova.plugins.clipboard.copy(text);
- */
 			showPopover();
 		}
 
