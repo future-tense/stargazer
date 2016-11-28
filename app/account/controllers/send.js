@@ -273,6 +273,8 @@ angular.module('app')
 				.call()
 				.then(function (res) {
 
+					$scope.send.destinationRaw = destInfo.account_id.trim();
+
 					var assetSortFunction = function (a, b) {
 						return a.asset_code > b.asset_code;
 					};

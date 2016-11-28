@@ -14,6 +14,9 @@
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
+				<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" class="text-gray" ng-show="send.destinationRaw && send.destinationRaw!==send.destination">
+					({{send.destinationRaw}})
+				</span>
 			</label>
 
 			<div ng-show="flags.hasValidDestination">
