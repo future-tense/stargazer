@@ -16,6 +16,10 @@
 		<button class="button button-block button-positive" on-tap="request()">
 			{{'account.receive.button' | translate}}
 		</button>
+
+		<button class="button button-block button-positive" on-tap="federation()" ng-hide="hasFederation">
+			{{'account.receive.federation' | translate}}
+		</button>
 	</div>
 </ion-content>
 <wallet-footer></wallet-footer>

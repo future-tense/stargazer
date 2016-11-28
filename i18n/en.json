@@ -33,6 +33,7 @@
 	"account.receive":							"Receive",
 	"account.receive.button":					"Request a specific amount",
 	"account.receive.copy":						"Copied to clipboard",
+	"account.receive.federation":				"Generate a federated address",
 	"account.receive.heading":					"My Stellar Address",
 
 	"account.send":								"Send",

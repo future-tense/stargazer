@@ -1,7 +1,7 @@
 /* global angular, console, require */
 
 angular.module('app')
-.controller('ReceiveCtrl', function ($ionicLoading, $q, $scope, $timeout, $translate, Horizon, Modal, platformInfo, Wallet) {
+.controller('ReceiveCtrl', function ($ionicLoading, $location, $q, $scope, $timeout, $translate, Horizon, Modal, platformInfo, Wallet) {
 	'use strict';
 
 	$scope.wallet = Wallet;
@@ -16,6 +16,11 @@ angular.module('app')
 		} else {
 			return 'XLM';
 		}
+	};
+
+	$scope.hasFederation = (Wallet.current.federation !== undefined);
+	$scope.federation = function () {
+		$location.path('/account-settings/federation');
 	};
 
 	$scope.request = function () {
