@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('ImportAccountCtrl', function ($location, $routeParams, $scope, $translate, Keychain, Wallet) {
+.controller('ImportAccountCtrl', function ($location, $routeParams, $scope, $translate, Horizon, Keychain, Wallet) {
 	'use strict';
 
 	var data;
@@ -11,21 +11,14 @@ angular.module('app')
 		$scope.scanned = true;
 	}
 
-	//	:TODO: get these from Horizon
-	$scope.networks = [{
-		title:	'Livenet',
-		phrase: 'Public Global Stellar Network ; September 2015'
-	}, {
-		title:	'Testnet',
-		phrase: 'Test SDF Network ; September 2015'
-	}];
+	$scope.networks = Horizon.getNetworks();
 
 	var numAccounts = Object.keys(Wallet.accounts).length;
 	$translate('account.defaultname', {number: numAccounts + 1})
 	.then(function (res) {
 		$scope.account = {
 			alias: res,
-			network: $scope.networks[0]
+			network: Horizon.getNetwork(Horizon.livenet)
 		};
 	});
 
@@ -48,7 +41,7 @@ angular.module('app')
 			keyStore = data.key;
 		} else {
 			seed = $scope.account.seed;
-			network = $scope.account.network.phrase;
+			network = Horizon.getHash($scope.account.network.phrase);
 			keyStore = seed;
 		}
 

@@ -21,11 +21,11 @@
 				</span>
 				<input type="password" ng-model="account.password" required>
 			</label>
-			<label class="item item-input item-select" ng-if="advanced&&!scanned">
+			<label class="item item-input item-select item-stacked-label" ng-if="advanced&&!scanned">
 				<span class="input-label">
 					{{'account.network.label' | translate}}
 				</span>
-				<select ng-model="account.network" ng-options="network.title for network in networks"></select>
+				<select ng-model="account.network" ng-options="network.name for network in networks"></select>
 			</label>
 			<div style="padding-left:16px;padding-right:16px">
 				<button class="button button-block button-positive" on-tap="import()" ng-disabled="importAccountForm.$invalid">

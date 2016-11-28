@@ -9,11 +9,11 @@
 				</span>
 				<input type="text" ng-model="account.alias" required>
 			</label>
-			<label class="item item-input item-select" ng-if="advanced">
+			<label class="item item-input item-select item-stacked-label" ng-if="advanced">
 				<span class="input-label">
 					{{'account.network.label' | translate}}
 				</span>
-				<select ng-model="account.network" ng-options="network.title for network in networks"></select>
+				<select ng-model="account.network" ng-options="network.name for network in networks"></select>
 			</label>
 			<div class="item item-divider">
 				{{'account.funding.heading' | translate}}

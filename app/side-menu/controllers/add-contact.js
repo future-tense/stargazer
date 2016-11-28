@@ -11,7 +11,7 @@ angular.module('app')
 	$scope.networks = Horizon.getNetworks();
 
 	$scope.model = {
-		network: Horizon.livenet
+		network: Horizon.getNetwork(Horizon.livenet)
 	};
 
 	$scope.saveContact = function () {

@@ -98,16 +98,17 @@ angular.module('app')
 	// @returns {Buffer}
 	*/
 
-	function signatureBase(tx, network) {
+	function signatureBase(tx, phrase) {
 		return Buffer.concat([
-			new StellarSdk.Network(network).networkId(),
+			new StellarSdk.Network(phrase).networkId(),
 			StellarSdk.xdr.EnvelopeType.envelopeTypeTx().toXDR(),
 			tx.tx.toXDR()
 		]);
 	}
 
 	function transactionHash(tx, network) {
-		var base = signatureBase(tx, network);
+		var phrase = Horizon.getNetwork(network).phrase;
+		var base = signatureBase(tx, phrase);
 		return StellarSdk.hash(base);
 	}
 

@@ -24,7 +24,7 @@
 					<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options='{debounce: 200}' placeholder="{{'account.send.amount.placeholder' | translate}}" min="{{send.minAmount}}">
 				</label>
 
-				<label class="item item-input item-select">
+				<label class="item item-input item-select item-stacked-label">
 					<select ng-model="send.asset" ng-change="onAsset()" ng-options="getAssetDescription(asset) for asset in assets"></select>
 				</label>
 			</div>

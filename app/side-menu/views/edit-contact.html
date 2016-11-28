@@ -19,6 +19,13 @@
 			<input type="text" ng-model="model.id" placeholder="{{'contact.address.placeholder' | translate}}" required autocapitalize="none" valid-address>
 		</label>
 
+		<label class="item item-input item-select item-stacked-label" ng-if="advanced">
+			<span class="input-label">
+				{{'account.network.label' | translate}}
+			</span>
+			<select ng-model="model.network" ng-options="network.name for network in networks"></select>
+		</label>
+
 		<div style="padding-left:16px;padding-right:16px">
 			<button class="button button-block button-positive" on-tap="updateContact()">
 				{{'contact.update' | translate}}

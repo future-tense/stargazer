@@ -370,6 +370,27 @@ ion-side-menu.menu {
 	background-color: #2C3E50;
 }
 
+.item-select.item-stacked-label select {
+	display: block;
+	margin: 0;
+	padding: 2px 8px 3px 0;
+	height: 34px;
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.item-select:after {
+	top: auto;
+	bottom: 20px;
+}
+
+select option {
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
+
 .bar .title {
 	margin-top:-2px;
 }

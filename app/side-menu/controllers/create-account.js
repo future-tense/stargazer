@@ -1,17 +1,10 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('CreateAccountCtrl', function ($location, $scope, $translate, Modal, Signer, Submitter, Wallet) {
+.controller('CreateAccountCtrl', function ($location, $scope, $translate, Horizon, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
-	//	:TODO: get these from Horizon
-	$scope.networks = [{
-		title: 'Livenet',
-		phrase: 'Public Global Stellar Network ; September 2015'
-	}, {
-		title: 'Testnet',
-		phrase: 'Test SDF Network ; September 2015'
-	}];
+	$scope.networks = Horizon.getNetworks();
 
 	var numAccounts = Object.keys(Wallet.accounts).length;
 	$translate('account.defaultname', {number: numAccounts + 1})
@@ -19,7 +12,7 @@ angular.module('app')
 		$scope.account = {
 			alias: res,
 			amount: 20,
-			network: $scope.networks[0]
+			network: Horizon.getNetwork(Horizon.livenet)
 		};
 	});
 
@@ -32,7 +25,7 @@ angular.module('app')
 
 	$scope.create = function () {
 
-		var network = $scope.account.network.phrase;
+		var network = Horizon.getHash($scope.account.network.phrase);
 
 		var accounts = {};
 		Object.keys(Wallet.accounts).forEach(function (key) {
