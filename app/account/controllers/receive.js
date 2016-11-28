@@ -19,9 +19,13 @@ angular.module('app')
 	};
 
 	$scope.hasFederation = (Wallet.current.federation !== undefined);
-	$scope.federation = function () {
+	$scope.setFederation = function () {
 		$location.path('/account-settings/federation');
 	};
+
+	if ($scope.hasFederation) {
+		$scope.federation = Wallet.current.federation + '*getstargazer.com';
+	}
 
 	$scope.request = function () {
 		Modal.show('app/account/modals/payment-request.html', $scope);

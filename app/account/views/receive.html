@@ -11,13 +11,17 @@
 		style="padding-left:16px;padding-right:16px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
 		{{accountId}}
 	</h6>
+	<h6 ng-click="copyToClipboard(federation)"
+		style="text-align:center" ng-if="hasFederation">
+		({{federation}})
+	</h6>
 
 	<div style="padding-left:16px;padding-right:16px">
 		<button class="button button-block button-positive" on-tap="request()">
 			{{'account.receive.button' | translate}}
 		</button>
 
-		<button class="button button-block button-positive" on-tap="federation()" ng-hide="hasFederation">
+		<button class="button button-block button-positive" on-tap="setFederation()" ng-if="!hasFederation">
 			{{'account.receive.federation' | translate}}
 		</button>
 	</div>
