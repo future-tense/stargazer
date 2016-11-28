@@ -3,7 +3,7 @@
 
 	<div class="list">
 
-		<div class="item activity-header" ng-show="type==='send'">
+		<div class="item activity-header" ng-if="type==='send'">
 
 			<div class="circle circle-red" style="margin-bottom:8px">
 				<i class="icon ion-ios-upload-outline"></i>
@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<div class="item activity-header" ng-show="type==='recv'">
+		<div class="item activity-header" ng-if="type==='recv'">
 			<div class="circle circle-green" style="margin-bottom:8px">
 				<i class="icon ion-ios-download-outline"></i>
 			</div>
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 
-		<div class="item activity-header" ng-show="type==='trade'">
+		<div class="item activity-header" ng-if="type==='trade'">
 			<div class="circle circle-blue" style="margin-bottom:8px">
 				<i class="fa fa-exchange"></i>
 			</div>
@@ -47,7 +47,7 @@
 			{{'account.transaction.details' | translate }}
 		</div>
 
-		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="type!=='trade'">
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="type!=='trade'">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label" style="padding-right:20px;flex-shrink:0;width:auto">
 					{{::counterpartyLabel | translate}}
