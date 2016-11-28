@@ -118,6 +118,7 @@ module.exports = function (grunt) {
 				spawn: false
 			},
 			files: [
+				'i18n/**/*',
 				'app/**/*',
 				'content/**/*'
 			],
