@@ -54,6 +54,7 @@
 	"account.settings.federation":				"Federated Name",
 	"account.settings.federation.label":		"Name",
 	"account.settings.federation.placeholder":	"Federated Name",
+	"account.settings.federation.text":			"Register a username and get a federated address (username*getstargazer.com) to use instead of your Stellar address",
 	"account.settings.inflation":				"Inflation Destination",
 	"account.settings.inflation.label":			"Set Inflation Destination",
 	"account.settings.inflation.placeholder":	"Inflation Destination",

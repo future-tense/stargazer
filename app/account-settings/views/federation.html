@@ -6,15 +6,18 @@
 		<label class="item item-input item-stacked-label">
 			<span class="input-label">
 				{{'account.settings.federation.label' | translate}}
-			</i></span>
+			</span>
 			<input type="text" id="alias" type="text" name="alias" ng-model="data.federation"
 				   placeholder="{{'account.settings.federation.placeholder' | translate}}" autocomplete="off" valid-federation accountid="{{accountId}}">
 		</label>
 
-		<div style="padding-left:16px;padding-right:16px">
+		<div style="padding-left:16px;padding-right:16px;text-align:center">
 			<button type="submit" class="button button-block button-positive" ng-disabled="federationForm.$invalid || federationForm.$pending">
 				{{'global.save' | translate}}
 			</button>
+			<span>
+				{{'account.settings.federation.text' | translate}}
+			</span>
 		</div>
 	</form>
 </ion-content>
