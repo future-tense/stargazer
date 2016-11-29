@@ -123,12 +123,17 @@ angular.module('app')
 						}
 					});
 
-					Wallet.current.balances.forEach(function (asset) {
+					currentAccount.balances.forEach(function (asset) {
 						var key = (asset.asset_code === 'XLM')?
 							'native' : asset.asset_issuer + asset.asset_code;
 
 						if (key in paths) {
-							paths[key].enabled = ((asset.balance - paths[key].source_amount) >= 0);
+							var amount = paths[key].source_amount;
+							if (asset.asset_code === 'XLM') {
+								paths[key].enabled = currentAccount.canSend(amount, 1);
+							} else {
+								paths[key].enabled = (asset.balance >= amount) && currentAccount.canSend(0, 1);
+							}
 						}
 					});
 

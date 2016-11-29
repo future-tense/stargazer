@@ -121,7 +121,7 @@ angular.module('app')
 	})
 	.filter(function (key) {
 		var account = Wallet.accounts[key];
-		return (account.getNativeBalance() - account.getReserve() >= 20);
+		return account.canSend(20, 1);
 	})
 	.map(function (key) {
 		return Wallet.accounts[key].alias;

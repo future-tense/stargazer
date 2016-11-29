@@ -73,6 +73,11 @@ angular.module('app')
 		return 10 * (2 + this.subentryCount);
 	};
 
+	//	return true if account has enough balance to send 'amount' XLM in a tx w/ 'numOps' operations
+	Account.prototype.canSend = function (amount, numOps) {
+		return (10000000*(this.getNativeBalance() - this.getReserve() - amount) - 100*numOps) >= 0;
+	};
+
 	Account.prototype.refresh = function () {
 
 		console.log('refreshing ' + this.alias);

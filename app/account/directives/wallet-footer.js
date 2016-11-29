@@ -6,10 +6,9 @@ angular.module('app')
 
 	function link(scope, element, attr) {
 		scope.canSend = function () {
-			return (Wallet.current.getNativeBalance() !== '0');
+			return Wallet.current.canSend(0, 1);
 		};
 	}
-
 	return {
 		link: link,
 		restrict: 'AE',
