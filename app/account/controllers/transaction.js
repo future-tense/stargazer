@@ -60,7 +60,6 @@ angular.module('app')
 	};
 
 	$scope.addContact = function () {
-
 		$scope.model = {
 			id:			$scope.counterparty,
 			network:	Wallet.current.network
@@ -70,8 +69,8 @@ angular.module('app')
 			Wallet.current.horizon().transactions().transaction(effect.hash).call()
 			.then(function (res) {
 				if (res.operation_count === 1) {
-					$scope.model.meta		= res.meta;
-					$scope.model.meta_type	= res.meta_type;
+					$scope.model.memo		= res.memo;
+					$scope.model.memo_type	= res.memo_type;
 				}
 			});
 		}

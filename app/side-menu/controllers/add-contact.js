@@ -24,12 +24,12 @@ angular.module('app')
 				network:	$scope.model.network
 			};
 
-			if ($scope.model.meta) {
-				contact.meta = $scope.model.meta;
+			if ($scope.model.memo) {
+				contact.memo = $scope.model.memo;
 			}
 
-			if ($scope.model.meta_type) {
-				contact.meta_type = $scope.model.meta_type;
+			if ($scope.model.memo_type) {
+				contact.memo_type = $scope.model.memo_type;
 			}
 
 			Contacts.add($scope.model.name, contact);
