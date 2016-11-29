@@ -1,4 +1,4 @@
-/* global nw, angular, console, require, Peer, StellarSdk */
+/* global angular, navigator, nw, require, StellarSdk */
 
 angular.module('app', [
 	'pascalprecht.translate',
@@ -8,12 +8,23 @@ angular.module('app', [
 	'use strict';
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|file|chrome-extension|tel):)|#/);
 })
-.run(function ($rootScope, $window) {
+
+.run(function ($ionicPlatform, $rootScope, $route, $window) {
 	'use strict';
+
 	$rootScope.goBack = function() {
 		$window.history.back();
 	};
+
+	$ionicPlatform.registerBackButtonAction(function () {
+		if ($route.current.controller !== 'HomeCtrl') {
+			$rootScope.goBack();
+		} else {
+			navigator.app.exitApp();
+		}
+	}, 100);
 })
+
 .run(function (platformInfo) {
 	'use strict';
 
