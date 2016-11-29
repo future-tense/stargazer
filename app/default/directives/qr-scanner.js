@@ -32,7 +32,7 @@ angular.module('app')
 
 		$scope.cordovaOpenScanner = function() {
 
-			$translate('default.camera')
+			$translate('modal.scanner.preparing')
 			.then(function (res) {
 				window.plugins.spinnerDialog.show(null, res, true);
 				return $timeout(100);

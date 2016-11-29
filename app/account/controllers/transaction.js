@@ -15,7 +15,7 @@ angular.module('app')
 		$scope.code = 'XLM';
 		$scope.amount = effect.amount;
 		$scope.counterparty = effect.from;
-		$scope.counterpartyLabel = 'account.transaction.from';
+		$scope.counterpartyLabel = 'transaction.from';
 	}
 
 	else if (effect.type === 'account_credited') {
@@ -23,7 +23,7 @@ angular.module('app')
 		$scope.code = effect.asset_code;
 		$scope.amount = effect.amount;
 		$scope.counterparty = effect.from;
-		$scope.counterpartyLabel = 'account.transaction.from';
+		$scope.counterpartyLabel = 'transaction.from';
 	}
 
 	else if (effect.type === 'account_debited') {
@@ -31,7 +31,7 @@ angular.module('app')
 		$scope.code = effect.asset_code;
 		$scope.amount = effect.amount;
 		$scope.counterparty = effect.to;
-		$scope.counterpartyLabel = 'account.transaction.to';
+		$scope.counterpartyLabel = 'transaction.to';
 	}
 
 	else if (effect.type === 'trade') {
@@ -44,7 +44,7 @@ angular.module('app')
 
 	$scope.effect = effect;
 	$scope.buttonText = function() {
-		return effect.comment? 'account.transaction.comment.edit' : 'account.transaction.comment.add';
+		return effect.comment? 'transaction.comment.edit' : 'transaction.comment.add';
 	};
 
 	$scope.isContact = ($scope.counterparty in Wallet.accounts) ||

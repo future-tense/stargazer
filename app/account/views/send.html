@@ -2,15 +2,15 @@
 <ion-content>
 	<div class="list">
 		<div class="item item-divider">
-			{{'account.send.info.heading' | translate}}
+			{{'tabs.send.info.heading' | translate}}
 		</div>
 
 		<form name="$parent.sendForm">
 			<label class="item item-input item-inset item-stacked-label">
 				<span class="input-label">
-					{{'account.send.destination.label' | translate}}
+					{{'tabs.send.destination.label' | translate}}
 				</span>
-				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'account.send.destination.placeholder' | translate}}" autocapitalize="none" valid-address>
+				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" valid-address>
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
@@ -22,9 +22,9 @@
 			<div ng-show="flags.hasValidDestination">
 				<label class="item item-input item-stacked-label">
 					<span class="input-label">
-						{{'account.send.amount.label' | translate}}
+						{{'tabs.send.amount.label' | translate}}
 					</span>
-					<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options='{debounce: 200}' placeholder="{{'account.send.amount.placeholder' | translate}}" min="{{send.minAmount}}">
+					<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options='{debounce: 200}' placeholder="{{'tabs.send.amount.placeholder' | translate}}" min="{{send.minAmount}}">
 				</label>
 
 				<label class="item item-input item-select item-stacked-label">
@@ -37,7 +37,7 @@
 	<div ng-show="!flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
 		<div class="list">
 			<div class="item item-divider">
-				{{'account.send.paths.empty' | translate}}
+				{{'tabs.send.paths.empty' | translate}}
 			</div>
 		</div>
 	</div>
@@ -46,13 +46,13 @@
 
 		<div class="list">
 			<div class="item item-divider">
-				{{'account.send.paths.heading' | translate}}
+				{{'tabs.send.paths.heading' | translate}}
 			</div>
 			<div class="item" style="text-align:center" ng-repeat="path in send.pathRecords">
 				<p>{{ path.source_amount | formatAmount }}</p>
 				<p>{{ getSourceAssetDescription(path) }}</p>
 				<button type="button" class="button button-small button-positive" ng-click="submit($index)" ng-disabled="!path.enabled">
-					{{'account.send' | translate}}
+					{{'tabs.send' | translate}}
 				</button>
 			</div>
 		</div>

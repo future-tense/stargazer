@@ -1,4 +1,4 @@
-<config-navbar heading="{{'account.transaction.heading' | translate}}" back="{{'global.done' | translate}}"></config-navbar>
+<config-navbar heading="{{'transaction.heading' | translate}}" back="{{'global.done' | translate}}"></config-navbar>
 <ion-content class="has-header">
 
 	<div class="list">
@@ -9,7 +9,7 @@
 				<i class="icon ion-ios-upload-outline"></i>
 			</div>
 			<div class="text-gray" style="margin-bottom:8px">
-				{{'account.transaction.sent' | translate}}
+				{{'transaction.sent' | translate}}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				{{ amount | formatAmount }} {{ code}}
@@ -21,7 +21,7 @@
 				<i class="icon ion-ios-download-outline"></i>
 			</div>
 			<div class="text-gray" style="margin-bottom:8px">
-				{{'account.transaction.received' | translate }}
+				{{'transaction.received' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				{{ amount | formatAmount }} {{ code}}
@@ -33,7 +33,7 @@
 				<i class="fa fa-exchange"></i>
 			</div>
 			<div class="text-gray" style="margin-bottom:8px">
-				{{'account.transaction.traded' | translate }}
+				{{'transaction.traded' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				+{{ bought_amount | formatAmount }} {{ bought_code}}
@@ -44,7 +44,7 @@
 		</div>
 
 		<div class="item item-divider">
-			{{'account.transaction.details' | translate }}
+			{{'transaction.details' | translate }}
 		</div>
 
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="type!=='trade'">
@@ -61,7 +61,7 @@
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
-					{{'account.transaction.date' | translate}}
+					{{'transaction.date' | translate}}
 				</span>
 				<span class="text-gray">
 					{{::effect.date | formatDate}}
@@ -72,7 +72,7 @@
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="effect.comment">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
-					{{'account.transaction.comment' | translate}}
+					{{'transaction.comment' | translate}}
 				</span>
 				<span class="text-gray">
 					{{effect.comment}}
@@ -88,7 +88,7 @@
 
 		<div style="padding-left:16px;padding-right:16px" ng-if="!isContact && type!=='trade'">
 			<button class="button button-block button-positive" on-tap="addContact()">
-				{{'account.transaction.contact.add' | translate}}
+				{{'transaction.contact.add' | translate}}
 			</button>
 		</div>
 	</div>

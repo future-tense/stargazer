@@ -13,7 +13,7 @@ angular.module('app')
 
 			if (Signer.hasEnoughSignatures(context.accounts)) {
 
-				return $translate('default.submitting')
+				return $translate('transaction.submitting')
 				.then(function (res) {
 					$ionicLoading.show({
 						template: res

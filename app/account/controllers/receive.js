@@ -34,7 +34,7 @@ angular.module('app')
 	$scope.copyToClipboard = function (text) {
 
 		var showPopover = function () {
-			$translate('account.receive.copy')
+			$translate('tabs.receive.copy')
 			.then(function (text) {
 				return $ionicLoading.show({
 					template: text

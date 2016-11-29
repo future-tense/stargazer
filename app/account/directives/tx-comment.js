@@ -20,10 +20,10 @@ angular.module('app')
 		function setTxDescription(tx) {
 
 			var key = {
-				'account_debited':	'account.transaction.sent',
-				'account_credited': 'account.transaction.received',
-				'account_created':	'account.transaction.received',
-				'trade':			'account.transaction.traded'
+				'account_debited':	'transaction.sent',
+				'account_credited': 'transaction.received',
+				'account_created':	'transaction.received',
+				'trade':			'transaction.traded'
 			}[tx.type];
 
 			$translate(key)

@@ -1,4 +1,4 @@
-<config-navbar heading="{{'account.settings' |translate}}" back="{{'global.done' | translate}}"></config-navbar>
+<config-navbar heading="{{'settings.account.heading' |translate}}" back="{{'global.done' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
 	<div class="list">
@@ -7,7 +7,7 @@
 		<a href="#/account-settings/alias">
 			<div class="item">
 				<span>
-					{{'account.settings.name' | translate}}
+					{{'settings.name' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					{{account.alias}}
@@ -19,7 +19,7 @@
 		<a href="#/account-settings/federation">
 			<div class="item">
 				<span>
-					{{'account.settings.federation' | translate}}
+					{{'settings.federation' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					{{account.federation}}
@@ -31,7 +31,7 @@
 		<a href="#/account-settings/trustlines">
 			<div class="item">
 				<span>
-					{{'account.settings.trustlines' | translate}}
+					{{'settings.trustlines' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
@@ -42,7 +42,7 @@
 		<a href="#/account-settings/advanced">
 			<div class="item">
 				<span>
-					{{'account.settings.advanced' | translate}}
+					{{'settings.advanced' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
@@ -51,12 +51,12 @@
 		</a>
 
 		<div class="item item-divider">
-			{{'account.settings.security' | translate}}
+			{{'settings.security' | translate}}
 		</div>
 
 		<div class="item item-toggle">
 			<span>
-				{{'account.settings.password' | translate}}
+				{{'settings.password' | translate}}
 			</span>
 			<div class="pull-right text-gray">
 				<label class="toggle">
@@ -71,7 +71,7 @@
 		<a href="#/account-settings/signers" ng-if="advanced">
 			<div class="item">
 				<span>
-					{{'account.settings.signers' | translate}}
+					{{'settings.signers' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
