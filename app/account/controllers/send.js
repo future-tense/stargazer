@@ -128,7 +128,7 @@ angular.module('app')
 							'native' : asset.asset_issuer + asset.asset_code;
 
 						if (key in paths) {
-							paths[key].enabled = ((asset.balance - paths[key].source_amount) > 0);
+							paths[key].enabled = ((asset.balance - paths[key].source_amount) >= 0);
 						}
 					});
 
@@ -273,21 +273,32 @@ angular.module('app')
 				.call()
 				.then(function (res) {
 
-					$scope.send.destinationRaw = destInfo.account_id.trim();
+					var accountId = destInfo.account_id.trim();
+					$scope.send.destinationRaw = accountId;
 
 					var assetSortFunction = function (a, b) {
 						return a.asset_code > b.asset_code;
 					};
 
-					var native = res.balances.filter(function (e) {
+					//	append any issuing assets we hold in the wallet
+					var issuing = Wallet.current.balances.filter(function (asset) {
+						if (asset.asset_type === 'native') {
+							return false;
+						} else {
+							return (asset.asset_issuer === accountId);
+						}
+					});
+
+					var assets = res.balances.concat(issuing);
+					var native = assets.filter(function (e) {
 						return e.asset_type === 'native';
 					});
 
-					var credit_alphanum4 = res.balances.filter(function (e) {
+					var credit_alphanum4 = assets.filter(function (e) {
 						return e.asset_type === 'credit_alphanum4';
 					});
 
-					var credit_alphanum12 = res.balances.filter(function (e) {
+					var credit_alphanum12 = assets.filter(function (e) {
 						return e.asset_type === 'credit_alphanum12';
 					});
 
