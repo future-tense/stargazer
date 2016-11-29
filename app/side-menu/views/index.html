@@ -6,13 +6,19 @@
 			<div>v1.0.0</div>
 		</div>
 
-		<ion-list>
-			<ion-item ng-repeat="account in getAccounts()"
+		<ion-list show-reorder="showReorder">
+			<ion-item ng-repeat="account in accounts"
 					  ng-class="{selected: account.id === wallet.current.id}"
 					  ng-href="#/account/{{account.id}}"
+					  on-hold="reorder()"
+					  on-touch="touch()"
+					  on-release="release()"
 					  menu-toggle>
 				<i class="icon" ng-class="getType(account)"></i>
 				{{account.alias}}
+				<ion-reorder-button class="ion-navicon"
+									on-reorder="moveItem(account, $fromIndex, $toIndex)">
+				</ion-reorder-button>
 			</ion-item>
 
 			<ion-item href="#/side-menu/add-account" menu-toggle>

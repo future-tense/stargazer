@@ -139,6 +139,13 @@ angular.module('app')
 		return (signers.length !== 1);
 	};
 
+	function saveAccountList() {
+		var accountNames = accountList.map(function (account) {
+			return account.alias;
+		});
+		Storage.setItem('accounts', accountNames);
+	}
+
 	//------------------------------------------------------------------------------------------------------------------
 	//	Wallet
 	//------------------------------------------------------------------------------------------------------------------
@@ -189,8 +196,8 @@ angular.module('app')
 		accounts[self.id] = self;
 		Storage.setItem('account.' + self.alias, self);
 
-		accountList.push(self.alias);
-		Storage.setItem('accounts', accountList);
+		accountList.push(self);
+		saveAccountList();
 
 		Wallet.current = self;
 		return self;
@@ -209,16 +216,7 @@ angular.module('app')
 
 		Storage.setItem('account.' + newName, account);
 		Storage.setItem('history.' + newName, History.effects[newName]);
-
-		var index = accountList.indexOf(oldName);
-		accountList[index] = newName;
-		Storage.setItem('accounts', accountList);
-
-/*
-		if (currentAccount.alias === oldName) {
-			currentAccount = account;
-		}
-*/
+		saveAccountList();
 		Storage.setItem('currentAccount', newName);
 		Storage.removeItem('account.' + oldName);
 		Storage.removeItem('history.' + oldName);
@@ -230,46 +228,42 @@ angular.module('app')
 			account.closeStream();
 		}
 
-		var accountId = account.id;
-		var index = accountList.indexOf(account.alias);
+		var index = accountList.indexOf(account);
 		accountList.splice(index, 1);
-		Storage.setItem('accounts', accountList);
+		saveAccountList();
 
 		var currentIndex = Math.max(0, index - 1);
-		var currentName = accountList[currentIndex];
+		Wallet.current = accountList[currentIndex];
+		Storage.setItem('currentAccount', Wallet.current.alias);
 
-		var accountByName = {};
-		Object.keys(Wallet.accounts).forEach(function (key) {
-			var account = Wallet.accounts[key];
-			accountByName[account.alias] = account;
-		});
-
-		Wallet.current = accountByName[currentName];
+		delete accounts[account.id];
 		Storage.removeItem('account.' + account.alias);
-
-		delete accounts[accountId];
-		Storage.removeItem('account.' + account.alias);
+		Storage.removeItem('history.' + account.alias);
 	};
 
+	Wallet.moveAccount = function (account, fromIndex, toIndex) {
+		accountList.splice(fromIndex, 1);
+		accountList.splice(toIndex, 0, account);
+		saveAccountList();
+	};
 
 	//------------------------------------------------------------------------------------------------------------------
 
 	var accountList = Storage.getItem('accounts');
 	if (accountList) {
-		accountList.forEach(function (name) {
+		accountList = accountList.map(function (name) {
 			var opts = Storage.getItem('account.' + name);
 			var self = new Account(opts);
 			accounts[self.id] = self;
+			return self;
 		});
 
 		var name = Storage.getItem('currentAccount');
 
 		var accountByName = {};
-		Object.keys(Wallet.accounts).forEach(function (key) {
-			var account = Wallet.accounts[key];
+		accountList.forEach(function (account) {
 			accountByName[account.alias] = account;
 		});
-
 		currentAccount = accountByName[name];
 	}
 
@@ -280,6 +274,8 @@ angular.module('app')
 			Wallet.createEmptyAccount(res);
 		});
 	}
+
+	Wallet.accountList = accountList;
 
 	//------------------------------------------------------------------------------------------------------------------
 

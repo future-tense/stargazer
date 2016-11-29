@@ -223,16 +223,19 @@ ion-side-menu-content {
 	width: 14px;
 }
 
-.item > .item-content {
+.sidebar .scroll,
+.item > .item-content,
+.item > .item-right-edit {
 	background-color: #2C3E50;
 }
 
-.item.selected > .item-content {
+.item.selected > .item-content,
+.item.selected > .item-right-edit{
 	background-color: #122232;
 }
 
-.sidebar .scroll {
-	background-color: #2C3E50;
+.item-reorder .button.icon {
+	color: #AAA;
 }
 
 .sidebar a {
