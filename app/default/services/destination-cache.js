@@ -16,20 +16,16 @@ angular.module('app')
 			return nullPromise;
 		}
 
-		var destInfo;
-
 		//	Account Name
 
 		var map = {};
-		Object.keys(Wallet.accounts).forEach(function (key) {
-			var alias = Wallet.accounts[key].alias;
-			map[alias] = key;
+		Wallet.accountList.forEach(function (account) {
+			map[account.alias] = account.id;
 		});
 
-		var res;
 		if (name in map) {
 			return $q.resolve({
-				account_id: map[name]
+				id: map[name]
 			});
 		}
 
@@ -38,7 +34,9 @@ angular.module('app')
 		var contact = Contacts.get(name);
 		if (contact) {
 			return $q.resolve({
-				account_id: contact.id
+				id: contact.id,
+				memo: contact.memo,
+				memo_type: contact.memo_type
 			});
 		}
 
@@ -48,9 +46,17 @@ angular.module('app')
 			return cache[name];
 		}
 
-		res = StellarSdk.FederationServer.resolve(name);
-		cache[name] = res;
-		return res;
+		var promise = StellarSdk.FederationServer.resolve(name)
+		.then(function (res) {
+			return {
+				id: res.account_id.trim(),
+				memo: res.memo,
+				memo_type: res.memo_type
+			};
+		});
+
+		cache[name] = promise;
+		return promise;
 	}
 
 	return {

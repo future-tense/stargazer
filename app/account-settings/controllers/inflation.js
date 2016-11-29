@@ -35,11 +35,10 @@ angular.module('app')
 		.then(function (res) {
 			var account = res[0];
 			var destInfo = res[1];
-			var dest = destInfo.account_id.trim();
 
 			var builder = new StellarSdk.TransactionBuilder(account);
 			builder.addOperation(StellarSdk.Operation.setOptions({
-				inflationDest: dest
+				inflationDest: destInfo.id
 			}));
 			var tx = builder.build();
 

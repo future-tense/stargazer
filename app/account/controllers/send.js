@@ -85,7 +85,7 @@ angular.module('app')
 			$scope.flags.hasPath = false;
 
 			var asset = createAsset($scope.send.asset);
-			var dest = destInfo.account_id.trim();
+			var dest = destInfo.id;
 			currentAccount.horizon().paths(source, dest, asset, $scope.send.amount)
 			.call()
 			.then(function (res) {
@@ -173,7 +173,7 @@ angular.module('app')
 			var account = res[0];
 			var destInfo = res[1];
 
-			var dest = destInfo.account_id.trim();
+			var dest = destInfo.id;
 
 			var record = $scope.send.pathRecords[index];
 			var sendAsset = createAsset(record, 'source_');
@@ -268,13 +268,13 @@ angular.module('app')
 			DestinationCache.lookup($scope.send.destination)
 			.then(function (destInfo) {
 
+				var destinationId = destInfo.id;
 				currentAccount.horizon().accounts()
-				.accountId(destInfo.account_id.trim())
+				.accountId(destinationId)
 				.call()
 				.then(function (res) {
 
-					var accountId = destInfo.account_id.trim();
-					$scope.send.destinationRaw = accountId;
+					$scope.send.destinationRaw = destinationId;
 
 					var assetSortFunction = function (a, b) {
 						return a.asset_code > b.asset_code;
@@ -285,7 +285,7 @@ angular.module('app')
 						if (asset.asset_type === 'native') {
 							return false;
 						} else {
-							return (asset.asset_issuer === accountId);
+							return (asset.asset_issuer === destinationId);
 						}
 					});
 

@@ -20,7 +20,7 @@ angular.module('app')
 		.then(function (destInfo) {
 
 			var contact = {
-				id:			destInfo.account_id.trim(),
+				id:			destInfo.id,
 				network:	$scope.model.network
 			};
 
