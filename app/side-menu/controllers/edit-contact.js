@@ -15,11 +15,10 @@ angular.module('app')
 	$scope.updateContact = function () {
 
 		Contacts.delete(name);
-
 		name = $scope.model.name;
-		var contact = $scope.model;
+		contact = $scope.model;
 		delete contact.name;
-		contact.network = contact.network.hash;
+		contact.network = Horizon.getHash(contact.network.phrase);
 		Contacts.add(name, contact);
 		$rootScope.goBack();
 	};

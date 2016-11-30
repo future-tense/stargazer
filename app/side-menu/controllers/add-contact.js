@@ -21,7 +21,7 @@ angular.module('app')
 
 			var contact = {
 				id:			destInfo.id,
-				network:	$scope.model.network
+				network:	Horizon.getHash($scope.model.network.phrase)
 			};
 
 			if ($scope.model.memo) {

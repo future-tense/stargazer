@@ -38,6 +38,9 @@ angular.module('app')
 		getHash: getHash,
 
 		getNetwork: function (hash) {
+			if (!hash) {
+				hash = livenet;
+			}
 			return networks[hash];
 		},
 

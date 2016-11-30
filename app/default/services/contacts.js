@@ -25,8 +25,7 @@ angular.module('app')
 					res.push(name);
 				}
 			});
-
-			return res;
+			return res.sort(ignoreCase);
 		},
 
 		getNames: function () {
