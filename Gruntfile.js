@@ -86,12 +86,6 @@ module.exports = function (grunt) {
 					dest: 'dist/css/ionic.min.css'
 				}]
 			},
-			lodash: {
-				files: [{
-					src: 'bower_components/lodash/dist/lodash.min.js',
-					dest: 'dist/js/lodash.min.js'
-				}]
-			},
 			content: {
 				expand: true,
 				cwd: 'content',

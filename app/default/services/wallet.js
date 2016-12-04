@@ -57,7 +57,15 @@ angular.module('app')
 			});
 		};
 
-		$window._.extend(this, params);
+		function extend(a, b) {
+			for (var i in b) {
+				if (b.hasOwnProperty(i)) {
+					a[i] = b[i];
+				}
+			}
+		}
+
+		extend(this, params);
 		this.refresh();
 	}
 

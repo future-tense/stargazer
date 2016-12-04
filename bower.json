@@ -27,7 +27,6 @@
     "jsqrcode": "qrcode-decoder-js#*",
     "angular-route": "^1.5.8",
     "toml-j0.4": "^1.0.10",
-    "lodash": "^4.15.0",
     "angular-translate": "^2.13.0",
     "messageformat": "^1.0.2",
     "angular-translate-interpolation-messageformat": "^2.13.0",
