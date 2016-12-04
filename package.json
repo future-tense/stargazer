@@ -22,9 +22,9 @@
   "license": "ISC",
   "dependencies": {
     "grunt": "^1.0.1",
+    "grunt-chokidar": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
     "grunt-file-sloc": "0.0.1",
     "grunt-nw-builder": "^3.1.0",
     "grunt-preprocess": "^5.1.0",

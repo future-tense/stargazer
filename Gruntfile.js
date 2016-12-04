@@ -113,14 +113,15 @@ module.exports = function (grunt) {
 			}
 		},
 
-		watch: {
+		chokidar: {
 			options: {
 				spawn: false
 			},
 			files: [
 				'i18n/**/*',
 				'app/**/*',
-				'content/**/*'
+				'content/**/*',
+				'gruntfile.js'
 			],
 			tasks: [
 				'build'
@@ -145,6 +146,8 @@ module.exports = function (grunt) {
 			}
 		}
 	});
+
+	grunt.registerTask('watch', ['chokidar']);
 
 	grunt.registerTask('build', [
 		'replace:jsqrcode',
