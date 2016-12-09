@@ -6,7 +6,7 @@ angular.module('app')
 
 	function lookup(domain) {
 
-		var url = 'https://www.' + domain + '/.well-known/stellar.toml';
+		var url = 'https://' + domain + '/.well-known/stellar.toml';
 
 		return $http.get(url)
 		.then(function (res) {
