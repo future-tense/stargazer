@@ -41,7 +41,6 @@ module.exports = function (grunt) {
 					'bower_components/buffer/buffer.min.js',
 					'bower_components/decimal.js/decimal.js',
 					'build/bower_components/jsqrcode/lib/qrcode-decoder.min.js',
-					'bower_components/moment/min/moment-with-locales.js',
 					'bower_components/qrcode.js/qrcode.js',
 					'bower_components/sjcl/sjcl.js',
 					'bower_components/stellar-sdk/stellar-sdk.min.js',
