@@ -74,4 +74,13 @@ angular.module('app')
 			handlePayment(data.stellar.payment);
 		}
 	};
+
+	$rootScope.$on('$submitter.failed', function (event, err) {
+		return $translate(err)
+		.then(function (res) {
+			$ionicPopup.alert({
+				title: res
+			});
+		});
+	});
 });

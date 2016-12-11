@@ -7,6 +7,9 @@
 	"global.ok":								"OK",
 	"global.cancel":							"Cancel",
 
+	"error.transaction-failed":					"Transaction Failed",
+	"error.missing-signatures":					"Not enough signatures",
+
 	"tabs.home":								"Overview",
 	"tabs.home.pull":							"Pull to refresh...",
 	"tabs.home.activity":						"Activity",

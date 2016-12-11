@@ -57,21 +57,15 @@ angular.module('app')
 			})
 			.then(Signer.sign)
 			.then(Submitter.submit)
-
-			.then(
-				function (res) {
-					Wallet.importAccount(
-						newAccount.accountId(),
-						newAccount.seed(),
-						$scope.account.alias,
-						network
-					);
-					$location.path('/');
-				},
-				function (err) {
-					console.log(err);
-				}
-			);
+			.then(function () {
+				Wallet.importAccount(
+					newAccount.accountId(),
+					newAccount.seed(),
+					$scope.account.alias,
+					network
+				);
+				$location.path('/');
+			});
 		}
 
 		else {

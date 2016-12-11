@@ -236,17 +236,9 @@ angular.module('app')
 		})
 		.then(Signer.sign)
 		.then(Submitter.submit)
-
-		.then(
-			function (res) {
-				$location.path('/');
-			},
-			function (err) {
-				console.log(err.title);
-				console.log(err.extras.result_codes);
-			}
-		);
-
+		.then(function () {
+			$location.path('/');
+		});
 	};
 
 	var query = $location.search();

@@ -1,37 +1,47 @@
 /* global angular, console */
 
 angular.module('app')
-.factory('Submitter', function ($ionicLoading, $location, $q, $translate, Signer) {
+.factory('Submitter', function ($rootScope, $ionicLoading, $location, $q, $translate, Signer) {
 	'use strict';
 
-	return {
-		submit: function (context) {
+	function submit(context) {
 
-			//
-			//	check if signature thresholds are met
-			//
+		if (Signer.hasEnoughSignatures(context.accounts)) {
 
-			if (Signer.hasEnoughSignatures(context.accounts)) {
+			return $translate('transaction.submitting')
+			.then(function (res) {
+				$ionicLoading.show({
+					template: res
+				});
 
-				return $translate('transaction.submitting')
-				.then(function (res) {
-					$ionicLoading.show({
-						template: res
-					});
-
-					return context.horizon.submitTransaction(context.tx)
-					.then(function (res) {
+				return context.horizon.submitTransaction(context.tx)
+				.then(
+					function (res) {
 						$ionicLoading.hide();
 						return res;
-					}, function (err) {
+					},
+					function (err) {
 						$ionicLoading.hide();
-						return $q.reject(err);
-					});
-				});
-			} else {
-				return $q.reject('Not enough signatures');
-			}
+
+						var res = '';
+						if (err.title === 'Transaction Failed') {
+							res = 'error.transaction-failed';
+						}
+						$rootScope.$emit('$submitter.failed', res);
+						return $q.reject();
+					}
+				);
+			});
 		}
 
+		else {
+			var res = 'error.missing-signatures';
+			$rootScope.$emit('$submitter.failed', res);
+			return $q.reject();
+		}
+	}
+
+	return {
+		submit: submit
 	};
 });

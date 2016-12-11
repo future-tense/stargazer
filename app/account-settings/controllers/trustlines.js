@@ -91,17 +91,12 @@ angular.module('app')
 		})
 		.then(Signer.sign)
 		.then(Submitter.submit)
-		.then(
-			function (res) {
-				$scope.account.refresh()
-				.then(function () {
-					$location.path('/');
-				});
-			},
-			function (err) {
-				console.log(err);
-			}
-		);
+		.then(function () {
+			$scope.account.refresh()
+			.then(function () {
+				$location.path('/');
+			});
+		});
 	};
 
 	$scope.addAnchor = function () {

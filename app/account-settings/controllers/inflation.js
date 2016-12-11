@@ -50,14 +50,9 @@ angular.module('app')
 
 		.then(Signer.sign)
 		.then(Submitter.submit)
+		.then(function () {
+			$rootScope.goBack();
+		});
 
-		.then(
-			function (res) {
-				$rootScope.goBack();
-			},
-			function (err) {
-				console.log(err);
-			}
-		);
 	};
 });
