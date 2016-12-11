@@ -2,12 +2,12 @@
 /* global angular */
 
 angular.module('app')
-.directive('accountActivity', function ($filter, History, Wallet) {
+.directive('accountActivity', function ($filter, Contacts, History, Wallet) {
 	'use strict';
 
 	var formatAmount = $filter('formatAmount');
 
-	function link(scope, iElement, iAttrs) {
+	function link(scope, element, attrs) {
 
 		function parseHistory() {
 			var accountName = Wallet.current.alias;
@@ -19,27 +19,38 @@ angular.module('app')
 			}
 
 			var paymentTypes = {
-				'account_debited': 1,
-				'account_credited': 1,
-				'account_created': 1,
-				'trade': 1
+				'account_debited': 'send',
+				'account_credited': 'recv',
+				'account_created': 'recv',
+				'trade': 'trade'
 			};
 
 			var filtered = array.filter(function (fx) {
 				return (fx.type in paymentTypes);
 			});
 
-			filtered.forEach(function (fx) {
+			filtered = filtered.map(function (fx) {
+
+				var res = {
+					id: fx.id
+				};
+
 				if (fx.type === 'account_debited') {
-					fx.desc = '-' + formatAmount(fx.amount) + ' ' + fx.asset_code;
+					res.desc = '-' + formatAmount(fx.amount) + ' ' + fx.asset_code;
+					res.amount = fx.amount;
+					res.asset_code = fx.asset_code;
 				}
 
 				else if (fx.type === 'account_credited') {
-					fx.desc = '+' + formatAmount(fx.amount) + ' ' + fx.asset_code;
+					res.desc = '+' + formatAmount(fx.amount) + ' ' + fx.asset_code;
+					res.amount = fx.amount;
+					res.asset_code = fx.asset_code;
 				}
 
 				else if (fx.type === 'account_created') {
-					fx.desc = '+' + formatAmount(fx.amount) + ' XLM';
+					res.desc = '+' + formatAmount(fx.amount) + ' XLM';
+					res.amount = fx.amount;
+					res.asset_code = 'XLM';
 				}
 
 				else if (fx.type === 'trade') {
@@ -51,12 +62,28 @@ angular.module('app')
 						fx.bought_asset_code = 'XLM';
 					}
 
-					fx.desc = '-' + formatAmount(fx.sold_amount) + ' ' + fx.sold_asset_code +
+					res.desc = '-' + formatAmount(fx.sold_amount) + ' ' + fx.sold_asset_code +
 						' / +' + formatAmount(fx.bought_amount) + ' ' + fx.bought_asset_code;
+
+					res.sold_amount = fx.sold_amount;
+					res.sold_asset_code = fx.sold_asset_code;
+					res.bought_amount = fx.bought_amount;
+					res.bought_asset_code = fx.bought_asset_code;
 				}
 
 				var date = new Date(fx.date);
-				fx.timestamp = date.getTime() / 1000;
+				res.timestamp = date.getTime() / 1000;
+				res.type = paymentTypes[fx.type];
+
+				var counterparty;
+				if (fx.to) {
+					counterparty = fx.to;
+				} else if (fx.from) {
+					counterparty = fx.from;
+				}
+				res.counterparty = counterparty;
+
+				return res;
 			});
 
 			scope.history = filtered.sort(
@@ -72,6 +99,36 @@ angular.module('app')
 		scope.$on('accountInfoLoaded', function (event, args) {
 			parseHistory();
 		});
+
+		scope.getComment = function (tx) {
+
+			function contact(id, network) {
+				if (id) {
+					if (id in Wallet.accounts) {
+						return Wallet.accounts[id].alias;
+					} else {
+						return Contacts.lookup(id, network);
+					}
+				}
+			}
+
+			if (tx.comment) {
+				return tx.comment;
+			}
+
+			else {
+				var name = contact(tx.counterparty, Wallet.current.network);
+				if (name) {
+					return name;
+				} else {
+					return {
+						'send':	'transaction.sent',
+						'recv': 'transaction.received',
+						'trade':'transaction.traded'
+					}[tx.type];
+				}
+			}
+		};
 	}
 
 	return {
