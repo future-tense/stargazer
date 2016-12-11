@@ -4,15 +4,14 @@ angular.module('app')
 .controller('SendCtrl', function ($location, $q, $scope, DestinationCache, Keychain, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
-	$scope.assets = [];
 	var assetCodeCollisions;
+	$scope.destinationAssets = [];
 	$scope.send = {};
 
 	$scope.flags = {};
 	$scope.flags.hasValidDestination = false;
 	$scope.flags.hasPath = false;
 	$scope.flags.pathPending = true;
-
 
 	$scope.onAmount = function () {
 		if ($scope.send.amount) {
@@ -199,8 +198,6 @@ angular.module('app')
 			var account = res[0];
 			var destInfo = res[1];
 
-			var dest = destInfo.id;
-
 			var record = $scope.send.pathRecords[index];
 			var sendAsset = createAsset(record, 'source_');
 			var destAsset = createAsset(record, 'destination_');
@@ -210,14 +207,14 @@ angular.module('app')
 
 			if ($scope.flags.createAccount) {
 				operation = StellarSdk.Operation.createAccount({
-					destination: dest,
+					destination: destInfo.id,
 					startingBalance: destAmount
 				});
 			}
 
 			else if (sendAsset.equals(destAsset) && (record.path.length === 0)) {
 				operation = StellarSdk.Operation.payment({
-					destination: dest,
+					destination: destInfo.id,
 					asset: destAsset,
 					amount: destAmount
 				});
@@ -231,7 +228,7 @@ angular.module('app')
 				operation = StellarSdk.Operation.pathPayment({
 					sendAsset: sendAsset,
 					sendMax: new Decimal(record.source_amount).times(new Decimal(2.00)).toFixed(7),
-					destination: dest,
+					destination: destInfo.id,
 					destAsset: destAsset,
 					destAmount: destAmount,
 					path: path
@@ -263,7 +260,7 @@ angular.module('app')
 		$scope.send.destination = query.destination;
 		$scope.send.amount		= query.amount;
 		$scope.send.asset 		= query;
-		$scope.assets.push(query);
+		$scope.destinationAssets.push(query);
 
 		$scope.getPaths();
 		$scope.flags.prefilled = true;
@@ -322,8 +319,8 @@ angular.module('app')
 					credit_alphanum12.sort(assetSortFunction);
 
 					native[0].asset_code = 'XLM';
-					$scope.assets = native.concat(credit_alphanum4, credit_alphanum12);
-					$scope.send.asset = $scope.assets[0];
+					$scope.destinationAssets = native.concat(credit_alphanum4, credit_alphanum12);
+					$scope.send.asset = $scope.destinationAssets[0];
 					$scope.send.minAmount = 0;
 
 					$scope.flags.createAccount = false;
@@ -334,12 +331,12 @@ angular.module('app')
 
 					//	account is not registered in the ledger yet
 
-					$scope.assets = [{
+					$scope.destinationAssets = [{
 						asset_type: 'native',
 						asset_code: 'XLM'
 					}];
 
-					$scope.send.asset = $scope.assets[0];
+					$scope.send.asset = $scope.destinationAssets[0];
 					$scope.send.minAmount = 20;
 
 					$scope.flags.createAccount = true;
