@@ -77,7 +77,7 @@ angular.module('app')
 		}
 	};
 })
-.directive('validFunder', function (Wallet) {
+.directive('validFunder', function (Horizon, Wallet) {
 	'use strict';
 
 	return {
@@ -92,9 +92,11 @@ angular.module('app')
 					return true;
 				}
 
+				var network = Horizon.getHash(scope.network);
+
 				var names = {};
 				Object.keys(Wallet.accounts).forEach(function (key) {
-					if (Wallet.accounts[key].network === scope.network) {
+					if (Wallet.accounts[key].network === network) {
 						var accountName = Wallet.accounts[key].alias;
 						names[accountName] = 1;
 					}
@@ -105,13 +107,15 @@ angular.module('app')
 		}
 	};
 })
-.controller('SelectFundingAccountCtrl', function($scope, Wallet) {
+.controller('SelectFundingAccountCtrl', function($scope, Horizon, Wallet) {
 	'use strict';
+
+	var network = Horizon.getHash($scope.account.network.phrase);
 
 	$scope.accounts = Object.keys(Wallet.accounts)
 	.filter(function (key) {
 		var account = Wallet.accounts[key];
-		return (account.network === $scope.account.network.phrase);
+		return (account.network === network);
 	})
 	.filter(function (key) {
 		var account = Wallet.accounts[key];
