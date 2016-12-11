@@ -4,7 +4,7 @@
 
 	<div class="list" ng-repeat="anchor in anchors">
 		<div class="item item-divider">
-			{{ anchor.id }}
+			<account-name id="{{::anchor.id}}" network="{{::account.network}}"></account-name>
 		</div>
 
 		<div ng-repeat="trustline in anchor.trustlines">
