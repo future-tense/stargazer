@@ -240,16 +240,12 @@ angular.module('app')
 
 			var builder = new StellarSdk.TransactionBuilder(account).addOperation(operation);
 
-			function createMemo(_type, _content) {
-				return new StellarSdk.Memo[_type](_content);
-			}
-
 			if (destInfo.memo) {
-				builder.addMemo(createMemo(destInfo.memo_type, destInfo.memo));
+				var memo = new StellarSdk.Memo[destInfo.memo_type](destInfo.memo);
+				builder.addMemo(memo);
 			}
 
 			var tx = builder.build();
-
 			return {
 				tx: tx,
 				network: currentAccount.network
