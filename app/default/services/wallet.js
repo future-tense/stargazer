@@ -260,6 +260,27 @@ angular.module('app')
 		saveAccountList();
 	};
 
+	Wallet.getAssetCodeCollisions = function (assets) {
+		var seen = {};
+		var collisions = {};
+		assets.forEach(function (asset) {
+			if (asset.asset_type !== 'native') {
+				var code = asset.asset_code;
+				var issuer = asset.asset_issuer;
+				if (code in seen) {
+					if (!(issuer in seen[code])) {
+						collisions[asset.asset_code] = 1;
+					}
+				} else {
+					seen[code] = {};
+				}
+				seen[code][issuer] = 1;
+			}
+		});
+
+		return collisions;
+	};
+
 	//------------------------------------------------------------------------------------------------------------------
 
 	var accountList = Storage.getItem('accounts');

@@ -5,6 +5,7 @@ angular.module('app')
 	'use strict';
 
 	$scope.assets = [];
+	var assetCodeCollisions;
 	$scope.send = {};
 
 	$scope.flags = {};
@@ -150,9 +151,21 @@ angular.module('app')
 		});
 	};
 
+	//
+	//
+	//
+
+	function updateCollisions(assets) {
+		assetCodeCollisions = Wallet.getAssetCodeCollisions(assets);
+	}
+
 	$scope.getSourceAssetDescription = function (path) {
 		if (path.source_asset_type !== 'native') {
-			return path.source_asset_code + '.' + path.source_asset_issuer;
+			if (path.source_asset_code in assetCodeCollisions) {
+				return path.source_asset_code + '.' + path.source_asset_issuer;
+			} else {
+				return path.source_asset_code;
+			}
 		} else {
 			return 'XLM';
 		}
@@ -160,11 +173,19 @@ angular.module('app')
 
 	$scope.getAssetDescription = function (asset) {
 		if (asset.asset_type !== 'native') {
-			return asset.asset_code + '.' + asset.asset_issuer;
+			if (asset.asset_code in assetCodeCollisions) {
+				return asset.asset_code + '.' + asset.asset_issuer;
+			} else {
+				return asset.asset_code;
+			}
 		} else {
 			return 'XLM';
 		}
 	};
+
+	//
+	//
+	//
 
 	$scope.submit = function (index) {
 
@@ -276,6 +297,8 @@ angular.module('app')
 					var assetSortFunction = function (a, b) {
 						return a.asset_code > b.asset_code;
 					};
+
+					updateCollisions(res.balances.concat(Wallet.current.balances));
 
 					//	append any issuing assets we hold in the wallet
 					var issuing = Wallet.current.balances.filter(function (asset) {
