@@ -105,6 +105,12 @@ angular.module('app')
 				}
 
 				else {
+
+					//
+					//	filter paths... keep the cheapest path per asset,
+					//	excluding paths with a zero cost
+					//
+
 					var paths = {};
 					res.records.forEach(function (record) {
 						if (record.source_amount === '0.0000000') {
@@ -122,6 +128,10 @@ angular.module('app')
 							paths[key] = record;
 						}
 					});
+
+					//
+					//	go through the remaining paths and disable the ones that are underfunded
+					//
 
 					currentAccount.balances.forEach(function (asset) {
 						var key = (asset.asset_code === 'XLM')?
