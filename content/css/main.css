@@ -287,14 +287,6 @@ ion-side-menu-content {
 	border-top: 1px solid #E2E7ED;
 }
 
-/* select in send.html */
-form .item-select select {
-	position: inherit;
-	direction: ltr;
-	padding-left: 0;
-	padding-right: 0;
-}
-
 /* header */
 
 ion-header-bar.bar {
@@ -409,6 +401,12 @@ ion-side-menu.menu {
 }
 
 .item-select:after {
+	top: auto;
+	bottom: 12px;
+	right: 0;
+}
+
+col > .item-select:after {
 	top: auto;
 	bottom: 20px;
 }

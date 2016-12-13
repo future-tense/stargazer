@@ -6,11 +6,11 @@
 		</div>
 
 		<form name="$parent.sendForm">
-			<label class="item item-input item-inset item-stacked-label">
+			<label class="item item-input item-inset item-stacked-label" style="padding-right:16px;border-style:none">
 				<span class="input-label">
 					{{'tabs.send.destination.label' | translate}}
 				</span>
-				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" valid-address>
+				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" valid-address style="border-bottom-width:1px;border-style:solid;border-color:#CCC;border-radius:0;margin-bottom:4px">
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
@@ -20,16 +20,25 @@
 			</label>
 
 			<div ng-show="flags.hasValidDestination">
-				<label class="item item-input item-stacked-label">
-					<span class="input-label">
-						{{'tabs.send.amount.label' | translate}}
-					</span>
-					<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options='{debounce: 200}' placeholder="{{'tabs.send.amount.placeholder' | translate}}" min="{{send.minAmount}}">
-				</label>
+				<div class="item" style="padding-bottom:8px;padding-top:6px;border-style:none">
+					<span class="input-label" style="padding-bottom:0;padding-top:0">
+                        {{'tabs.send.amount.label' | translate}}
+                    </span>
+					<div class="row" style="padding:0">
+						<div class="col" style="padding:0">
+							<label class="item-input item-stacked-label" style="padding-left:0;border-width:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-right:8px">
+								<input type="number" ng-model="send.amount" ng-change="onAmount()" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.amount.placeholder' | translate}}" min="{{send.minAmount}}" style="height:28px">
+							</label>
+						</div>
 
-				<label class="item item-input item-select item-stacked-label">
-					<select ng-model="send.asset" ng-change="onAsset()" ng-options="getAssetDescription(asset) for asset in destinationAssets"></select>
-				</label>
+						<div class="col" style="padding:0;">
+							<label class="item-input item-select item-stacked-label" style="padding-left:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-left:8px">
+								<select ng-model="send.asset" ng-change="onAsset()" ng-options="getAssetDescription(asset) for asset in destinationAssets" style="height:28px;padding-top:3px;padding-bottom:2px">
+								</select>
+							</label>
+						</div>
+					</div>
+				</div>
 			</div>
 		</form>
 	</div>

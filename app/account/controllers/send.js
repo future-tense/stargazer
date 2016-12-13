@@ -14,15 +14,11 @@ angular.module('app')
 	$scope.flags.pathPending = true;
 
 	$scope.onAmount = function () {
-		if ($scope.send.amount) {
-			$scope.getPaths();
-		}
+		$scope.getPaths();
 	};
 
 	$scope.onAsset = function () {
-		if ($scope.send.amount) {
-			$scope.getPaths();
-		}
+		$scope.getPaths();
 	};
 
 	function createAsset(json, prefix) {
@@ -55,6 +51,13 @@ angular.module('app')
 
 	$scope.getPaths = function () {
 
+		$scope.flags.pathPending = true;
+		$scope.flags.hasPath = false;
+
+		if (!$scope.send.amount) {
+			return;
+		}
+
 		var currentAccount = Wallet.current;
 		var source = currentAccount.id;
 
@@ -73,6 +76,7 @@ angular.module('app')
 				path: []
 			}];
 
+			$scope.flags.pathPending = false;
 			$scope.flags.hasPath = true;
 			$scope.$apply();
 
@@ -81,9 +85,6 @@ angular.module('app')
 
 		DestinationCache.lookup($scope.send.destination)
 		.then(function (destInfo) {
-			$scope.flags.pathPending = true;
-			$scope.flags.hasPath = false;
-
 			var asset = createAsset($scope.send.asset);
 			var dest = destInfo.id;
 			currentAccount.horizon().paths(source, dest, asset, $scope.send.amount)
