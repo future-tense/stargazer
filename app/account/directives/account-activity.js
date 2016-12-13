@@ -1,11 +1,86 @@
-
 /* global angular */
+/* jshint multistr: true */
 
 angular.module('app')
-.directive('accountActivity', function ($filter, Contacts, History, Wallet) {
+.directive('accountActivity', function ($filter, $interval, $translate, Contacts, History, Wallet) {
 	'use strict';
 
 	var formatAmount = $filter('formatAmount');
+
+	function renderTime(now, timestamp) {
+		var delta = now - timestamp;
+		var message;
+		if (delta < 60) {
+			message = 'timestamp.seconds';
+		}
+		else if (delta < 3600) {
+			delta /= 60;
+			message = 'timestamp.minutes';
+		}
+		else if (delta < 86400) {
+			delta /= 3600;
+			message = 'timestamp.hours';
+		}
+		else {
+			delta /= 86400;
+			message = 'timestamp.days';
+		}
+
+		var d = Math.floor(delta);
+		return $translate.instant(message, {RES: d}, 'messageformat');
+	}
+
+	function getComment(tx) {
+
+		function contact(id, network) {
+			if (id) {
+				if (id in Wallet.accounts) {
+					return Wallet.accounts[id].alias;
+				} else {
+					return Contacts.lookup(id, network);
+				}
+			}
+		}
+
+		if (tx.comment) {
+			return tx.comment;
+		}
+
+		else {
+			var name = contact(tx.counterparty, Wallet.current.network);
+			if (name) {
+				return name;
+			} else {
+				return $translate.instant({
+					'send':	'transaction.sent',
+					'recv': 'transaction.received',
+					'trade':'transaction.traded'
+				}[tx.type]);
+			}
+		}
+	}
+
+	function renderItem(tx) {
+
+		var now = new Date().getTime() / 1000;
+
+		var icon = {
+			'send':	'<div class="circle circle-red"><i class="icon ion-ios-upload-outline"></i></div>',
+			'recv':	'<div class="circle circle-green"><i class="icon ion-ios-download-outline"></i></div>',
+			'trade':'<div class="circle circle-blue"><i class="fa fa-exchange"></i></div>'
+		};
+
+		return '\
+			<a class="feed-item" href="#/account/transaction/' + tx.id +'">\
+				<div class="feed-item-icon">' + icon[tx.type] + '</div>\
+				<div class="feed-item-comment">' + getComment(tx) + '</div>\
+				<div class="payment">\
+					<div style="text-align:right;color:#444;">' + tx.desc + '</div>\
+					<div class="timestamp" time="' + tx.timestamp + '">' + renderTime(now, tx.timestamp) +'</div>\
+				</div>\
+				<div class="more">&raquo;</div>\
+			</a>';
+	}
 
 	function link(scope, element, attrs) {
 
@@ -74,6 +149,7 @@ angular.module('app')
 				var date = new Date(fx.date);
 				res.timestamp = date.getTime() / 1000;
 				res.type = paymentTypes[fx.type];
+				res.comment = fx.comment;
 
 				var counterparty;
 				if (fx.to) {
@@ -93,42 +169,31 @@ angular.module('app')
 			);
 		}
 
-		scope.history = [];
+		function renderHistory() {
+			element[0].children[1].innerHTML = scope.history.map(function (tx) {
+				return renderItem(tx);
+			}).join('');
+		}
+
+		function updateTime() {
+			var now = new Date().getTime() / 1000;
+			var list = document.getElementsByClassName('timestamp');
+			for (var i = 0; i < list.length; i++) {
+				var e = list[i];
+				var timestamp = e.getAttribute('time');
+				e.textContent = renderTime(now, timestamp);
+			}
+		}
+
 		parseHistory();
+		renderHistory();
 
 		scope.$on('accountInfoLoaded', function (event, args) {
 			parseHistory();
+			renderHistory();
 		});
 
-		scope.getComment = function (tx) {
-
-			function contact(id, network) {
-				if (id) {
-					if (id in Wallet.accounts) {
-						return Wallet.accounts[id].alias;
-					} else {
-						return Contacts.lookup(id, network);
-					}
-				}
-			}
-
-			if (tx.comment) {
-				return tx.comment;
-			}
-
-			else {
-				var name = contact(tx.counterparty, Wallet.current.network);
-				if (name) {
-					return name;
-				} else {
-					return {
-						'send':	'transaction.sent',
-						'recv': 'transaction.received',
-						'trade':'transaction.traded'
-					}[tx.type];
-				}
-			}
-		};
+		$interval(updateTime, 1000);
 	}
 
 	return {

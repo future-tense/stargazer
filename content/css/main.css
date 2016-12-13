@@ -38,6 +38,14 @@ div[account-balance] td {
 	overflow: hidden;
 }
 
+.feed {
+	margin-bottom: 80px;
+}
+
+.feed-item.item > .item-content {
+	background-color: white;
+}
+
 .feed-item {
 	display: table;
 	position: relative;
@@ -45,8 +53,25 @@ div[account-balance] td {
 */	height: 80px;
 	border-top: 1px solid #E5E5E5;
 	padding: 0 16px;
-	background-color: white;
 	overflow: hidden;
+	background-color: white;
+}
+
+.feed-item-comment {
+	display: table-cell;
+	color:#444;
+	padding-left:16px;
+	vertical-align: middle;
+}
+
+.feed-item-icon {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.timestamp {
+	text-align: right;
+	color: #AAAAAA;
 }
 
 .avatar {
