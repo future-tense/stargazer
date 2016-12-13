@@ -29,6 +29,7 @@ angular.module('app')
 				colorLight : "#ffffff",
 				correctLevel : QRCode.CorrectLevel.L
 			});
+			qrcode._el.title = '';
 		}
 
 		scope.$watch('text', function () {
