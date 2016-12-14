@@ -1,7 +1,7 @@
 <config-navbar heading="{{'settings.federation' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
-	<form name="federationForm" class="list" ng-submit="save()">
+	<form name="federationForm" class="list">
 		<div class="item item-divider"></div>
 		<label class="item item-input item-stacked-label">
 			<span class="input-label">
@@ -13,7 +13,7 @@
 	</form>
 
 	<div style="padding-left:16px;padding-right:16px;text-align:center">
-		<button type="submit" class="button button-block button-positive" ng-disabled="federationForm.$invalid || federationForm.$pending">
+		<button type="submit" class="button button-block button-positive" on-tap="save()" ng-disabled="federationForm.$invalid || federationForm.$pending">
 			{{'global.save' | translate}}
 		</button>
 		<span>

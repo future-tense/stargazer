@@ -1,9 +1,9 @@
 <config-navbar heading="{{'settings.delete' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
-	<form name="deleteForm" ng-submit="delete()">
-		<div class="item item-divider"></div>
-		<label class="item item-input item-inset item-stacked-label" ng-if="isEncrypted">
+	<div class="item item-divider"></div>
+	<form name="deleteForm" ng-if="isEncrypted">
+		<label class="item item-input item-inset item-stacked-label">
 			<span class="input-label">
 				{{'settings.delete.password' | translate}}
 			</span>
@@ -11,7 +11,7 @@
 		</label>
 	</form>
 	<div style="padding-left:16px;padding-right:16px">
-		<button type="submit" class="button button-block button-positive" ng-disabled="isEncrypted && deleteForm.$invalid">
+		<button type="button" class="button button-block button-positive" on-tap="delete()" ng-disabled="isEncrypted && deleteForm.$invalid">
 			{{'settings.delete.button' | translate}}
 		</button>
 	</div>

@@ -1,7 +1,7 @@
 <config-navbar heading="{{'settings.name' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
-	<form class="list" ng-submit="save()">
+	<form class="list">
 		<div class="item item-divider"></div>
 		<label class="item item-input item-stacked-label">
 			<span class="input-label">{{'settings.name.label' | translate}}</span>
@@ -9,7 +9,7 @@
 		</label>
 	</form>
 	<div style="padding-left:16px;padding-right:16px">
-		<button type="submit" class="button button-block button-positive">
+		<button type="button" class="button button-block button-positive" on-tap="save()">
 			{{'global.save' | translate}}
 		</button>
 	</div>
