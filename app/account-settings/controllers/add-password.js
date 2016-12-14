@@ -4,6 +4,7 @@ angular.module('app')
 .controller('AddPasswordCtrl', function ($scope) {
 	'use strict';
 
+	$scope.form = {};
 	$scope.model = {};
 	$scope.confirm = false;
 	$scope.heading = 'modal.password.set';
@@ -14,7 +15,9 @@ angular.module('app')
 	};
 
 	$scope.confirmPassword = function () {
-		$scope.modalResolve($scope.model.password);
+		if ($scope.form.confirmForm.$valid) {
+			$scope.modalResolve($scope.model.password);
+		}
 	};
 
 	$scope.cancel = function () {

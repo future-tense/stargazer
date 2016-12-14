@@ -4,6 +4,7 @@ angular.module('app')
 .controller('SubmitPasswordCtrl', function ($scope, Wallet) {
 	'use strict';
 
+	$scope.form = {};
 	$scope.model = {};
 
 	var signer = $scope.signer;
@@ -24,7 +25,9 @@ angular.module('app')
 	}
 
 	$scope.submitPassword = function () {
-		$scope.modalResolve($scope.model.password);
+		if ($scope.form.passwordForm.$valid) {
+			$scope.modalResolve($scope.model.password);
+		}
 	};
 
 	$scope.cancel = function () {
