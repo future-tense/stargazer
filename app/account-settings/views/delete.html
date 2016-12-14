@@ -9,11 +9,10 @@
 			</span>
 			<input type="password" ng-model="account.password" required valid-password signer="{{account.id}}">
 		</label>
-
-		<div style="padding-left:16px;padding-right:16px">
-			<button type="submit" class="button button-block button-positive" ng-disabled="isEncrypted && deleteForm.$invalid">
-				{{'settings.delete.button' | translate}}
-			</button>
-		</div>
 	</form>
+	<div style="padding-left:16px;padding-right:16px">
+		<button type="submit" class="button button-block button-positive" ng-disabled="isEncrypted && deleteForm.$invalid">
+			{{'settings.delete.button' | translate}}
+		</button>
+	</div>
 </ion-content>

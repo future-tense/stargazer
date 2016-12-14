@@ -6,12 +6,12 @@
 		</div>
 
 		<form name="$parent.sendForm">
-			<label class="item item-input item-inset item-stacked-label" style="padding-right:16px;border-style:none">
+			<label class="item item-input item-inset item-stacked-label">
 				<span class="input-label">
 					{{'tabs.send.destination.label' | translate}}
 				</span>
-				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" valid-address style="border-bottom-width:1px;border-style:solid;border-color:#CCC;border-radius:0;margin-bottom:4px">
-				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
+				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" valid-address>
+				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px;padding-left:16px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
 				<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" class="text-gray" ng-show="send.destinationRaw && send.destinationRaw!==send.destination">
@@ -20,7 +20,7 @@
 			</label>
 
 			<div ng-show="flags.hasValidDestination">
-				<div class="item" style="padding-bottom:8px;padding-top:6px;border-style:none">
+				<div class="item" style="padding-bottom:8px;padding-top:6px">
 					<span class="input-label" style="padding-bottom:0;padding-top:0">
                         {{'tabs.send.amount.label' | translate}}
                     </span>

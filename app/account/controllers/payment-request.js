@@ -7,6 +7,22 @@ angular.module('app')
 	$scope.model = {};
 	$scope.showResult = false;
 
+	$scope.balances = Wallet.current.balances;
+
+	var assetCodeCollisions = Wallet.getAssetCodeCollisions($scope.balances);
+
+	$scope.getAssetDescription = function (asset) {
+		if (asset.asset_type !== 'native') {
+			if (asset.asset_code in assetCodeCollisions) {
+				return asset.asset_code + '.' + asset.asset_issuer;
+			} else {
+				return asset.asset_code;
+			}
+		} else {
+			return 'XLM';
+		}
+	};
+
 	$scope.cancel = function () {
 		$scope.closeModalService();
 	};

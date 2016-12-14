@@ -9,6 +9,7 @@
 	</ion-header-bar>
 
 	<ion-content class="modal-content fix-modals-touch">
+		<div class="item item-divider"></div>
 		<form name="contactForm">
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">
@@ -30,12 +31,11 @@
 				</span>
 				<select ng-model="model.network" ng-options="network.name for network in networks"></select>
 			</label>
-
-			<div style="padding-left:16px;padding-right:16px">
-				<button class="button button-block button-positive" on-tap="saveContact()" ng-disabled="contactForm.$invalid || contactForm.$pending">
-					{{'global.save' | translate}}
-				</button>
-			</div>
 		</form>
+		<div style="padding-left:16px;padding-right:16px">
+			<button class="button button-block button-positive" on-tap="saveContact()" ng-disabled="contactForm.$invalid || contactForm.$pending">
+				{{'global.save' | translate}}
+			</button>
+		</div>
 	</ion-content>
 </ion-modal-view>

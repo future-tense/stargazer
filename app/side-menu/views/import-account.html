@@ -27,11 +27,11 @@
 				</span>
 				<select ng-model="account.network" ng-options="network.name for network in networks"></select>
 			</label>
-			<div style="padding-left:16px;padding-right:16px">
-				<button class="button button-block button-positive" on-tap="import()" ng-disabled="importAccountForm.$invalid">
-					{{'account.import' | translate}}
-				</button>
-			</div>
 		</div>
 	</form>
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="import()" ng-disabled="importAccountForm.$invalid">
+			{{'account.import' | translate}}
+		</button>
+	</div>
 </ion-content>

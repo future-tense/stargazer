@@ -1,10 +1,8 @@
 <config-navbar heading="{{'contact.edit' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header">
-
+	<div class="item item-divider"></div>
 	<form name="contactForm">
-		<div class="item item-divider">
-		</div>
 		<label class="item item-input item-stacked-label">
 			<span class="input-label">
 				{{'contact.name.label' | translate}}
@@ -25,17 +23,17 @@
 			</span>
 			<select ng-model="model.network" ng-options="network.name for network in networks"></select>
 		</label>
-
-		<div style="padding-left:16px;padding-right:16px">
-			<button class="button button-block button-positive" on-tap="updateContact()">
-				{{'contact.update' | translate}}
-			</button>
-		</div>
-
-		<div style="padding-left:16px;padding-right:16px">
-			<button class="button button-block button-positive" on-tap="deleteContact()">
-				{{'contact.delete' | translate}}
-			</button>
-		</div>
 	</form>
+
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="updateContact()">
+			{{'contact.update' | translate}}
+		</button>
+	</div>
+
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="deleteContact()">
+			{{'contact.delete' | translate}}
+		</button>
+	</div>
 </ion-content>

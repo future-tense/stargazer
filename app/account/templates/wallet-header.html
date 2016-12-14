@@ -2,12 +2,13 @@
 	<button
 		on-tap="toggleLeftMenu()"
 		class="button button-clear button-white fa fa-bars"
+		style="border-width:0;padding:0"
 		ng-show="physicalScreenWidth < 768">
 	</button>
 	<h1 class="title ellipsis">{{ wallet.alias }}</h1>
 	<button
 		on-tap="openSettings()"
 		class="button button-clear button-white fa fa-cog"
-		style="margin-top:-2px">
+		style="margin-top:-2px;border-width:0;padding:0">
 	</button>
 </ion-header-bar>

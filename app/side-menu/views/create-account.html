@@ -33,13 +33,14 @@
 				</span>
 				<input type="number" ng-model="account.amount" placeholder="{{'account.funding.amount.placeholder' | translate}}" min="20">
 			</label>
-			<div style="padding-left:16px;padding-right:16px">
-				<button class="button button-block button-positive" on-tap="create()" ng-disabled="createAccountForm.$invalid">
-					{{'account.add' | translate}}
-				</button>
-			</div>
 		</div>
 	</form>
+
+	<div style="padding-left:16px;padding-right:16px">
+		<button class="button button-block button-positive" on-tap="create()" ng-disabled="createAccountForm.$invalid">
+			{{'account.add' | translate}}
+		</button>
+	</div>
 
 	<div style="padding-left:16px;padding-right:16px;text-align:center" class="text-gray">
 		{{'account.funding.text' | translate}}

@@ -406,11 +406,6 @@ ion-side-menu.menu {
 	right: 0;
 }
 
-col > .item-select:after {
-	top: auto;
-	bottom: 20px;
-}
-
 select option {
 	white-space: nowrap;
 	overflow:hidden;
@@ -419,4 +414,41 @@ select option {
 
 .bar .title {
 	margin-top:-2px;
+}
+
+form {
+	background-color: white;
+	padding-bottom: 9px;
+}
+
+form .item {
+	border-style: none;
+	padding-right: 16px;
+}
+
+form .item > input,
+form .item-select {
+	border-bottom-width: 1px;
+	border-style: solid;
+	border-color: #CCC;
+	border-radius: 0;
+	margin-bottom: 4px;
+}
+
+form .col > .item-select {
+	margin:0;
+}
+
+form .item-select {
+	margin-top: 6px;
+	margin-right: 16px;
+	margin-left: 16px;
+	border-top-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
+	margin-bottom: 9px;
+	padding-bottom: 0;
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 0;
 }

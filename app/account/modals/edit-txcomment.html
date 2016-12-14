@@ -9,6 +9,7 @@
 	</ion-header-bar>
 
 	<ion-content class="modal-content fix-modals-touch">
+		<div class="item item-divider"></div>
 		<form name="commentForm">
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">
@@ -16,12 +17,11 @@
 				</span>
 				<input type="text" ng-model="model.comment" placeholder="{{'modal.comment.add' | translate}}" required>
 			</label>
-
-			<div style="padding-left:16px;padding-right:16px">
-				<button class="button button-block button-positive" on-tap="saveComment()" ng-disabled="commentForm.$invalid">
-					{{'global.save' | translate}}
-				</button>
-			</div>
 		</form>
+		<div style="padding-left:16px;padding-right:16px">
+			<button class="button button-block button-positive" on-tap="saveComment()" ng-disabled="commentForm.$invalid">
+				{{'global.save' | translate}}
+			</button>
+		</div>
 	</ion-content>
 </ion-modal-view>

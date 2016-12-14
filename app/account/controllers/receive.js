@@ -8,15 +8,6 @@ angular.module('app')
 	$scope.qrtext = '';
 
 	$scope.accountId = Wallet.current.id;
-	$scope.balances = Wallet.current.balances;
-
-	$scope.getAssetDescription = function (asset) {
-		if (asset.asset_type !== 'native') {
-			return asset.asset_code + '.' + asset.asset_issuer;
-		} else {
-			return 'XLM';
-		}
-	};
 
 	$scope.hasFederation = (Wallet.current.federation !== undefined);
 	$scope.setFederation = function () {

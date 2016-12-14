@@ -10,14 +10,14 @@
 			<input type="text" id="alias" type="text" name="alias" ng-model="data.federation"
 				   placeholder="{{'settings.federation.placeholder' | translate}}" autocomplete="off" valid-federation accountid="{{accountId}}">
 		</label>
-
-		<div style="padding-left:16px;padding-right:16px;text-align:center">
-			<button type="submit" class="button button-block button-positive" ng-disabled="federationForm.$invalid || federationForm.$pending">
-				{{'global.save' | translate}}
-			</button>
-			<span>
-				{{'settings.federation.text' | translate}}
-			</span>
-		</div>
 	</form>
+
+	<div style="padding-left:16px;padding-right:16px;text-align:center">
+		<button type="submit" class="button button-block button-positive" ng-disabled="federationForm.$invalid || federationForm.$pending">
+			{{'global.save' | translate}}
+		</button>
+		<span>
+			{{'settings.federation.text' | translate}}
+		</span>
+	</div>
 </ion-content>
