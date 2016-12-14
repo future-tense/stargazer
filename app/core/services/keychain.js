@@ -70,7 +70,7 @@ angular.module('app')
 		var scope = $rootScope.$new();
 		scope.signer = signer;
 
-		return Modal.show('app/default/modals/submit-password.html', scope)
+		return Modal.show('app/core/modals/submit-password.html', scope)
 		.then(function (password) {
 			var seed = decrypt(keyStore, password);
 			return StellarSdk.Keypair.fromSeed(seed);

@@ -46,7 +46,7 @@ angular.module('app')
 		$scope.send.pathRecords = [];
 
 		$scope.send.destination = '';
-		Modal.show('app/default/modals/select-contact.html', $scope);
+		Modal.show('app/core/modals/select-contact.html', $scope);
 	};
 
 	$scope.getPaths = function () {

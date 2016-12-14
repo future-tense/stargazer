@@ -20,7 +20,7 @@ angular.module('app')
 		//	invalidate form records first
 		$scope.send.destination = '';
 
-		Modal.show('app/default/views/select-contact.html', $scope);
+		Modal.show('app/core/views/select-contact.html', $scope);
 	};
 
 	$scope.setInflation = function () {
