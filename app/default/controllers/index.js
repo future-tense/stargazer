@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('IndexCtrl', function ($ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Language, Modal, Storage, Wallet) {
+.controller('IndexCtrl', function ($ionicBody, $ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Language, Modal, Storage, Wallet) {
 	'use strict';
 
 	$scope.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
@@ -76,11 +76,11 @@ angular.module('app')
 	};
 
 	$rootScope.$on('$submitter.failed', function (event, err) {
-		return $translate(err)
-		.then(function (res) {
-			$ionicPopup.alert({
-				title: res
-			});
+		$ionicPopup.alert({
+			title: $translate.instant(err)
+		}).then(function () {
+			//	:KLUDGE: ionic 1.3.2 messes up, so we have to manually remove this
+			$ionicBody.removeClass('modal-open');
 		});
 	});
 });
