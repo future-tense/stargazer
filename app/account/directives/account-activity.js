@@ -170,9 +170,16 @@ angular.module('app')
 		}
 
 		function renderHistory() {
-			element[0].children[1].innerHTML = scope.history.map(function (tx) {
-				return renderItem(tx);
-			}).join('');
+			var html;
+			if (scope.history.length !== 0) {
+				html = scope.history.map(function (tx) {
+					return renderItem(tx);
+				}).join('');
+			} else {
+				var text = $translate.instant('tabs.home.activity.empty');
+				html = '<div style="text-align: center" class="text-gray">' + text + '</div';
+			}
+			element[0].children[1].innerHTML = html;
 		}
 
 		function updateTime() {
