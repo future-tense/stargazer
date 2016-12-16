@@ -21,10 +21,13 @@
 	function _parseEffect(fx, op, tx) {
 
 		var res = {
-			id:		fx.id,
-			type:	fx.type,
-			hash:	tx.hash,
-			date:	tx.created_at
+			id:			fx.id,
+			type:		fx.type,
+			hash:		tx.hash,
+			date:		tx.created_at,
+			numOps: 	tx.operation_count,
+			memo:		tx.memo,
+			memoType:	tx.memo_type
 		};
 
 		var handlers = {

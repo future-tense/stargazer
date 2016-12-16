@@ -4,6 +4,7 @@ angular.module('app')
 .controller('CreateAccountCtrl', function ($location, $scope, $translate, Horizon, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
+	$scope.advanced = false;
 	$scope.networks = Horizon.getNetworks();
 
 	var numAccounts = Object.keys(Wallet.accounts).length;

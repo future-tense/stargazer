@@ -66,13 +66,10 @@ angular.module('app')
 		};
 
 		if ($scope.type === 'send') {
-			Wallet.current.horizon().transactions().transaction(effect.hash).call()
-			.then(function (res) {
-				if (res.operation_count === 1) {
-					$scope.model.memo		= res.memo;
-					$scope.model.memo_type	= res.memo_type;
-				}
-			});
+			if (effect.numOps === 1) {
+				$scope.model.memo		= effect.memo;
+				$scope.model.memo_type	= effect.memo_type;
+			}
 		}
 
 		Modal.show('app/account/modals/add-contact.html', $scope);

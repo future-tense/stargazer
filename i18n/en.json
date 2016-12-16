@@ -6,6 +6,16 @@
 	"global.update":							"Update",
 	"global.ok":								"OK",
 	"global.cancel":							"Cancel",
+	"global.advanced.show":						"Show advanced options",
+	"global.advanced.hide":						"Hide advanced options",
+
+	"memo.memo":								"Memo",
+	"memo.type":								"Memo Type",
+	"memotype.none":							"None",
+	"memotype.id":								"ID",
+	"memotype.text":							"Text",
+	"memotype.hash":							"Hash",
+	"memotype.return":							"Return",
 
 	"error.transaction-failed":					"Transaction Failed",
 	"error.missing-signatures":					"Not enough signatures",
@@ -43,6 +53,7 @@
 	"transaction.from":							"From",
 	"transaction.to":							"To",
 	"transaction.submitting":					"Submitting...",
+	"transaction.memo":							"Memo",
 
 	"account.initialname":						"Personal Account",
 	"account.defaultname":						"Personal Account #{{number}}",

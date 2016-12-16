@@ -6,12 +6,6 @@ angular.module('app')
 
 	$scope.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
 
-	$scope.advanced = Storage.getItem('advanced') || false;
-	$scope.toggleAdvanced = function () {
-		$scope.advanced = !$scope.advanced;
-		Storage.setItem('advanced', $scope.advanced);
-	};
-
 	function handleAccountImport(account, key) {
 
 		var data = window.btoa(JSON.stringify({

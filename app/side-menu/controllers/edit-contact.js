@@ -7,6 +7,15 @@ angular.module('app')
 	var name = $routeParams.name;
 	var contact = Contacts.get(name);
 
+	$scope.memoTypes = [
+		{name: 'memotype.none',		value: null},
+		{name: 'memotype.id',		value: 'id'},
+		{name: 'memotype.text',		value: 'text'},
+		{name: 'memotype.hash',		value: 'hash'},
+		{name: 'memotype.return',	value: 'return'}
+	];
+
+	$scope.advanced = false;
 	$scope.model = contact;
 	$scope.model.name = name;
 	$scope.model.network = Horizon.getNetwork(contact.network);

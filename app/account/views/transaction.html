@@ -69,6 +69,17 @@
 			</label>
 		</div>
 
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="effect.memo">
+			<label class="item-input" style="padding-left:0;justify-content: space-between;">
+				<span class="input-label">
+					{{'transaction.memo' | translate}}
+				</span>
+				<span class="text-gray">
+					{{::effect.memo}}
+				</span>
+			</label>
+		</div>
+
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="effect.comment">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">

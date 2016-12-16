@@ -4,9 +4,18 @@ angular.module('app')
 .controller('AddContactCtrl', function ($route, $scope, Contacts, DestinationCache, Horizon) {
 	'use strict';
 
+	$scope.advanced = false;
 	$scope.cancel = function () {
 		$scope.closeModalService();
 	};
+
+	$scope.memoTypes = [
+		{name: 'memotype.none',		value: null},
+		{name: 'memotype.id',		value: 'id'},
+		{name: 'memotype.text',		value: 'text'},
+		{name: 'memotype.hash',		value: 'hash'},
+		{name: 'memotype.return',	value: 'return'}
+	];
 
 	$scope.networks = Horizon.getNetworks();
 

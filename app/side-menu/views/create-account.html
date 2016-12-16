@@ -9,7 +9,21 @@
 				</span>
 				<input type="text" ng-model="account.alias" required>
 			</label>
-			<label class="item item-input item-select item-stacked-label" ng-if="advanced">
+			<div class="item" style="padding:8px 16px">
+				<button class="button button-block button-outline button-stable" style="margin:0;border-radius:0" on-tap="advanced=!advanced">
+					<div ng-show="!advanced">
+						<i class="fa fa-cog"></i>
+						&nbsp;{{'global.advanced.show' | translate}}&nbsp;
+						<i class="icon-arrow-down4"></i>
+					</div>
+					<div ng-show="advanced">
+						<i class="fa fa-cog"></i>
+						&nbsp;{{'global.advanced.hide' | translate}}&nbsp;
+						<i class="icon-arrow-up4"></i>
+					</div>
+				</button>
+			</div>
+			<label class="item item-input item-select item-stacked-label" ng-show="advanced">
 				<span class="input-label">
 					{{'account.network.label' | translate}}
 				</span>

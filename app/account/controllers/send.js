@@ -4,6 +4,15 @@ angular.module('app')
 .controller('SendCtrl', function ($location, $q, $scope, DestinationCache, Keychain, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
+	$scope.advanced = false;
+	$scope.memoTypes = [
+		{name: 'memotype.none',		value: null},
+		{name: 'memotype.id',		value: 'id'},
+		{name: 'memotype.text',		value: 'text'},
+		{name: 'memotype.hash',		value: 'hash'},
+		{name: 'memotype.return',	value: 'return'}
+	];
+
 	var assetCodeCollisions;
 	$scope.destinationAssets = [];
 	$scope.send = {};
@@ -248,8 +257,8 @@ angular.module('app')
 
 			var builder = new StellarSdk.TransactionBuilder(account).addOperation(operation);
 
-			if (destInfo.memo) {
-				var memo = new StellarSdk.Memo[destInfo.memo_type](destInfo.memo);
+			if ($scope.send.memoType) {
+				var memo = new StellarSdk.Memo[$scope.send.memo_type]($scope.send.memo);
 				builder.addMemo(memo);
 			}
 
@@ -297,6 +306,14 @@ angular.module('app')
 				.then(function (res) {
 
 					$scope.send.destinationRaw = destinationId;
+
+					if (destInfo.memo_type) {
+						$scope.send.memoType	= destInfo.memo_type;
+						$scope.send.memo		= destInfo.memo;
+					} else {
+						$scope.send.memoType	= null;
+						$scope.send.memo		= null;
+					}
 
 					var assetSortFunction = function (a, b) {
 						return a.asset_code > b.asset_code;
