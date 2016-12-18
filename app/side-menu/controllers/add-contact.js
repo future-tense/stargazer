@@ -9,14 +9,6 @@ angular.module('app')
 		$scope.closeModalService();
 	};
 
-	$scope.memoTypes = [
-		{name: 'memotype.none',		value: null},
-		{name: 'memotype.id',		value: 'id'},
-		{name: 'memotype.text',		value: 'text'},
-		{name: 'memotype.hash',		value: 'hash'},
-		{name: 'memotype.return',	value: 'return'}
-	];
-
 	$scope.networks = Horizon.getNetworks();
 
 	$scope.model = {

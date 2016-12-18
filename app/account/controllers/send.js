@@ -5,13 +5,6 @@ angular.module('app')
 	'use strict';
 
 	$scope.advanced = false;
-	$scope.memoTypes = [
-		{name: 'memotype.none',		value: null},
-		{name: 'memotype.id',		value: 'id'},
-		{name: 'memotype.text',		value: 'text'},
-		{name: 'memotype.hash',		value: 'hash'},
-		{name: 'memotype.return',	value: 'return'}
-	];
 
 	var assetCodeCollisions;
 	$scope.destinationAssets = [];
