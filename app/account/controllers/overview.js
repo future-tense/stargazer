@@ -1,7 +1,7 @@
 /* global angular, console, toml */
 
 angular.module('app')
-.controller('HomeCtrl', function ($location, $route, $scope, $http, Anchors, History, Wallet) {
+.controller('OverviewCtrl', function ($route, $scope, Wallet) {
 	'use strict';
 
 	var accountId = $route.current.params.accountId;

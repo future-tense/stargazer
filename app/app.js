@@ -17,7 +17,7 @@ angular.module('app', [
 	};
 
 	$ionicPlatform.registerBackButtonAction(function () {
-		if ($route.current.controller !== 'HomeCtrl') {
+		if ($route.current.controller !== 'OverviewCtrl') {
 			$rootScope.goBack();
 		} else {
 			navigator.app.exitApp();
