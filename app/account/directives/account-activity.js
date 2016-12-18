@@ -37,7 +37,7 @@ angular.module('app')
 				if (id in Wallet.accounts) {
 					return Wallet.accounts[id].alias;
 				} else {
-					return Contacts.lookup(id, network);
+					return Contacts.lookup(id, network, tx.memoType, tx.memo);
 				}
 			}
 		}
@@ -150,6 +150,8 @@ angular.module('app')
 				res.timestamp = date.getTime() / 1000;
 				res.type = paymentTypes[fx.type];
 				res.comment = fx.comment;
+				res.memoType = fx.memoType;
+				res.memo = fx.memo;
 
 				var counterparty;
 				if (fx.to) {

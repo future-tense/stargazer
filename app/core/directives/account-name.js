@@ -9,7 +9,8 @@ angular.module('app')
 		Reverse.lookupAndFill(
 			function (res) {scope.name = res;},
 			scope.id,
-			scope.network
+			scope.network,
+			scope.tx
 		);
 	}
 
@@ -17,7 +18,8 @@ angular.module('app')
 		restrict: 'E',
 		scope: {
 			id: '@',
-			network: '@'
+			network: '@',
+			tx: '='
 		},
 		link: link,
 		template: '{{name}}'

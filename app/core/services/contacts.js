@@ -37,10 +37,6 @@ angular.module('app')
 		},
 
 		add: function (name, contact) {
-			if (contact.network === Horizon.livenet) {
-				delete contact.network;
-			}
-
 			contacts[name] = contact;
 			Storage.setItem('contacts', contacts);
 		},
@@ -50,24 +46,45 @@ angular.module('app')
 			Storage.setItem('contacts', contacts);
 		},
 
-		lookup: function (accountId, network) {
+		lookup: function (accountId, network, memoType, memo) {
 
 			if (!network) {
 				network = Horizon.livenet;
 			}
 
-			var res;
+			var matches = [];
 			Object.keys(contacts).forEach(function (name) {
 				var contact = contacts[name];
 				if (!contact.network) {
 					contact.network = Horizon.livenet;
 				}
+
 				if ((contact.id === accountId) && (contact.network === network)) {
-					res = name;
+					matches.push(name);
 				}
 			});
 
-			return res;
+			if (memoType && memo) {
+				var memoContact = matches.filter(function (name) {
+					var contact = contacts[name];
+					return ((memoType === contact.memo_type) && (memo === contact.memo));
+				});
+
+				if (memoContact.length) {
+					return memoContact[0];
+				}
+			}
+
+			var contact = matches.filter(function (name) {
+				var contact = contacts[name];
+				return (!contact.memo_type && !contact.memo);
+			});
+
+			if (contact.length) {
+				return contact[0];
+			} else {
+				return null;
+			}
 		}
 	};
 });

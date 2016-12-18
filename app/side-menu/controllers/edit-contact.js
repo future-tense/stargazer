@@ -16,7 +16,7 @@ angular.module('app')
 	];
 
 	$scope.advanced = false;
-	$scope.model = contact;
+	$scope.model = JSON.parse(JSON.stringify(contact));
 	$scope.model.name = name;
 	$scope.model.network = Horizon.getNetwork(contact.network);
 	$scope.networks = Horizon.getNetworks();

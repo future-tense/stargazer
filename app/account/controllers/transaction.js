@@ -47,8 +47,19 @@ angular.module('app')
 		return effect.comment? 'transaction.comment.edit' : 'transaction.comment.add';
 	};
 
+	//
+
+	var contactName = Contacts.lookup(
+		$scope.counterparty,
+		Wallet.current.network,
+		effect.memoType,
+		effect.memo
+	);
+	var contact = Contacts.get(contactName);
 	$scope.isContact = ($scope.counterparty in Wallet.accounts) ||
-		Contacts.lookup($scope.counterparty, Wallet.current.network);
+		(contact && contact.memo_type === effect.memoType && contact.memo === effect.memo);
+
+	//
 
 	$scope.editComment = function () {
 
@@ -68,7 +79,7 @@ angular.module('app')
 		if ($scope.type === 'send') {
 			if (effect.numOps === 1) {
 				$scope.model.memo		= effect.memo;
-				$scope.model.memo_type	= effect.memo_type;
+				$scope.model.memo_type	= effect.memoType;
 			}
 		}
 

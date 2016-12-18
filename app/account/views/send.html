@@ -60,11 +60,11 @@
 						<span class="input-label">
 							{{'memo.type' | translate}}
 						</span>
-						<select ng-model="send.memoType" ng-init="send.memoType=memoTypes[0].value">
+						<select ng-model="send.memo_type" ng-init="send.memo_type=memoTypes[0].value">
 							<option ng-repeat="type in memoTypes" value="{{type.value}}">{{type.name | translate}}</option>
 						</select>
 					</label>
-					<label class="item item-input item-inset item-stacked-label" ng-show="send.memoType">
+					<label class="item item-input item-inset item-stacked-label" ng-show="send.memo_type">
 						<span class="input-label">
 							{{'memo.memo' | translate}}
 						</span>

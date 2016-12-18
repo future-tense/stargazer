@@ -53,7 +53,7 @@
 					{{::counterpartyLabel | translate}}
 				</span>
 				<span class="text-gray" style="flex-shrink:1;justify-content:flex-end;text-overflow:ellipsis;overflow:hidden">
-					<account-name id="{{::counterparty}}" network="{{::network}}"></account-name>
+					<account-name id="{{::counterparty}}" network="{{::network}}" tx="effect"></account-name>
 				</span>
 			</label>
 		</div>
@@ -69,7 +69,7 @@
 			</label>
 		</div>
 
-		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="effect.memo">
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="!isContact && effect.memo">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
 					{{'transaction.memo' | translate}}

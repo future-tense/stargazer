@@ -30,7 +30,7 @@ angular.module('app')
 		});
 	}
 
-	function lookup(accountId, network) {
+	function lookup(accountId, network, tx) {
 
 		return $q(function(resolve, reject) {
 			if (accountId in Wallet.accounts) {
@@ -38,7 +38,14 @@ angular.module('app')
 			}
 
 			else {
-				var name = Contacts.lookup(accountId, network);
+
+				var name;
+				if (tx) {
+					name = Contacts.lookup(accountId, network, tx.memoType, tx.memo);
+				} else {
+					name = Contacts.lookup(accountId, network);
+				}
+
 				if (name) {
 					resolve(name);
 				}
@@ -65,9 +72,9 @@ angular.module('app')
 
 	return {
 		lookup: lookup,
-		lookupAndFill: function (setter, accountId, network) {
+		lookupAndFill: function (setter, accountId, network, tx) {
 			setter(accountId);
-			lookup(accountId, network)
+			lookup(accountId, network, tx)
 			.then(setter);
 		}
 	};

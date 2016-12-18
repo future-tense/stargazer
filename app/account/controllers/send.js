@@ -257,7 +257,7 @@ angular.module('app')
 
 			var builder = new StellarSdk.TransactionBuilder(account).addOperation(operation);
 
-			if ($scope.send.memoType) {
+			if ($scope.send.memo_type) {
 				var memo = new StellarSdk.Memo[$scope.send.memo_type]($scope.send.memo);
 				builder.addMemo(memo);
 			}
@@ -306,12 +306,11 @@ angular.module('app')
 				.then(function (res) {
 
 					$scope.send.destinationRaw = destinationId;
-
 					if (destInfo.memo_type) {
-						$scope.send.memoType	= destInfo.memo_type;
+						$scope.send.memo_type	= destInfo.memo_type;
 						$scope.send.memo		= destInfo.memo;
 					} else {
-						$scope.send.memoType	= null;
+						$scope.send.memo_type	= null;
 						$scope.send.memo		= null;
 					}
 
