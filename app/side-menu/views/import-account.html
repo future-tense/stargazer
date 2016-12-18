@@ -21,26 +21,18 @@
 				</span>
 				<input type="password" ng-model="account.password" required>
 			</label>
-			<div class="item" style="padding:8px 16px" ng-if="!scanned">
-				<button class="button button-block button-outline button-stable" style="margin:0;border-radius:0" on-tap="flag.advanced=!flag.advanced">
-					<div ng-show="!flag.advanced">
-						<i class="fa fa-cog"></i>
-						&nbsp;{{'global.advanced.show' | translate}}&nbsp;
-						<i class="icon-arrow-down4"></i>
-					</div>
-					<div ng-show="flag.advanced">
-						<i class="fa fa-cog"></i>
-						&nbsp;{{'global.advanced.hide' | translate}}&nbsp;
-						<i class="icon-arrow-up4"></i>
-					</div>
-				</button>
+
+			<div ng-if="!scanned">
+				<advanced-toggle ng-model="advanced"></advanced-toggle>
+				<div ng-show="advanced">
+					<label class="item item-input item-select item-stacked-label">
+						<span class="input-label">
+							{{'account.network.label' | translate}}
+						</span>
+						<select ng-model="account.network" ng-options="network.name for network in networks"></select>
+					</label>
+				</div>
 			</div>
-			<label class="item item-input item-select item-stacked-label" ng-show="flag.advanced&&!scanned">
-				<span class="input-label">
-					{{'account.network.label' | translate}}
-				</span>
-				<select ng-model="account.network" ng-options="network.name for network in networks"></select>
-			</label>
 		</div>
 	</form>
 	<div style="padding-left:16px;padding-right:16px">

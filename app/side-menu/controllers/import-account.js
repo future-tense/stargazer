@@ -4,11 +4,7 @@ angular.module('app')
 .controller('ImportAccountCtrl', function ($location, $routeParams, $scope, $translate, Horizon, Keychain, Wallet) {
 	'use strict';
 
-	//	gotta love angular scoping
-	$scope.flag = {
-		advanced: false
-	};
-
+	$scope.advanced = false;
 	$scope.networks = Horizon.getNetworks();
 
 	var data;
@@ -18,15 +14,11 @@ angular.module('app')
 		$scope.scanned = true;
 	}
 
-
 	var numAccounts = Object.keys(Wallet.accounts).length;
-	$translate('account.defaultname', {number: numAccounts + 1})
-	.then(function (res) {
-		$scope.account = {
-			alias: res,
-			network: Horizon.getNetwork(Horizon.livenet)
-		};
-	});
+	$scope.account = {
+		alias: $translate.instant('account.defaultname', {number: numAccounts + 1}),
+		network: Horizon.getNetwork(Horizon.livenet)
+	};
 
 	$scope.import = function () {
 
