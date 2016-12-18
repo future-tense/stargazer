@@ -9,13 +9,11 @@
 				</span>
 				<input type="text" ng-model="account.alias" required>
 			</label>
+
 			<advanced-toggle ng-model="advanced"></advanced-toggle>
-			<label class="item item-input item-select item-stacked-label" ng-show="advanced">
-				<span class="input-label">
-					{{'account.network.label' | translate}}
-				</span>
-				<select ng-model="account.network" ng-options="network.name for network in networks"></select>
-			</label>
+
+			<network-selector network="account.network" ng-show="advanced"></network-selector>
+
 			<div class="item item-divider">
 				{{'account.funding.heading' | translate}}
 			</div>
@@ -23,7 +21,7 @@
 				<span class="input-label">
 					{{'account.funding.label' | translate}}
 				</span>
-				<input type="text" ng-model="account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="account.network.phrase">
+				<input type="text" ng-model="account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="account.network">
 				<a on-tap="selectAccount()" style="position:absolute;right:16px;top:40px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>

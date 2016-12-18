@@ -1,21 +1,16 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('CreateAccountCtrl', function ($location, $scope, $translate, Horizon, Modal, Signer, Submitter, Wallet) {
+.controller('CreateAccountCtrl', function ($location, $scope, $translate, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.advanced = false;
-	$scope.networks = Horizon.getNetworks();
 
 	var numAccounts = Object.keys(Wallet.accounts).length;
-	$translate('account.defaultname', {number: numAccounts + 1})
-	.then(function (res) {
-		$scope.account = {
-			alias: res,
-			amount: 20,
-			network: Horizon.getNetwork(Horizon.livenet)
-		};
-	});
+	$scope.account = {
+		alias: $translate.instant('account.defaultname', {number: numAccounts + 1}),
+		amount: 20
+	};
 
 	$scope.wallet = Wallet;
 
@@ -26,7 +21,7 @@ angular.module('app')
 
 	$scope.create = function () {
 
-		var network = Horizon.getHash($scope.account.network.phrase);
+		var network = $scope.account.network;
 
 		var accounts = {};
 		Object.keys(Wallet.accounts).forEach(function (key) {
@@ -78,7 +73,7 @@ angular.module('app')
 		}
 	};
 })
-.directive('validFunder', function (Horizon, Wallet) {
+.directive('validFunder', function (Wallet) {
 	'use strict';
 
 	return {
@@ -93,7 +88,7 @@ angular.module('app')
 					return true;
 				}
 
-				var network = Horizon.getHash(scope.network);
+				var network = scope.network;
 
 				var names = {};
 				Object.keys(Wallet.accounts).forEach(function (key) {
@@ -108,10 +103,10 @@ angular.module('app')
 		}
 	};
 })
-.controller('SelectFundingAccountCtrl', function($scope, Horizon, Wallet) {
+.controller('SelectFundingAccountCtrl', function($scope, Wallet) {
 	'use strict';
 
-	var network = Horizon.getHash($scope.account.network.phrase);
+	var network = $scope.account.network;
 
 	$scope.accounts = Object.keys(Wallet.accounts)
 	.filter(function (key) {

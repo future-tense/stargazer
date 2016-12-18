@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('AddContactCtrl', function ($route, $scope, Contacts, DestinationCache, Horizon) {
+.controller('AddContactCtrl', function ($route, $scope, Contacts, DestinationCache) {
 	'use strict';
 
 	$scope.advanced = false;
@@ -9,11 +9,7 @@ angular.module('app')
 		$scope.closeModalService();
 	};
 
-	$scope.networks = Horizon.getNetworks();
-
-	$scope.model = {
-		network: Horizon.getNetwork(Horizon.livenet)
-	};
+	$scope.model = {};
 
 	$scope.saveContact = function () {
 
@@ -22,7 +18,7 @@ angular.module('app')
 
 			var contact = {
 				id:			destInfo.id,
-				network:	Horizon.getHash($scope.model.network.phrase)
+				network:	$scope.model.network
 			};
 
 			if ($scope.model.memo) {

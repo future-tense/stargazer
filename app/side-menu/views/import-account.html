@@ -24,14 +24,7 @@
 
 			<div ng-if="!scanned">
 				<advanced-toggle ng-model="advanced"></advanced-toggle>
-				<div ng-show="advanced">
-					<label class="item item-input item-select item-stacked-label">
-						<span class="input-label">
-							{{'account.network.label' | translate}}
-						</span>
-						<select ng-model="account.network" ng-options="network.name for network in networks"></select>
-					</label>
-				</div>
+				<network-selector network="account.network" ng-show="advanced"></network-selector>
 			</div>
 		</div>
 	</form>

@@ -1,11 +1,10 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('ImportAccountCtrl', function ($location, $routeParams, $scope, $translate, Horizon, Keychain, Wallet) {
+.controller('ImportAccountCtrl', function ($location, $routeParams, $scope, $translate, Keychain, Wallet) {
 	'use strict';
 
 	$scope.advanced = false;
-	$scope.networks = Horizon.getNetworks();
 
 	var data;
 	if ($routeParams.data) {
@@ -16,8 +15,7 @@ angular.module('app')
 
 	var numAccounts = Object.keys(Wallet.accounts).length;
 	$scope.account = {
-		alias: $translate.instant('account.defaultname', {number: numAccounts + 1}),
-		network: Horizon.getNetwork(Horizon.livenet)
+		alias: $translate.instant('account.defaultname', {number: numAccounts + 1})
 	};
 
 	$scope.import = function () {
@@ -39,7 +37,7 @@ angular.module('app')
 			keyStore = data.key;
 		} else {
 			seed = $scope.account.seed;
-			network = Horizon.getHash($scope.account.network.phrase);
+			network = $scope.account.network;
 			keyStore = seed;
 		}
 

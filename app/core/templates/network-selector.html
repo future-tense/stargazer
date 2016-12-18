@@ -1,0 +1,8 @@
+<label class="item item-input item-select item-stacked-label">
+	<span class="input-label">
+		{{'account.network.label' | translate}}
+	</span>
+	<select ng-model="network">
+		<option ng-repeat="network in networks" value="{{hash(network)}}">{{network.name}}</option>
+	</select>
+</label>
