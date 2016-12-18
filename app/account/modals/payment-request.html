@@ -13,12 +13,12 @@
 			<div class="item item-divider"></div>
 			<div class="item" style="padding-bottom:8px;padding-top:6px">
 				<span class="input-label" style="padding-bottom:0;padding-top:0">
-					{{'tabs.send.amount.label' | translate}}
+					{{'modal.request.amount.label' | translate}}
 				</span>
 				<div class="row" style="padding:0">
 					<div class="col" style="padding:0">
 						<label class="item-input item-stacked-label" style="padding-left:0;border-width:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-right:8px">
-							<input type="number" ng-model="model.amount" ng-change="onAmount()" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.amount.placeholder' | translate}}" min="{{send.minAmount}}" style="height:28px" required>
+							<input type="number" ng-model="model.amount" ng-change="onAmount()" ng-model-options="{debounce: 200}" placeholder="{{'modal.request.amount.placeholder' | translate}}" min="{{send.minAmount}}" style="height:28px" required>
 						</label>
 					</div>
 
