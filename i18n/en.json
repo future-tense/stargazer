@@ -38,7 +38,7 @@
 	"tabs.send.destination.placeholder":		"Recipient Address",
 	"tabs.send.info.heading":					"Recipient information",
 	"tabs.send.paths.heading":					"Send as",
-	"tabs.send.paths.empty":					"No paths found",
+	"tabs.send.paths.empty":					"No payment options found",
 
 	"transaction.heading":						"Transaction Details",
 	"transaction.comment":						"Comment",
@@ -91,7 +91,6 @@
 	"settings.trustlines":						"Trustlines",
 	"settings.trustlines.add":					"Add Anchor",
 
-	"settings.mode.advanced":					"Advanced Mode",
 	"settings.contacts":						"Contacts",
 	"settings.contacts.add":					"Add Contact",
 	"settings.global.heading":					"Global Settings",
