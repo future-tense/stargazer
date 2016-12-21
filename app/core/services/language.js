@@ -9,6 +9,10 @@ angular.module('app')
 			name:	'English',
 			locale:	'en-US'
 		},
+		id: {
+			name:	'Bahasa Indonesia',
+			locale: 'id-ID'
+		},
 		sv: {
 			name:	'Svenska',
 			locale:	'sv-SE'
