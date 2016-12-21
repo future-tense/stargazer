@@ -1,7 +1,7 @@
 /* global angular, console, Decimal, StellarSdk */
 
 angular.module('app')
-.controller('SendCtrl', function ($location, $q, $scope, DestinationCache, Keychain, Modal, Signer, Submitter, Wallet) {
+.controller('SendCtrl', function ($location, $q, $scope, DestinationCache, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.advanced = false;
