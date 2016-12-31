@@ -67,6 +67,7 @@ angular.module('app', [
 	.fallbackLanguage('en');
 
 	$translateProvider.translations('en', /* @include ../i18n/en.json */);
+	$translateProvider.translations('fil', /* @include ../i18n/fil.json */);
 	$translateProvider.translations('id', /* @include ../i18n/id.json */);
 	$translateProvider.translations('sv', /* @include ../i18n/sv.json */);
 }]);
