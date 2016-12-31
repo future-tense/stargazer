@@ -29,7 +29,7 @@ angular.module('app')
 				$scope.model.network = account.network;
 			}
 
-			Modal.show('app/account/views/add-contact.html', $scope);
+			Modal.show('app/account/modals/add-contact.html', $scope);
 		}
 	}
 
