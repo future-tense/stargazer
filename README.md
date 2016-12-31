@@ -104,19 +104,10 @@ Asset is only needed if not XLM
 }
 ```
 
-# Binaries
+# LICENSE
 
-Android:
-* https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer.apk
-* bd0d2af696ccf2fd847fea17d7e46c2cfb11dc9c0e27aa91712d7d00d9c440ea (sha-256)
-
-OS X:
-* https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer-osx.zip
-* 3b09ddb48be4a98c49a7d6ea913b14fcc0aa9427ca4d62cb31a70152dc3fb76a (sha-256)
-
-Win64:
-* https://dl.dropboxusercontent.com/u/1263552/Stargazer/stargazer-win64.zip
-* 9516fd93c049631d2c566b05609cbeff603b4f4f458e4306deec140ce5474d56 (sha-256)
-
-The Android app currently has to be sideloaded into the device. I'm personally using the app AirDrop for doing that,
-but there are other ways, see e.g. http://www.digitalcitizen.life/how-sideload-apps-using-apk-files-android-devices
+Stargazer is released under the GNU Affero General Public License v3 (AGPL), except for the following files
+* app/core/controllers/scanner.js
+* app/core/directives/qr-scanner.js
+* app/core/services/platform-info.js
+which originate from Copay, and are made available under the terms of the MIT License.
