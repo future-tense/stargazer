@@ -91,6 +91,12 @@
 	"settings.trustlines":						"Trustlines",
 	"settings.trustlines.add":					"Add Anchor",
 
+	"modal.trustline.heading":					"Add Anchor",
+	"modal.trustline.anchor.label":				"Anchor",
+	"modal.trustline.anchor.placeholder":		"Anchor domain or address",
+	"modal.trustline.asset.label":				"Asset",
+	"modal.trustline.asset.placeholder":		"Asset Code",
+
 	"settings.contacts":						"Contacts",
 	"settings.contacts.add":					"Add Contact",
 	"settings.global.heading":					"Global Settings",
