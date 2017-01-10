@@ -1,0 +1,38 @@
+<ion-modal-view ng-controller="AddTrustlineCtrl">
+	<ion-header-bar align-title="center" class="tab-bar">
+		<h1 class="title ellipsis">
+			Add anchor
+		</h1>
+	</ion-header-bar>
+
+	<ion-content class="modal-content fix-modals-touch">
+		<div class="item item-divider"></div>
+		<form name="trustlineForm">
+			<label class="item item-input item-stacked-label">
+				<span class="input-label">
+					Anchor
+				</span>
+				<input type="text" name="anchor" ng-model="model.anchor" placeholder="Anchor domain or addresss" autocapitalize="none" autocomplete="off" required valid-anchor>
+			</label>
+			<label class="item item-input item-stacked-label" ng-show="showAsset">
+				<span class="input-label">
+					Asset
+				</span>
+				<input type="text" ng-model="model.asset" placeholder="Asset code" autocapitalize="none" required>
+			</label>
+		</form>
+
+		<div class="row" style="padding:4px 8px">
+			<div class="col col-50" style="padding:4px 8px">
+				<button class="button button-block button-light" on-tap="cancel()">
+					{{'global.cancel' | translate}}
+				</button>
+			</div>
+			<div class="col col-50" style="padding:4px 8px">
+				<button class="button button-block button-positive" on-tap="add()" ng-disabled="trustlineForm.$invalid || trustlineForm.$pending">
+					{{'global.ok' | translate}}
+				</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-modal-view>

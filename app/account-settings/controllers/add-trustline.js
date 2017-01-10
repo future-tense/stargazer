@@ -1,0 +1,77 @@
+/* global angular, console */
+
+angular.module('app')
+.controller('AddTrustlineCtrl', function ($scope, DestinationCache) {
+	'use strict';
+
+	$scope.form = {};
+	$scope.model = {
+		asset: 'dummy'
+	};
+
+	$scope.setPassword = function () {
+		$scope.heading = 'modal.password.confirm';
+		$scope.confirm = true;
+	};
+
+	$scope.$watch('trustlineForm.anchor.$valid', function (isValid, lastValue) {
+		DestinationCache.lookup($scope.model.anchor)
+		.then(function () {
+			$scope.model.asset = '';
+			$scope.showAsset = true;
+		}, function () {
+			$scope.model.asset = 'dummy';
+			$scope.showAsset = false;
+		});
+	});
+
+	$scope.add = function () {
+		$scope.modalResolve({
+			anchor: $scope.model.anchor,
+			asset:  $scope.model.asset
+		});
+	};
+
+	$scope.cancel = function () {
+		$scope.closeModalService();
+	};
+})
+.directive('validAnchor', function ($q, Anchors, DestinationCache) {
+	'use strict';
+
+	function any(list) {
+
+		var counter = 0;
+		function resolve(res) {
+			counter += 1;
+			return res;
+		}
+		function reject(err) {
+			return err;
+		}
+
+		return $q.all(list.map(function (item) {
+			return item.then(resolve, reject);
+		}))
+		.then(function (res) {
+			if (counter >= 1) {
+				return res;
+			} else {
+				return $q.reject();
+			}
+		});
+	}
+
+	return {
+		require: 'ngModel',
+		link: function (scope, element, attributes, ngModel) {
+			ngModel.$asyncValidators.validAnchor = function (name) {
+				return any([
+					Anchors.lookup(name),
+					DestinationCache.lookup(name)
+				]);
+			};
+		}
+	};
+
+});

@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('AccountTrustlinesCtrl', function ($ionicPopup, $location, $scope, Anchors, Signer, Submitter, Wallet) {
+.controller('AccountTrustlinesCtrl', function ($location, $scope, Anchors, DestinationCache, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.account = Wallet.current;
@@ -27,6 +27,37 @@ angular.module('app')
 	$scope.hasBalance = function (trustline) {
 		return trustline.object.balance != 0;
 	};
+
+	function addAsset(asset) {
+
+		var ids = $scope.anchors.map(function (item) {
+			return item.id;
+		});
+
+		var index = ids.indexOf(asset.issuer);
+
+		var value = {
+			object: {
+				asset_issuer:	asset.issuer,
+				asset_code:		asset.code,
+				balance:		0
+			},
+			state:		false,
+			oldState:	false
+		};
+
+		if (index === -1) {
+			$scope.anchors.push({
+				id:			asset.issuer,
+				trustlines: [
+					value
+				]
+			});
+		} else {
+			var trustlines = $scope.anchors[index].trustlines;
+			trustlines.push(value);
+		}
+	}
 
 	var getAnchors = function () {
 		var anchors = {};
@@ -100,62 +131,23 @@ angular.module('app')
 	};
 
 	$scope.addAnchor = function () {
+		Modal.show('app/account-settings/modals/add-trustline.html', $scope)
+		.then(function (res) {
 
-		$scope.data = {};
-		$ionicPopup.show({
-			template: '<input type="text" ng-model="data.anchor">',
-			title: 'Enter domain name of Anchor',
-			scope: $scope,
-			buttons: [
-				{ text: 'Cancel' },
-				{
-					text: '<b>Set</b>',
-					type: 'button-positive',
-					onTap: function(e) {
-						if (!$scope.data.anchor) {
-							e.preventDefault();
-						} else {
-							return $scope.data.anchor;
-						}
-					}
-				}
-			]
-		})
-		.then(function (domain) {
-			Anchors.lookup(domain)
-			.then(function (assetList){
-
-				assetList.forEach(function (asset) {
-
-					var ids = $scope.anchors.map(function (item) {
-						return item.id;
-					});
-
-					var index = ids.indexOf(asset.issuer);
-
-					var value = {
-						object: {
-							asset_issuer:	asset.issuer,
-							asset_code:		asset.code,
-							balance:		0
-						},
-						state:		false,
-						oldState:	false
-					};
-
-					if (index === -1) {
-						$scope.anchors.push({
-							id:			asset.issuer,
-							trustlines: [
-								value
-							]
-						});
-					} else {
-						var trustlines = $scope.anchors[index].trustlines;
-						trustlines.push(value);
-					}
+			DestinationCache.lookup(res.anchor)
+			.then(function (destInfo) {
+				addAsset({
+					issuer: destInfo.id,
+					code:   res.asset
+				});
+			},
+			function (err) {
+				Anchors.lookup(res.anchor)
+				.then(function (assetList){
+					assetList.forEach(addAsset);
 				});
 			});
 		});
+
 	};
 });

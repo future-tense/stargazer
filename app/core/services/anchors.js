@@ -6,6 +6,10 @@ angular.module('app')
 
 	function lookup(domain) {
 
+		if (!domain) {
+			return $q.reject();
+		}
+
 		var url = 'https://' + domain + '/.well-known/stellar.toml';
 
 		return $http.get(url)
