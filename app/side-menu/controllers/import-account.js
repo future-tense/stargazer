@@ -5,44 +5,23 @@ angular.module('app')
 	'use strict';
 
 	$scope.advanced = false;
+	$scope.account = {};
 
-	var data;
 	if ($routeParams.data) {
-		data = JSON.parse(window.atob($routeParams.data));
+		var data = JSON.parse(window.atob($routeParams.data));
 		$scope.encrypted = (typeof data.key === 'object');
 		$scope.scanned = true;
+		$scope.account.seed = data.key;
+		$scope.account.network = data.account.network;
 	}
 
 	var numAccounts = Object.keys(Wallet.accounts).length;
-	$scope.account = {
-		alias: $translate.instant('account.defaultname', {number: numAccounts + 1})
-	};
+	$scope.account.alias = $translate.instant('account.defaultname', {number: numAccounts + 1});
 
 	$scope.import = function () {
-
-		var accountId;
-		var seed;
-		var name = $scope.account.alias;
-		var network;
-		var keyStore;
-
-		if ($scope.scanned) {
-
-			if ($scope.encrypted) {
-				seed = Keychain.decrypt(data.key, $scope.account.password);
-			} else {
-				seed = data.key;
-			}
-			network = data.account.network;
-			keyStore = data.key;
-		} else {
-			seed = $scope.account.seed;
-			network = $scope.account.network;
-			keyStore = seed;
-		}
-
-		accountId = StellarSdk.Keypair.fromSeed(seed).accountId();
-		Wallet.importAccount(accountId, keyStore, name, network);
+		var keyStore  = $scope.account.seed;
+		var accountId = Keychain.idFromKey(keyStore, $scope.account.password);
+		Wallet.importAccount(accountId, keyStore, $scope.account.alias, $scope.account.network);
 		$location.path('/');
 	};
 });

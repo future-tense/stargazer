@@ -36,7 +36,12 @@ angular.module('app')
 
 	return {
 
-		decrypt: decrypt,
+		idFromKey: function (key, password) {
+			if (typeof key === 'object') {
+				key = Crypto.decrypt(key, password);
+			}
+			return StellarSdk.Keypair.fromSeed(key).accountId();
+		},
 
 		setPassword: function (signer, password) {
 			var keyStore = keychain[signer];
