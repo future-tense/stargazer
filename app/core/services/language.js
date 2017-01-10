@@ -9,9 +9,17 @@ angular.module('app')
 			name:	'English',
 			locale:	'en-US'
 		},
+		es: {
+			name:	'Español',
+			locale:	'es-ES'
+		},
 		fil: {
 			name:	'Pilipino',
 			locale:	'fil-PH'
+		},
+		hi: {	/* hindi */
+			name:	'हिन्दी',
+			locale:	'hi-IN'
 		},
 		id: {
 			name:	'Bahasa Indonesia',
@@ -20,6 +28,10 @@ angular.module('app')
 		sv: {
 			name:	'Svenska',
 			locale:	'sv-SE'
+		},
+		zh: {	/* chinese */
+			name:	'中文',
+			locale:	'zh-CN'
 		}
 	};
 
