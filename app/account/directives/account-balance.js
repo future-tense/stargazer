@@ -1,13 +1,18 @@
 
-/* global angular */
+/* global angular, console */
 
 angular.module('app')
-.directive('accountBalance', function (Wallet) {
+.directive('accountBalance', function (Horizon, Wallet) {
 	'use strict';
 
 	function link(scope, iElement, iAttrs) {
 
 		var account = Wallet.current;
+
+		var network = account.network;
+		if (network !== Horizon.livenet) {
+			scope.network = Horizon.getNetwork(network).name;
+		}
 
 		if (account.getNativeBalance() !== '0') {
 			scope.lockClass = account.isLocallySecure()? 'ion-ios-locked-outline' : 'ion-ios-unlocked-outline';
