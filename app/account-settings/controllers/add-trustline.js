@@ -14,7 +14,7 @@ angular.module('app')
 		$scope.confirm = true;
 	};
 
-	$scope.$watch('trustlineForm.anchor.$valid', function (isValid, lastValue) {
+	$scope.$watch('form.trustline.anchor.$valid', function (isValid, lastValue) {
 		DestinationCache.lookup($scope.model.anchor)
 		.then(function () {
 			$scope.model.asset = '';

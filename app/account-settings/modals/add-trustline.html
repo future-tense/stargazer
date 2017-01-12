@@ -7,7 +7,7 @@
 
 	<ion-content class="modal-content fix-modals-touch">
 		<div class="item item-divider"></div>
-		<form name="trustlineForm">
+		<form name="form.trustline">
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">
 					{{'modal.trustline.anchor.label' | translate}}
@@ -29,7 +29,7 @@
 				</button>
 			</div>
 			<div class="col col-50" style="padding:4px 8px">
-				<button class="button button-block button-positive" on-tap="add()" ng-disabled="trustlineForm.$invalid || trustlineForm.$pending">
+				<button class="button button-block button-positive" on-tap="add()" ng-disabled="form.trustline.$invalid || form.trustline.$pending">
 					{{'global.ok' | translate}}
 				</button>
 			</div>
