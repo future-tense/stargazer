@@ -9,7 +9,7 @@ The QR codes contain JSON encoded data structures.
     "stellar": {
         "account": {
             "id":       ACCOUNT_ID,
-            "network":  NETWORK_CODE (*)
+            "network":  NETWORK_CODE // (*)
         }
     }
 }
@@ -24,9 +24,9 @@ The QR codes contain JSON encoded data structures.
     "stellar": {
         "payment": {
             "destination":  ACCOUNT_ID,
-            "network":      NETWORK_CODE, (*)
+            "network":      NETWORK_CODE, // (*)
             "amount":       AMOUNT,
-            "asset": {.     (**)
+            "asset": {      // (**)
                 "code":     ASSET_CODE,
                 "issuer":   ASSET_ISSER
             }
@@ -37,7 +37,7 @@ The QR codes contain JSON encoded data structures.
 
 *) Network is only needed if not stellar.org live network
 
-**)Asset is only needed if not XLM
+**) Asset is only needed if not XLM
 
 ## Account export/import
 
