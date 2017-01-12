@@ -56,8 +56,9 @@ angular.module('app')
 		effect.memo
 	);
 	var contact = Contacts.get(contactName);
-	$scope.isContact = ($scope.counterparty in Wallet.accounts) ||
-		(contact && contact.memo_type === effect.memoType && contact.memo === effect.memo);
+
+	$scope.isWallet = ($scope.counterparty in Wallet.accounts);
+	$scope.isContact = (contact && contact.memo_type === effect.memoType && contact.memo === effect.memo);
 
 	//
 

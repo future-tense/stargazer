@@ -97,7 +97,7 @@
 			</button>
 		</div>
 
-		<div style="padding-left:16px;padding-right:16px" ng-if="!isContact && type!=='trade'">
+		<div style="padding-left:16px;padding-right:16px" ng-if="!isWallet && !isContact && type!=='trade'">
 			<button class="button button-block button-positive" on-tap="addContact()">
 				{{'transaction.contact.add' | translate}}
 			</button>
