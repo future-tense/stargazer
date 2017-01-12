@@ -29,6 +29,10 @@ The QR codes contain JSON encoded data structures.
             "asset": {      // (**)
                 "code":     ASSET_CODE,
                 "issuer":   ASSET_ISSER
+            },
+            "memo": {       // (***)
+                "type":     MEMO_TYPE,
+                "value":    MEMO
             }
         }
     }
@@ -38,6 +42,8 @@ The QR codes contain JSON encoded data structures.
 *) Network is only needed if not stellar.org live network
 
 **) Asset is only needed if not XLM
+
+***) Optional
 
 ## Account export/import
 

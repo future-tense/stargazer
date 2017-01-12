@@ -45,6 +45,13 @@ angular.module('app')
 			};
 		}
 
+		if ($scope.model.memo_type) {
+			payment.memo = {
+				type: $scope.model.memo_type,
+				value: $scope.model.memo
+			};
+		}
+
 		var text = {
 			stellar: {
 				payment: payment

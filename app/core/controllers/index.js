@@ -46,6 +46,10 @@ angular.module('app')
 			object.asset_issuer	= payment.asset.issuer;
 		}
 
+		if (payment.memo) {
+			object.memo = payment.memo;
+		}
+
 		$location.path('/account/send')
 		.search(object);
 	}

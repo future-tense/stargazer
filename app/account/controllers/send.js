@@ -275,6 +275,11 @@ angular.module('app')
 		$scope.send.asset 		= query;
 		$scope.destinationAssets.push(query);
 
+		if (query.memo) {
+			$scope.send.memo_type = query.memo.type;
+			$scope.send.memo      = query.memo.value;
+		}
+
 		$scope.getPaths();
 		$scope.flags.prefilled = true;
 	}
