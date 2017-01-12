@@ -283,6 +283,7 @@ angular.module('app')
 
 		if ($scope.flags.prefilled) {
 			$scope.flags.hasValidDestination = true;
+			updateCollisions(Wallet.current.balances);
 			return;
 		}
 
