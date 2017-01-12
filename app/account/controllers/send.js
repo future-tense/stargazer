@@ -75,7 +75,8 @@ angular.module('app')
 				source_amount: amount,
 				source_asset_code: code,
 				source_asset_issuer: source,
-				path: []
+				path: [],
+				enabled: true
 			}];
 
 			$scope.flags.pathPending = false;
