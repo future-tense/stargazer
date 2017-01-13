@@ -15,11 +15,11 @@
 				<span class="input-label">
 					{{'modal.comment.label' | translate}}
 				</span>
-				<input type="text" ng-model="model.comment" placeholder="{{'modal.comment.add' | translate}}" required>
+				<input type="text" ng-model="model.comment" placeholder="{{'modal.comment.add' | translate}}">
 			</label>
 		</form>
 		<div style="padding-left:16px;padding-right:16px">
-			<button class="button button-block button-positive" on-tap="saveComment()" ng-disabled="commentForm.$invalid">
+			<button class="button button-block button-positive" on-tap="saveComment()">
 				{{'global.save' | translate}}
 			</button>
 		</div>

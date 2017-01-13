@@ -14,7 +14,12 @@ angular.module('app')
 
 	$scope.saveComment = function () {
 		$scope.closeModalService();
-		$scope.effect.comment = $scope.model.comment;
+
+		if ($scope.model.comment) {
+			$scope.effect.comment = $scope.model.comment;
+		} else {
+			delete $scope.effect.comment;
+		}
 
 		var accountName	= Wallet.current.alias;
 		Storage.setItem('history.' + accountName, History.effects[accountName]);
