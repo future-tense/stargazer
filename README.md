@@ -2,6 +2,7 @@
 
 A wallet application for the [Stellar](https://stellar.org) platform. Desktop and Mobile.
 
+
 ## Main features:
 
 * Multiple accounts
@@ -26,22 +27,11 @@ A wallet application for the [Stellar](https://stellar.org) platform. Desktop an
 
 * Federated addresses
 
-## Testing
-
-* Test folder contains two QR codes to scan, to get a couple of accounts into the wallet, so you can send 
-things to and from. *NB: Both of these are on testnet*.
-
-Test Account #1 | Test Account #2
----|---
-![test #1](test/test-1.png)|![test #2](test/test-2.png)
-
-* Otherwise, the way I recommend is to use either one of the desktop apps to import seeds into, to then
-export to the mobile app.
-
 
 ## Security
 
 All private keys are stored in localStorage, encrypted or not. Within the app, key decryption and transaction signing all take place inside the `Keychain` service in `app/core/services/keychain.js`. The only time an unencrypted private key leaves that service is when an account is being exported and you're not using password protection.
+
 
 ## Translations
 
@@ -54,8 +44,7 @@ All private keys are stored in localStorage, encrypted or not. Within the app, k
 Some of the phrases, specifically the `XX days/hours/minutes/seconds ago` ones, have both a singular and a plurar form that should be translated.*
 
 
-
-## LICENSE
+## License
 
 **Stargazer** is released under the **GNU Affero General Public License v3** (AGPL), except for the following files:
 
