@@ -2,7 +2,7 @@
 
 <ion-content class="has-header">
 	<div class="item item-divider"></div>
-	<form name="deleteForm" ng-if="isEncrypted">
+	<form name="form.delete" ng-if="isEncrypted">
 		<label class="item item-input item-inset item-stacked-label">
 			<span class="input-label">
 				{{'settings.delete.password' | translate}}
@@ -11,7 +11,7 @@
 		</label>
 	</form>
 	<div style="padding-left:16px;padding-right:16px">
-		<button type="button" class="button button-block button-positive" on-tap="delete()" ng-disabled="isEncrypted && deleteForm.$invalid">
+		<button type="button" class="button button-block button-positive" on-tap="delete()" ng-disabled="isEncrypted && form.delete.$invalid">
 			{{'settings.delete.button' | translate}}
 		</button>
 	</div>

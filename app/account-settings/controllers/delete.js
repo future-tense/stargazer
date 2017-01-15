@@ -4,6 +4,7 @@ angular.module('app')
 .controller('DeleteAccountCtrl', function ($location, $scope, Keychain, Wallet) {
 	'use strict';
 
+	$scope.form = {};
 	$scope.account = Wallet.current;
 	$scope.isEncrypted = Keychain.isEncrypted(Wallet.current.id);
 
