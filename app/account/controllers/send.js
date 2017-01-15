@@ -281,6 +281,8 @@ angular.module('app')
 			$scope.send.memo      = query.memo.value;
 		}
 
+		updateCollisions($scope.destinationAssets.concat(Wallet.current.balances));
+
 		$scope.getPaths();
 		$scope.flags.prefilled = true;
 	}
@@ -289,7 +291,6 @@ angular.module('app')
 
 		if ($scope.flags.prefilled) {
 			$scope.flags.hasValidDestination = true;
-			updateCollisions(Wallet.current.balances);
 			return;
 		}
 
