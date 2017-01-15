@@ -34,7 +34,7 @@ angular.module('app')
 			amount:			$scope.model.amount
 		};
 
-		if (Wallet.current.network !== Horizon.livenet) {
+		if (Wallet.current.network !== Horizon.public) {
 			payment.network = Wallet.current.network;
 		}
 

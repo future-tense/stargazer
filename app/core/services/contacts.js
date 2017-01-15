@@ -19,7 +19,7 @@ angular.module('app')
 			Object.keys(contacts).forEach(function (name) {
 				var contact = contacts[name];
 				if (!contact.network) {
-					contact.network = Horizon.livenet;
+					contact.network = Horizon.public;
 				}
 				if (contact.network === network) {
 					res.push(name);
@@ -49,14 +49,14 @@ angular.module('app')
 		lookup: function (accountId, network, memoType, memo) {
 
 			if (!network) {
-				network = Horizon.livenet;
+				network = Horizon.public;
 			}
 
 			var matches = [];
 			Object.keys(contacts).forEach(function (name) {
 				var contact = contacts[name];
 				if (!contact.network) {
-					contact.network = Horizon.livenet;
+					contact.network = Horizon.public;
 				}
 
 				if ((contact.id === accountId) && (contact.network === network)) {

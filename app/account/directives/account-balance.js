@@ -10,7 +10,7 @@ angular.module('app')
 		var account = Wallet.current;
 
 		var network = account.network;
-		if (network !== Horizon.livenet) {
+		if (network !== Horizon.public) {
 			scope.network = Horizon.getNetwork(network).name;
 		}
 

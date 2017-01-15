@@ -11,7 +11,7 @@ angular.module('app')
 		link: function(scope, element, attributes) {
 
 			if (!scope.network) {
-				scope.network = Horizon.livenet;
+				scope.network = Horizon.public;
 			}
 
 			scope.networks = Horizon.getNetworks();

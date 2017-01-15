@@ -189,7 +189,7 @@ angular.module('app')
 	Wallet.importAccount = function (accountId, seed, name, network) {
 
 		if (!network) {
-			network = Horizon.livenet;
+			network = Horizon.public;
 		}
 
 		Keychain.addKey(accountId, seed);

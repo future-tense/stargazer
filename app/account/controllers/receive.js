@@ -55,7 +55,7 @@ angular.module('app')
 			id: Wallet.current.id
 		};
 
-		if (Wallet.current.network !== Horizon.livenet) {
+		if (Wallet.current.network !== Horizon.public) {
 			account.network = Wallet.current.network;
 		}
 

@@ -5,7 +5,7 @@ angular.module('app')
 	'use strict';
 
 	var networkList = [{
-		name:	'Livenet',
+		name:	'Public',
 		phrase: 'Public Global Stellar Network ; September 2015',
 		server: 'https://horizon.stellar.org'
 	}, {
@@ -24,7 +24,7 @@ angular.module('app')
 		return new StellarSdk.Network(passphrase).networkId().toString('hex').slice(0, 8);
 	}
 
-	var livenet = getHash('Public Global Stellar Network ; September 2015');
+	var publicNetwork = getHash('Public Global Stellar Network ; September 2015');
 
 	var networks = {};
 	networkList.forEach(function (network) {
@@ -33,13 +33,13 @@ angular.module('app')
 	});
 
 	return {
-		livenet: livenet,
+		public: publicNetwork,
 
 		getHash: getHash,
 
 		getNetwork: function (hash) {
 			if (!hash) {
-				hash = livenet;
+				hash = publicNetwork;
 			}
 			return networks[hash];
 		},
