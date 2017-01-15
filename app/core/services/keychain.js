@@ -94,8 +94,8 @@ angular.module('app')
 				return true;
 			}
 
-			var seed = Crypto.decrypt(keyStore, password);
 			try {
+				var seed = Crypto.decrypt(keyStore, password);
 				var keyPair = StellarSdk.Keypair.fromSeed(seed);
 				return true;
 			} catch (error) {
