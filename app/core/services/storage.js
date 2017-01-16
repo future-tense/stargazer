@@ -27,6 +27,11 @@ angular.module('app')
 		$window.localStorage.removeItem(key);
 	}
 
+	var version = getItem('db-version');
+	if (!version) {
+		setItem('db-version', 1);
+	}
+
 	return {
 		getItem: getItem,
 		setItem: setItem,
