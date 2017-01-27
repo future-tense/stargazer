@@ -110,6 +110,20 @@ angular.module('app')
 	};
 
 	//
+	//	returns an array of all the assets in an account that are issued by `issuer`
+	//
+
+	Account.prototype.getAssetsFromIssuer = function (issuer) {
+		return this.balances.filter(function (asset) {
+			if (asset.asset_type === 'native') {
+				return false;
+			} else {
+				return (asset.asset_issuer === issuer);
+			}
+		});
+	};
+
+	//
 	//	is it possible to sign a medium threshold tx with only unencrypted local keys?
 	//
 

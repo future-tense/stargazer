@@ -60,14 +60,23 @@ angular.module('app')
 			return;
 		}
 
+		if ($scope.flags.hasUnregisteredDestination &&
+			$scope.send.asset.asset_type === 'native' &&
+			$scope.send.amount < 20
+		) {
+			return;
+		}
+
+		var amount;
 		var currentAccount = Wallet.current;
 		var source = currentAccount.id;
 
 		//	check if we're the issuing account for this asset
-		if ($scope.send.asset.asset_type !== 'native' && $scope.send.asset.asset_issuer === source) {
-
-			var amount	= $scope.send.amount.toString();
-			var code	= $scope.send.asset.asset_code;
+		if ($scope.send.asset.asset_type !== 'native' &&
+			$scope.send.asset.asset_issuer === source
+		) {
+			var code = $scope.send.asset.asset_code;
+			amount = $scope.send.amount.toString();
 			$scope.send.pathRecords = [{
 				destination_amount: amount,
 				destination_asset_code: code,
@@ -75,6 +84,26 @@ angular.module('app')
 				source_amount: amount,
 				source_asset_code: code,
 				source_asset_issuer: source,
+				path: [],
+				enabled: true
+			}];
+
+			$scope.flags.pathPending = false;
+			$scope.flags.hasPath = true;
+			$scope.$apply();
+
+			return;
+		}
+
+		if ($scope.flags.hasUnregisteredDestination &&
+			$scope.send.asset.asset_type === 'native'
+		) {
+			amount = $scope.send.amount.toString();
+			$scope.send.pathRecords = [{
+				destination_amount: amount,
+				destination_asset_type: 'native',
+				source_amount: amount,
+				source_asset_type: 'native',
 				path: [],
 				enabled: true
 			}];
@@ -94,21 +123,7 @@ angular.module('app')
 			.call()
 			.then(function (res) {
 
-				if (res.records.length === 0) {
-					/* empty statement */;
-				}
-
-				//	if we're going to createAccount we can only send XLM, so filter
-				//	all paths involving any non-native currencies
-
-				else if ($scope.flags.createAccount) {
-					$scope.send.pathRecords = res.records.filter(function (record) {
-						return (record.source_asset_type === 'native') && (record.path.length === 0);
-					});
-					$scope.flags.hasPath = true;
-				}
-
-				else {
+				if (res.records.length) {
 
 					//
 					//	filter paths... keep the cheapest path per asset,
@@ -146,7 +161,7 @@ angular.module('app')
 							if (asset.asset_code === 'XLM') {
 								paths[key].enabled = currentAccount.canSend(amount, 1);
 							} else {
-								paths[key].enabled = (asset.balance >= amount) && currentAccount.canSend(0, 1);
+								paths[key].enabled = ((asset.balance - amount) >= 0) && currentAccount.canSend(0, 1);
 							}
 						}
 					});
@@ -219,7 +234,7 @@ angular.module('app')
 
 			var operation;
 
-			if ($scope.flags.createAccount) {
+			if ($scope.flags.hasUnregisteredDestination && (destAsset.code === 'XLM')) {
 				operation = StellarSdk.Operation.createAccount({
 					destination: destInfo.id,
 					startingBalance: destAmount
@@ -304,8 +319,10 @@ angular.module('app')
 				currentAccount.horizon().accounts()
 				.accountId(destinationId)
 				.call()
-				.then(function (res) {
 
+				//	destinationId is a registered account
+
+				.then(function (res) {
 					$scope.send.destinationRaw = destinationId;
 					if (destInfo.memo_type) {
 						$scope.send.memo_type	= destInfo.memo_type;
@@ -322,13 +339,7 @@ angular.module('app')
 					updateCollisions(res.balances.concat(Wallet.current.balances));
 
 					//	append any issuing assets we hold in the wallet
-					var issuing = Wallet.current.balances.filter(function (asset) {
-						if (asset.asset_type === 'native') {
-							return false;
-						} else {
-							return (asset.asset_issuer === destinationId);
-						}
-					});
+					var issuing = currentAccount.getAssetsFromIssuer(destinationId);
 
 					var assets = res.balances.concat(issuing);
 					var native = assets.filter(function (e) {
@@ -349,30 +360,35 @@ angular.module('app')
 					native[0].asset_code = 'XLM';
 					$scope.destinationAssets = native.concat(credit_alphanum4, credit_alphanum12);
 					$scope.send.asset = $scope.destinationAssets[0];
-					$scope.send.minAmount = 0;
-
-					$scope.flags.createAccount = false;
-					$scope.flags.hasValidDestination = true;
-					$scope.$apply();
+					$scope.flags.hasUnregisteredDestination = false;
 				})
+
+				//	destinationId is not (currently) a registered account
+
 				.catch(function (err) {
 
-					//	account is not registered in the ledger yet
-
-					$scope.destinationAssets = [{
+					var assets = [{
 						asset_type: 'native',
 						asset_code: 'XLM'
 					}];
 
-					$scope.send.asset = $scope.destinationAssets[0];
-					$scope.send.minAmount = 20;
+					var issuing = currentAccount.getAssetsFromIssuer(destinationId);
+					$scope.destinationAssets = assets.concat(issuing);
 
-					$scope.flags.createAccount = true;
+					updateCollisions(Wallet.current.balances);
+
+					$scope.send.asset = $scope.destinationAssets[0];
+					$scope.flags.hasUnregisteredDestination = true;
+				})
+
+				.finally(function () {
 					$scope.flags.hasValidDestination = true;
 					$scope.$apply();
 				});
 			});
-		} else {
+		}
+
+		else {
 			$scope.flags.hasValidDestination = false;
 			delete $scope.send.amount;
 		}
