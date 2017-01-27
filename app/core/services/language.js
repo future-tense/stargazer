@@ -17,6 +17,10 @@ angular.module('app')
 			name:	'Pilipino',
 			locale:	'fil-PH'
 		},
+		fr: {
+			name:	'Français',
+			locale:	'fr-FR'
+		},
 		hi: {	/* hindi */
 			name:	'हिन्दी',
 			locale:	'hi-IN'
@@ -24,6 +28,10 @@ angular.module('app')
 		id: {
 			name:	'Bahasa Indonesia',
 			locale: 'id-ID'
+		},
+		pl: {
+			name:	'Polszczyzna',
+			locale:	'pl-PL'
 		},
 		sv: {
 			name:	'Svenska',

@@ -69,8 +69,10 @@ angular.module('app', [
 	$translateProvider.translations('en', /* @include ../i18n/en.json */);
 	$translateProvider.translations('es', /* @include ../i18n/es.json */);
 	$translateProvider.translations('fil', /* @include ../i18n/fil.json */);
+	$translateProvider.translations('fr', /* @include ../i18n/fr.json */);
 	$translateProvider.translations('hi', /* @include ../i18n/hi.json */);
 	$translateProvider.translations('id', /* @include ../i18n/id.json */);
+	$translateProvider.translations('pl', /* @include ../i18n/pl.json */);
 	$translateProvider.translations('sv', /* @include ../i18n/sv.json */);
 	$translateProvider.translations('zh', /* @include ../i18n/zh.json */);
 }]);
