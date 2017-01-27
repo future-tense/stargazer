@@ -30,7 +30,7 @@ angular.module('app')
 			locale: 'id-ID'
 		},
 		pl: {
-			name:	'Polszczyzna',
+			name:	'Polski',
 			locale:	'pl-PL'
 		},
 		sv: {
