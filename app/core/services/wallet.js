@@ -264,8 +264,11 @@ angular.module('app')
 		Storage.setItem('currentAccount', Wallet.current.alias);
 
 		delete accounts[account.id];
-		Storage.removeItem('account.' + account.alias);
-		Storage.removeItem('history.' + account.alias);
+
+		var name = account.alias;
+		delete History.effects[name];
+		Storage.removeItem('account.' + name);
+		Storage.removeItem('history.' + name);
 	};
 
 	Wallet.moveAccount = function (account, fromIndex, toIndex) {
