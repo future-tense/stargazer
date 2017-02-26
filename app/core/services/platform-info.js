@@ -14,11 +14,11 @@ angular.module('app')
 	// Fixes IOS WebKit UA
 	ua = ua.replace(/\(\d+\)$/, '');
 
-	var isNodeWebkit = function() {
+	var isElectron = function() {
 		var isNode = (typeof process !== "undefined" && typeof require !== "undefined");
 		if (isNode) {
 			try {
-				return (typeof require('nw.gui') !== "undefined");
+				return (typeof require('electron') !== "undefined");
 			} catch (e) {
 				return false;
 			}
@@ -33,12 +33,12 @@ angular.module('app')
 		isSafari: Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
 		ua: ua,
 		isCordova: !!$window.cordova,
-		isNW: isNodeWebkit(),
+		isElectron: isElectron()
 	};
 
 	ret.isMobile = ret.isAndroid || ret.isIOS || ret.isWP;
-	ret.isChromeApp = $window.chrome && chrome.runtime && chrome.runtime.id && !ret.isNW;
-	ret.isDevel = !ret.isMobile && !ret.isChromeApp && !ret.isNW;
+	ret.isChromeApp = $window.chrome && chrome.runtime && chrome.runtime.id && !ret.isElectron;
+	ret.isDevel = !ret.isMobile && !ret.isChromeApp && !ret.isElectron;
 
 	return ret;
 });

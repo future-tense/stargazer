@@ -42,9 +42,9 @@ angular.module('app')
 			showPopover();
 		}
 
-		else if (platformInfo.isNW) {
-			var gui = require('nw.gui');
-			gui.Clipboard.get().set(text);
+		else if (platformInfo.isElectron) {
+			var electron = require('electron');
+			electron.clipboard.writeText(text);
 			showPopover();
 		}
 	};

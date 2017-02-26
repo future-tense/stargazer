@@ -25,34 +25,6 @@ angular.module('app', [
 	}, 100);
 })
 
-.run(function (platformInfo) {
-	'use strict';
-
-	if (platformInfo.isNW) {
-
-//		nw.Window.get().showDevTools();
-
-		// Load native UI library
-		var gui = require('nw.gui');
-
-		// Create menu
-		var menu = new gui.Menu({
-			type: 'menubar'
-		});
-
-		// Append Menu to Window
-		gui.Window.get().menu = menu;
-
-		// create MacBuiltin
-		try {
-			menu.createMacBuiltin('Stargazer', {
-				hideEdit: false,
-				hideWindow: true
-			});
-		} catch (e) {}
-	}
-})
-
 .config(function($ionicConfigProvider) {
 	'use strict';
 	$ionicConfigProvider.scrolling.jsScrolling(false);
