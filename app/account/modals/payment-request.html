@@ -8,7 +8,7 @@
 		</h1>
 	</ion-header-bar>
 
-	<ion-content ng-hide="showResult" class="modal-content fix-modals-touch">
+	<ion-content ng-hide="showResult" class="modal-content fix-modals-touch" scrollbar-y="false">
 		<form name="qrForm">
 			<div class="item item-divider"></div>
 			<div class="item" style="padding-bottom:8px;padding-top:6px">
@@ -39,7 +39,7 @@
 		</div>
 	</ion-content>
 
-	<ion-content ng-show="showResult" class="modal-content fix-modals-touch">
+	<ion-content ng-show="showResult" class="modal-content fix-modals-touch" scrollbar-y="false">
 		<div class="list">
 			<div class="item item-divider">
 				{{'global.qr-code' | translate}}
