@@ -256,7 +256,7 @@ angular.module('app')
 
 				operation = StellarSdk.Operation.pathPayment({
 					sendAsset: sendAsset,
-					sendMax: new Decimal(record.source_amount).times(new Decimal(2.00)).toFixed(7),
+					sendMax: record.source_amount,
 					destination: destInfo.id,
 					destAsset: destAsset,
 					destAmount: destAmount,
