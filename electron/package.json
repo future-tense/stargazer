@@ -6,7 +6,7 @@
   "main": "index.js",
   "license": "AGPL-3.0",
   "scripts": {
-    "start": "npm run copy-app && electron .",
+    "start": "npm run clean && npm run copy-app && electron .",
     "copy-app": "cp -R ../dist app",
     "clean": "rm -rf .app .dist",
     "build-mac": "build --mac --x64",
