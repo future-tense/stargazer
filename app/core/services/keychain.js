@@ -83,7 +83,7 @@ angular.module('app')
 		signMessage: function (signer, message) {
 			return getKey(signer)
 			.then(function (key) {
-				var hash = StellarSdk.hash(message);
+				var hash = StellarSdk.hash(StellarSdk.hash(message));
 				return key.sign(hash).toString('base64');
 			});
 		},

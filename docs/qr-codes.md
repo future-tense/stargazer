@@ -45,6 +45,23 @@ The QR codes contain JSON encoded data structures.
 
 ***) Optional
 
+
+## Challenge/Response
+
+```javascript
+{
+    "stellar": {
+        "challenge": {
+            "id":       ACCOUNT_ID,		// (*)
+            "message":  MESSAGE,
+            "url":      WEBHOOK_URL
+        }
+    }
+}
+```
+
+*) If not provided, any account the user controls can be used
+
 ## Account export/import
 
 ```javascript

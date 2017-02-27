@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('IndexCtrl', function ($ionicBody, $ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Language, Modal, Storage, Wallet) {
+.controller('IndexCtrl', function ($http, $ionicBody, $ionicLoading, $ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Keychain, Language, Modal, Storage, Wallet) {
 	'use strict';
 
 	$scope.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
@@ -54,6 +54,32 @@ angular.module('app')
 		.search(object);
 	}
 
+	function handleChallenge(challenge) {
+
+		var id = challenge.id ? challenge.id : Wallet.current.id;
+
+		if (Keychain.isLocalSigner(id)) {
+			Keychain.signMessage(id, challenge.message)
+			.then(function (sig) {
+
+				$ionicLoading.show({
+					template: 'Submitting response...'
+				});
+
+				$http.post(challenge.url, {
+					id: id,
+					msg: challenge.message,
+					sig: sig
+				})
+				.then(function (res) {
+					$ionicLoading.hide();
+				}, function (err) {
+					$ionicLoading.hide();
+				});
+			});
+		}
+	}
+
 	$scope.onQrCodeScanned = function (data) {
 
 		data = JSON.parse(data);
@@ -68,8 +94,13 @@ angular.module('app')
 				handleAccount(data.stellar.account);
 			}
 		}
+
 		else if (data.stellar.payment) {
 			handlePayment(data.stellar.payment);
+		}
+
+		else if (data.stellar.challenge) {
+			handleChallenge(data.stellar.challenge);
 		}
 	};
 
