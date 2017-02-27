@@ -9,12 +9,7 @@ angular.module('app')
         link: function(scope, element, attributes, ngModel) {
 
             ngModel.$validators.validSeed = function(modelValue) {
-				try {
-					var keypair = StellarSdk.Keypair.fromSeed(modelValue);
-					return true;
-				} catch (error) {
-					return false;
-				}
+				return StellarSdk.StrKey.isValidEd25519SecretSeed(modelValue);
             };
 		}
     };

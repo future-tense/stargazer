@@ -8,7 +8,7 @@ angular.module('app')
 
 		var keyStore = keychain[signer];
 		if (typeof keyStore === 'string') {
-			var keys =  StellarSdk.Keypair.fromSeed(keyStore);
+			var keys =  StellarSdk.Keypair.fromSecret(keyStore);
 			return $q.when(keys);
 		}
 
@@ -17,8 +17,8 @@ angular.module('app')
 
 		return Modal.show('app/core/modals/submit-password.html', scope)
 		.then(function (password) {
-			var seed = Crypto.decrypt(keyStore, password);
-			return StellarSdk.Keypair.fromSeed(seed);
+			var secret = Crypto.decrypt(keyStore, password);
+			return StellarSdk.Keypair.fromSecret(secret);
 		}, function (err) {
 			return $q.reject(err);
 		});
@@ -40,7 +40,7 @@ angular.module('app')
 			if (typeof key === 'object') {
 				key = Crypto.decrypt(key, password);
 			}
-			return StellarSdk.Keypair.fromSeed(key).accountId();
+			return StellarSdk.Keypair.fromSecret(key).publicKey();
 		},
 
 		setPassword: function (signer, password) {
@@ -96,8 +96,7 @@ angular.module('app')
 
 			try {
 				var seed = Crypto.decrypt(keyStore, password);
-				var keyPair = StellarSdk.Keypair.fromSeed(seed);
-				return true;
+				return StellarSdk.StrKey.isValidEd25519SecretSeed(seed);
 			} catch (error) {
 				return false;
 			}

@@ -41,7 +41,7 @@ angular.module('app')
 			.then(function (account) {
 				var tx = new StellarSdk.TransactionBuilder(account)
 				.addOperation(StellarSdk.Operation.createAccount({
-					destination: newAccount.accountId(),
+					destination: newAccount.publicKey(),
 					startingBalance: $scope.account.amount.toString()
 				}))
 				.build();
@@ -55,8 +55,8 @@ angular.module('app')
 			.then(Submitter.submit)
 			.then(function () {
 				Wallet.importAccount(
-					newAccount.accountId(),
-					newAccount.seed(),
+					newAccount.publicKey(),
+					newAccount.secret(),
 					$scope.account.alias,
 					network
 				);

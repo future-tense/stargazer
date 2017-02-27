@@ -194,10 +194,9 @@ angular.module('app')
 	Wallet.createEmptyAccount = function (name, network) {
 
 		var keys = StellarSdk.Keypair.random();
-		var accountId = keys.accountId();
-		var seed = keys.seed();
-
-		return Wallet.importAccount(accountId, seed, name, network);
+		var publicKey = keys.publicKey();
+		var secret = keys.secret();
+		return Wallet.importAccount(publicKey, secret, name, network);
 	};
 
 	Wallet.importAccount = function (accountId, seed, name, network) {
