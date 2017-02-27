@@ -5,7 +5,7 @@
 			{{'tabs.send.info.heading' | translate}}
 		</div>
 
-		<form name="$parent.sendForm">
+		<form name="forms.send">
 			<label class="item item-input item-inset item-stacked-label">
 				<span class="input-label">
 					{{'tabs.send.destination.label' | translate}}
@@ -14,7 +14,7 @@
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px;padding-left:16px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
-				<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" class="text-gray" ng-show="send.destinationRaw && send.destinationRaw!==send.destination">
+				<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" class="text-gray" ng-show="showRaw()">
 					({{send.destinationRaw}})
 				</span>
 			</label>

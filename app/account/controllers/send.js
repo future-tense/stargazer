@@ -9,6 +9,7 @@ angular.module('app')
 	var assetCodeCollisions;
 	$scope.destinationAssets = [];
 	$scope.send = {};
+	$scope.forms = {};
 
 	$scope.flags = {};
 	$scope.flags.hasValidDestination = false;
@@ -48,6 +49,7 @@ angular.module('app')
 		$scope.send.pathRecords = [];
 
 		$scope.send.destination = '';
+		$scope.send.destinationRaw = '';
 		Modal.show('app/core/modals/select-contact.html', $scope);
 	};
 
@@ -302,7 +304,12 @@ angular.module('app')
 		$scope.flags.prefilled = true;
 	}
 
-	$scope.$watch('sendForm.destination.$valid', function (isValid, lastValue) {
+	$scope.showRaw = function () {
+		return $scope.send.destination && $scope.send.destinationRaw &&
+			($scope.send.destinationRaw !== $scope.send.destination);
+	};
+
+	$scope.$watch('forms.send.destination.$valid', function (isValid, lastValue) {
 
 		if ($scope.flags.prefilled) {
 			$scope.flags.hasValidDestination = true;
@@ -311,11 +318,14 @@ angular.module('app')
 
 		if (isValid && $scope.send.destination) {
 
+			$scope.send.destinationRaw = '';
 			var currentAccount = Wallet.current;
 			DestinationCache.lookup($scope.send.destination)
 			.then(function (destInfo) {
 
 				var destinationId = destInfo.id;
+				$scope.send.destinationRaw = destinationId;
+
 				currentAccount.horizon().accounts()
 				.accountId(destinationId)
 				.call()
@@ -323,7 +333,6 @@ angular.module('app')
 				//	destinationId is a registered account
 
 				.then(function (res) {
-					$scope.send.destinationRaw = destinationId;
 					if (destInfo.memo_type) {
 						$scope.send.memo_type	= destInfo.memo_type;
 						$scope.send.memo		= destInfo.memo;
