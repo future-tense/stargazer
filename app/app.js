@@ -25,11 +25,6 @@ angular.module('app', [
 	}, 100);
 })
 
-.config(function($ionicConfigProvider) {
-	'use strict';
-	$ionicConfigProvider.scrolling.jsScrolling(false);
-})
-
 .config(['$translateProvider', function ($translateProvider) {
 	'use strict';
 
