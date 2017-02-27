@@ -24,4 +24,23 @@ angular.module('app')
 		Wallet.importAccount(accountId, keyStore, $scope.account.alias, $scope.account.network);
 		$location.path('/');
 	};
+})
+
+.directive('validPassword2', function (Keychain) {
+	'use strict';
+
+	return {
+		require: 'ngModel',
+		link: function(scope, element, attributes, ngModel) {
+
+			ngModel.$validators.validPassword = function (modelValue) {
+				if (modelValue) {
+					return Keychain.isValidPassword(scope.$parent.account.seed, modelValue);
+				} else {
+					return false;
+				}
+			};
+		}
+	};
+
 });

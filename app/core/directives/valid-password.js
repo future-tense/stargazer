@@ -9,7 +9,7 @@ angular.module('app')
 		link: function(scope, element, attributes, ngModel) {
 			ngModel.$validators.validPassword = function (modelValue) {
 				if (modelValue) {
-					return Keychain.isValidPassword(attributes.signer, modelValue);
+					return Keychain.isValidPasswordForSigner(attributes.signer, modelValue);
 				} else {
 					return false;
 				}

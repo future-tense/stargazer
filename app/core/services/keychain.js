@@ -24,6 +24,19 @@ angular.module('app')
 		});
 	}
 
+	function isValidPassword(keyStore, password) {
+		if (typeof keyStore === 'string') {
+			return true;
+		}
+
+		try {
+			var seed = Crypto.decrypt(keyStore, password);
+			return StellarSdk.StrKey.isValidEd25519SecretSeed(seed);
+		} catch (error) {
+			return false;
+		}
+	}
+
 	var keychain = {};
 	var keys = Storage.getItem('keys');
 	if (keys) {
@@ -88,18 +101,11 @@ angular.module('app')
 			);
 		},
 
-		isValidPassword: function (signer, password) {
-			var keyStore = keychain[signer];
-			if (typeof keyStore === 'string') {
-				return true;
-			}
+		isValidPassword: isValidPassword,
 
-			try {
-				var seed = Crypto.decrypt(keyStore, password);
-				return StellarSdk.StrKey.isValidEd25519SecretSeed(seed);
-			} catch (error) {
-				return false;
-			}
+		isValidPasswordForSigner: function (signer, password) {
+			var keyStore = keychain[signer];
+			return isValidPassword(keyStore, password);
 		},
 
 		isEncrypted: function (signer) {
