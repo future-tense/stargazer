@@ -44,19 +44,20 @@
 				<memo-selector type="send.memo_type" memo="send.memo" ng-show="advanced"></memo-selector>
 			</div>
 		</form>
-	</div>
 
-	<div ng-show="!flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
-		<div class="list">
+		<div ng-show="forms.send.destination.$viewValue && !flags.hasValidDestination">
+			<div class="item item-divider">
+				Unknown recipient address
+			</div>
+		</div>
+
+		<div ng-show="!flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
 			<div class="item item-divider">
 				{{'tabs.send.paths.empty' | translate}}
 			</div>
 		</div>
-	</div>
 
-	<div ng-show="flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
-
-		<div class="list">
+		<div ng-show="flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
 			<div class="item item-divider">
 				{{'tabs.send.paths.heading' | translate}}
 			</div>
@@ -69,7 +70,6 @@
 			</div>
 		</div>
 	</div>
-
 </ion-content>
 
 <wallet-footer></wallet-footer>
