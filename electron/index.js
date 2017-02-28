@@ -1,4 +1,4 @@
-/* global require */
+/* global require, process */
 
 (function () {
 	'use strict';
