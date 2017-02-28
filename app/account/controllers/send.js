@@ -107,7 +107,7 @@ angular.module('app')
 				source_amount: amount,
 				source_asset_type: 'native',
 				path: [],
-				enabled: true
+				enabled: currentAccount.canSend(amount, 1)
 			}];
 
 			$scope.flags.pathPending = false;
