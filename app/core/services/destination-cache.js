@@ -40,7 +40,7 @@ angular.module('app')
 			});
 		}
 
-		//	Federated Address
+		//	Public key or Federated Address
 
 		if (name in cache) {
 			return cache[name];
