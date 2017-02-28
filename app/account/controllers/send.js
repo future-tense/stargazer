@@ -399,6 +399,8 @@ angular.module('app')
 
 		else {
 			$scope.flags.hasValidDestination = false;
+			$scope.flags.hasPath = false;
+			$scope.flags.pathPending = true;
 			delete $scope.send.amount;
 		}
 	});
