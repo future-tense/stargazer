@@ -8,7 +8,7 @@
   "scripts": {
     "start": "npm run clean && npm run copy-app && electron .",
     "copy-app": "cp -R ../dist app",
-    "clean": "rm -rf .app .dist",
+    "clean": "rm -rf app dist",
     "build-mac": "build --mac --x64",
     "build-win": "build --win --x64",
     "build-linux": "build --linux --x64"
