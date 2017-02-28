@@ -179,7 +179,7 @@ angular.module('app')
 				}).join('');
 			} else {
 				var text = $translate.instant('tabs.home.activity.empty');
-				html = '<div style="text-align: center" class="text-gray">' + text + '</div';
+				html = '<div style="text-align: center" class="text-gray">' + text + '</div>';
 			}
 			element[0].children[1].innerHTML = html;
 		}
