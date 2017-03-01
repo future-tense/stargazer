@@ -14,31 +14,14 @@ angular.module('app')
 	// Fixes IOS WebKit UA
 	ua = ua.replace(/\(\d+\)$/, '');
 
-	var isElectron = function() {
-		var isNode = (typeof process !== "undefined" && typeof require !== "undefined");
-		if (isNode) {
-			try {
-				return (typeof require('electron') !== "undefined");
-			} catch (e) {
-				return false;
-			}
-		}
-	};
-
 	// Detect mobile devices
-	var ret = {
+	return {
 		isAndroid: !!ua.match(/Android/i),
 		isIOS: /iPad|iPhone|iPod/.test(ua) && !$window.MSStream,
 		isWP: !!ua.match(/IEMobile/i),
 		isSafari: Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
 		ua: ua,
 		isCordova: !!$window.cordova,
-		isElectron: isElectron()
+		isElectron: !!ua.match(/Electron/i)
 	};
-
-	ret.isMobile = ret.isAndroid || ret.isIOS || ret.isWP;
-	ret.isChromeApp = $window.chrome && chrome.runtime && chrome.runtime.id && !ret.isElectron;
-	ret.isDevel = !ret.isMobile && !ret.isChromeApp && !ret.isElectron;
-
-	return ret;
 });
