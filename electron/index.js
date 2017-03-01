@@ -32,8 +32,11 @@
 			]}
 		];
 
-		var Menu = electron.Menu;
-		Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+		// No menu on Windows
+		if (process.platform !== 'win32') {
+			var Menu = electron.Menu;
+			Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+		}
 
 		// Create the browser window.
 		var BrowserWindow = electron.BrowserWindow;
