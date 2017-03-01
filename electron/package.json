@@ -15,6 +15,7 @@
   },
   "build": {
     "appId": "io.futuretense.stargazer.wallet",
+    "compression": "maximum",
     "dmg": {
       "contents": [
         {
