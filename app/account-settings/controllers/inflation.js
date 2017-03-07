@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('AccountInflationCtrl', function ($q, $rootScope, $scope, DestinationCache, Modal, Reverse, Signer, Submitter, Wallet) {
+.controller('AccountInflationCtrl', function ($q, $rootScope, $scope, Modal, Reverse, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.oldName = Wallet.current.alias;
@@ -28,14 +28,10 @@ angular.module('app')
 		var currentAccount = Wallet.current;
 		var source = currentAccount.id;
 
-		$q.all([
-			currentAccount.horizon().loadAccount(source),
-			DestinationCache.lookup($scope.send.destination)
-		])
-		.then(function (res) {
-			var account = res[0];
-			var destInfo = res[1];
+		currentAccount.horizon().loadAccount(source)
+		.then(function (account) {
 
+			var destInfo = $scope.send.destInfo;
 			var builder = new StellarSdk.TransactionBuilder(account);
 			builder.addOperation(StellarSdk.Operation.setOptions({
 				inflationDest: destInfo.id

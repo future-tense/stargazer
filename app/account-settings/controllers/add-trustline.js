@@ -1,7 +1,7 @@
 /* global angular, console */
 
 angular.module('app')
-.controller('AddTrustlineCtrl', function ($scope, DestinationCache) {
+.controller('AddTrustlineCtrl', function ($scope, Destination) {
 	'use strict';
 
 	$scope.form = {};
@@ -15,7 +15,7 @@ angular.module('app')
 	};
 
 	$scope.$watch('form.trustline.anchor.$valid', function (isValid, lastValue) {
-		DestinationCache.lookup($scope.model.anchor)
+		Destination.lookup($scope.model.anchor)
 		.then(function () {
 			$scope.model.asset = '';
 			$scope.showAsset = true;
@@ -36,7 +36,7 @@ angular.module('app')
 		$scope.closeModalService();
 	};
 })
-.directive('validAnchor', function ($q, Anchors, DestinationCache) {
+.directive('validAnchor', function ($q, Anchors, Destination) {
 	'use strict';
 
 	function any(list) {
@@ -68,7 +68,7 @@ angular.module('app')
 			ngModel.$asyncValidators.validAnchor = function (name) {
 				return any([
 					Anchors.lookup(name),
-					DestinationCache.lookup(name)
+					Destination.lookup(name)
 				]);
 			};
 		}

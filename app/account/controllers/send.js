@@ -1,28 +1,19 @@
 /* global angular, console, Decimal, StellarSdk */
 
 angular.module('app')
-.controller('SendCtrl', function ($location, $q, $scope, DestinationCache, Modal, Signer, Submitter, Wallet) {
+.controller('SendCtrl', function ($location, $scope, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.advanced = false;
-
-	var assetCodeCollisions;
 	$scope.destinationAssets = [];
 	$scope.send = {};
 	$scope.forms = {};
-
 	$scope.flags = {};
-	$scope.flags.hasValidDestination = false;
-	$scope.flags.hasPath = false;
-	$scope.flags.pathPending = true;
 
-	$scope.onAmount = function () {
-		$scope.getPaths();
-	};
-
-	$scope.onAsset = function () {
-		$scope.getPaths();
-	};
+	var assetCodeCollisions;
+	var hasPath			= false;
+	var isPathPending	= true;
+	var isPreFilled		= false;
 
 	function createAsset(json, prefix) {
 
@@ -43,26 +34,104 @@ angular.module('app')
 		return asset;
 	}
 
-	$scope.selectRecipient = function () {
+	function updateCollisions(assets) {
+		assetCodeCollisions = Wallet.getAssetCodeCollisions(assets);
+	}
 
-		//	invalidate form records first
-		$scope.send.pathRecords = [];
+	function onDestInfo(destInfo) {
 
-		$scope.send.destination = '';
-		$scope.send.destinationRaw = '';
-		Modal.show('app/core/modals/select-contact.html', $scope);
-	};
+		if (isPreFilled) {
+			return;
+		}
 
-	$scope.getPaths = function () {
+		if (!destInfo) {
+			hasPath = false;
+			isPathPending = true;
+			delete $scope.send.amount;
+			return;
+		}
 
-		$scope.flags.pathPending = true;
-		$scope.flags.hasPath = false;
+		var currentAccount = Wallet.current;
+
+		currentAccount.horizon().accounts()
+		.accountId(destInfo.id)
+		.call()
+
+		//	destInfo.id is a registered account
+
+		.then(function (res) {
+			if (destInfo.memo_type) {
+				$scope.send.memo_type	= destInfo.memo_type;
+				$scope.send.memo		= destInfo.memo;
+			} else {
+				$scope.send.memo_type	= null;
+				$scope.send.memo		= null;
+			}
+
+			var assetSortFunction = function (a, b) {
+				return a.asset_code > b.asset_code;
+			};
+
+			updateCollisions(res.balances.concat(Wallet.current.balances));
+
+			//	append any issuing assets we hold in the wallet
+			var issuing = currentAccount.getAssetsFromIssuer(destInfo.id);
+
+			var assets = res.balances.concat(issuing);
+			var native = assets.filter(function (e) {
+				return e.asset_type === 'native';
+			});
+
+			var credit_alphanum4 = assets.filter(function (e) {
+				return e.asset_type === 'credit_alphanum4';
+			});
+
+			var credit_alphanum12 = assets.filter(function (e) {
+				return e.asset_type === 'credit_alphanum12';
+			});
+
+			credit_alphanum4.sort(assetSortFunction);
+			credit_alphanum12.sort(assetSortFunction);
+
+			native[0].asset_code = 'XLM';
+			$scope.destinationAssets = native.concat(credit_alphanum4, credit_alphanum12);
+			$scope.send.asset = $scope.destinationAssets[0];
+			$scope.flags.isUnregistered = false;
+		})
+
+		//	destInfo.id is not (currently) a registered account
+
+		.catch(function (err) {
+
+			var assets = [{
+				asset_type: 'native',
+				asset_code: 'XLM'
+			}];
+
+			var issuing = currentAccount.getAssetsFromIssuer(destInfo.id);
+			$scope.destinationAssets = assets.concat(issuing);
+
+			updateCollisions(Wallet.current.balances);
+
+			$scope.send.asset = $scope.destinationAssets[0];
+			$scope.flags.isUnregistered = true;
+		})
+
+		.finally(function () {
+			$scope.$apply();
+		});
+	}
+
+	function getPaths() {
+
+		isPathPending	= true;
+		hasPath			= false;
 
 		if (!$scope.send.amount) {
 			return;
 		}
 
-		if ($scope.flags.hasUnregisteredDestination &&
+		if ($scope.flags.isUnregistered &&
 			$scope.send.asset.asset_type === 'native' &&
 			$scope.send.amount < 20
 		) {
@@ -90,14 +159,14 @@ angular.module('app')
 				enabled: true
 			}];
 
-			$scope.flags.pathPending = false;
-			$scope.flags.hasPath = true;
+			isPathPending = false;
+			hasPath = true;
 			$scope.$apply();
 
 			return;
 		}
 
-		if ($scope.flags.hasUnregisteredDestination &&
+		if ($scope.flags.isUnregistered &&
 			$scope.send.asset.asset_type === 'native'
 		) {
 			amount = $scope.send.amount.toString();
@@ -110,96 +179,78 @@ angular.module('app')
 				enabled: currentAccount.canSend(amount, 1)
 			}];
 
-			$scope.flags.pathPending = false;
-			$scope.flags.hasPath = true;
+			isPathPending = false;
+			hasPath = true;
 			$scope.$apply();
 
 			return;
 		}
 
-		DestinationCache.lookup($scope.send.destination)
-		.then(function (destInfo) {
-			var asset = createAsset($scope.send.asset);
-			var dest = destInfo.id;
-			currentAccount.horizon().paths(source, dest, asset, $scope.send.amount)
-			.call()
-			.then(function (res) {
+		var destInfo = $scope.send.destInfo;
+		var asset = createAsset($scope.send.asset);
+		var dest = destInfo.id;
+		currentAccount.horizon().paths(source, dest, asset, $scope.send.amount)
+		.call()
+		.then(function (res) {
 
-				if (res.records.length) {
+			if (res.records.length) {
 
-					//
-					//	filter paths... keep the cheapest path per asset,
-					//	excluding paths with a zero cost
-					//
+				//
+				//	filter paths... keep the cheapest path per asset,
+				//	excluding paths with a zero cost
+				//
 
-					var paths = {};
-					res.records.forEach(function (record) {
-						if (record.source_amount === '0.0000000') {
-							return;
-						}
+				var paths = {};
+				res.records.forEach(function (record) {
+					if (record.source_amount === '0.0000000') {
+						return;
+					}
 
-						var key = (record.source_asset_type === 'native')?
-							'native' : record.source_asset_issuer + record.source_asset_code;
+					var key = (record.source_asset_type === 'native')?
+						'native' : record.source_asset_issuer + record.source_asset_code;
 
-						if (key in paths) {
-							if ((paths[key].source_amount - record.source_amount) > 0) {
-								paths[key] = record;
-							}
-						} else {
+					if (key in paths) {
+						if ((paths[key].source_amount - record.source_amount) > 0) {
 							paths[key] = record;
 						}
-					});
+					} else {
+						paths[key] = record;
+					}
+				});
 
-					//
-					//	go through the remaining paths and disable the ones that are underfunded
-					//
+				//
+				//	go through the remaining paths and disable the ones that are underfunded
+				//
 
-					currentAccount.balances.forEach(function (asset) {
-						var key = (asset.asset_code === 'XLM')?
-							'native' : asset.asset_issuer + asset.asset_code;
+				currentAccount.balances.forEach(function (asset) {
+					var key = (asset.asset_code === 'XLM')?
+						'native' : asset.asset_issuer + asset.asset_code;
 
-						if (key in paths) {
-							var amount = paths[key].source_amount;
-							if (asset.asset_code === 'XLM') {
-								paths[key].enabled = currentAccount.canSend(amount, 1);
-							} else {
-								paths[key].enabled = ((asset.balance - amount) >= 0) && currentAccount.canSend(0, 1);
-							}
+					if (key in paths) {
+						var amount = paths[key].source_amount;
+						if (asset.asset_code === 'XLM') {
+							paths[key].enabled = currentAccount.canSend(amount, 1);
+						} else {
+							paths[key].enabled = ((asset.balance - amount) >= 0) && currentAccount.canSend(0, 1);
 						}
-					});
+					}
+				});
 
-					$scope.send.pathRecords = Object.keys(paths).map(function (key) {
-						return paths[key];
-					});
+				$scope.send.pathRecords = Object.keys(paths).map(function (key) {
+					return paths[key];
+				});
 
-					$scope.flags.hasPath = ($scope.send.pathRecords.length !== 0);
-				}
+				hasPath = ($scope.send.pathRecords.length !== 0);
+			}
 
-				$scope.flags.pathPending = false;
-				$scope.$apply();
-			});
+			isPathPending = false;
+			$scope.$apply();
 		});
-	};
-
-	//
-	//
-	//
-
-	function updateCollisions(assets) {
-		assetCodeCollisions = Wallet.getAssetCodeCollisions(assets);
 	}
 
-	$scope.getSourceAssetDescription = function (path) {
-		if (path.source_asset_type !== 'native') {
-			if (path.source_asset_code in assetCodeCollisions) {
-				return path.source_asset_code + '.' + path.source_asset_issuer;
-			} else {
-				return path.source_asset_code;
-			}
-		} else {
-			return 'XLM';
-		}
-	};
+	//
+	//	rendering
+	//
 
 	$scope.getAssetDescription = function (asset) {
 		if (asset.asset_type !== 'native') {
@@ -213,21 +264,44 @@ angular.module('app')
 		}
 	};
 
+	$scope.getSourceAssetDescription = function (path) {
+		return $scope.getAssetDescription({
+			asset_type:		path.source_asset_type,
+			asset_code:		path.source_asset_code,
+			asset_issuer:	path.source_asset_issuer
+		});
+	};
+
 	//
+	//	actions
 	//
-	//
+
+	$scope.selectRecipient = function () {
+
+		//	invalidate form records first
+		$scope.send.pathRecords = [];
+
+		$scope.send.destination = '';
+		$scope.send.destInfo = null;
+		Modal.show('app/core/modals/select-contact.html', $scope);
+	};
+
+	$scope.onAmount = function () {
+		getPaths();
+	};
+
+	$scope.onAsset = function () {
+		getPaths();
+	};
 
 	$scope.submit = function (index) {
 
 		var currentAccount = Wallet.current;
 		var source = currentAccount.id;
-		$q.all([
-			currentAccount.horizon().loadAccount(source),
-			DestinationCache.lookup($scope.send.destination)
-		])
-		.then(function (res) {
-			var account = res[0];
-			var destInfo = res[1];
+
+		currentAccount.horizon().loadAccount(source)
+		.then(function (account) {
+			var destInfo = $scope.send.destInfo;
 
 			var record = $scope.send.pathRecords[index];
 			var sendAsset = createAsset(record, 'source_');
@@ -236,7 +310,7 @@ angular.module('app')
 
 			var operation;
 
-			if ($scope.flags.hasUnregisteredDestination && (destAsset.code === 'XLM')) {
+			if ($scope.flags.isUnregistered && (destAsset.code === 'XLM')) {
 				operation = StellarSdk.Operation.createAccount({
 					destination: destInfo.id,
 					startingBalance: destAmount
@@ -300,108 +374,34 @@ angular.module('app')
 
 		updateCollisions($scope.destinationAssets.concat(Wallet.current.balances));
 
-		$scope.getPaths();
-		$scope.flags.prefilled = true;
+		isPreFilled = true;
+
+		$scope.send.destInfo = {
+			id: query.destination
+		};
+
+		getPaths();
 	}
 
-	$scope.showRaw = function () {
-		return $scope.send.destination && $scope.send.destinationRaw &&
-			($scope.send.destinationRaw !== $scope.send.destination);
+	$scope.showUnregistered = function () {
+		return $scope.flags.isUnregistered && $scope.send.destInfo && isPathPending;
 	};
 
-	$scope.$watch('forms.send.destination.$valid', function (isValid, lastValue) {
+	$scope.isEmail = function (address) {
+		return /^[\w\.\+]+@([\w]+\.)+[\w]{2,}$/.test(address);
+	};
 
-		if ($scope.flags.prefilled) {
-			$scope.flags.hasValidDestination = true;
-			return;
-		}
+	$scope.showPaths = function () {
+		return hasPath && !isPathPending;
+	};
 
-		if (isValid && $scope.send.destination) {
+	$scope.showNoPaths = function () {
+		return !hasPath && !isPathPending;
+	};
 
-			$scope.send.destinationRaw = '';
-			var currentAccount = Wallet.current;
-			DestinationCache.lookup($scope.send.destination)
-			.then(function (destInfo) {
+	$scope.showRaw = function () {
+		return $scope.send.destInfo && ($scope.send.destInfo.id !== $scope.send.destination);
+	};
 
-				var destinationId = destInfo.id;
-				$scope.send.destinationRaw = destinationId;
-
-				currentAccount.horizon().accounts()
-				.accountId(destinationId)
-				.call()
-
-				//	destinationId is a registered account
-
-				.then(function (res) {
-					if (destInfo.memo_type) {
-						$scope.send.memo_type	= destInfo.memo_type;
-						$scope.send.memo		= destInfo.memo;
-					} else {
-						$scope.send.memo_type	= null;
-						$scope.send.memo		= null;
-					}
-
-					var assetSortFunction = function (a, b) {
-						return a.asset_code > b.asset_code;
-					};
-
-					updateCollisions(res.balances.concat(Wallet.current.balances));
-
-					//	append any issuing assets we hold in the wallet
-					var issuing = currentAccount.getAssetsFromIssuer(destinationId);
-
-					var assets = res.balances.concat(issuing);
-					var native = assets.filter(function (e) {
-						return e.asset_type === 'native';
-					});
-
-					var credit_alphanum4 = assets.filter(function (e) {
-						return e.asset_type === 'credit_alphanum4';
-					});
-
-					var credit_alphanum12 = assets.filter(function (e) {
-						return e.asset_type === 'credit_alphanum12';
-					});
-
-					credit_alphanum4.sort(assetSortFunction);
-					credit_alphanum12.sort(assetSortFunction);
-
-					native[0].asset_code = 'XLM';
-					$scope.destinationAssets = native.concat(credit_alphanum4, credit_alphanum12);
-					$scope.send.asset = $scope.destinationAssets[0];
-					$scope.flags.hasUnregisteredDestination = false;
-				})
-
-				//	destinationId is not (currently) a registered account
-
-				.catch(function (err) {
-
-					var assets = [{
-						asset_type: 'native',
-						asset_code: 'XLM'
-					}];
-
-					var issuing = currentAccount.getAssetsFromIssuer(destinationId);
-					$scope.destinationAssets = assets.concat(issuing);
-
-					updateCollisions(Wallet.current.balances);
-
-					$scope.send.asset = $scope.destinationAssets[0];
-					$scope.flags.hasUnregisteredDestination = true;
-				})
-
-				.finally(function () {
-					$scope.flags.hasValidDestination = true;
-					$scope.$apply();
-				});
-			});
-		}
-
-		else {
-			$scope.flags.hasValidDestination = false;
-			$scope.flags.hasPath = false;
-			$scope.flags.pathPending = true;
-			delete $scope.send.amount;
-		}
-	});
+	$scope.$watch('send.destInfo', onDestInfo);
 });

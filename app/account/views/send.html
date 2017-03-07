@@ -10,16 +10,16 @@
 				<span class="input-label">
 					{{'tabs.send.destination.label' | translate}}
 				</span>
-				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" valid-address>
+				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" valid-address="send.destInfo">
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px;padding-left:16px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
 				<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" class="text-gray" ng-show="showRaw()">
-					({{send.destinationRaw}})
+					({{send.destInfo.id}})
 				</span>
 			</label>
 
-			<div ng-show="flags.hasValidDestination">
+			<div ng-show="send.destInfo">
 				<div class="item" style="padding-bottom:8px;padding-top:6px">
 					<span class="input-label" style="padding-bottom:0;padding-top:0">
                         {{'tabs.send.amount.label' | translate}}
@@ -45,19 +45,28 @@
 			</div>
 		</form>
 
-		<div ng-show="forms.send.destination.$viewValue && !flags.hasValidDestination">
+		<div ng-show="forms.send.destination.$viewValue && !send.destInfo">
 			<div class="item item-divider">
-				Unknown recipient address
+				Not a valid recipient address
 			</div>
 		</div>
 
-		<div ng-show="!flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
+		<div ng-show="showUnregistered()" style="margin-bottom: 100px">
+			<div class="item item-divider">
+				Recipient account isn't registered. Send a minimum amount of 20 XLM to activate it.
+				<span ng-show="isEmail(send.destination)">
+					Recipient will receive an email with instructions on how to retrieve the funds.
+				</span>
+			</div>
+		</div>
+
+		<div ng-show="showNoPaths()" style="margin-bottom: 100px">
 			<div class="item item-divider">
 				{{'tabs.send.paths.empty' | translate}}
 			</div>
 		</div>
 
-		<div ng-show="flags.hasPath&&!flags.pathPending" style="margin-bottom: 100px">
+		<div ng-show="showPaths()" style="margin-bottom: 100px">
 			<div class="item item-divider">
 				{{'tabs.send.paths.heading' | translate}}
 			</div>

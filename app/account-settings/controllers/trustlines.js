@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('AccountTrustlinesCtrl', function ($location, $scope, Anchors, DestinationCache, Modal, Signer, Submitter, Wallet) {
+.controller('AccountTrustlinesCtrl', function ($location, $scope, Anchors, Destination, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.account = Wallet.current;
@@ -134,7 +134,7 @@ angular.module('app')
 		Modal.show('app/account-settings/modals/add-trustline.html', $scope)
 		.then(function (res) {
 
-			DestinationCache.lookup(res.anchor)
+			Destination.lookup(res.anchor)
 			.then(function (destInfo) {
 				addAsset({
 					issuer: destInfo.id,
