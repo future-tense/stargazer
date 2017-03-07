@@ -54,5 +54,8 @@
     "electron": "^1.4.15",
     "electron-builder": "^14.1.1",
     "electron-builder-squirrel-windows": "^13.10.1"
+  },
+  "dependencies": {
+    "decimal.js": "^7.1.1"
   }
 }
