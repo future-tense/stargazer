@@ -229,44 +229,41 @@ ion-side-menu-content {
 	font-size: 21px;
 }
 
+.sidebar .scroll,
+.sidebar .item {
+	background-color: #2C3E50;
+}
+
 .sidebar .list {
 	padding-top: 0;
 	padding-bottom: 0;
+	margin-bottom: 16px;
 }
 
 .sidebar .item {
 	margin: 0;
 	border: 0;
-	border-bottom: 1px solid #495867;
-}
-.item-complex .item-content {
-	padding: 16px;
-}
-
-.icon.ion-ios-person:before,
-.icon.ion-ios-people:before {
-	width: 14px;
-}
-
-.sidebar .scroll,
-.item > .item-content,
-.item > .item-right-edit {
-	background-color: #2C3E50;
-}
-
-.item.selected > .item-content,
-.item.selected > .item-right-edit{
-	background-color: #122232;
-}
-
-.item-reorder .button.icon {
 	color: #AAA;
+	padding: 2px 16px;
+}
+
+.platform-cordova .sidebar .item {
+	padding: 12px 16px;
+}
+
+.sidebar a > .item:hover {
+	background-color: #3C4C5B;
+}
+
+.sidebar .item.selected,
+.sidebar a > .item.selected:hover {
+	background-color: #6898C6;
+	color: white;
 }
 
 .sidebar a {
 	color: #AAA;
 	display: block;
-	padding: 16px 10px 16px 16px;
 }
 
 .sidebar a:hover {
@@ -275,6 +272,16 @@ ion-side-menu-content {
 
 .sidebar span {
 	text-transform: uppercase;
+}
+
+.sidebar .icon.ion-ios-person:before,
+.sidebar .icon.ion-ios-people:before {
+	width: 14px;
+}
+
+
+.item-reorder .button.icon {
+	color: #AAA;
 }
 
 .bottom-bar {
@@ -443,12 +450,19 @@ form .item-select {
 	margin-top: 6px;
 	margin-right: 16px;
 	margin-left: 16px;
+	margin-bottom: 9px;
 	border-top-width: 0;
 	border-left-width: 0;
 	border-right-width: 0;
-	margin-bottom: 9px;
 	padding-bottom: 0;
 	padding-left: 0;
 	padding-right: 0;
 	padding-top: 0;
+}
+
+.button-outline {
+	min-height: unset;
+	line-height: 32px;
+	margin: 0;
+	border-radius: 0;
 }

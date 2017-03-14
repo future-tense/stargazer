@@ -1,39 +1,34 @@
 <div class="sidebar" ng-controller="MainMenuCtrl">
 
 	<ion-content scrollbar-y="false">
-		<div style="display:flex;flex-direction:column;align-items:center;color:#ECECEC;padding:20px 0;border-bottom:1px solid #495867;background-color:#2C3E50">
+		<div style="display:flex;flex-direction:column;align-items:center;color:#ECECEC;padding:20px 0;background-color:#2C3E50">
 			<h1 style="color:#ECECEC">Stargazer</h1>
 			<div>v1.2.0</div>
 		</div>
 
-		<ion-list show-reorder="showReorder">
-			<ion-item ng-repeat="account in accounts"
-					  ng-class="{selected: account.id === wallet.current.id}"
-					  ng-href="#/account/{{account.id}}"
-					  on-hold="reorder()"
-					  on-touch="touch()"
-					  on-release="release()"
-					  menu-toggle>
-				<i class="icon" ng-class="getType(account)"></i>
-				{{account.alias}}
-				<ion-reorder-button class="ion-navicon"
-									on-reorder="moveItem(account, $fromIndex, $toIndex)">
-				</ion-reorder-button>
-			</ion-item>
-
-			<ion-item href="#/side-menu/add-account" menu-toggle>
-				<span>{{'sidemenu.account' | translate }}</span>
-				<div class="pull-right">
-					<span>&raquo;</span>
+		<div class="list">
+			<div class="item">
+				<span>accounts</span>
+				<a href="#/side-menu/add-account" class="pull-right" menu-toggle>
+					<i class="ion-ios-plus-outline"></i>
+				</a>
+			</div>
+			<a ng-href="#/account/{{account.id}}" ng-repeat="account in accounts" menu-toggle>
+				<div class="item" ng-class="{selected: account.id === wallet.current.id}">
+					<i class="icon" ng-class="getType(account)"></i>
+					{{account.alias}}
 				</div>
-			</ion-item>
+			</a>
+		</div>
 
-			<ion-item href="#/side-menu/settings" menu-toggle>
-				<span>{{'sidemenu.settings' | translate}}</span>
-				<div class="pull-right">
-					<span>&raquo;</span>
-				</div>
-			</ion-item>
-		</ion-list>
+		<div class="list">
+			<div class="item">
+				<a class="button button-block button-outline button-stable"
+				   href="#/side-menu/settings" menu-toggle>
+					{{'sidemenu.settings' | translate}}
+				</a>
+			</div>
+		</div>
+
 	</ion-content>
 </div>
