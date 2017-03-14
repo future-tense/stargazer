@@ -40,6 +40,9 @@
 			'account_credited': function () {
 				if (op.type === 'path_payment' && op.from === op.to) {
 					res = null;
+				} else if (op.type === 'account_merge') {
+					res.from = op.account;
+					_copyAmount(res, fx);
 				} else {
 					res.from = op.from;
 					_copyAmount(res, fx);
