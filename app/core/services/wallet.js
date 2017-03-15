@@ -301,12 +301,12 @@ angular.module('app')
 			return self;
 		});
 
-		var currentName = Storage.getItem('currentAccount');
-
 		var accountByName = {};
 		accountList.forEach(function (account) {
 			accountByName[account.alias] = account;
 		});
+
+		var currentName = Storage.getItem('currentAccount');
 		currentAccount = accountByName[currentName];
 	}
 
