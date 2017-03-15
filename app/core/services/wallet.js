@@ -312,10 +312,8 @@ angular.module('app')
 
 	else {
 		accountList = [];
-		$translate('account.initialname')
-		.then(function (res) {
-			Wallet.createEmptyAccount(res);
-		});
+		var accountName = $translate.instant('account.initialname');
+		Wallet.createEmptyAccount(accountName);
 	}
 
 	accountList.insert = function (account) {
