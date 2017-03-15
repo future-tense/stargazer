@@ -2,7 +2,18 @@
 
 <ion-content scrollbar-y="false" ng-show="isActivated()">
 	<ion-refresher pulling-text="{{'tabs.home.pull' | translate}}" on-refresh="doRefresh()"></ion-refresher>
-	<account-balance account="wallet.current"></account-balance>
+	<div style="background-color:#00BCD4;color:#FFFFFF">
+		<div style="height:120px;font-size:18px;display:flex;flex-direction:column;justify-content:center">
+			<div>
+				<div style="text-align:center" ng-repeat="asset in getAssets()">
+					{{ asset.balance | formatAmount }}
+					{{ asset.asset_code }}
+				</div>
+			</div>
+		</div>
+		<account-info></account-info>
+	</div>
+
 	<div class="camera-icon" style="position:relative">
 		<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
 	</div>
@@ -19,13 +30,7 @@
 		<div class="camera-icon" style="position:relative">
 			<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
 		</div>
-
-		<div style="height:40px;margin-left:16px;margin-right:16px;margin-bottom:2px;display:flex;justify-content:space-between;align-items:flex-end;">
-			<i class="icon" ng-class="lockClass" style="flex-basis:16px"></i>
-			<span>{{network}}</span>
-			<i style="flex-basis:16px">&nbsp;</i>
-		</div>
-
+		<account-info></account-info>
 	</div>
 </div>
 

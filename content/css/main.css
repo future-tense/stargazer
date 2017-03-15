@@ -126,20 +126,6 @@ button .icon-bar {
 	border-radius: 4px;
 }
 
-.Aligner {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	height: 100%;
-}
-.Aligner-item--fixed {
-	flex: 0 0 auto;
-	max-width: 50%;
-}
-.Aligner-item {
-	flex: 1 1 0;
-}
-
 qrcode {
 	width:	256px;
 	height:	256px;

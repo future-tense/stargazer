@@ -11,15 +11,19 @@ angular.module('app')
 
 	$scope.wallet = Wallet;
 
-	var network = Wallet.current.network;
-	if (network !== Horizon.public) {
-		$scope.network = Horizon.getNetwork(network).name;
-	}
-
-	$scope.lockClass = Wallet.current.isLocallySecure()? 'ion-ios-locked-outline' : 'ion-ios-unlocked-outline';
-
 	$scope.isActivated = function () {
 		return Wallet.current.getNativeBalance() !== '0';
+	};
+
+	$scope.getAssets = function () {
+
+		return Wallet.current.balances.filter(function (e) {
+			if (e.asset_type === 'native') {
+				return true;
+			} else {
+				return (e.balance !== '0.0000000');
+			}
+		});
 	};
 
 	$scope.doRefresh = function () {
