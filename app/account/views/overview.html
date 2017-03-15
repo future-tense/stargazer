@@ -1,10 +1,34 @@
 <wallet-header></wallet-header>
-<ion-content scrollbar-y="false">
+
+<ion-content scrollbar-y="false" ng-show="isActivated()">
 	<ion-refresher pulling-text="{{'tabs.home.pull' | translate}}" on-refresh="doRefresh()"></ion-refresher>
 	<account-balance account="wallet.current"></account-balance>
-	<div class="camera-icon" style="position: relative">
+	<div class="camera-icon" style="position:relative">
 		<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
 	</div>
 	<account-activity account="wallet.current" limit="100" filter="payments"></account-activity>
 </ion-content>
+
+<div ng-hide="isActivated()" style="height:100%">
+
+	<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%">
+		<span>
+			Account is empty.
+		</span>
+	</div>
+
+	<div style="height:40px;width:100%;position:fixed;bottom:40px">
+		<div class="camera-icon" style="position:relative">
+			<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
+		</div>
+
+		<div style="height:40px;margin-left:16px;margin-right:16px;margin-bottom:2px;display:flex;justify-content:space-between;align-items:flex-end;">
+			<i class="icon" ng-class="lockClass" style="flex-basis:16px"></i>
+			<span>{{network}}</span>
+			<i style="flex-basis:16px">&nbsp;</i>
+		</div>
+
+	</div>
+</div>
+
 <wallet-footer></wallet-footer>

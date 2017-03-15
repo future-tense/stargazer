@@ -1,7 +1,7 @@
 /* global angular, console, toml */
 
 angular.module('app')
-.controller('OverviewCtrl', function ($route, $scope, Wallet) {
+.controller('OverviewCtrl', function ($route, $scope, Horizon, Wallet) {
 	'use strict';
 
 	var accountId = $route.current.params.accountId;
@@ -10,6 +10,17 @@ angular.module('app')
 	}
 
 	$scope.wallet = Wallet;
+
+	var network = Wallet.current.network;
+	if (network !== Horizon.public) {
+		$scope.network = Horizon.getNetwork(network).name;
+	}
+
+	$scope.lockClass = Wallet.current.isLocallySecure()? 'ion-ios-locked-outline' : 'ion-ios-unlocked-outline';
+
+	$scope.isActivated = function () {
+		return Wallet.current.getNativeBalance() !== '0';
+	};
 
 	$scope.doRefresh = function () {
 

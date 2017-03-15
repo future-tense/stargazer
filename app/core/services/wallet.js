@@ -129,6 +129,10 @@ angular.module('app')
 
 	Account.prototype.isLocallySecure = function () {
 
+		if (this.getNativeBalance() === '0') {
+			return Keychain.isEncrypted(this.id);
+		}
+
 		var signers = this.signers
 		.filter(function (signer) {
 			return (signer.weight !== 0);
