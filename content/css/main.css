@@ -234,6 +234,23 @@ ion-side-menu-content {
 	background-color: #2C3E50;
 }
 
+.sidebar .badge {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #AAA;
+	padding: 0 8px;
+	position: static;
+	line-height: 14px;
+}
+
+.platform-android .sidebar .badge {
+	padding-top: 1px;
+}
+
+.platform-browser .sidebar .badge {
+	padding-bottom: 1px;
+}
+
 .sidebar .list {
 	padding-top: 0;
 	padding-bottom: 0;

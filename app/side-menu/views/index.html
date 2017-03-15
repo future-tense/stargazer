@@ -1,16 +1,15 @@
 <div class="sidebar" ng-controller="MainMenuCtrl">
 
 	<ion-content scrollbar-y="false">
-		<div style="display:flex;flex-direction:column;align-items:center;color:#ECECEC;padding:20px 0;background-color:#2C3E50">
+		<div style="display:flex;flex-direction:column;align-items:center;padding:20px 0">
 			<h1 style="color:#ECECEC">Stargazer</h1>
-			<div>v1.2.0</div>
 		</div>
 
 		<div class="list">
 			<div class="item">
 				<span>accounts</span>
 				<a href="#/side-menu/add-account" class="pull-right" menu-toggle>
-					<i class="ion-ios-plus-outline"></i>
+					<span class="badge">+</span>
 				</a>
 			</div>
 			<a ng-href="#/account/{{account.id}}" ng-repeat="account in accounts" menu-toggle>
