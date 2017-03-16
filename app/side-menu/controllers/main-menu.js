@@ -7,7 +7,6 @@ angular.module('app')
 	$scope.wallet = Wallet;
 	$scope.accounts = Wallet.accountList;
 
-
 	$scope.getType = function (account) {
 		return account.isMultiSig()? 'ion-ios-people' : 'ion-ios-person';
 	};
