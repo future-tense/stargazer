@@ -1,0 +1,39 @@
+<config-navbar heading="About" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+
+<ion-content class="has-header" scrollbar-y="false">
+	<div class="list">
+		<div class="item item-divider">RELEASE INFORMATION</div>
+		<div class="item">
+			<span>
+				Version
+			</span>
+			<div class="pull-right text-gray">
+				<span>1.2.0</span>
+			</div>
+		</div>
+
+		<div class="item item-divider">FEEDBACK</div>
+
+		<a ext-href="market://details?id=io.futuretense.stargazer.wallet" ng-if="android">
+			<div class="item">
+			<span>
+				Review on Play Store
+			</span>
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<a ext-href="mailto:feedback@getstargazer.com?subject=Stargazer%20feedback">
+			<div class="item">
+				<span>
+					Send an E-mail
+				</span>
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+	</div>
+</ion-content>

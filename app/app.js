@@ -6,7 +6,7 @@ angular.module('app', [
 	'ionic'
 ], function ($compileProvider) {
 	'use strict';
-	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|ftp|mailto|file|chrome-extension|tel):)|#/);
+	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|mailto|file|chrome-extension|market):)|#/);
 })
 
 .run(function ($ionicPlatform, $rootScope, $route, $window) {

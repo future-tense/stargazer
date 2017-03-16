@@ -5,6 +5,10 @@ angular.module('app')
 	'use strict';
 
 	$routeProvider
+	.when('/side-menu/about', {
+		templateUrl: 'app/side-menu/views/about.html',
+		controller: 'AboutCtrl'
+	})
 	.when('/side-menu/add-account', {
 		templateUrl: 'app/side-menu/views/add-account.html'
 	})
