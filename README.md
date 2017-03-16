@@ -8,24 +8,27 @@ A wallet application for the [Stellar](https://stellar.org) platform. Desktop an
 * Multiple accounts
 
 * Multiple assets
-	* Issue/Redeem
-	* Send/Receive/Trade
+    * Issue/Redeem
+    * Send/Receive/Trade
 
 * Multiple networks
 
-* Import/export accounts
-	* QR code
-	* Manual input
+* Send to
+    * Stellar addresses
+    * Federated addresses
+    * Email addresses
 
 * Create/receive payment requests
 
 * Add contacts
-	* using QR code
-	* from a transaction
+    * using QR code
+    * from a transaction
 
 * Add comments to transactions
 
-* Federated addresses
+* Import/export accounts
+    * QR code
+    * Manual input
 
 
 ## Security
