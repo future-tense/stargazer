@@ -8,30 +8,28 @@ angular.module('app')
 
 		if (Signer.hasEnoughSignatures(context.accounts)) {
 
-			return $translate('transaction.submitting')
-			.then(function (res) {
-				$ionicLoading.show({
-					template: res
-				});
-
-				return context.horizon.submitTransaction(context.tx)
-				.then(
-					function (res) {
-						$ionicLoading.hide();
-						return res;
-					},
-					function (err) {
-						$ionicLoading.hide();
-
-						var res = '';
-						if (err.title === 'Transaction Failed') {
-							res = 'error.transaction-failed';
-						}
-						$rootScope.$emit('$submitter.failed', res);
-						return $q.reject();
-					}
-				);
+			var text = $translate.instant('transaction.submitting');
+			$ionicLoading.show({
+				template: text
 			});
+
+			return context.horizon.submitTransaction(context.tx)
+			.then(
+				function (res) {
+					$ionicLoading.hide();
+					return res;
+				},
+				function (err) {
+					$ionicLoading.hide();
+
+					var res = '';
+					if (err.title === 'Transaction Failed') {
+						res = 'error.transaction-failed';
+					}
+					$rootScope.$emit('$submitter.failed', res);
+					return $q.reject();
+				}
+			);
 		}
 
 		else {

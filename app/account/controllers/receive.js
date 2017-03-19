@@ -25,16 +25,11 @@ angular.module('app')
 	$scope.copyToClipboard = function (text) {
 
 		var showPopover = function () {
-			$translate('tabs.receive.copy')
-			.then(function (text) {
-				return $ionicLoading.show({
-					template: text
-				});
-			})
-			.then(function () {
-				return $timeout(700);
-			})
-			.then($ionicLoading.hide);
+			var text = $translate.instant('tabs.receive.copy');
+			return $ionicLoading.show({
+				template: text,
+				duration: 700
+			});
 		};
 
 		if (platformInfo.isCordova) {
