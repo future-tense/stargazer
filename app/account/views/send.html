@@ -45,25 +45,19 @@
 			</div>
 		</form>
 
-		<div ng-show="forms.send.destination.$viewValue && !send.destInfo">
-			<div class="item item-divider">
-				Not a valid recipient address
-			</div>
+		<div class="card" ng-show="forms.send.destination.$viewValue && !send.destInfo">
+			Not a valid recipient address
 		</div>
 
-		<div ng-show="showUnregistered()" style="margin-bottom: 100px">
-			<div class="item item-divider">
-				Recipient account isn't registered. Send a minimum amount of 20 XLM to activate it.
-				<span ng-show="isEmail(send.destination)">
-					Recipient will receive an email with instructions on how to retrieve the funds.
-				</span>
-			</div>
+		<div class="card" ng-show="showUnregistered()" style="margin-bottom: 100px">
+			Recipient account isn't registered. Send a minimum amount of 20 XLM to activate it.
+			<span ng-show="isEmail(send.destination)">
+				Recipient will receive an email with instructions on how to retrieve the funds.
+			</span>
 		</div>
 
-		<div ng-show="showNoPaths()" style="margin-bottom: 100px">
-			<div class="item item-divider">
-				{{'tabs.send.paths.empty' | translate}}
-			</div>
+		<div class="card" ng-show="showNoPaths()" style="margin-bottom: 100px">
+			{{'tabs.send.paths.empty' | translate}}
 		</div>
 
 		<div ng-show="showPaths()" style="margin-bottom: 100px">
