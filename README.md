@@ -47,6 +47,34 @@ All private keys are stored in localStorage, encrypted or not. Within the app, k
 Some of the phrases, specifically the `XX days/hours/minutes/seconds ago` ones, have both a singular and a plurar form that should be translated.*
 
 
+## Build instructions
+
+### Building the baseline app
+```
+npm install
+bower install
+grunt build
+```
+
+### Building for desktop
+```
+cd electron
+npm install
+npm run start
+```
+
+### Building for mobile
+```
+cd ionic
+npm install -g ionic
+npm install
+
+ionic resources android --icon
+ionic state restore
+npm run start
+```
+
+
 ## License
 
 **Stargazer** is released under the **GNU Affero General Public License v3** (AGPL), except for the following files:
