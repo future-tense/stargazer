@@ -292,7 +292,7 @@ angular.module('app')
 
 	//------------------------------------------------------------------------------------------------------------------
 
-	var accountList = Storage.getItem('accounts').sort();
+	var accountList = Storage.getItem('accounts');
 	if (accountList) {
 		accountList = accountList.map(function (name) {
 			var opts = Storage.getItem('account.' + name);
@@ -312,11 +312,14 @@ angular.module('app')
 
 	else {
 		accountList = [];
-		var accountName = $translate.instant('account.initialname');
-		Wallet.createEmptyAccount(accountName);
 	}
 
 	accountList.insert = function (account) {
+
+		if (!this.length) {
+			return this.push(account);
+		}
+
 		var self = this;
 		self.some(function (item, index) {
 			if (item.alias.localeCompare(account.alias) > 0) {
@@ -339,6 +342,11 @@ angular.module('app')
 		});
 		Storage.setItem('accounts', accountNames);
 	};
+
+	if (accountList.length === 0) {
+		var accountName = $translate.instant('account.initialname');
+		Wallet.createEmptyAccount(accountName);
+	}
 
 	Wallet.accountList = accountList;
 
