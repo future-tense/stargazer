@@ -14,6 +14,11 @@
     "gulp-util": "^2.2.14",
     "shelljs": "^0.3.0"
   },
+  "scripts": {
+    "start": "npm run clean && npm run copy-app && ionic run android",
+    "copy-app": "cp -R ../dist/* www",
+    "clean": "rm -rf www/*"
+  },
   "cordovaPlugins": [
     "https://github.com/VersoSolutions/CordovaClipboard.git",
     "cordova-plugin-device",
