@@ -10,7 +10,7 @@
 				<span class="input-label">
 					{{'tabs.send.destination.label' | translate}}
 				</span>
-				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" valid-address="send.destInfo">
+				<input type="text" name="destination" ng-model="send.destination" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="send.destInfo">
 				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px;padding-left:16px">
 					<i class="glyphicon glyphicon-book"></i>
 				</a>
