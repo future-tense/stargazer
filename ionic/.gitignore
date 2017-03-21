@@ -5,3 +5,4 @@
 !/platforms/platforms.json
 !/resources/icon.png
 *.keystore
+*.apk
