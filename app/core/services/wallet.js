@@ -321,13 +321,17 @@ angular.module('app')
 		}
 
 		var self = this;
-		self.some(function (item, index) {
+		var found = self.some(function (item, index) {
 			if (item.alias.localeCompare(account.alias) > 0) {
 				self.splice(index, 0, account);
 				return true;
 			}
 			return false;
 		});
+
+		if (!found) {
+			this.push(account);
+		}
 	};
 
 	accountList.remove = function (account) {
