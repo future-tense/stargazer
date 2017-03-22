@@ -12,7 +12,7 @@
 				<span class="input-label">
 					{{'modal.trustline.anchor.label' | translate}}
 				</span>
-				<input type="text" name="anchor" ng-model="model.anchor" placeholder="{{'modal.trustline.anchor.placeholder' | translate}}" autocapitalize="none" autocomplete="off" required valid-anchor>
+				<input type="text" name="anchor" ng-model="model.anchor" ng-model-options="{debounce: 200}" placeholder="{{'modal.trustline.anchor.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" required valid-anchor>
 			</label>
 			<label class="item item-input item-stacked-label" ng-show="showAsset">
 				<span class="input-label">

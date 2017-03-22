@@ -14,7 +14,7 @@
 			<span class="input-label">
 				{{'contact.address.label' | translate}}
 			</span>
-			<input type="text" ng-model="model.id" placeholder="{{'contact.address.placeholder' | translate}}" required autocapitalize="none" valid-address="model.destInfo">
+			<input type="text" ng-model="model.id" ng-model-options="{debounce: 200}" placeholder="{{'contact.address.placeholder' | translate}}" required autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="model.destInfo">
 		</label>
 
 		<advanced-toggle ng-model="advanced"></advanced-toggle>
