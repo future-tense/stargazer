@@ -193,23 +193,28 @@ a:hover {
 
 .camera-icon a {
 	background: #4B6178;
-	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
 	color: #fff;
 	display: block;
 	position: absolute;
-	padding: 15px 17px;
+	padding: 15px;
 	border-radius: 100%;
 	top: inherit;
 	right: 15px;
-	bottom: -26px;
-/*	bottom: 2px;
-	line-height: 12px;
-*/
+	bottom: -24px;
+	width: 51px;
+	height: 51px;
 }
 
 .size-21 {
 	font-size: 21px;
 }
+
+.platform-browser .icon-scan:before {
+	position: relative;
+	top: -2px;
+}
+
 
 .sidebar .scroll,
 .sidebar .item {
