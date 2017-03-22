@@ -168,10 +168,6 @@ a:hover {
 	color: #AAAAAA;
 }
 
-ion-side-menu-content {
-	background-color: #ECECEC !important;
-}
-
 #qr-canvas {
 	display: none;
 }
@@ -341,17 +337,22 @@ ion-content.has-header {
 	right: 16px;
 }
 
-
-.scroll {
+.scroll,
+.modal,
+.item-divider {
 	background-color: #ECECEC;
 }
+
+ion-side-menu-content {
+	background-color: #ECECEC !important;
+}
+
 
 .button-clear {
 	transition: none;
 }
 
 .item-divider {
-	background-color: #ECECEC;
 	border: none;
 	margin: 0;
 }
