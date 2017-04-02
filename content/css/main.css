@@ -133,6 +133,10 @@ qrcode {
 
 .item {
 	color: #333333;
+	margin: 0;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
 }
 
 .item,
@@ -469,6 +473,12 @@ form .item-select {
 	margin: 0;
 	border-radius: 0;
 }
+
+.scroll {
+	position: relative;
+	height: 100%
+}
+
 .pull-right {
 	float: right;
 }
@@ -491,4 +501,29 @@ i.icon-arrow-down:before,
 i.icon-arrow-up:before {
 	position: absolute;
 	bottom: 14px;
+}
+
+.button.button-block, .button.button-full {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.button.button-positive {
+	min-height: 48px;
+}
+
+.button-group {
+	padding-left:16px;
+	padding-right:16px;
+	margin-bottom:8px;
+	margin-top:8px;
+	width:100%;
+}
+
+.list {
+	padding-top: 0;
+}
+
+.bottom-border {
+	border-bottom: 1px solid #DDD;
 }

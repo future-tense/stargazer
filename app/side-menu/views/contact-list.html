@@ -1,7 +1,7 @@
 <config-navbar heading="{{'settings.contacts' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header" scrollbar-y="false">
-	<div class="list">
+	<div class="list" ng-style="{'min-height':minHeight}">
 		<div class="item item-divider">
 		</div>
 		<a ng-href="#/side-menu/contact/{{name}}" ng-repeat="name in names">
@@ -16,7 +16,7 @@
 		</a>
 	</div>
 
-	<div style="padding-left:16px;padding-right:16px">
+	<div class="button-group">
 		<button class="button button-block button-positive" on-tap="addContact()">
 			{{'settings.contacts.add' | translate}}
 		</button>

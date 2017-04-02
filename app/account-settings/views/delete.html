@@ -10,7 +10,8 @@
 			<input type="password" ng-model="account.password" required valid-password signer="{{account.id}}">
 		</label>
 	</form>
-	<div style="padding-left:16px;padding-right:16px">
+
+	<div class="button-group" style="position:absolute;bottom:0">
 		<button type="button" class="button button-block button-positive" on-tap="delete()" ng-disabled="isEncrypted && form.delete.$invalid">
 			{{'settings.delete.button' | translate}}
 		</button>

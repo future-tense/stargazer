@@ -1,48 +1,49 @@
 <config-navbar heading="{{'sidemenu.account.create' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 <ion-content class="has-header" scrollbar-y="false">
-	<form name="createAccountForm">
-		<div class="list" style="margin-bottom:8px">
-			<div class="item item-divider"></div>
-			<label class="item item-input item-inset item-stacked-label">
-				<span class="input-label">
-					{{'account.name.label' | translate}}
-				</span>
-				<input type="text" ng-model="account.alias" required>
-			</label>
 
-			<advanced-toggle ng-model="advanced"></advanced-toggle>
-
-			<network-selector network="account.network" ng-show="advanced"></network-selector>
-		</div>
-		<div class="list">
-			<div class="item item-divider">
-				{{'account.funding.heading' | translate}}
+	<div ng-style="{'min-height':minHeight}">
+		<form name="createAccountForm">
+			<div class="list" style="margin-bottom:8px">
+				<div class="item item-divider"></div>
+				<label class="item item-input item-inset item-stacked-label">
+					<span class="input-label">
+						{{'account.name.label' | translate}}
+					</span>
+					<input type="text" ng-model="account.alias" required>
+				</label>
+				<advanced-toggle ng-model="advanced"></advanced-toggle>
+				<network-selector network="account.network" ng-show="advanced"></network-selector>
 			</div>
-			<label class="item item-input item-inset item-stacked-label">
-				<span class="input-label">
-					{{'account.funding.label' | translate}}
-				</span>
-				<input type="text" ng-model="account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="account.network">
-				<a on-tap="selectAccount()" style="position:absolute;right:16px;top:40px">
-					<i class="icon icon-book"></i>
-				</a>
-			</label>
-			<label class="item item-input item-stacked-label" ng-show="account.funder">
-				<span class="input-label">
-					{{'account.funding.amount.label' | translate}}
-				</span>
-				<input type="number" ng-model="account.amount" placeholder="{{'account.funding.amount.placeholder' | translate}}" min="20">
-			</label>
+			<div class="list">
+				<div class="item item-divider">
+					{{'account.funding.heading' | translate}}
+				</div>
+				<label class="item item-input item-inset item-stacked-label">
+					<span class="input-label">
+						{{'account.funding.label' | translate}}
+					</span>
+					<input type="text" ng-model="account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="account.network">
+					<a on-tap="selectAccount()" style="position:absolute;right:16px;top:40px">
+						<i class="icon icon-book"></i>
+					</a>
+				</label>
+				<label class="item item-input item-stacked-label" ng-show="account.funder">
+					<span class="input-label">
+						{{'account.funding.amount.label' | translate}}
+					</span>
+					<input type="number" ng-model="account.amount" placeholder="{{'account.funding.amount.placeholder' | translate}}" min="20">
+				</label>
+			</div>
+		</form>
+		<div class="card" style="margin-bottom:8px">
+			{{'account.funding.text' | translate}}
 		</div>
-	</form>
+	</div>
 
-	<div style="padding-left:16px;padding-right:16px">
+	<div class="button-group">
 		<button class="button button-block button-positive" on-tap="create()" ng-disabled="createAccountForm.$invalid">
 			{{'account.add' | translate}}
 		</button>
 	</div>
-
-	<div class="card">
-		{{'account.funding.text' | translate}}
-	</div>
 </ion-content>
+

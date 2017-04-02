@@ -4,25 +4,27 @@ angular.module('app')
 .controller('ReceiveCtrl', function ($ionicLoading, $location, $q, $scope, $timeout, $translate, Horizon, Modal, platformInfo, Wallet) {
 	'use strict';
 
-	$scope.wallet = Wallet;
-	$scope.qrtext = '';
+	$scope.copyToClipboard	= copyToClipboard;
+	$scope.request			= request;
+	$scope.setFederation	= setFederation;
+	$scope.showAddress		= showAddress;
 
-	$scope.accountId = Wallet.current.id;
+	$scope.accountId		= Wallet.current.id;
+	$scope.hasFederation	= (Wallet.current.federation !== undefined);
+	$scope.minHeight		= getMinHeight();
+	$scope.qrtext			= '';
+	$scope.wallet			= Wallet;
 
-	$scope.hasFederation = (Wallet.current.federation !== undefined);
-	$scope.setFederation = function () {
-		$location.path('/account-settings/federation');
-	};
+	activate();
 
-	if ($scope.hasFederation) {
-		$scope.federation = Wallet.current.federation + '*getstargazer.com';
+	function activate() {
+		if ($scope.hasFederation) {
+			$scope.federation = Wallet.current.federation + '*getstargazer.com';
+		}
+		showAddress();
 	}
 
-	$scope.request = function () {
-		Modal.show('app/account/modals/payment-request.html', $scope);
-	};
-
-	$scope.copyToClipboard = function (text) {
+	function copyToClipboard(text) {
 
 		var showPopover = function () {
 			var text = $translate.instant('tabs.receive.copy');
@@ -42,9 +44,24 @@ angular.module('app')
 			electron.clipboard.writeText(text);
 			showPopover();
 		}
-	};
+	}
 
-	$scope.showAddress = function () {
+	function getMinHeight() {
+		var headerHeight = 2*40;
+		var numButtons = 1 + (Wallet.current.federation === undefined);
+		var buttonGroupHeight = 48*numButtons + 8*(numButtons - 1) + 24;
+		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+	}
+
+	function request() {
+		Modal.show('app/account/modals/payment-request.html', $scope);
+	}
+
+	function setFederation() {
+		$location.path('/account-settings/federation');
+	}
+
+	function showAddress() {
 
 		var account = {
 			id: Wallet.current.id
@@ -54,14 +71,10 @@ angular.module('app')
 			account.network = Wallet.current.network;
 		}
 
-		var text = {
+		$scope.qrtext = JSON.stringify({
 			stellar: {
 				account: account
 			}
-		};
-
-		$scope.qrtext = JSON.stringify(text);
-	};
-
-	$scope.showAddress();
+		});
+	}
 });

@@ -1,28 +1,29 @@
 <wallet-header></wallet-header>
 <ion-content scrollbar-y="false">
-	<div style="display:flex; flex-direction: column; align-items: center;">
-		<h1 style="margin-top:10px">
-			{{'tabs.receive.heading' | translate}}
-		</h1>
-		<qrcode text="qrtext" ng-click="copyToClipboard(accountId)"></qrcode>
+	<div ng-style="{'min-height':minHeight}">
+		<div style="display:flex; flex-direction: column; align-items: center;">
+			<h1 style="margin-top:10px">
+				{{'tabs.receive.heading' | translate}}
+			</h1>
+			<qrcode text="qrtext" ng-click="copyToClipboard(accountId)"></qrcode>
+		</div>
+		<h6 ng-click="copyToClipboard(accountId)"
+			style="padding-left:16px;padding-right:16px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+			{{accountId}}
+		</h6>
+		<h6 ng-click="copyToClipboard(federation)"
+			style="text-align:center" ng-if="hasFederation">
+			({{federation}})
+		</h6>
 	</div>
 
-	<h6 ng-click="copyToClipboard(accountId)"
-		style="padding-left:16px;padding-right:16px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-		{{accountId}}
-	</h6>
-	<h6 ng-click="copyToClipboard(federation)"
-		style="text-align:center" ng-if="hasFederation">
-		({{federation}})
-	</h6>
-
-	<div style="padding-left:16px;padding-right:16px">
-		<button class="button button-block button-positive" on-tap="request()">
-			{{'tabs.receive.button' | translate}}
-		</button>
-
+	<div class="button-group">
 		<button class="button button-block button-positive" on-tap="setFederation()" ng-if="!hasFederation">
 			{{'tabs.receive.federation' | translate}}
+		</button>
+
+		<button class="button button-block button-positive" on-tap="request()">
+			{{'tabs.receive.button' | translate}}
 		</button>
 	</div>
 </ion-content>

@@ -4,29 +4,35 @@ angular.module('app')
 .controller('AccountTrustlinesCtrl', function ($location, $scope, Anchors, Destination, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
-	$scope.account = Wallet.current;
+	$scope.addAnchor		= addAnchor;
+	$scope.getTrustlines	= getTrustlines;
+	$scope.hasBalance		= hasBalance;
+	$scope.onChange			= onChange;
+	$scope.updateTrustlines	= updateTrustlines;
 
-	$scope.getTrustlines = function () {
-		return $scope.account.balances.filter(function (balance) {
-			return balance.asset_type !== 'native';
-		});
-	};
+	$scope.account		= Wallet.current;
+	$scope.minHeight	= getMinHeight();
+	$scope.anchors		= getAnchors();
 
-	$scope.isDirty = function () {
+	function addAnchor() {
+		Modal.show('app/account-settings/modals/add-trustline.html', $scope)
+		.then(function (res) {
 
-		var pristine = true;
-		$scope.anchors.forEach(function (anchor) {
-			anchor.trustlines.forEach(function (trustline) {
-				pristine = pristine && (trustline.state === trustline.oldState);
+			Destination.lookup(res.anchor)
+			.then(function (destInfo) {
+				addAsset({
+					issuer: destInfo.id,
+					code:   res.asset
+				});
+			},
+			function () {
+				Anchors.lookup(res.anchor)
+				.then(function (assetList){
+					assetList.forEach(addAsset);
+				});
 			});
 		});
-
-		return !pristine;
-	};
-
-	$scope.hasBalance = function (trustline) {
-		return trustline.object.balance != 0;
-	};
+	}
 
 	function addAsset(asset) {
 
@@ -59,7 +65,7 @@ angular.module('app')
 		}
 	}
 
-	var getAnchors = function () {
+	function getAnchors() {
 		var anchors = {};
 		Wallet.current.balances.forEach(function (balance) {
 			if (balance.asset_type === 'native') {
@@ -82,11 +88,38 @@ angular.module('app')
 				trustlines: anchors[key]
 			};
 		});
-	};
+	}
 
-	$scope.anchors = getAnchors();
+	function getMinHeight() {
+		var headerHeight = 40;
+		var numButtons = 1 + ($scope.isDirty === true);
+		var buttonGroupHeight = 48*numButtons + 8*(numButtons - 1) + 16 + 8;
+		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+	}
 
-	$scope.updateTrustlines = function () {
+	function getTrustlines() {
+		return $scope.account.balances.filter(function (balance) {
+			return balance.asset_type !== 'native';
+		});
+	}
+
+	function hasBalance(trustline) {
+		return trustline.object.balance != 0;
+	}
+
+	function onChange() {
+		var pristine = true;
+		$scope.anchors.forEach(function (anchor) {
+			anchor.trustlines.forEach(function (trustline) {
+				pristine = pristine && (trustline.state === trustline.oldState);
+			});
+		});
+
+		$scope.isDirty = !pristine;
+		$scope.minHeight = getMinHeight();
+	}
+
+	function updateTrustlines() {
 
 		$scope.account.horizon().loadAccount($scope.account.id)
 		.then(function (account) {
@@ -128,26 +161,5 @@ angular.module('app')
 				$location.path('/');
 			});
 		});
-	};
-
-	$scope.addAnchor = function () {
-		Modal.show('app/account-settings/modals/add-trustline.html', $scope)
-		.then(function (res) {
-
-			Destination.lookup(res.anchor)
-			.then(function (destInfo) {
-				addAsset({
-					issuer: destInfo.id,
-					code:   res.asset
-				});
-			},
-			function (err) {
-				Anchors.lookup(res.anchor)
-				.then(function (assetList){
-					assetList.forEach(addAsset);
-				});
-			});
-		});
-
-	};
+	}
 });
