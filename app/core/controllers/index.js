@@ -1,10 +1,15 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('IndexCtrl', function ($http, $ionicBody, $ionicLoading, $ionicPopup, $location, $q, $rootScope, $scope, $translate, Contacts, Horizon, Keychain, Language, Modal, Storage, Wallet) {
+.controller('IndexCtrl', function ($http, $ionicBody, $ionicLoading, $ionicPopup, $location, $q, $rootScope, $scope, $translate, $window, Contacts, Horizon, Keychain, Language, Modal, Storage, Wallet) {
 	'use strict';
 
-	$scope.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
+	$scope.onQrCodeScanned = onQrCodeScanned;
+	$scope.physicalScreenWidth = $window.innerWidth;
+
+	$rootScope.$on('$submitter.failed', onSubmitterFailed);
+
+	angular.element($window).bind('resize', updateWidth);
 
 	function handleAccountImport(account, key) {
 
@@ -80,7 +85,7 @@ angular.module('app')
 		}
 	}
 
-	$scope.onQrCodeScanned = function (data) {
+	function onQrCodeScanned(data) {
 
 		data = JSON.parse(data);
 		if (!data.stellar) {
@@ -102,14 +107,18 @@ angular.module('app')
 		else if (data.stellar.challenge) {
 			handleChallenge(data.stellar.challenge);
 		}
-	};
+	}
 
-	$rootScope.$on('$submitter.failed', function (event, err) {
+	function onSubmitterFailed(event, err) {
 		$ionicPopup.alert({
 			title: $translate.instant(err)
 		}).then(function () {
 			//	:KLUDGE: ionic 1.3.2 messes up, so we have to manually remove this
 			$ionicBody.removeClass('modal-open');
 		});
-	});
+	}
+
+	function updateWidth() {
+		$scope.physicalScreenWidth = $window.innerWidth;
+	}
 });
