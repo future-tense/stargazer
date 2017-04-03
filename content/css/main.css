@@ -200,7 +200,7 @@ a:hover {
 	padding: 15px;
 	border-radius: 100%;
 	top: inherit;
-	right: 15px;
+	right: 16px;
 	bottom: -24px;
 	width: 51px;
 	height: 51px;
@@ -209,12 +209,6 @@ a:hover {
 .size-21 {
 	font-size: 21px;
 }
-
-.platform-browser .icon-scan:before {
-	position: relative;
-	top: -2px;
-}
-
 
 .sidebar .scroll,
 .sidebar .item {
@@ -474,4 +468,27 @@ form .item-select {
 	line-height: 32px;
 	margin: 0;
 	border-radius: 0;
+}
+.pull-right {
+	float: right;
+}
+
+.bar .button.button-clear.icon:before {
+	font-size: 14px;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+i.icon.icon-cog:before {
+	font-size: 14px;
+}
+
+.button .icon {
+	vertical-align: baseline;
+}
+
+i.icon-arrow-down:before,
+i.icon-arrow-up:before {
+	position: absolute;
+	bottom: 14px;
 }

@@ -1,7 +1,11 @@
 <wallet-header></wallet-header>
 
 <ion-content scrollbar-y="false" ng-show="isActivated()">
-	<ion-refresher pulling-text="{{'tabs.home.pull' | translate}}" on-refresh="doRefresh()"></ion-refresher>
+	<ion-refresher
+		pulling-text="{{'tabs.home.pull' | translate}}"
+		pulling-icon="icon-pull"
+		on-refresh="doRefresh()">
+	</ion-refresher>
 	<div style="background-color:#00BCD4;color:#FFFFFF">
 		<div style="height:120px;font-size:18px;display:flex;flex-direction:column;justify-content:center">
 			<div>

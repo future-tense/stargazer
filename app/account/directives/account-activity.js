@@ -65,9 +65,9 @@ angular.module('app')
 		var now = new Date().getTime() / 1000;
 
 		var icon = {
-			'send':	'<div class="circle circle-red"><i class="icon ion-ios-upload-outline"></i></div>',
-			'recv':	'<div class="circle circle-green"><i class="icon ion-ios-download-outline"></i></div>',
-			'trade':'<div class="circle circle-blue"><i class="fa fa-exchange"></i></div>'
+			'send':	'<div class="circle circle-red"><i class="icon icon-upload"></i></div>',
+			'recv':	'<div class="circle circle-green"><i class="icon icon-download"></i></div>',
+			'trade':'<div class="circle circle-blue"><i class="icon icon-exchange"></i></div>'
 		};
 
 		return '\

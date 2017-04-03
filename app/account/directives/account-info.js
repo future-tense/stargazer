@@ -14,7 +14,7 @@ angular.module('app')
 			scope.network = Horizon.getNetwork(network).name;
 		}
 
-		scope.lockClass = account.isLocallySecure()? 'ion-ios-locked-outline' : 'ion-ios-unlocked-outline';
+		scope.lockClass = account.isLocallySecure()? 'icon-lock' : 'icon-lock-open';
 	}
 
 	return {

@@ -60,26 +60,10 @@ module.exports = function (grunt) {
 
 		// Copies remaining files to places other tasks can use
 		copy: {
-			'font-awesome': {
-				files: [{
-					src: 'bower_components/font-awesome/css/font-awesome.min.css',
-					dest: 'dist/css/font-awesome.min.css'
-				},{
-					expand: true,
-					cwd: 'bower_components/font-awesome/fonts/',
-					src: ['fontawesome-webfont.*'],
-					dest: 'dist/fonts/'
-				}]
-			},
 			ionic: {
 				files: [{
 					src: 'bower_components/ionic/release/js/ionic.bundle.js',
 					dest: 'dist/js/ionic.bundle.js'
-				}, {
-					expand: true,
-					cwd: 'bower_components/ionic/release/fonts/',
-					src: ['*'],
-					dest: 'dist/fonts/'
 				}, {
 					src: 'bower_components/ionic/release/css/ionic.min.css',
 					dest: 'dist/css/ionic.min.css'

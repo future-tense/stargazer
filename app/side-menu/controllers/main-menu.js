@@ -8,6 +8,6 @@ angular.module('app')
 	$scope.accounts = Wallet.accountList;
 
 	$scope.getType = function (account) {
-		return account.isMultiSig()? 'ion-ios-people' : 'ion-ios-person';
+		return account.isMultiSig()? 'icon-people' : 'icon-person';
 	};
 });
