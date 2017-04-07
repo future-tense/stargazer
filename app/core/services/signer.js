@@ -26,16 +26,23 @@ angular.module('app')
 
 	var Buffer = buffer.Buffer;
 
+	return {
+		hasEnoughSignatures:	hasEnoughSignatures,
+		hasExternalSigners:		hasExternalSigners,
+		sign:					sign
+	};
+
 	function getOperationCategory(op) {
-		var category = 1;
-		if (op.type === 'setOptions') {
-			if (op.masterWeight || op.lowThreshold || op.medThreshold || op.highThreshold || op.signer) {
-				category = 2;
-			}
-		} else if (op.type === 'allowTrust') {
-			category = 0;
+		if (op.type === 'allowTrust') {
+			return 0;
 		}
-		return category;
+
+		if ((op.type === 'setOptions') &&
+			(op.masterWeight || op.lowThreshold || op.medThreshold || op.highThreshold || op.signer)) {
+			return 2;
+		}
+
+		return 1;
 	}
 
 	function getSourceAccount(op, tx) {
@@ -86,6 +93,12 @@ angular.module('app')
 		}
 
 		return true;
+	}
+
+	function hasExternalSigners(context) {
+		var signers = Object.keys(context.signers);
+		var localSigners = signers.filter(Keychain.isLocalSigner);
+		return (signers.length !== localSigners.length);
 	}
 
 	/*
@@ -176,20 +189,22 @@ angular.module('app')
 
 		var signers = {};
 		sourceAccounts.forEach(function (source) {
-			var account = accounts[source];
 
+			function addSourceAccount(key, value) {
+				if (key in signers) {
+					signers[key].push(value);
+				} else {
+					signers[key] = [value];
+				}
+			}
+
+			var account = accounts[source];
 			account.signers.forEach(function (signer) {
 				if (signer.weight !== 0) {
-					var value = {
+					addSourceAccount(signer.public_key, {
 						account:	source,
 						weight:		signer.weight
-					};
-
-					if (signer.public_key in signers) {
-						signers[signer.public_key].push(value);
-					} else {
-						signers[signer.public_key] = [value];
-					}
+					});
 				}
 			});
 
@@ -213,23 +228,21 @@ angular.module('app')
 		var txHash = transactionHash(context.tx, context.network);
 
 		return localSigners.forEachThen(function (signer) {
-			return Keychain.signTransaction(signer, context.tx, txHash)
-			.then(
-				function () {
-					var sources = signers[signer];
-					sources.forEach(function (source) {
-						accounts[source.account].sum += source.weight;
-					});
+			return Keychain.signTransactionHash(signer, txHash)
+			.then(function (sig) {
+				context.tx.signatures.push(sig);
+				var sources = signers[signer];
+				sources.forEach(function (source) {
+					accounts[source.account].sum += source.weight;
+				});
 
-					delete signers[signer];
-				},
-				function (err) {
-					console.log(err);
-				}
-			);
+				delete signers[signer];
+			});
 		})
 		.then(function () {
-			console.log(context.tx);
+			return context;
+		})
+		.catch(function () {
 			return context;
 		});
 	}
@@ -244,14 +257,4 @@ angular.module('app')
 		.then(getSigners)
 		.then(signLocalKeys);
 	}
-
-	return {
-		sign: sign,
-		hasEnoughSignatures: hasEnoughSignatures,
-		hasExternalSigners: function (context) {
-			var signers = Object.keys(context.signers);
-			var localSigners = signers.filter(Keychain.isLocalSigner);
-			return (signers.length !== localSigners.length);
-		}
-	};
 });

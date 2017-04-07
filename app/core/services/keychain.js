@@ -1,8 +1,30 @@
-/* global angular, console, StellarSdk */
+/* global angular, StellarSdk */
 
 angular.module('app')
 .factory('Keychain', function ($q, $rootScope, Crypto, Modal, Storage) {
 	'use strict';
+
+	var keychain = {};
+	var keys = Storage.getItem('keys');
+	if (keys) {
+		keys.forEach(function (publicKey) {
+			keychain[publicKey] = Storage.getItem('key.' + publicKey);
+		});
+	}
+
+	return {
+		addKey: addKey,
+		getKeyInfo: getKeyInfo,
+		idFromKey: idFromKey,
+		isEncrypted: isEncrypted,
+		isLocalSigner: isLocalSigner,
+		isValidPassword: isValidPassword,
+		isValidPasswordForSigner: isValidPasswordForSigner,
+		removePassword: removePassword,
+		setPassword: setPassword,
+		signMessage: signMessage,
+		signTransactionHash: signTransactionHash
+	};
 
 	function getKey(signer) {
 
@@ -19,9 +41,34 @@ angular.module('app')
 		.then(function (password) {
 			var secret = Crypto.decrypt(keyStore, password);
 			return StellarSdk.Keypair.fromSecret(secret);
-		}, function (err) {
-			return $q.reject(err);
 		});
+	}
+
+	/* */
+
+	function addKey(accountId, seed) {
+		keychain[accountId] = seed;
+		Storage.setItem('key.' + accountId, seed);
+		Storage.setItem('keys', Object.keys(keychain));
+	}
+
+	function getKeyInfo(signer) {
+		return keychain[signer];
+	}
+
+	function idFromKey(key, password) {
+		if (typeof key === 'object') {
+			key = Crypto.decrypt(key, password);
+		}
+		return StellarSdk.Keypair.fromSecret(key).publicKey();
+	}
+
+	function isEncrypted (signer) {
+		return (typeof keychain[signer] === 'object');
+	}
+
+	function isLocalSigner(signer) {
+		return (signer in keychain);
 	}
 
 	function isValidPassword(keyStore, password) {
@@ -37,83 +84,37 @@ angular.module('app')
 		}
 	}
 
-	var keychain = {};
-	var keys = Storage.getItem('keys');
-	if (keys) {
-		keys.forEach(function (publicKey) {
-			keychain[publicKey] = Storage.getItem('key.' + publicKey);
+	function isValidPasswordForSigner(signer, password) {
+		var keyStore = keychain[signer];
+		return isValidPassword(keyStore, password);
+	}
+
+	function removePassword(signer, password) {
+		var keyStore = keychain[signer];
+		keyStore = Crypto.decrypt(keyStore, password);
+		keychain[signer] = keyStore;
+		Storage.setItem('key.' + signer, keyStore);
+	}
+
+	function setPassword(signer, password) {
+		var keyStore = keychain[signer];
+		keyStore = Crypto.encrypt(keyStore, password);
+		keychain[signer] = keyStore;
+		Storage.setItem('key.' + signer, keyStore);
+	}
+
+	function signMessage(signer, message) {
+		return getKey(signer)
+		.then(function (key) {
+			var hash = StellarSdk.hash(StellarSdk.hash(message));
+			return key.sign(hash).toString('base64');
 		});
 	}
 
-	/* */
-
-	return {
-
-		idFromKey: function (key, password) {
-			if (typeof key === 'object') {
-				key = Crypto.decrypt(key, password);
-			}
-			return StellarSdk.Keypair.fromSecret(key).publicKey();
-		},
-
-		setPassword: function (signer, password) {
-			var keyStore = keychain[signer];
-			keyStore = Crypto.encrypt(keyStore, password);
-			keychain[signer] = keyStore;
-			Storage.setItem('key.' + signer, keyStore);
-		},
-
-		removePassword: function (signer, password) {
-			var keyStore = keychain[signer];
-			keyStore = Crypto.decrypt(keyStore, password);
-			keychain[signer] = keyStore;
-			Storage.setItem('key.' + signer, keyStore);
-		},
-
-		addKey: function (accountId, seed) {
-			keychain[accountId] = seed;
-			Storage.setItem('key.' + accountId, seed);
-			Storage.setItem('keys', Object.keys(keychain));
-		},
-
-		getKeyInfo: function (signer) {
-			return keychain[signer];
-		},
-
-		signMessage: function (signer, message) {
-			return getKey(signer)
-			.then(function (key) {
-				var hash = StellarSdk.hash(StellarSdk.hash(message));
-				return key.sign(hash).toString('base64');
-			});
-		},
-
-		signTransaction: function (signer, tx, txHash) {
-			return getKey(signer)
-			.then(
-				function (key) {
-					var sig = key.signDecorated(txHash);
-					tx.signatures.push(sig);
-				},
-				function (err) {
-					return $q.reject(err);
-				}
-			);
-		},
-
-		isValidPassword: isValidPassword,
-
-		isValidPasswordForSigner: function (signer, password) {
-			var keyStore = keychain[signer];
-			return isValidPassword(keyStore, password);
-		},
-
-		isEncrypted: function (signer) {
-			return (typeof keychain[signer] === 'object');
-		},
-
-		isLocalSigner: function (signer) {
-			return (signer in keychain);
-		}
-	};
+	function signTransactionHash(signer, txHash) {
+		return getKey(signer)
+		.then(function (key) {
+			return key.signDecorated(txHash);
+		});
+	}
 });
