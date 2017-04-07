@@ -95,7 +95,7 @@ angular.module('app')
 		scope: {
 			network: '='
 		},
-		link: function(scope, element, attributes, ngModel) {
+		link: function (scope, element, attributes, ngModel) {
 			ngModel.$validators.validFunder = function (name) {
 
 				if (!name) {
@@ -127,7 +127,7 @@ angular.module('app')
 	$scope.accounts = getAccounts();
 
 	function getAccounts() {
-		Object.keys(Wallet.accounts)
+		return Object.keys(Wallet.accounts)
 		.filter(function (key) {
 			var network = $scope.account.network;
 			var account = Wallet.accounts[key];
