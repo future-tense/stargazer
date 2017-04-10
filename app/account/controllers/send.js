@@ -357,7 +357,8 @@ angular.module('app')
 		.then(Submitter.submit)
 		.then(function () {
 			$location.path('/');
-		});
+		})
+		.catch(function (){});
 	};
 
 	var query = $location.search();
