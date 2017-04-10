@@ -27,6 +27,7 @@ angular.module('app')
 	var Buffer = buffer.Buffer;
 
 	return {
+		getTransactionHash:		getTransactionHash,
 		hasEnoughSignatures:	hasEnoughSignatures,
 		hasExternalSigners:		hasExternalSigners,
 		sign:					sign
@@ -119,7 +120,7 @@ angular.module('app')
 		]);
 	}
 
-	function transactionHash(tx, network) {
+	function getTransactionHash(tx, network) {
 		var phrase = Horizon.getNetwork(network).phrase;
 		var base = signatureBase(tx, phrase);
 		return StellarSdk.hash(base);
@@ -175,7 +176,6 @@ angular.module('app')
 			delete account.thresholds;
 		});
 
-		console.log(accounts);
 		return context;
 	}
 
@@ -211,7 +211,6 @@ angular.module('app')
 			delete account.signers;
 		});
 
-		console.log(signers);
 		context.signers = signers;
 		return context;
 	}
@@ -221,23 +220,48 @@ angular.module('app')
 	//
 
 	function signLocalKeys(context) {
+
 		var accounts = context.accounts;
 		var signers = context.signers;
 
+		var signerFromHint = {};
+		Object.keys(signers).forEach(function (key) {
+			var hint = StellarSdk.Keypair.fromPublicKey(key).signatureHint().toString('hex');
+			signerFromHint[hint] = key;
+		});
+
+		//	add weights for existing signatures
+
+		context.tx.signatures.forEach(function (sig) {
+			var hint = sig.hint().toString('hex');
+			var signer = signerFromHint[hint];
+			var sources = signers[signer];
+			sources.forEach(function (source) {
+				accounts[source.account].sum += source.weight;
+			});
+
+			delete signers[signer];
+
+		});
+
 		var localSigners = Object.keys(signers).filter(Keychain.isLocalSigner);
-		var txHash = transactionHash(context.tx, context.network);
+		var txHash = getTransactionHash(context.tx, context.network);
+
+		context.txHash = txHash;
+		context.signatures = [];
 
 		return localSigners.forEachThen(function (signer) {
 			return Keychain.signTransactionHash(signer, txHash)
 			.then(function (sig) {
-				context.tx.signatures.push(sig);
+				context.signatures.push(sig);
 				var sources = signers[signer];
 				sources.forEach(function (source) {
 					accounts[source.account].sum += source.weight;
 				});
 
 				delete signers[signer];
-			});
+			})
+			.catch(function (err) {});
 		})
 		.then(function () {
 			return context;
