@@ -508,7 +508,7 @@ i.icon-arrow-up:before {
 	margin-bottom: 8px;
 }
 
-.button.button-positive {
+.button-group > .button.button-positive {
 	min-height: 48px;
 }
 
