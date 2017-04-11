@@ -1,4 +1,4 @@
-/* global angular, console, StellarSdk */
+/* global angular, StellarSdk */
 
 angular.module('app')
 .factory('Transactions', function (Constellation, Signer, Storage, Wallet) {
@@ -11,7 +11,8 @@ angular.module('app')
 	transactionList = Storage.getItem('transactions') || [];
 	transactionList.forEach(function (hash) {
 		var data = Storage.getItem('tx.' + hash);
-		data.tx = new StellarSdk.Transaction(data.txenv);
+		data.tx = decodeTransaction(data.txenv);
+		data.hash = hash;
 		transactions[hash] = data;
 	});
 
@@ -19,6 +20,7 @@ angular.module('app')
 
 	return {
 		addTransaction: addTransaction,
+		forSigner: forSigner,
 		get: getTransaction,
 		isPending: isPending,
 		subscribe: subscribe,
@@ -28,22 +30,33 @@ angular.module('app')
 	//-----------------------------------------------------------------------//
 
 	function addTransaction(hash, payload) {
+
 		if (!(hash in transactions)) {
 			transactions[hash] = payload;
 			transactionList.push(hash);
-		} else {
-			transactions[hash].progress = payload.progress;
+			Storage.setItem('transactions', transactionList);
+			payload.hash = hash;
+			payload.signers = {};
+
+			payload.id.split(',').forEach(function (id) {
+				payload.signers[id] = 1;
+			});
+			storeTransaction(hash, payload);
 		}
 
-		var data = {
-			txenv:		payload.txenv,
-			network:	payload.network,
-			progress:	payload.progress
-		};
+		else {
+			var tx = transactions[hash];
+			payload.id.split(',').forEach(function (id) {
+				tx.signers[id] = 1;
+			});
+			storeTransaction(hash, tx);
+		}
+	}
 
-		Storage.setItem('tx.' + hash, data);
-		Storage.setItem('transactions', transactionList);
-
+	function forSigner(signer) {
+		return transactionList
+		.map(hash => transactions[hash])
+		.filter(tx => signer in tx.signers);
 	}
 
 	function getTransaction(hash) {
@@ -55,16 +68,13 @@ angular.module('app')
 	}
 
 	function subscribe() {
-		var pubkeys = Wallet.accountList.map(function (account) {
-			return account.id;
-		});
+		var pubkeys = Wallet.accountList.map(account => account.id);
 		eventSource = Constellation.subscribe(pubkeys, onRequest, onProgress);
 	}
 
 	//-----------------------------------------------------------------------//
 
 	function onRequest(payload) {
-
 		var tx = new StellarSdk.Transaction(payload.txenv);
 		var hash = Signer.getTransactionHash(tx, payload.network).toString('hex');
 		payload.tx = tx;
@@ -91,13 +101,25 @@ angular.module('app')
 		else {
 			var tx = transactions[hash];
 			tx.progress = payload.progress;
-
-			var data = {
-				txenv:		tx.txenv,
-				network:	tx.network,
-				progress:	tx.progress
-			};
-			Storage.setItem('tx.' + hash, data);
+			storeTransaction(hash, tx);
 		}
+	}
+
+	function storeTransaction(hash, tx) {
+		var data = {
+			txenv:		tx.txenv,
+			network:	tx.network,
+			progress:	tx.progress
+		};
+
+		if ('signers' in tx) {
+			data.signers = tx.signers;
+		}
+
+		Storage.setItem('tx.' + hash, data);
+	}
+
+	function decodeTransaction(txenv) {
+		new StellarSdk.Transaction(txenv);
 	}
 });

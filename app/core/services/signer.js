@@ -87,7 +87,7 @@ angular.module('app')
 		for (var key in sourceAccounts) {
 			if (sourceAccounts.hasOwnProperty(key)) {
 				var account = sourceAccounts[key];
-				if (account.sum < account.threshold) {
+				if (account.weight < account.threshold) {
 					return false;
 				}
 			}
@@ -128,8 +128,8 @@ angular.module('app')
 
 	function getAccountInfo(context) {
 
-		var accounts = context.accounts;
-		var sourceAccounts = Object.keys(accounts);
+		var progress = context.progress;
+		var sourceAccounts = Object.keys(progress);
 		var accountInfo = sourceAccounts.map(function (source) {
 			if (source in Wallet.accounts) {
 				return $q.when(Wallet.accounts[source]);
@@ -139,10 +139,10 @@ angular.module('app')
 		});
 
 		return $q.all(accountInfo)
-		.then(function (info) {
-			info.forEach(function (i) {
-				accounts[i.id].signers		= i.signers;
-				accounts[i.id].thresholds	= i.thresholds;
+		.then(function (accounts) {
+			accounts.forEach(function (account) {
+				progress[account.id].signers	= account.signers;
+				progress[account.id].thresholds	= account.thresholds;
 			});
 			return context;
 		});
@@ -153,11 +153,11 @@ angular.module('app')
 	//
 
 	function getThresholds(context) {
-		var accounts = context.accounts;
-		var sourceAccounts = Object.keys(accounts);
+		var progress = context.progress;
+		var sourceAccounts = Object.keys(progress);
 
 		sourceAccounts.forEach(function (source) {
-			var account = accounts[source];
+			var account = progress[source];
 
 			var thresholds = [
 				account.thresholds.low_threshold  * account.category[0],
@@ -171,7 +171,7 @@ angular.module('app')
 			}
 
 			account.threshold = threshold;
-			account.sum = 0;
+			account.weight = 0;
 			delete account.category;
 			delete account.thresholds;
 		});
@@ -184,8 +184,8 @@ angular.module('app')
 	//
 
 	function getSigners(context) {
-		var accounts = context.accounts;
-		var sourceAccounts = Object.keys(accounts);
+		var progress = context.progress;
+		var sourceAccounts = Object.keys(progress);
 
 		var signers = {};
 		sourceAccounts.forEach(function (source) {
@@ -198,7 +198,7 @@ angular.module('app')
 				}
 			}
 
-			var account = accounts[source];
+			var account = progress[source];
 			account.signers.forEach(function (signer) {
 				if (signer.weight !== 0) {
 					addSourceAccount(signer.public_key, {
@@ -221,7 +221,7 @@ angular.module('app')
 
 	function signLocalKeys(context) {
 
-		var accounts = context.accounts;
+		var progress = context.progress;
 		var signers = context.signers;
 
 		var signerFromHint = {};
@@ -237,7 +237,7 @@ angular.module('app')
 			var signer = signerFromHint[hint];
 			var sources = signers[signer];
 			sources.forEach(function (source) {
-				accounts[source.account].sum += source.weight;
+				progress[source.account].weight += source.weight;
 			});
 
 			delete signers[signer];
@@ -245,8 +245,9 @@ angular.module('app')
 		});
 
 		var localSigners = Object.keys(signers).filter(Keychain.isLocalSigner);
-		var txHash = getTransactionHash(context.tx, context.network);
+		context.id = localSigners.join(',');
 
+		var txHash = getTransactionHash(context.tx, context.network);
 		context.txHash = txHash;
 		context.signatures = [];
 
@@ -256,7 +257,7 @@ angular.module('app')
 				context.signatures.push(sig);
 				var sources = signers[signer];
 				sources.forEach(function (source) {
-					accounts[source.account].sum += source.weight;
+					progress[source.account].weight += source.weight;
 				});
 
 				delete signers[signer];
@@ -273,7 +274,7 @@ angular.module('app')
 
 	function sign(context) {
 		context.horizon  = Horizon.getServer(context.network);
-		context.accounts = getSourceAccounts(context.tx);
+		context.progress = getSourceAccounts(context.tx);
 
 		return $q.when(context)
 		.then(getAccountInfo)

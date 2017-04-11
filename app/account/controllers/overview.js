@@ -1,7 +1,7 @@
 /* global angular, console, toml */
 
 angular.module('app')
-.controller('OverviewCtrl', function ($route, $scope, Horizon, Wallet) {
+.controller('OverviewCtrl', function ($route, $scope, Horizon, Transactions, Wallet) {
 	'use strict';
 
 	var accountId = $route.current.params.accountId;
@@ -10,6 +10,9 @@ angular.module('app')
 	}
 
 	$scope.wallet = Wallet;
+	$scope.pending = Transactions;
+
+	$scope.pubkey = Wallet.current.id;
 
 	$scope.isActivated = function () {
 		return Wallet.current.getNativeBalance() !== '0';

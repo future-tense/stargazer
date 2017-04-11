@@ -21,6 +21,25 @@
 	<div class="camera-icon" style="position:relative">
 		<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
 	</div>
+
+	<div ng-show="pending.forSigner(pubkey).length !== 0">
+		<div style="padding:8px 16px; height:40px">
+			<span>
+				Signing requests
+			</span>
+		</div>
+		<div class="feed" style="margin-bottom:0">
+			<a class="feed-item" ng-href="#/transaction/{{tx.hash}}" ng-repeat="tx in pending.forSigner(pubkey)">
+				<div class="feed-item-icon">
+					<div class="circle circle-red"><i class="icon icon-upload"></i></div>
+				</div>
+				<div class="feed-item-comment">{{tx.hash}}</div>
+				<div class="payment"></div>
+				<div class="more">&raquo;</div>
+			</a>
+		</div>
+	</div>
+
 	<account-activity account="wallet.current" limit="100" filter="payments"></account-activity>
 </ion-content>
 

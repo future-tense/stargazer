@@ -15,7 +15,7 @@ angular.module('app')
 			return submitSignature(context, hash);
 		}
 
-		else if (Signer.hasEnoughSignatures(context.accounts)) {
+		else if (Signer.hasEnoughSignatures(context.progress)) {
 			return submitTransaction(context);
 		}
 
@@ -53,7 +53,9 @@ angular.module('app')
 
 			var data = {
 				txenv: txenv,
-				tx: context.tx
+				id: context.id,
+				tx: context.tx,
+				progress: context.progress
 			};
 			Transactions.addTransaction(hash, data);
 		})
