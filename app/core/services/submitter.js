@@ -15,15 +15,15 @@ angular.module('app')
 			return submitSignature(context, hash);
 		}
 
-		else if (Signer.hasEnoughSignatures(context.progress)) {
+		if (Signer.hasEnoughSignatures(context.progress)) {
 			return submitTransaction(context);
 		}
 
-		else /*if (Signer.hasExternalSigners(context))*/ {
+		if (Signer.hasExternalSigners(context)) {
 			return submitSigningRequest(context, hash);
 		}
 
-	//	$q.resolve();
+		$q.resolve();
 	}
 
 	function submitSignature(context, hash) {
