@@ -120,6 +120,6 @@ angular.module('app')
 	}
 
 	function decodeTransaction(txenv) {
-		new StellarSdk.Transaction(txenv);
+		return new StellarSdk.Transaction(txenv);
 	}
 });
