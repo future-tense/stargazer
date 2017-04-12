@@ -245,7 +245,7 @@ angular.module('app')
 		});
 
 		var localSigners = Object.keys(signers).filter(Keychain.isLocalSigner);
-		context.id = localSigners.join(',');
+		context.id = localSigners;
 
 		var txHash = getTransactionHash(context.tx, context.network);
 		context.txHash = txHash;

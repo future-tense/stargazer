@@ -38,7 +38,7 @@ angular.module('app')
 			payload.hash = hash;
 			payload.signers = {};
 
-			payload.id.split(',').forEach(function (id) {
+			payload.id.forEach(function (id) {
 				payload.signers[id] = 1;
 			});
 			storeTransaction(hash, payload);
@@ -46,7 +46,7 @@ angular.module('app')
 
 		else {
 			var tx = transactions[hash];
-			payload.id.split(',').forEach(function (id) {
+			payload.id.forEach(function (id) {
 				tx.signers[id] = 1;
 			});
 			storeTransaction(hash, tx);
