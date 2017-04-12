@@ -4,13 +4,11 @@ angular.module('app')
 .factory('Transactions', function (Constellation, Signer, Storage, Wallet) {
 	'use strict';
 
-	var transactionList = [];
-	var transactions = {};
-	var eventSource;
-
-	transactionList = Storage.getItem('transactions') || [];
+	let eventSource;
+	let transactions = {};
+	const transactionList = Storage.getItem('transactions') || [];
 	transactionList.forEach(function (hash) {
-		var data = Storage.getItem('tx.' + hash);
+		const data = Storage.getItem('tx.' + hash);
 		data.tx = decodeTransaction(data.txenv);
 		data.hash = hash;
 		transactions[hash] = data;
@@ -45,7 +43,7 @@ angular.module('app')
 		}
 
 		else {
-			var tx = transactions[hash];
+			const tx = transactions[hash];
 			payload.id.forEach(function (id) {
 				tx.signers[id] = 1;
 			});
@@ -68,29 +66,29 @@ angular.module('app')
 	}
 
 	function subscribe() {
-		var pubkeys = Wallet.accountList.map(account => account.id);
+		const pubkeys = Wallet.accountList.map(account => account.id);
 		eventSource = Constellation.subscribe(pubkeys, onRequest, onProgress);
 	}
 
 	//-----------------------------------------------------------------------//
 
 	function onRequest(payload) {
-		var tx = new StellarSdk.Transaction(payload.txenv);
-		var hash = Signer.getTransactionHash(tx, payload.network).toString('hex');
+		const tx = new StellarSdk.Transaction(payload.txenv);
+		const hash = Signer.getTransactionHash(tx, payload.network).toString('hex');
 		payload.tx = tx;
 		addTransaction(hash, payload);
 	}
 
 	function onProgress(payload) {
 
-		var hash = payload.hash;
-		var isDone = Object.keys(payload.progress).every(function (key) {
-			var account = payload.progress[key];
+		const hash = payload.hash;
+		const isDone = Object.keys(payload.progress).every(function (key) {
+			const account = payload.progress[key];
 			return (account.weight >= account.threshold);
 		});
 
 		if (isDone) {
-			var index = transactionList.indexOf(hash);
+			const index = transactionList.indexOf(hash);
 			transactionList.splice(index, 1);
 			Storage.setItem('transactions', transactionList);
 
@@ -99,14 +97,14 @@ angular.module('app')
 		}
 
 		else {
-			var tx = transactions[hash];
+			const tx = transactions[hash];
 			tx.progress = payload.progress;
 			storeTransaction(hash, tx);
 		}
 	}
 
 	function storeTransaction(hash, tx) {
-		var data = {
+		const data = {
 			txenv:		tx.txenv,
 			network:	tx.network,
 			progress:	tx.progress
