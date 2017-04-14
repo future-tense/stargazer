@@ -88,25 +88,21 @@ angular.module('app')
 
 	Account.prototype.refresh = function () {
 
-		console.log('refreshing ' + this.alias);
+//		console.log('refreshing ' + this.alias);
 
 		if (this.closeStream) {
 			this.closeStream();
 		}
 
-		var self = this;
+		const self = this;
 		return this.getAccountInfo()
-		.then(
-			function () {
-				return History.getTransactions(self, 20)
-				.then(function () {
-					History.subscribe(self);
-				});
-			},
-			function (err) {
-				console.log(err);
-			}
-		);
+		.then(function () {
+			return History.getTransactions(self, 20)
+			.then(function () {
+				History.subscribe(self);
+			});
+		})
+		.catch(function (err) {});
 	};
 
 	//
