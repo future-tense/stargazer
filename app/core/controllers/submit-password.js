@@ -7,7 +7,7 @@ angular.module('app')
 	$scope.form = {};
 	$scope.model = {};
 
-	var signer = $scope.signer;
+	let signer = $scope.signer;
 	if (signer === Wallet.current.id) {
 		$scope.label = 'modal.password.label';
 	}
