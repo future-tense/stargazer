@@ -20,17 +20,6 @@
 			</a>
 		</div>
 
-		<div class="list" ng-if="transactions.length !== 0">
-			<div class="item">
-				<span>transactions</span>
-			</div>
-			<a ng-href="#/transaction/{{txHash}}" ng-repeat="txHash in transactions" menu-toggle>
-				<div class="item" ng-class="{selected: account.id === wallet.current.id}">
-					{{txHash}}
-				</div>
-			</a>
-		</div>
-
 		<div class="list">
 			<div class="item">
 				<a class="button button-block button-outline button-stable"
