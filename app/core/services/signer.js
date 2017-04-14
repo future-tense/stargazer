@@ -221,21 +221,21 @@ angular.module('app')
 
 	function signLocalKeys(context) {
 
-		var progress = context.progress;
-		var signers = context.signers;
+		const progress = context.progress;
+		const signers = context.signers;
 
-		var signerFromHint = {};
+		const signerFromHint = {};
 		Object.keys(signers).forEach(function (key) {
-			var hint = StellarSdk.Keypair.fromPublicKey(key).signatureHint().toString('hex');
+			const hint = StellarSdk.Keypair.fromPublicKey(key).signatureHint().toString('hex');
 			signerFromHint[hint] = key;
 		});
 
 		//	add weights for existing signatures
 
 		context.tx.signatures.forEach(function (sig) {
-			var hint = sig.hint().toString('hex');
-			var signer = signerFromHint[hint];
-			var sources = signers[signer];
+			const hint = sig.hint().toString('hex');
+			const signer = signerFromHint[hint];
+			const sources = signers[signer];
 			sources.forEach(function (source) {
 				progress[source.account].weight += source.weight;
 			});
@@ -244,32 +244,10 @@ angular.module('app')
 
 		});
 
-		var localSigners = Object.keys(signers).filter(Keychain.isLocalSigner);
-		context.id = localSigners;
-
-		var txHash = getTransactionHash(context.tx, context.network);
-		context.txHash = txHash;
-		context.signatures = [];
-
-		return localSigners.forEachThen(function (signer) {
-			return Keychain.signTransactionHash(signer, txHash)
-			.then(function (sig) {
-				context.signatures.push(sig);
-				var sources = signers[signer];
-				sources.forEach(function (source) {
-					progress[source.account].weight += source.weight;
-				});
-
-				delete signers[signer];
-			})
-			.catch(function (err) {});
-		})
-		.then(function () {
-			return context;
-		})
-		.catch(function () {
-			return context;
-		});
+		context.id			= Object.keys(signers).filter(Keychain.isLocalSigner);
+		context.txHash		= getTransactionHash(context.tx, context.network);
+		context.signatures	= [];
+		return context;
 	}
 
 	function sign(context) {

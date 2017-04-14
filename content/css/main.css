@@ -527,3 +527,15 @@ i.icon-arrow-up:before {
 .bottom-border {
 	border-bottom: 1px solid #DDD;
 }
+
+.submitter {
+	height: 100%;
+	background-color: #FFF;
+	padding-top: 80px;
+}
+
+@media (min-width: 680px) {
+	.submitter {
+		padding-top: 40px
+	}
+}

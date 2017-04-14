@@ -1,0 +1,95 @@
+<ion-modal-view ng-controller="ReviewSubmitCtrl">
+	<ion-header-bar align-title="center" class="tab-bar">
+		<button on-tap="close()" class="button button-clear button-white">
+			{{'modal.close' | translate}}
+		</button>
+		<h1 class="title ellipsis">
+			Review and Submit
+		</h1>
+	</ion-header-bar>
+	<ion-content class="modal-content text-center fix-modals-touch" ng-init="init()" scrollbar-y="false">
+
+		<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between" ng-show="state === 'signing'">
+			<div class="item item-divider">Transaction</div>
+			<div style="background-color:#FFF;height:100%;padding-top:16px">
+				<div ng-repeat="op in operations" dynamic="op">
+				</div>
+			</div>
+			<div ng-show="signer.isEncrypted">
+				<div style="width:100%">
+					<div class="item item-divider">Signatures</div>
+					<div class="item">Sign for <account-name id="{{signer.id}}"/></div>
+					<form name="form.passwordForm">
+						<label class="item item-input item-stacked-label">
+							<span class="input-label">
+								{{label | translate:translationData}}
+							</span>
+							<input type="password" ng-model="model.password" placeholder="{{'modal.password.placeholder' | translate}}" autocapitalize="none" on-esc="cancel()" on-enter="submitPassword()" required valid-password signer="{{signer.id}}">
+						</label>
+					</form>
+					<div class="row" style="padding:4px 8px">
+						<div class="col col-50" style="padding:4px 8px">
+							<button class="button button-block button-light" on-tap="cancel()">
+								{{'global.cancel' | translate}}
+							</button>
+						</div>
+						<div class="col col-50" style="padding:4px 8px">
+							<button class="button button-block button-positive" on-tap="sign(model.password)" ng-disabled="form.passwordForm.$invalid">
+								{{'global.ok' | translate}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div ng-show="!signer.isEncrypted">
+				<div style="width:100%">
+					<div class="item item-divider">Signatures</div>
+					<div class="item">Sign for <account-name id="{{signer.id}}"/></div>
+					<div class="row" style="padding:4px 8px">
+						<div class="col col-50" style="padding:4px 8px">
+							<button class="button button-block button-light" on-tap="cancel()">
+								{{'global.cancel' | translate}}
+							</button>
+						</div>
+						<div class="col col-50" style="padding:4px 8px">
+							<button class="button button-block button-positive" on-tap="sign()">
+								{{'global.ok' | translate}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="submitter" ng-show="state !== 'signing'">
+
+			<div ng-show="state === 'pending'">
+				<img src="images/ring-loader.svg">
+			</div>
+
+			<div ng-show="state === 'submitted'">
+				<div style="border-color:#00D415;color:#00D415;width:128px;height:128px;border-radius:64px;border-width:2px;border-style:solid;margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:center;font-size:48px">
+					<i class="icon icon-check"></i>
+				</div>
+			</div>
+
+			<div ng-show="state === 'failed'">
+				<div style="border-color:#D41500;color:#D41500;width:128px;height:128px;border-radius:64px;border-width:2px;border-style:solid;margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:center;font-size:48px">
+					<i class="icon icon-cross"></i>
+				</div>
+			</div>
+
+			<h3 class="text-gray">
+				{{message}}
+			</h3>
+
+			<div class="button-group" style="position:absolute;bottom:0" ng-show="state !== 'pending'">
+				<button type="button" class="button button-block button-positive" on-tap="close()">
+					OK
+				</button>
+			</div>
+		</div>
+	</ion-content>
+
+</ion-modal-view>

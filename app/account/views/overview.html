@@ -29,7 +29,7 @@
 			</span>
 		</div>
 		<div class="feed" style="margin-bottom:0">
-			<a class="feed-item" ng-href="#/transaction/{{tx.hash}}" ng-repeat="tx in pending.forSigner(pubkey)">
+			<a class="feed-item" on-tap="review(tx)" ng-repeat="tx in pending.forSigner(pubkey)">
 				<div class="feed-item-icon">
 					<div class="circle circle-red"><i class="icon icon-upload"></i></div>
 				</div>

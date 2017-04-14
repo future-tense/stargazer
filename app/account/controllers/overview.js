@@ -1,7 +1,7 @@
 /* global angular, console, toml */
 
 angular.module('app')
-.controller('OverviewCtrl', function ($route, $scope, Horizon, Transactions, Wallet) {
+.controller('OverviewCtrl', function ($q, $route, $scope, Signer, Submitter, Transactions, Wallet) {
 	'use strict';
 
 	var accountId = $route.current.params.accountId;
@@ -34,9 +34,19 @@ angular.module('app')
 		Wallet.current.refresh()
 		.then(function () {
 			$scope.$broadcast('scroll.refreshComplete');
-		}, function (err) {
+		})
+		.catch(function (err) {
 			$scope.$broadcast('scroll.refreshComplete');
 			// :TODO: Display some message about not being able to refresh
 		});
 	};
+
+	$scope.review = reviewPending;
+
+	function reviewPending(context) {
+		$q.when(context)
+		.then(Signer.sign)
+		.then(Submitter.submit)
+		.catch(function (){});
+	}
 });

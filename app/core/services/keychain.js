@@ -4,13 +4,11 @@ angular.module('app')
 .factory('Keychain', function ($q, $rootScope, Crypto, Modal, Storage) {
 	'use strict';
 
-	var keychain = {};
-	var keys = Storage.getItem('keys');
-	if (keys) {
-		keys.forEach(function (publicKey) {
-			keychain[publicKey] = Storage.getItem('key.' + publicKey);
-		});
-	}
+	const keychain = {};
+	const keys = Storage.getItem('keys') || [];
+	keys.forEach(function (publicKey) {
+		keychain[publicKey] = Storage.getItem('key.' + publicKey);
+	});
 
 	return {
 		addKey: addKey,
@@ -26,22 +24,29 @@ angular.module('app')
 		signTransactionHash: signTransactionHash
 	};
 
-	function getKey(signer) {
+	function getKey(signer, password) {
 
-		var keyStore = keychain[signer];
+		const keyStore = keychain[signer];
 		if (typeof keyStore === 'string') {
-			var keys =  StellarSdk.Keypair.fromSecret(keyStore);
+			const keys =  StellarSdk.Keypair.fromSecret(keyStore);
 			return $q.when(keys);
 		}
 
-		var scope = $rootScope.$new();
+		if (password) {
+			const key = decryptKey(password);
+			return $q.when(key);
+		}
+
+		const scope = $rootScope.$new();
 		scope.signer = signer;
 
 		return Modal.show('app/core/modals/submit-password.html', scope)
-		.then(function (password) {
-			var secret = Crypto.decrypt(keyStore, password);
+		.then(password => decryptKey(password));
+
+		function decryptKey(password) {
+			const secret = Crypto.decrypt(keyStore, password);
 			return StellarSdk.Keypair.fromSecret(secret);
-		});
+		}
 	}
 
 	/* */
@@ -77,7 +82,7 @@ angular.module('app')
 		}
 
 		try {
-			var seed = Crypto.decrypt(keyStore, password);
+			const seed = Crypto.decrypt(keyStore, password);
 			return StellarSdk.StrKey.isValidEd25519SecretSeed(seed);
 		} catch (error) {
 			return false;
@@ -85,36 +90,32 @@ angular.module('app')
 	}
 
 	function isValidPasswordForSigner(signer, password) {
-		var keyStore = keychain[signer];
+		const keyStore = keychain[signer];
 		return isValidPassword(keyStore, password);
 	}
 
 	function removePassword(signer, password) {
-		var keyStore = keychain[signer];
+		let keyStore = keychain[signer];
 		keyStore = Crypto.decrypt(keyStore, password);
 		keychain[signer] = keyStore;
 		Storage.setItem('key.' + signer, keyStore);
 	}
 
 	function setPassword(signer, password) {
-		var keyStore = keychain[signer];
+		let keyStore = keychain[signer];
 		keyStore = Crypto.encrypt(keyStore, password);
 		keychain[signer] = keyStore;
 		Storage.setItem('key.' + signer, keyStore);
 	}
 
 	function signMessage(signer, message) {
+		const hash = StellarSdk.hash(StellarSdk.hash(message));
 		return getKey(signer)
-		.then(function (key) {
-			var hash = StellarSdk.hash(StellarSdk.hash(message));
-			return key.sign(hash).toString('base64');
-		});
+		.then(key => key.sign(hash).toString('base64'));
 	}
 
-	function signTransactionHash(signer, txHash) {
-		return getKey(signer)
-		.then(function (key) {
-			return key.signDecorated(txHash);
-		});
+	function signTransactionHash(signer, hash, password) {
+		return getKey(signer, password)
+		.then(key => key.signDecorated(hash));
 	}
 });
