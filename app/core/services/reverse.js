@@ -4,7 +4,12 @@ angular.module('app')
 .factory('Reverse', function ($q, Contacts, Wallet) {
 	'use strict';
 
-	var reverseFederationCache = {};
+	const reverseFederationCache = {};
+
+	return {
+		lookup: lookup,
+		lookupAndFill: lookupAndFill
+	};
 
 	function reverseFederationLookup(accountId) {
 
@@ -15,14 +20,8 @@ angular.module('app')
 				return StellarSdk.FederationServer.createForDomain(accountInfo.home_domain)
 				.then(function (federationServer) {
 					return federationServer.resolveAccountId(accountId)
-					.then(
-						function (res) {
-							return res.stellar_address;
-						},
-						function (err) {
-							return $q.reject(err);
-						}
-					);
+					.then(res => res.stellar_address)
+					.catch(err => $q.reject(err));
 				});
 			} else {
 				return $q.reject();
@@ -39,7 +38,7 @@ angular.module('app')
 
 			else {
 
-				var name;
+				let name;
 				if (tx) {
 					name = Contacts.lookup(accountId, network, tx.memoType, tx.memo);
 				} else {
@@ -56,27 +55,19 @@ angular.module('app')
 
 				else {
 					reverseFederationLookup(accountId)
-					.then(
-						function (name) {
-							reverseFederationCache[accountId] = name;
-							resolve(name);
-						},
-						function (err) {
-							reject(err);
-						}
-					);
+					.then(function (name) {
+						reverseFederationCache[accountId] = name;
+						resolve(name);
+					})
+					.catch(err => reject(err));
 				}
 			}
 		});
 	}
 
-	return {
-		lookup: lookup,
-		lookupAndFill: function (setter, accountId, network, tx) {
-			setter(accountId);
-			lookup(accountId, network, tx)
-			.then(setter);
-		}
-	};
-
+	function lookupAndFill(setter, accountId, network, tx) {
+		setter(accountId);
+		lookup(accountId, network, tx)
+		.then(setter);
+	}
 });
