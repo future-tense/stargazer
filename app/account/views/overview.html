@@ -22,6 +22,7 @@
 		<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
 	</div>
 
+
 	<div ng-show="pending.forSigner(pubkey).length !== 0">
 		<div style="padding:8px 16px; height:40px">
 			<span>
@@ -30,9 +31,7 @@
 		</div>
 		<div class="feed" style="margin-bottom:0">
 			<a class="feed-item" on-tap="review(tx)" ng-repeat="tx in pending.forSigner(pubkey)">
-				<div class="feed-item-icon">
-					<div class="circle circle-red"><i class="icon icon-upload"></i></div>
-				</div>
+				<jazzicon class="feed-item-icon" seed="{{tx.hash}}"></jazzicon>
 				<div class="feed-item-comment">{{tx.hash}}</div>
 				<div class="payment"></div>
 				<div class="more">&raquo;</div>

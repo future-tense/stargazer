@@ -16,6 +16,8 @@ angular.module('app')
 		$scope.amount = effect.amount;
 		$scope.counterparty = effect.from;
 		$scope.counterpartyLabel = 'transaction.from';
+		$scope.seed = effect.from;
+
 	}
 
 	else if (effect.type === 'account_credited') {
@@ -24,6 +26,7 @@ angular.module('app')
 		$scope.amount = effect.amount;
 		$scope.counterparty = effect.from;
 		$scope.counterpartyLabel = 'transaction.from';
+		$scope.seed = effect.from;
 	}
 
 	else if (effect.type === 'account_debited') {
@@ -32,6 +35,7 @@ angular.module('app')
 		$scope.amount = effect.amount;
 		$scope.counterparty = effect.to;
 		$scope.counterpartyLabel = 'transaction.to';
+		$scope.seed = effect.to;
 	}
 
 	else if (effect.type === 'trade') {
@@ -40,6 +44,7 @@ angular.module('app')
 		$scope.bought_code = (effect.bought_asset_type === 'native')? 'XLM': effect.bought_asset_code;
 		$scope.sold_amount = effect.sold_amount;
 		$scope.sold_code = (effect.sold_asset_type === 'native')? 'XLM': effect.sold_asset_code;
+		$scope.seed = Wallet.current.id;
 	}
 
 	$scope.effect = effect;

@@ -67,6 +67,8 @@ div[account-balance] td {
 .feed-item-icon {
 	display: table-cell;
 	vertical-align: middle;
+	width: 40px;
+	height: 40px
 }
 
 .timestamp {
@@ -350,7 +352,6 @@ ion-side-menu-content {
 	background-color: #ECECEC !important;
 }
 
-
 .button-clear {
 	transition: none;
 }
@@ -372,32 +373,6 @@ ion-side-menu-content {
 	display:flex;
 	flex-direction: column;
 	align-items: center;
-}
-
-.circle {
-	border-radius: 50%;
-	border-width: 1px;
-	width: 40px;
-	height: 40px;
-	display: flex;
-	border-style: solid;
-	align-items: center;
-	justify-content: center;
-}
-
-.circle-red {
-	border-color: #D60000;
-	color: #D60000;
-}
-
-.circle-green {
-	border-color: #00D600;
-	color: #00D600;
-}
-
-.circle-blue {
-	border-color: #0000D6;
-	color: #0000D6;
 }
 
 ion-side-menu.menu {

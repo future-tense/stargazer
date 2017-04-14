@@ -8,12 +8,14 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "grunt": "^1.0.1",
+    "grunt-browserify": "^5.0.0",
     "grunt-chokidar": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-file-sloc": "0.0.1",
     "grunt-preprocess": "^5.1.0",
     "grunt-replace": "^1.0.1",
+    "jazzicon": "git+https://github.com/flyswatter/jazzicon.git#8e51499",
     "jit-grunt": "^0.10.0"
   }
 }

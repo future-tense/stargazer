@@ -31,6 +31,14 @@ module.exports = function (grunt) {
 			}
 		},
 
+		browserify: {
+			dist: {
+				files: {
+					'build/jazzicon.js': ['app/core/services/jazzicon.js']
+				}
+			}
+		},
+
 		concat: {
 			vendor: {
 				src: [
@@ -52,7 +60,9 @@ module.exports = function (grunt) {
 				src: [
 					'build/app.js',
 					'app/**/*.js',
-					'!app/app.js'
+					'build/jazzicon.js',
+					'!app/app.js',
+					'!app/core/services/jazzicon.js'
 				],
 				dest: 'dist/js/stargazer.js'
 			}
@@ -105,16 +115,6 @@ module.exports = function (grunt) {
 			]
 		},
 
-		nwjs: {
-			options: {
-				version: 'latest',
-				flavor: 'normal',
-				platforms: ['osx64', 'win64', 'win32', 'linux64'],
-				buildDir: './webkitbuilds'		// Where the build version of my NW.js app is saved
-			},
-			src: ['./nwjs/**'] // Your NW.js app
-		},
-
 		sloc: {
 			'style3': {
 				files: [
@@ -129,6 +129,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', [
 		'replace:jsqrcode',
 		'preprocess:app',
+		'browserify:dist',
 		'concat',
 		'copy'
 	]);

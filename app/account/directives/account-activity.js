@@ -2,7 +2,7 @@
 /* jshint multistr: true */
 
 angular.module('app')
-.directive('accountActivity', function ($filter, $interval, $translate, Contacts, History, Wallet) {
+.directive('accountActivity', function ($filter, $interval, $translate, Contacts, History, Jazzicon, Wallet) {
 	'use strict';
 
 	var formatAmount = $filter('formatAmount');
@@ -64,15 +64,13 @@ angular.module('app')
 
 		var now = new Date().getTime() / 1000;
 
-		var icon = {
-			'send':	'<div class="circle circle-red"><i class="icon icon-upload"></i></div>',
-			'recv':	'<div class="circle circle-green"><i class="icon icon-download"></i></div>',
-			'trade':'<div class="circle circle-blue"><i class="icon icon-exchange"></i></div>'
-		};
+		function getSeed(tx) {
+			return tx.counterparty? tx.counterparty : Wallet.current.id;
+		}
 
 		return '\
 			<a class="feed-item" href="#/account/transaction/' + tx.id +'">\
-				<div class="feed-item-icon">' + icon[tx.type] + '</div>\
+				<div class="feed-item-icon" data-seed="' + getSeed(tx) + '"></div>\
 				<div class="feed-item-comment">' + getComment(tx) + '</div>\
 				<div class="payment">\
 					<div style="text-align:right;color:#444;">' + tx.desc + '</div>\
@@ -153,13 +151,11 @@ angular.module('app')
 				res.memoType = fx.memoType;
 				res.memo = fx.memo;
 
-				var counterparty;
 				if (fx.to) {
-					counterparty = fx.to;
+					res.counterparty = fx.to;
 				} else if (fx.from) {
-					counterparty = fx.from;
+					res.counterparty = fx.from;
 				}
-				res.counterparty = counterparty;
 
 				return res;
 			});
@@ -182,6 +178,15 @@ angular.module('app')
 				html = '<div style="text-align: center" class="text-gray">' + text + '</div>';
 			}
 			element[0].children[1].innerHTML = html;
+
+			const list = document.getElementsByClassName('feed-item-icon');
+			for (let i = 0; i < list.length; i++) {
+				const elem = list[i];
+				const seed = elem.getAttribute('data-seed');
+				if (seed) {
+					elem.appendChild(Jazzicon.render(seed));
+				}
+			}
 		}
 
 		function updateTime() {

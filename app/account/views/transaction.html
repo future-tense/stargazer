@@ -3,10 +3,7 @@
 
 	<div class="list">
 		<div class="item activity-header" ng-if="type==='send'">
-
-			<div class="circle circle-red" style="margin-bottom:8px">
-				<i class="icon icon-upload"></i>
-			</div>
+			<jazzicon seed="{{seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
 				{{'transaction.sent' | translate}}
 			</div>
@@ -16,9 +13,7 @@
 		</div>
 
 		<div class="item activity-header" ng-if="type==='recv'">
-			<div class="circle circle-green" style="margin-bottom:8px">
-				<i class="icon icon-download"></i>
-			</div>
+			<jazzicon seed="{{seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
 				{{'transaction.received' | translate }}
 			</div>
@@ -28,9 +23,7 @@
 		</div>
 
 		<div class="item activity-header" ng-if="type==='trade'">
-			<div class="circle circle-blue" style="margin-bottom:8px">
-				<i class="icon icon-exchange"></i>
-			</div>
+			<jazzicon seed="{{seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
 				{{'transaction.traded' | translate }}
 			</div>
