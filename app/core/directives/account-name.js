@@ -1,17 +1,27 @@
-
-/* global angular, console, StellarSdk */
+/* global angular */
 
 angular.module('app')
-.directive('accountName', function ($q, Reverse) {
+.directive('accountName', function (Reverse) {
 	'use strict';
 
-	function link(scope, element, attrs) {
-		Reverse.lookupAndFill(
-			function (res) {scope.name = res;},
-			scope.id,
-			scope.network,
-			scope.tx
-		);
+	function link(scope, element, attributes) {
+
+		scope.$watch('id', function () {
+
+			if (scope.id === undefined) {
+				return;
+			}
+
+			const network = scope.network || scope.$parent.network;
+			Reverse.lookupAndFill(
+				res => {
+					element[0].innerText = res;
+				},
+				scope.id,
+				network,
+				scope.tx
+			);
+		});
 	}
 
 	return {
@@ -21,7 +31,6 @@ angular.module('app')
 			network: '@',
 			tx: '='
 		},
-		link: link,
-		template: '{{name}}'
+		link: link
 	};
 });
