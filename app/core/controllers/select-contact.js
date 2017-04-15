@@ -1,25 +1,28 @@
 /* global angular, console */
 
 angular.module('app')
-.controller('SelectContactCtrl', function($scope, Contacts, Wallet) {
+.controller('SelectContactCtrl', function ($scope, Contacts, Wallet) {
 	'use strict';
 
-	$scope.accounts = Object.keys(Wallet.accounts)
-	.filter(function (key) {
-		return (Wallet.accounts[key].network === Wallet.current.network);
-	})
-	.map(function (key) {
-		return Wallet.accounts[key].alias;
-	});
+	$scope.cancel = cancel;
+	$scope.select = select;
 
+	$scope.accounts = getAccounts();
 	$scope.contacts = Contacts.forNetwork(Wallet.current.network);
 
-	$scope.cancel = function () {
-		$scope.modal.remove();
-	};
+	function getAccounts() {
+		const network = Wallet.current.network;
 
-	$scope.select = function (contact) {
-		$scope.send.destination = contact;
-		$scope.modal.remove();
-	};
+		return Wallet.accountList
+		.filter(item => item.network === network)
+		.map(item => item.alias);
+	}
+
+	function cancel() {
+		$scope.closeModalService();
+	}
+
+	function select (contact) {
+		$scope.modalResolve(contact);
+	}
 });

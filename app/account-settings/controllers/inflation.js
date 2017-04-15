@@ -16,11 +16,10 @@ angular.module('app')
 	}
 
 	$scope.selectRecipient = function () {
-
-		//	invalidate form records first
-		$scope.send.destination = '';
-
-		Modal.show('app/core/modals/select-contact.html', $scope);
+		Modal.show('app/core/modals/select-contact.html', $scope)
+		.then(function (dest) {
+			$scope.send.destination = dest;
+		});
 	};
 
 	$scope.setInflation = function () {

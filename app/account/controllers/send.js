@@ -283,7 +283,10 @@ angular.module('app')
 
 		$scope.send.destination = '';
 		$scope.send.destInfo = null;
-		Modal.show('app/core/modals/select-contact.html', $scope);
+		Modal.show('app/core/modals/select-contact.html', $scope)
+		.then(function (dest) {
+			$scope.send.destination = dest;
+		});
 	};
 
 	$scope.onAmount = function () {
