@@ -71,7 +71,6 @@ angular.module('app')
 
 		if (Transactions.isPending(hash) && context.signatures.length !== 0) {
 
-			console.log(74);
 			$scope.message = 'Submitting signature(s)...';
 			$scope.state = 'pending';
 			return Submitter.submitSignature(context, hash)
@@ -87,7 +86,6 @@ angular.module('app')
 
 		if (Signer.hasEnoughSignatures(context.progress)) {
 
-			console.log(90);
 			$scope.message = $translate.instant('transaction.submitting');
 			$scope.state = 'pending';
 			return Submitter.submitTransaction(context)
@@ -104,7 +102,6 @@ angular.module('app')
 
 		if (Signer.hasExternalSigners(context) && context.signatures.length !== 0) {
 
-			console.log(106);
 			$scope.message = 'Submitting signing request...';
 			$scope.state = 'pending';
 			return Submitter.submitSigningRequest(context, hash)
@@ -118,7 +115,6 @@ angular.module('app')
 			});
 		}
 
-		console.log(117);
 		$scope.message = 'Cancelled';
 		$scope.state = 'failed';
 	}
