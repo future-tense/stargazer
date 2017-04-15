@@ -1,7 +1,7 @@
 /* global angular, StellarSdk */
 
 angular.module('app')
-.factory('Keychain', function ($q, $rootScope, Crypto, Modal, Storage) {
+.factory('Keychain', function ($q, Crypto, Modal, Storage) {
 	'use strict';
 
 	const keychain = {};
@@ -37,10 +37,11 @@ angular.module('app')
 			return $q.when(key);
 		}
 
-		const scope = $rootScope.$new();
-		scope.signer = signer;
+		const data = {
+			signer: signer
+		};
 
-		return Modal.show('app/core/modals/submit-password.html', scope)
+		return Modal.show('app/core/modals/submit-password.html', data)
 		.then(password => decryptKey(password));
 
 		function decryptKey(password) {

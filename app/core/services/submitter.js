@@ -1,7 +1,7 @@
 /* global angular, console */
 
 angular.module('app')
-.factory('Submitter', function ($rootScope, $ionicLoading, $q, $translate, Modal, Constellation, Signer, Transactions) {
+.factory('Submitter', function (Modal, Constellation, Transactions) {
 	'use strict';
 
 	return {
@@ -12,9 +12,10 @@ angular.module('app')
 	};
 
 	function submit(context) {
-		const scope = $rootScope.$new();
-		scope.context = context;
-		return Modal.show('app/core/modals/review-submit.html', scope);
+		const data = {
+			context: context
+		};
+		return Modal.show('app/core/modals/review-submit.html', data);
 	}
 
 	function submitSignature(context, hash) {

@@ -69,26 +69,26 @@ angular.module('app')
 
 	$scope.editComment = function () {
 
-		$scope.model = {
+		const data = {
 			comment: effect.comment
 		};
 
-		Modal.show('app/account/modals/edit-txcomment.html', $scope);
+		Modal.show('app/account/modals/edit-txcomment.html', data);
 	};
 
 	$scope.addContact = function () {
-		$scope.model = {
+		const data = {
 			id:			$scope.counterparty,
 			network:	Wallet.current.network
 		};
 
 		if ($scope.type === 'send') {
 			if (effect.numOps === 1) {
-				$scope.model.memo		= effect.memo;
-				$scope.model.memo_type	= effect.memoType;
+				data.memo		= effect.memo;
+				data.memo_type	= effect.memoType;
 			}
 		}
 
-		Modal.show('app/account/modals/add-contact.html', $scope);
+		Modal.show('app/account/modals/add-contact.html', data);
 	};
 });

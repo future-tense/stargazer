@@ -54,7 +54,7 @@ angular.module('app')
 	}
 
 	function request() {
-		Modal.show('app/account/modals/payment-request.html', $scope);
+		Modal.show('app/account/modals/payment-request.html');
 	}
 
 	function setFederation() {

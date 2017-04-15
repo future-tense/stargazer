@@ -8,12 +8,14 @@ angular.module('app')
 		show: show
 	};
 
-	function show(template, $scope) {
-		$scope = $scope || $rootScope.$new();
+	function show(template, data) {
+
+		const $scope = $rootScope.$new();
 
 		$scope.closeModalService	= close;
 		$scope.modalReject			= reject;
 		$scope.modalResolve			= resolve;
+		$scope.data					= data;
 
 		$ionicModal.fromTemplateUrl(template, {
 			scope: $scope,
@@ -24,7 +26,7 @@ angular.module('app')
 			modal.show();
 		});
 
-		var deferred = $q.defer();
+		const deferred = $q.defer();
 		return deferred.promise;
 
 		function close() {

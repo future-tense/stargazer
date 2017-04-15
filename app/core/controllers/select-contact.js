@@ -4,15 +4,16 @@ angular.module('app')
 .controller('SelectContactCtrl', function ($scope, Contacts, Wallet) {
 	'use strict';
 
+	const network = $scope.data.network;
+
 	$scope.cancel = cancel;
 	$scope.select = select;
 
 	$scope.accounts = getAccounts();
-	$scope.contacts = Contacts.forNetwork(Wallet.current.network);
+	$scope.contacts = Contacts.forNetwork(network);
+	$scope.heading	= $scope.data.heading;
 
 	function getAccounts() {
-		const network = Wallet.current.network;
-
 		return Wallet.accountList
 		.filter(item => item.network === network)
 		.map(item => item.alias);

@@ -15,7 +15,7 @@ angular.module('app')
 	$scope.anchors		= getAnchors();
 
 	function addAnchor() {
-		Modal.show('app/account-settings/modals/add-trustline.html', $scope)
+		Modal.show('app/account-settings/modals/add-trustline.html')
 		.then(function (res) {
 
 			Destination.lookup(res.anchor)
@@ -24,8 +24,8 @@ angular.module('app')
 					issuer: destInfo.id,
 					code:   res.asset
 				});
-			},
-			function () {
+			})
+			.catch(function () {
 				Anchors.lookup(res.anchor)
 				.then(function (assetList){
 					assetList.forEach(addAsset);

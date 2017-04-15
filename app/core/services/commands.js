@@ -1,7 +1,7 @@
 /* global angular */
 
 angular.module('app')
-.factory('Commands', function ($http, $ionicLoading, $location, $rootScope, Contacts, Keychain, Modal, Wallet) {
+.factory('Commands', function ($http, $ionicLoading, $location, Contacts, Keychain, Modal, Wallet) {
 	'use strict';
 
 	return {
@@ -44,19 +44,17 @@ angular.module('app')
 	function handleAccount(account) {
 
 		if (!(account.id in Wallet.accounts) && !Contacts.lookup(account.id, account.network)) {
-
-			var scope = $rootScope.$new();
-			scope.model = {
+			const data = {
 				id:			account.id,
 				meta:		account.meta,
 				meta_type:	account.meta_type
 			};
 
 			if (account.network) {
-				scope.model.network = account.network;
+				data.network = account.network;
 			}
 
-			Modal.show('app/account/modals/add-contact.html', scope);
+			Modal.show('app/account/modals/add-contact.html', data);
 		}
 	}
 

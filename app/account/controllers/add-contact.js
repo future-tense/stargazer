@@ -4,13 +4,18 @@ angular.module('app')
 .controller('AddContactFromTxCtrl', function ($route, $scope, Contacts) {
 	'use strict';
 
-	$scope.cancel = function () {
+	$scope.cancel		= cancel;
+	$scope.saveContact	= saveContact;
+
+	$scope.model		= $scope.data;
+
+	function cancel() {
 		$scope.closeModalService();
-	};
+	}
 
-	$scope.saveContact = function () {
+	function saveContact() {
 
-		var contact = {
+		const contact = {
 			id:			$scope.model.id,
 			network:	$scope.model.network
 		};
@@ -26,6 +31,6 @@ angular.module('app')
 		Contacts.add($scope.model.name, contact);
 		$scope.closeModalService();
 		$route.reload();
-	};
+	}
 });
 

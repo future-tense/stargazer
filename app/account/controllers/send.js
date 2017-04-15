@@ -280,10 +280,14 @@ angular.module('app')
 
 		//	invalidate form records first
 		$scope.send.pathRecords = [];
-
-		$scope.send.destination = '';
 		$scope.send.destInfo = null;
-		Modal.show('app/core/modals/select-contact.html', $scope)
+
+		const data = {
+			network: Wallet.current.network,
+			heading: 'modal.recipient.heading'
+		};
+
+		Modal.show('app/core/modals/select-contact.html', data)
 		.then(function (dest) {
 			$scope.send.destination = dest;
 		});

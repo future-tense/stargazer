@@ -9,7 +9,7 @@ angular.module('app')
 	$scope.minHeight	= getMinHeight();
 
 	function addContact() {
-		Modal.show('app/side-menu/modals/add-contact.html', $scope);
+		Modal.show('app/side-menu/modals/add-contact.html');
 	}
 
 	function getMinHeight() {

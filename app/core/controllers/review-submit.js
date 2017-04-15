@@ -9,7 +9,7 @@ angular.module('app')
 	$scope.message = '';
 	$scope.signer = {};
 
-	const context = $scope.context;
+	const context = $scope.data.context;
 	const hash = context.txHash.toString('hex');
 	$scope.network = context.network;
 	sign().then(submit);

@@ -16,7 +16,12 @@ angular.module('app')
 	}
 
 	$scope.selectRecipient = function () {
-		Modal.show('app/core/modals/select-contact.html', $scope)
+		const data = {
+			network: Wallet.current.network,
+			heading: 'Select Inflation Destination'
+		};
+
+		Modal.show('app/core/modals/select-contact.html', data)
 		.then(function (dest) {
 			$scope.send.destination = dest;
 		});

@@ -45,7 +45,7 @@ angular.module('app')
 		};
 
 		$scope.modalOpenScanner = function () {
-			Modal.show('app/core/modals/scanner.html', $scope);
+			Modal.show('app/core/modals/scanner.html');
 		};
 
 		$scope.openScanner = function () {

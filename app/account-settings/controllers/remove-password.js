@@ -6,6 +6,7 @@ angular.module('app')
 
 	$scope.form  = {};
 	$scope.model = {};
+	$scope.signer = $scope.data.signer;
 
 	$scope.removePassword = function () {
 		if ($scope.form.passwordForm.$valid) {

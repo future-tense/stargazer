@@ -4,23 +4,29 @@ angular.module('app')
 .controller('AddContactCtrl', function ($route, $scope, Contacts) {
 	'use strict';
 
-	$scope.advanced = false;
-	$scope.cancel = function () {
+	$scope.cancel		= cancel;
+	$scope.saveContact	= saveContact;
+
+	$scope.advanced		= false;
+	$scope.model		= {};
+
+	$scope.$watch('model.destInfo', onDestInfo);
+
+	function cancel() {
 		$scope.closeModalService();
-	};
+	}
 
-	$scope.model = {};
-
-	$scope.$watch('model.destInfo', function (destInfo) {
+	function onDestInfo(destInfo) {
+		console.log(destInfo);
 		if (destInfo && destInfo.id !== $scope.model.id && destInfo.memo_type !== '') {
 			$scope.model.memo		= destInfo.memo;
 			$scope.model.memo_type	= destInfo.memo_type;
 		}
-	});
+	}
 
-	$scope.saveContact = function () {
+	function saveContact() {
 
-		var contact = {
+		const contact = {
 			id:			$scope.model.destInfo.id,
 			network:	$scope.model.network
 		};
@@ -36,6 +42,6 @@ angular.module('app')
 		Contacts.add($scope.model.name, contact);
 		$scope.closeModalService();
 		$route.reload();
-	};
+	}
 });
 
