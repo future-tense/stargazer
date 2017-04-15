@@ -15,6 +15,9 @@ angular.module('app')
 			const network = scope.network || scope.$parent.network;
 			Reverse.lookupAndFill(
 				res => {
+					if (res === scope.id) {
+						res = res.slice(0, 4) + '....' + res.slice(-4);
+ 					}
 					element[0].innerText = res;
 				},
 				scope.id,
