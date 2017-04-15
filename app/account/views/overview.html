@@ -31,8 +31,7 @@
 		<div class="feed" style="margin-bottom:0">
 			<a class="feed-item" href on-tap="review(tx)" ng-repeat="tx in pending.forSigner(pubkey)">
 				<jazzicon class="feed-item-icon" seed="{{tx.hash}}"></jazzicon>
-				<div class="feed-item-comment">{{tx.hash}}</div>
-				<div class="payment"></div>
+				<div class="feed-item-comment">{{tx.hash.slice(0,16)}}...</div>
 				<div class="payment">
 					<div style="text-align:right;color:#444;">{{isSigned(tx, pubkey)}}</div>
 				</div>
