@@ -1,7 +1,7 @@
  /* global angular, qrcode */
 
 angular.module('app')
-.controller('scannerController', function($scope, $timeout) {
+.controller('scannerController', function ($scope, $timeout) {
 	'use strict';
 
 	// QR code Scanner

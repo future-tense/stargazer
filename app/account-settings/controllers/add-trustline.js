@@ -19,7 +19,8 @@ angular.module('app')
 		.then(function () {
 			$scope.model.asset = '';
 			$scope.showAsset = true;
-		}, function () {
+		})
+		.catch(function () {
 			$scope.model.asset = 'dummy';
 			$scope.showAsset = false;
 		});
@@ -40,8 +41,7 @@ angular.module('app')
 	'use strict';
 
 	function any(list) {
-
-		var counter = 0;
+		let counter = 0;
 		function resolve(res) {
 			counter += 1;
 			return res;

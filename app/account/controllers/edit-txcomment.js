@@ -4,15 +4,23 @@ angular.module('app')
 .controller('EditTransactionCommentCtrl', function ($scope, History, Storage, Wallet) {
 	'use strict';
 
-	$scope.cancel = function () {
-		$scope.closeModalService();
-	};
+	$scope.cancel = cancel;
+	$scope.buttonText = buttonText;
+	$scope.saveComment = saveComment;
 
-	$scope.buttonText = function() {
+	$scope.model = {};
+	$scope.model.comment = $scope.data.comment;
+
+
+	function buttonText() {
 		return $scope.effect.comment? 'modal.comment.edit' : 'modal.comment.add';
-	};
+	}
 
-	$scope.saveComment = function () {
+	function cancel() {
+		$scope.closeModalService();
+	}
+
+	function saveComment() {
 		$scope.closeModalService();
 
 		if ($scope.model.comment) {
@@ -21,8 +29,8 @@ angular.module('app')
 			delete $scope.effect.comment;
 		}
 
-		var accountName	= Wallet.current.alias;
+		const accountName = Wallet.current.alias;
 		Storage.setItem('history.' + accountName, History.effects[accountName]);
-	};
+	}
 });
 
