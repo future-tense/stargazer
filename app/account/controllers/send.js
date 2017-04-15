@@ -1,7 +1,7 @@
 /* global angular, console, Decimal, StellarSdk */
 
 angular.module('app')
-.controller('SendCtrl', function ($location, $scope, Modal, Signer, Submitter, Wallet) {
+.controller('SendCtrl', function ($location, $scope, Modal, Reviewer, Wallet) {
 	'use strict';
 
 	$scope.advanced = false;
@@ -360,8 +360,7 @@ angular.module('app')
 				network: currentAccount.network
 			};
 		})
-		.then(Signer.sign)
-		.then(Submitter.submit)
+		.then(Reviewer.review)
 		.then(function () {
 			$location.path('/');
 		})

@@ -9,6 +9,24 @@
 	</ion-header-bar>
 	<ion-content class="modal-content text-center fix-modals-touch" ng-init="init()" scrollbar-y="false">
 
+		<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between" ng-show="state === 'signed'">
+			<div class="item item-divider">Transaction</div>
+			<div style="background-color:#FFF;height:100%;padding-top:16px">
+				<div ng-repeat="op in operations" dynamic="op">
+				</div>
+			</div>
+
+			<div style="width:100%">
+				<div class="item item-divider">Signatures</div>
+				<div class="item">Already signed</div>
+				<div class="row" style="padding:4px 8px">
+					<button class="button button-block button-positive" on-tap="close()">
+						{{'global.ok' | translate}}
+					</button>
+				</div>
+			</div>
+		</div>
+
 		<div style="height:100%;display:flex;flex-direction:column;justify-content:space-between" ng-show="state === 'signing'">
 			<div class="item item-divider">Transaction</div>
 			<div style="background-color:#FFF;height:100%;padding-top:16px">
@@ -62,7 +80,7 @@
 			</div>
 		</div>
 
-		<div class="submitter" ng-show="state !== 'signing'">
+		<div class="submitter" ng-show="state !== 'signing' && state !== 'signed'">
 
 			<div ng-show="state === 'pending'">
 				<img src="images/ring-loader.svg">
@@ -86,7 +104,7 @@
 
 			<div class="button-group" style="position:absolute;bottom:0" ng-show="state !== 'pending'">
 				<button type="button" class="button button-block button-positive" on-tap="close()">
-					OK
+					{{'global.ok' | translate}}
 				</button>
 			</div>
 		</div>

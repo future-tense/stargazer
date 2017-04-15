@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('AccountInflationCtrl', function ($q, $rootScope, $scope, Modal, Reverse, Signer, Submitter, Wallet) {
+.controller('AccountInflationCtrl', function ($q, $rootScope, $scope, Modal, Reverse, Reviewer, Wallet) {
 	'use strict';
 
 	$scope.oldName = Wallet.current.alias;
@@ -48,8 +48,7 @@ angular.module('app')
 			};
 		})
 
-		.then(Signer.sign)
-		.then(Submitter.submit)
+		.then(Reviewer.review)
 		.then(function () {
 			$rootScope.goBack();
 		});

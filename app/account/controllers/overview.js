@@ -1,7 +1,7 @@
 /* global angular, console, toml */
 
 angular.module('app')
-.controller('OverviewCtrl', function ($q, $route, $scope, Signer, Submitter, Transactions, Wallet) {
+.controller('OverviewCtrl', function ($q, $route, $scope, Reviewer, Transactions, Wallet) {
 	'use strict';
 
 	const accountId = $route.current.params.accountId;
@@ -49,8 +49,7 @@ angular.module('app')
 
 	function reviewPending(context) {
 		$q.when(context)
-		.then(Signer.sign)
-		.then(Submitter.submit)
+		.then(Reviewer.review)
 		.catch(function (){});
 	}
 });

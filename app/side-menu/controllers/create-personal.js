@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('CreatePersonalAccountCtrl', function ($location, $scope, $translate, Modal, Signer, Submitter, Wallet) {
+.controller('CreatePersonalAccountCtrl', function ($location, $scope, $translate, Modal, Reviewer, Wallet) {
 	'use strict';
 
 	$scope.create			= createAccount;
@@ -44,8 +44,7 @@ angular.module('app')
 					network: network
 				};
 			})
-			.then(Signer.sign)
-			.then(Submitter.submit)
+			.then(Reviewer.review)
 			.then(function () {
 				Wallet.importAccount(
 					newAccount.publicKey(),

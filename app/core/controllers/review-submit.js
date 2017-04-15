@@ -10,11 +10,18 @@ angular.module('app')
 	$scope.signer = {};
 
 	const context = $scope.data.context;
-	const hash = context.txHash.toString('hex');
 	$scope.network = context.network;
-	sign().then(submit);
 
-	function sign() {
+	if (context.hasSigned && context.hasSigned.length === context.signers.length) {
+		$scope.operations = Humanizer.parse(context.tx);
+		$scope.state = 'signed';
+	} else {
+		$q.when(Signer.sign(context))
+		.then(interactiveSign)
+		.then(submit);
+	}
+
+	function interactiveSign() {
 
 		const localSigners	= context.id;
 		const signers		= context.signers;
@@ -68,6 +75,7 @@ angular.module('app')
 	function submit () {
 
 		console.log(context);
+		const hash = context.txHash.toString('hex');
 
 		if (Transactions.isPending(hash) && context.signatures.length !== 0) {
 

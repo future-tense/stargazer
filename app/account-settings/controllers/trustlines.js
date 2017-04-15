@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('AccountTrustlinesCtrl', function ($location, $scope, Anchors, Destination, Modal, Signer, Submitter, Wallet) {
+.controller('AccountTrustlinesCtrl', function ($location, $scope, Anchors, Destination, Modal, Reviewer, Wallet) {
 	'use strict';
 
 	$scope.addAnchor		= addAnchor;
@@ -153,8 +153,7 @@ angular.module('app')
 				network: Wallet.current.network
 			};
 		})
-		.then(Signer.sign)
-		.then(Submitter.submit)
+		.then(Reviewer.review)
 		.then(function () {
 			$scope.account.refresh()
 			.then(function () {
