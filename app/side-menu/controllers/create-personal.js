@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('CreateAccountCtrl', function ($location, $scope, $translate, Modal, Signer, Submitter, Wallet) {
+.controller('CreatePersonalAccountCtrl', function ($location, $scope, $translate, Modal, Signer, Submitter, Wallet) {
 	'use strict';
 
 	$scope.create			= createAccount;

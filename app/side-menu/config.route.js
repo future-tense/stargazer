@@ -17,8 +17,8 @@ angular.module('app')
 		controller: 'ImportAccountCtrl'
 	})
 	.when('/side-menu/create-account', {
-		templateUrl: 'app/side-menu/views/create-account.html',
-		controller: 'CreateAccountCtrl'
+		templateUrl: 'app/side-menu/views/create-personal.html',
+		controller: 'CreatePersonalAccountCtrl'
 	})
 	.when('/side-menu/contacts', {
 		templateUrl: 'app/side-menu/views/contact-list.html',
