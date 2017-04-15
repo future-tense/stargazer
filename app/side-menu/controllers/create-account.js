@@ -14,30 +14,30 @@ angular.module('app')
 
 	function createAccount() {
 
-		var network = $scope.account.network;
+		const network = $scope.account.network;
 
-		var accounts = {};
+		const accounts = {};
 		Object.keys(Wallet.accounts).forEach(function (key) {
-			var account = Wallet.accounts[key];
+			const account = Wallet.accounts[key];
 			if (account.network === network) {
 				accounts[account.alias] = account;
 			}
 		});
 
-		var funderName = $scope.account.funder;
+		const funderName = $scope.account.funder;
 		if (funderName in accounts) {
 
-			var newAccount	= StellarSdk.Keypair.random();
-			var funder		= accounts[funderName];
+			const newAccount	= StellarSdk.Keypair.random();
+			const funder		= accounts[funderName];
 
 			funder.horizon().loadAccount(funder.id)
 			.then(function (account) {
-				var tx = new StellarSdk.TransactionBuilder(account)
-					.addOperation(StellarSdk.Operation.createAccount({
-						destination: newAccount.publicKey(),
-						startingBalance: $scope.account.amount.toString()
-					}))
-					.build();
+				const tx = new StellarSdk.TransactionBuilder(account)
+				.addOperation(StellarSdk.Operation.createAccount({
+					destination: newAccount.publicKey(),
+					startingBalance: $scope.account.amount.toString()
+				}))
+				.build();
 
 				return {
 					tx: tx,
@@ -67,88 +67,28 @@ angular.module('app')
 	}
 
 	function getAccountName() {
-		var numAccounts = Object.keys(Wallet.accounts).length;
+		const accountNum = Wallet.accountList.filter(item => !item.isMultiSig()).length + 1;
 		return {
-			alias: $translate.instant('account.defaultname', {number: numAccounts + 1}),
+			alias: $translate.instant('account.defaultname', {number: accountNum}),
 			amount: 20
 		};
 	}
 
 	function getMinHeight() {
-		var headerHeight = 40;
-		var buttonGroupHeight = 48 + 16 + 8;
+		const headerHeight = 40;
+		const buttonGroupHeight = 48 + 16 + 8;
 		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
 	}
 
 	function selectAccount() {
-		$scope.account.funder = '';
-		Modal.show('app/side-menu/modals/select-account.html', $scope);
-	}
-})
+		const data = {
+			network: $scope.account.network,
+			minimum: 20
+		};
 
-
-.directive('validFunder', function (Wallet) {
-	'use strict';
-
-	return {
-		require: 'ngModel',
-		scope: {
-			network: '='
-		},
-		link: function (scope, element, attributes, ngModel) {
-			ngModel.$validators.validFunder = function (name) {
-
-				if (!name) {
-					return true;
-				}
-
-				var network = scope.network;
-
-				var names = {};
-				Object.keys(Wallet.accounts).forEach(function (key) {
-					if (Wallet.accounts[key].network === network) {
-						var accountName = Wallet.accounts[key].alias;
-						names[accountName] = 1;
-					}
-				});
-
-				return (name in names);
-			};
-		}
-	};
-})
-
-.controller('SelectFundingAccountCtrl', function ($scope, Wallet) {
-	'use strict';
-
-	$scope.cancel = cancel;
-	$scope.select = select;
-
-	$scope.accounts = getAccounts();
-
-	function getAccounts() {
-		return Object.keys(Wallet.accounts)
-		.filter(function (key) {
-			var network = $scope.account.network;
-			var account = Wallet.accounts[key];
-			return (account.network === network);
-		})
-		.filter(function (key) {
-			var account = Wallet.accounts[key];
-			return account.canSend(20, 1);
-		})
-		.map(function (key) {
-			return Wallet.accounts[key].alias;
+		Modal.show('app/side-menu/modals/select-account.html', data)
+		.then(function (res) {
+			$scope.account.funder = res;
 		});
 	}
-
-	function cancel() {
-		$scope.modal.remove();
-	}
-
-	function select(contact) {
-		$scope.account.funder = contact;
-		$scope.modal.remove();
-	}
 });
-
