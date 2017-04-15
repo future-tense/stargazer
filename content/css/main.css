@@ -504,6 +504,10 @@ i.icon-arrow-up:before {
 }
 
 @media (min-width: 680px) {
+	.modal {
+		top: 10%;
+		bottom: 10%;
+	}
 	.submitter {
 		padding-top: 40px
 	}
