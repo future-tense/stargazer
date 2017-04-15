@@ -16,9 +16,13 @@ angular.module('app')
 		templateUrl: 'app/side-menu/views/import-account.html',
 		controller: 'ImportAccountCtrl'
 	})
-	.when('/side-menu/create-account', {
+	.when('/side-menu/create-personal', {
 		templateUrl: 'app/side-menu/views/create-personal.html',
 		controller: 'CreatePersonalAccountCtrl'
+	})
+	.when('/side-menu/create-shared', {
+		templateUrl: 'app/side-menu/views/create-shared.html',
+		controller: 'CreateSharedAccountCtrl'
 	})
 	.when('/side-menu/contacts', {
 		templateUrl: 'app/side-menu/views/contact-list.html',
