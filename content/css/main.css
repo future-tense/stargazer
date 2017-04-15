@@ -24,12 +24,6 @@ div[account-balance] td {
 	width: 50%;
 }
 
-
-.bids table > tbody > tr > th,
-.bids table > tbody > tr > td {
-	text-align: right;
-}
-
 .card {
 	border: 1px solid #DDD;
 	text-align: center;
@@ -513,4 +507,9 @@ i.icon-arrow-up:before {
 	.submitter {
 		padding-top: 40px
 	}
+}
+
+div,
+span {
+	vertical-align: middle;
 }
