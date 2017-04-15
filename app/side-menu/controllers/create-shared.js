@@ -66,7 +66,7 @@ angular.module('app')
 					builder.addOperation(op);
 				});
 
-				const threshold = $scope.signers.length + 1;
+				const threshold = $scope.account.threshold;
 				builder.addOperation(StellarSdk.Operation.setOptions({
 					source: newAccountId,
 					lowThreshold: threshold,

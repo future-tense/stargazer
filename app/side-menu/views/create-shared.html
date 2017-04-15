@@ -40,6 +40,15 @@
 						Add signer
 					</button>
 				</div>
+				<div class="item item-divider">
+					Signature Threshold
+				</div>
+				<label class="item item-input item-stacked-label">
+					<span class="input-label">
+						{{'Threshold' | translate}}
+					</span>
+					<input type="number" name="threshold" ng-model="account.threshold" placeholder="{{'Threshold' | translate}}" min="1" max="{{1 + signers.length}}">
+				</label>
 			</div>
 
 			<div class="list">
@@ -66,8 +75,8 @@
 	</div>
 
 	<div class="button-group">
-		<button class="button button-block button-positive" on-tap="create()" ng-disabled="!account.funder">
-			{{'account.add' | translate}}
+		<button class="button button-block button-positive" on-tap="create()" ng-disabled="!account.funder || createAccountForm.threshold.$invalid">
+			Create Account
 		</button>
 	</div>
 </ion-content>
