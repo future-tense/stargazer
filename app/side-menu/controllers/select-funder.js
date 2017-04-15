@@ -11,11 +11,12 @@ angular.module('app')
 
 	function getAccounts() {
 		const network = $scope.data.network;
-		const minimum = $scope.data.minimum;
+		const minimum = $scope.data.minimum || 20;
+		const numOps  = $scope.data.numOps || 1;
 
 		return Wallet.accountList
 		.filter(item => item.network === network)
-		.filter(item => item.canSend(minimum, 1))
+		.filter(item => item.canSend(minimum, numOps))
 		.map(item => item.alias);
 	}
 
