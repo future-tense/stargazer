@@ -134,7 +134,22 @@ angular.module('app')
 			if (source in Wallet.accounts) {
 				return $q.when(Wallet.accounts[source]);
 			} else {
-				return context.horizon.accounts().accountId(source).call();
+				return context.horizon.accounts().accountId(source).call()
+				.catch(function (res) {
+					return $q.when({
+						id: source,
+						signers: [{
+							public_key: source,
+							weight: 1
+
+						}],
+						thresholds: {
+							low_threshold:	0,
+							med_threshold:	0,
+							high_threshold:	0
+						}
+					});
+				});
 			}
 		});
 
