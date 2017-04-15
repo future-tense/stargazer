@@ -4,7 +4,7 @@ angular.module('app')
 .controller('OverviewCtrl', function ($q, $route, $scope, Signer, Submitter, Transactions, Wallet) {
 	'use strict';
 
-	var accountId = $route.current.params.accountId;
+	const accountId = $route.current.params.accountId;
 	if (accountId) {
 		Wallet.current = Wallet.accounts[accountId];
 	}
@@ -16,6 +16,10 @@ angular.module('app')
 
 	$scope.isActivated = function () {
 		return Wallet.current.getNativeBalance() !== '0';
+	};
+
+	$scope.isSigned = function (tx, pubkey) {
+		return (tx.hasSigned && pubkey in tx.hasSigned)? 'Signed' : 'Unsigned';
 	};
 
 	$scope.getAssets = function () {

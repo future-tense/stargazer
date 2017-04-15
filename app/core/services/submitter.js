@@ -23,7 +23,10 @@ angular.module('app')
 			return sig.toXDR().toString('base64');
 		});
 
-		return Constellation.submitSignatures(hash, sigs);
+		return Constellation.submitSignatures(hash, sigs)
+		.then(function () {
+			Transactions.markAsSigned(hash, context.id);
+		});
 	}
 
 	function submitSigningRequest(context, hash) {
@@ -40,6 +43,7 @@ angular.module('app')
 				progress: context.progress
 			};
 			Transactions.addTransaction(hash, data);
+			Transactions.markAsSigned(hash, context.id);
 		});
 	}
 

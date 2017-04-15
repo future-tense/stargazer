@@ -21,6 +21,7 @@ angular.module('app')
 		forSigner: forSigner,
 		get: getTransaction,
 		isPending: isPending,
+		markAsSigned: markAsSigned,
 		subscribe: subscribe,
 		list: transactionList
 	};
@@ -63,6 +64,18 @@ angular.module('app')
 
 	function isPending(txHash) {
 		return txHash in transactions;
+	}
+
+	function markAsSigned(hash, signers) {
+		const tx = transactions[hash];
+
+		const hasSigned = tx.hasSigned || {};
+		signers.forEach(function (id) {
+			hasSigned[id] = 1;
+		});
+
+		tx.hasSigned = hasSigned;
+		storeTransaction(hash, tx);
 	}
 
 	function subscribe() {
@@ -112,6 +125,10 @@ angular.module('app')
 
 		if ('signers' in tx) {
 			data.signers = tx.signers;
+		}
+
+		if ('hasSigned' in tx) {
+			data.hasSigned = tx.hasSigned;
 		}
 
 		Storage.setItem('tx.' + hash, data);
