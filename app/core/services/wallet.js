@@ -198,7 +198,9 @@ angular.module('app')
 			network = Horizon.public;
 		}
 
-		Keychain.addKey(accountId, seed);
+		if (seed) {
+			Keychain.addKey(accountId, seed);
+		}
 
 		var opts = {
 			id:			accountId,
@@ -218,6 +220,7 @@ angular.module('app')
 		accountList.insert(self);
 		accountList.save();
 
+		$rootScope.$broadcast('account added');
 		Wallet.current = self;
 		return self;
 	};

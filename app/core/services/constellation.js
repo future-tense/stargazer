@@ -31,11 +31,13 @@ angular.module('app')
 		return $http.post(`${baseUrl}/transaction`, data);
 	}
 
-	function subscribe(pubkeys, requestFunc, progressFunc) {
+	function subscribe(pubkeys, requestFunc, progressFunc, addSignerFunc, removeSignerFunc) {
 
 		const eventSource = new EventSource(`${baseUrl}/events/${pubkeys}`);
 		eventSource.addEventListener('request', handler(requestFunc), false);
 		eventSource.addEventListener('progress', handler(progressFunc), false);
+		eventSource.addEventListener('add_signer', handler(addSignerFunc), false);
+		eventSource.addEventListener('remove_signer', handler(removeSignerFunc), false);
 		return eventSource;
 
 		function handler(func) {

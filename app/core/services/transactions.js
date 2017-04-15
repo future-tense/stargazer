@@ -1,7 +1,7 @@
 /* global angular, StellarSdk */
 
 angular.module('app')
-.factory('Transactions', function (Constellation, Signer, Storage, Wallet) {
+.factory('Transactions', function ($rootScope, Constellation, Signer, Storage, Wallet) {
 	'use strict';
 
 	let eventSource;
@@ -15,6 +15,7 @@ angular.module('app')
 	});
 
 	subscribe();
+	$rootScope.$on('account added', subscribe);
 
 	return {
 		addTransaction: addTransaction,
@@ -80,10 +81,41 @@ angular.module('app')
 
 	function subscribe() {
 		const pubkeys = Wallet.accountList.map(account => account.id);
-		eventSource = Constellation.subscribe(pubkeys, onRequest, onProgress);
+		eventSource = Constellation.subscribe(pubkeys, onRequest, onProgress, onAddSigner, null);
 	}
 
 	//-----------------------------------------------------------------------//
+
+	function onAddSigner(payload) {
+
+		if (payload.account in Wallet.accounts) {
+			return;
+		}
+
+		const names = new Set(Wallet.accountList.map(item => item.alias));
+
+		let name;
+		let i = 1;
+		while (true) {
+			const candidate = 'Shared Account #' + i;
+			if (!names.has(candidate)) {
+				name = candidate;
+				break;
+			}
+			i += 1;
+		}
+
+		console.log(name);
+		Wallet.importAccount(payload.account, null, name, payload.network);
+	}
+
+	function onRemoveSigner(payload) {
+
+		const account = Wallet.accounts[payload.account];
+		if (account.network === payload.network) {
+			Wallet.removeAccount(account);
+		}
+	}
 
 	function onRequest(payload) {
 		const tx = new StellarSdk.Transaction(payload.txenv);
