@@ -7,6 +7,10 @@ A wallet application for the [Stellar](https://stellar.org) platform. Desktop an
 
 * Multiple accounts
 
+* Multiple account types
+	* Personal accounts
+	* Shared accounts
+
 * Multiple assets
     * Issue/Redeem
     * Send/Receive/Trade
@@ -19,6 +23,8 @@ A wallet application for the [Stellar](https://stellar.org) platform. Desktop an
     * Email addresses
 
 * Create/receive payment requests
+
+* Create/receive multi-sig/multi-party signing requests
 
 * Add contacts
     * using QR code
@@ -34,7 +40,7 @@ A wallet application for the [Stellar](https://stellar.org) platform. Desktop an
 ## Security
 
 All private keys are stored in localStorage, encrypted or not. Within the app, key decryption and transaction signing all take place inside the `Keychain` service in `app/core/services/keychain.js`. The only time an unencrypted private key leaves that service is when an account is being exported and you're not using password protection.
-
+All transactions go through the same steps of being displayed for review before being signed and submitted.
 
 ## Translations
 
