@@ -105,7 +105,6 @@ angular.module('app')
 			i += 1;
 		}
 
-		console.log(name);
 		Wallet.importAccount(payload.account, null, name, payload.network);
 	}
 
