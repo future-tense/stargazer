@@ -74,10 +74,10 @@ angular.module('app')
 					highThreshold: threshold
 				}));
 
-				const tx = builder.build();
-
 				/*	This signs for the new account */
-				const hash = Signer.getTransactionHash(tx);
+
+				const tx = builder.build();
+				const hash = Signer.getTransactionHash(tx, network);
 				const sig = newAccount.signDecorated(hash);
 				tx.signatures.push(sig);
 
