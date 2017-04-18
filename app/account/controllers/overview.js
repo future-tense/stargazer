@@ -15,6 +15,7 @@ angular.module('app')
 		const accountId = $route.current.params.accountId;
 		if (accountId) {
 			Wallet.current = Wallet.accounts[accountId];
+			Wallet.current.clearBadgeCount();
 		}
 	}
 

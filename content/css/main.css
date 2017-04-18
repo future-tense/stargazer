@@ -222,6 +222,14 @@ a:hover {
 	padding: 0 8px;
 	position: static;
 	line-height: 14px;
+	margin-top: 2px;
+}
+
+.sidebar .badge.badge-solid {
+	border-color: #D45C00;
+	background-color: #D45C00;
+	color: #FFF;
+	font-size: 12px;
 }
 
 .platform-android .sidebar .badge {

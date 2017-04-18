@@ -16,6 +16,9 @@
 				<div class="item" ng-class="{selected: account.id === wallet.current.id}">
 					<i class="icon" ng-class="getType(account)"></i>
 					{{account.alias}}
+					<span class="badge badge-solid pull-right" ng-show="getBadgeCount(account) !== 0">
+						{{ getBadgeCount(account)}}
+					</span>
 				</div>
 			</a>
 		</div>

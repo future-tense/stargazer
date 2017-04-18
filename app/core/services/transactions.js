@@ -39,6 +39,9 @@ angular.module('app')
 			payload.signers = {};
 
 			payload.id.forEach(function (id) {
+				if (id !== Wallet.current.id) {
+					Wallet.accounts[id].increaseBadgeCount();
+				}
 				payload.signers[id] = 1;
 			});
 			storeTransaction(hash, payload);

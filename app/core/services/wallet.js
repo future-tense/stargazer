@@ -159,11 +159,30 @@ angular.module('app')
 			return false;
 		}
 
-		var signers = this.signers.filter(function (signer) {
-			return (signer.weight !== 0);
-		});
-
+		const signers = this.signers.filter(signer => signer.weight !== 0);
 		return (signers.length !== 1);
+	};
+
+	Account.prototype.increaseBadgeCount = function () {
+		if (!this.badgeCount) {
+			this.badgeCount = 1;
+		} else {
+			this.badgeCount += 1;
+		}
+		Storage.setItem('account.' + this.alias, this);
+	};
+
+	Account.prototype.clearBadgeCount = function () {
+		this.badgeCount = 0;
+		Storage.setItem('account.' + this.alias, this);
+	};
+
+	Account.prototype.getBadgeCount = function () {
+		if (this.badgeCount) {
+			return this.badgeCount;
+		} else {
+			return 0;
+		}
 	};
 
 	//------------------------------------------------------------------------------------------------------------------
@@ -371,9 +390,9 @@ angular.module('app')
 			return;
 		}
 
-		var account = accounts[args.address];
-		var fx = args.res;
-		var asset;
+		const account = accounts[args.address];
+		const fx = args.res;
+		let asset;
 
 		function plus(a, b) {
 			return new Decimal(a).plus(new Decimal(b)).toFixed(7);
@@ -401,6 +420,10 @@ angular.module('app')
 
 			asset = getAccountAsset(account, fx.bought_asset_code, fx.bought_asset_issuer);
 			asset.balance = plus(asset.balance, fx.bought_amount);
+		}
+
+		if (account !== Wallet.current) {
+			account.increaseBadgeCount();
 		}
 	});
 
