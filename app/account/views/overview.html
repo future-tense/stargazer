@@ -1,59 +1,44 @@
 <wallet-header></wallet-header>
 
-<ion-content scrollbar-y="false" ng-show="isActivated()">
-	<ion-refresher
-		pulling-text="{{'tabs.home.pull' | translate}}"
-		pulling-icon="icon-pull"
-		on-refresh="doRefresh()">
-	</ion-refresher>
-	<div style="background-color:#00BCD4;color:#FFFFFF">
-		<div style="height:120px;font-size:18px;display:flex;flex-direction:column;justify-content:center">
-			<div>
-				<div style="text-align:center" ng-repeat="asset in getAssets()">
-					{{ asset.balance | formatAmount }}
-					{{ asset.asset_code }}
+<div ng-switch="isActivated()">
+	<ion-content scrollbar-y="false" ng-switch-when="true">
+		<ion-refresher
+			pulling-text="{{'tabs.home.pull' | translate}}"
+			pulling-icon="icon-pull"
+			on-refresh="doRefresh()">
+		</ion-refresher>
+		<div style="background-color:#00BCD4;color:#FFFFFF">
+			<div style="height:120px;font-size:18px;display:flex;flex-direction:column;justify-content:center">
+				<div>
+					<div style="text-align:center" ng-repeat="asset in getAssets()">
+						{{ asset.balance | formatAmount }}
+						{{ asset.asset_code }}
+					</div>
 				</div>
 			</div>
+			<account-info></account-info>
 		</div>
-		<account-info></account-info>
-	</div>
 
-	<div class="camera-icon" style="position:relative">
-		<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
-	</div>
-
-	<div ng-show="pending.forSigner(pubkey).length !== 0">
-		<div style="padding:8px 16px; height:40px">
-			<span>
-				Signing requests
-			</span>
-		</div>
-		<div class="feed" style="margin-bottom:0">
-			<a class="feed-item" href on-tap="review(tx)" ng-repeat="tx in pending.forSigner(pubkey)">
-				<jazzicon class="feed-item-icon" seed="{{tx.hash}}"></jazzicon>
-				<div class="feed-item-comment">{{tx.hash.slice(0,16)}}...</div>
-				<div class="payment">
-					<div style="text-align:right;color:#444;">{{isSigned(tx, pubkey)}}</div>
-				</div>
-				<div class="more">&raquo;</div>
-			</a>
-		</div>
-	</div>
-
-	<account-activity account="wallet.current" limit="100" filter="payments"></account-activity>
-</ion-content>
-
-<div ng-hide="isActivated()" style="height:100%">
-
-	<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%">
-		<div>{{'tabs.home.empty' | translate}}</div>
-	</div>
-
-	<div style="height:40px;width:100%;position:fixed;bottom:40px">
 		<div class="camera-icon" style="position:relative">
 			<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
 		</div>
-		<account-info></account-info>
+
+		<account-requests></account-requests>
+		<account-activity account="wallet.current" limit="100" filter="payments"></account-activity>
+	</ion-content>
+
+	<div style="height:100%" ng-switch-when="false">
+		<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%">
+			<div>{{'tabs.home.empty' | translate}}</div>
+		</div>
+
+		<div style="height:40px;width:100%;position:fixed;bottom:40px">
+			<div class="camera-icon" style="position:relative">
+				<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
+			</div>
+			<account-info></account-info>
+		</div>
+		<account-requests></account-requests>
 	</div>
 </div>
 
