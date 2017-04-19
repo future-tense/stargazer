@@ -50,14 +50,14 @@ angular.module('app')
 		video.src = '';
 	};
 
-	qrcode.callback = function(data) {
+	qrcode.callback = function (data) {
 		if (prevResult != data) {
 			prevResult = data;
 			return;
 		}
 		_scanStop();
 		$scope.cancel();
-		$scope.onScan({
+		$scope.data.onScan({
 			data: data
 		});
 	};
