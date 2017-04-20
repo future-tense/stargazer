@@ -4,31 +4,27 @@ angular.module('app')
 .directive('qrScanner', function ($ionicLoading, $rootScope, $timeout, $translate, Modal, platformInfo) {
 	'use strict';
 
-	var isCordova	= platformInfo.isCordova;
-	var isWP		= platformInfo.isWP;
-	var isIOS		= platformInfo.isIOS;
+	return {
+		restrict: 'E',
+		scope: {
+			onScan: "&"
+		},
+		controller: controller,
+		replace: true,
+		template: '<a id="camera-icon" class="p10" ng-click="openScanner()"><i class="icon-scan size-21"></i></a>'
+	};
 
-	var controller = function ($scope) {
+	function controller($scope) {
 
-		var onSuccess = function (result) {
-			$ionicLoading.hide();
-			if (isWP && result.cancelled) {
-				return;
-			}
+		const isCordova	= platformInfo.isCordova;
+		const isWP		= platformInfo.isWP;
+		const isIOS		= platformInfo.isIOS;
 
-			var data = isIOS ? result : result.text;
-			$scope.onScan({
-				data: data
-			});
-		};
+		$scope.openScanner = isCordova? cordovaOpenScanner : modalOpenScanner;
 
-		var onError = function (error) {
-			$ionicLoading.hide();
-		};
+		function cordovaOpenScanner() {
 
-		$scope.cordovaOpenScanner = function () {
-
-			var text = $translate.instant('modal.scanner.preparing');
+			const text = $translate.instant('modal.scanner.preparing');
 			return $ionicLoading.show({
 				template: text
 			})
@@ -42,31 +38,31 @@ angular.module('app')
 					});
 				}
 			});
-		};
 
-		$scope.modalOpenScanner = function () {
-			const data = {
-				onScan: $scope.onScan
-			};
-			Modal.show('app/core/modals/scanner.html', data);
-		};
+			function onSuccess(result) {
+				$ionicLoading.hide();
+				if (isWP && result.cancelled) {
+					return;
+				}
 
-		$scope.openScanner = function () {
-			if (isCordova) {
-				$scope.cordovaOpenScanner();
-			} else {
-				$scope.modalOpenScanner();
+				const data = isIOS ? result : result.text;
+				$scope.onScan({
+					data: data
+				});
 			}
-		};
-	};
 
-	return {
-		restrict: 'E',
-		scope: {
-			onScan: "&"
-		},
-		controller: controller,
-		replace: true,
-		template: '<a id="camera-icon" class="p10" ng-click="openScanner()"><i class="icon-scan size-21"></i></a>'
-	};
+			function onError(error) {
+				$ionicLoading.hide();
+			}
+		}
+
+		function modalOpenScanner() {
+			Modal.show('app/core/modals/scanner.html')
+			.then(function (data) {
+				$scope.onScan({
+					data: data
+				});
+			});
+		}
+	}
 });

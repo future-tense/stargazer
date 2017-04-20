@@ -1,42 +1,104 @@
  /* global angular, qrcode */
 
 angular.module('app')
-.controller('scannerController', function ($scope, $timeout) {
+.controller('scannerController', function ($scope, $timeout, QRDecoder) {
 	'use strict';
 
+	$scope.init		= init;
+	$scope.cancel	= cancel;
+
 	// QR code Scanner
-	var video;
-	var canvas;
-	var $video;
-	var context;
-	var localMediaStream;
-	var prevResult;
-	var scanTimer;
+	let context;
+	let localMediaStream;
+	let prevResult;
+	let scanTimer;
+	let video;
 
-	var qrcode = window.qrcode;
-
-	var width  = 480;		// 300;
-	var height = 320;		// 225;
+	const qrcode = window.qrcode;
+	const width  = 480;		// 300;
+	const height = 320;		// 225;
 
 	//		480*320
 
-	var _scan = function(evt) {
+	qrcode.callback = function (data) {
+		if (prevResult !== data) {
+			prevResult = data;
+			return;
+		}
+
+		stopScanning();
+		$scope.modalResolve(data);
+	};
+
+	function init() {
+		setScanner();
+		$timeout(function() {
+			if ($scope.beforeScan) {
+				$scope.beforeScan();
+			}
+			const canvas = document.getElementById('qr-canvas');
+			context = canvas.getContext('2d');
+
+			video = document.getElementById('qrcode-scanner-video');
+			canvas.width = width;
+			canvas.height = height;
+			context.clearRect(0, 0, width, height);
+
+			navigator.getUserMedia({
+				video: true
+			}, onSuccess, onError);
+		}, 500);
+
+		function onSuccess(stream) {
+			video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
+			localMediaStream = stream;
+			video.play();
+			$timeout(scan, 1000);
+		}
+
+		function onError(err) {
+			cancel();
+		}
+	}
+
+	function cancel() {
+		stopScanning();
+		$scope.closeModalService();
+	}
+
+	function setScanner() {
+		navigator.getUserMedia = navigator.getUserMedia ||
+			navigator.webkitGetUserMedia ||
+			navigator.mozGetUserMedia ||
+			navigator.msGetUserMedia;
+
+		window.URL = window.URL ||
+			window.webkitURL ||
+			window.mozURL ||
+			window.msURL;
+	}
+
+	function scan(evt) {
 		if (localMediaStream) {
 			context.drawImage(video, 0, 0, width, height);
 			try {
-				qrcode.decode();
+				QRDecoder.decode()
+				.then(function (data) {
+					stopScanning();
+					$scope.modalResolve(data);
+				});
 			} catch (e) {
 				//qrcodeError(e);
 			}
 		}
-		scanTimer = $timeout(_scan, 800);
-	};
+		scanTimer = $timeout(scan, 800);
+	}
 
-	var _scanStop = function() {
+	function stopScanning() {
 		$timeout.cancel(scanTimer);
 		if (localMediaStream && localMediaStream.active) {
-			var localMediaStreamTrack = localMediaStream.getTracks();
-			for (var i = 0; i < localMediaStreamTrack.length; i++) {
+			const localMediaStreamTrack = localMediaStream.getTracks();
+			for (let i = 0; i < localMediaStreamTrack.length; i++) {
 				localMediaStreamTrack[i].stop();
 			}
 		} else {
@@ -48,62 +110,5 @@ angular.module('app')
 		}
 		localMediaStream = null;
 		video.src = '';
-	};
-
-	qrcode.callback = function (data) {
-		if (prevResult != data) {
-			prevResult = data;
-			return;
-		}
-		_scanStop();
-		$scope.cancel();
-		$scope.data.onScan({
-			data: data
-		});
-	};
-
-	var _successCallback = function(stream) {
-		video.src = (window.URL && window.URL.createObjectURL(stream)) || stream;
-		localMediaStream = stream;
-		video.play();
-		$timeout(_scan, 1000);
-	};
-
-	var _videoError = function(err) {
-		$scope.cancel();
-	};
-
-	var setScanner = function() {
-		navigator.getUserMedia = navigator.getUserMedia ||
-			navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia;
-		window.URL = window.URL || window.webkitURL ||
-			window.mozURL || window.msURL;
-	};
-
-	$scope.init = function() {
-		setScanner();
-		$timeout(function() {
-			if ($scope.beforeScan) {
-				$scope.beforeScan();
-			}
-			canvas = document.getElementById('qr-canvas');
-			context = canvas.getContext('2d');
-
-			video = document.getElementById('qrcode-scanner-video');
-			$video = angular.element(video);
-			canvas.width = width;
-			canvas.height = height;
-			context.clearRect(0, 0, width, height);
-
-			navigator.getUserMedia({
-				video: true
-			}, _successCallback, _videoError);
-		}, 500);
-	};
-
-	$scope.cancel = function() {
-		_scanStop();
-		$scope.closeModalService();
-	};
+	}
 });
