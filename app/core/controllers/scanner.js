@@ -10,32 +10,17 @@ angular.module('app')
 	// QR code Scanner
 	let context;
 	let localMediaStream;
-	let prevResult;
 	let scanTimer;
 	let video;
 
-	const qrcode = window.qrcode;
 	const width  = 480;		// 300;
 	const height = 320;		// 225;
 
 	//		480*320
 
-	qrcode.callback = function (data) {
-		if (prevResult !== data) {
-			prevResult = data;
-			return;
-		}
-
-		stopScanning();
-		$scope.modalResolve(data);
-	};
-
 	function init() {
 		setScanner();
 		$timeout(function() {
-			if ($scope.beforeScan) {
-				$scope.beforeScan();
-			}
 			const canvas = document.getElementById('qr-canvas');
 			context = canvas.getContext('2d');
 
