@@ -5,9 +5,12 @@ angular.module('app')
 	'use strict';
 
 	return {
-		link: function (scope, element, attributes) {
-			const el = Jazzicon.render(attributes.seed);
-			element[0].appendChild(el);
-		}
+		restrict: 'E',
+		link: link
 	};
+
+	function link(scope, element, attributes) {
+		const el = Jazzicon.render(attributes.seed);
+		element[0].appendChild(el);
+	}
 });

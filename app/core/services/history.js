@@ -126,13 +126,13 @@
 
 		function addEffect(effect, account) {
 
-			var accountEffects = History.effects[account.alias];
+			const accountEffects = History.effects[account.alias];
 
 			return effect.operation()
 			.then(function (operation) {
 				return operation.transaction()
 				.then(function (transaction) {
-					var res = _parseEffect(effect, operation, transaction);
+					const res = _parseEffect(effect, operation, transaction);
 					if (res) {
 						accountEffects[res.id] = res;
 						return {
@@ -149,7 +149,7 @@
 		var History = {};
 		History.effects = {};
 
-		var accountList = Storage.getItem('accounts') || [];
+		const accountList = Storage.getItem('accounts') || [];
 		accountList.forEach(function (name) {
 			History.effects[name] = Storage.getItem('history.' + name) || {};
 		});
@@ -171,7 +171,8 @@
 						$rootScope.$broadcast('newTransaction', effect);
 						Storage.setItem('history.' + account.alias, History.effects[account.alias]);
 						Storage.setItem('account.' + account.alias, account);
-					}, function (err) {
+					})
+					.catch(function (err) {
 						account.pagingToken = msg.paging_token;
 						Storage.setItem('account.' + account.alias, account);
 					});

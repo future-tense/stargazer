@@ -190,11 +190,11 @@ angular.module('app')
 		}
 
 		function updateTime() {
-			var now = new Date().getTime() / 1000;
-			var list = document.getElementsByClassName('timestamp');
-			for (var i = 0; i < list.length; i++) {
-				var e = list[i];
-				var timestamp = e.getAttribute('time');
+			const now = new Date().getTime() / 1000;
+			const list = document.getElementsByClassName('timestamp');
+			for (let i = 0; i < list.length; i++) {
+				const e = list[i];
+				const timestamp = e.getAttribute('time');
 				e.textContent = renderTime(now, timestamp);
 			}
 		}

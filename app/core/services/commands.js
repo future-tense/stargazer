@@ -8,9 +8,9 @@ angular.module('app')
 		onQrCodeScanned: onQrCodeScanned
 	};
 
-	function onQrCodeScanned(data) {
+	function onQrCodeScanned(qrData) {
 
-		data = JSON.parse(data);
+		const data = JSON.parse(qrData);
 		if (!data.stellar) {
 			return;
 		}
@@ -34,7 +34,7 @@ angular.module('app')
 
 	function handleAccountImport(account, key) {
 
-		var data = window.btoa(JSON.stringify({
+		const data = window.btoa(JSON.stringify({
 			account: account,
 			key: key
 		}));
@@ -59,7 +59,7 @@ angular.module('app')
 	}
 
 	function handlePayment(payment) {
-		var object = {
+		const object = {
 			destination:	payment.destination,
 			amount:			payment.amount
 		};
@@ -81,7 +81,7 @@ angular.module('app')
 
 	function handleChallenge(challenge) {
 
-		var id = challenge.id ? challenge.id : Wallet.current.id;
+		const id = challenge.id ? challenge.id : Wallet.current.id;
 
 		if (Keychain.isLocalSigner(id)) {
 			Keychain.signMessage(id, challenge.message)

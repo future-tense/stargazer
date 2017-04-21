@@ -6,19 +6,20 @@ angular.module('app')
 
 	return {
 		restrict: 'A',
-		link: function (scope, element, attributes) {
-
-			var url = attributes.extHref;
-			function onclick() {
-				window.open(url, '_system');
-				return false;
-			}
-
-			if (platformInfo.isCordova) {
-				element[0].onclick = onclick;
-			} else {
-				element[0].href = url;
-			}
-		}
+		link: link
 	};
+
+	function link(scope, element, attributes) {
+		const url = attributes.extHref;
+		if (platformInfo.isCordova) {
+			element[0].onclick = onclick;
+		} else {
+			element[0].href = url;
+		}
+
+		function onclick() {
+			window.open(url, '_system');
+			return false;
+		}
+	}
 });

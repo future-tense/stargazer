@@ -338,15 +338,15 @@ angular.module('app')
 
 	//-----------------------------------------------------------------------//
 
-	function getAsset(asset) {
-		return (asset.code === 'XLM')? 'XLM' : `${asset.code}.<account-name id="${asset.issuer}"></account-name>`;
-	}
-
 	function getAccount(id) {
 		return `<account-name id="${id}"></account-name>`;
 	}
 
 	function getAmount(amount) {
 		return `{{'${amount}'|formatAmount}}`;
+	}
+
+	function getAsset(asset) {
+		return (asset.code === 'XLM')? 'XLM' : `${asset.code}.<account-name id="${asset.issuer}"></account-name>`;
 	}
 });

@@ -4,7 +4,7 @@ angular.module('app')
 .factory('Horizon', function () {
 	'use strict';
 
-	var networkList = [{
+	const networkList = [{
 		name:	'Public',
 		phrase: 'Public Global Stellar Network ; September 2015',
 		server: 'https://horizon.stellar.org'
@@ -24,11 +24,11 @@ angular.module('app')
 		return new StellarSdk.Network(passphrase).networkId().toString('hex').slice(0, 8);
 	}
 
-	var publicNetwork = getHash('Public Global Stellar Network ; September 2015');
+	const publicNetwork = getHash('Public Global Stellar Network ; September 2015');
 
-	var networks = {};
+	const networks = {};
 	networkList.forEach(function (network) {
-		var hash = getHash(network.phrase);
+		const hash = getHash(network.phrase);
 		networks[hash] = network;
 	});
 
@@ -49,7 +49,7 @@ angular.module('app')
 		},
 
 		getServer: function (hash) {
-			var url = networks[hash].server;
+			const url = networks[hash].server;
 			return new StellarSdk.Server(url);
 		}
 	};
