@@ -2,14 +2,14 @@
 	<span class="input-label">
 		{{'memo.type' | translate}}
 	</span>
-	<select ng-model="type">
-		<option ng-repeat="type in memoTypes" value="{{type.value}}">{{type.name | translate}}</option>
+	<select ng-model="vm.type">
+		<option ng-repeat="type in vm.memoTypes" value="{{type.value}}">{{type.name | translate}}</option>
 	</select>
 </label>
 
-<label class="item item-input item-inset item-stacked-label" ng-show="type">
+<label class="item item-input item-inset item-stacked-label" ng-show="vm.type">
 	<span class="input-label">
 		{{'memo.memo' | translate}}
 	</span>
-	<input type="text" ng-model="memo">
+	<input type="text" ng-model="vm.memo">
 </label>
