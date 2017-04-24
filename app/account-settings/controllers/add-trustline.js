@@ -16,11 +16,11 @@ angular.module('app')
 
 	$scope.$watch('form.trustline.anchor.$valid', function (isValid, lastValue) {
 		Destination.lookup($scope.model.anchor)
-		.then(function () {
+		.then(() => {
 			$scope.model.asset = '';
 			$scope.showAsset = true;
 		})
-		.catch(function () {
+		.catch(() => {
 			$scope.model.asset = 'dummy';
 			$scope.showAsset = false;
 		});
@@ -50,10 +50,8 @@ angular.module('app')
 			return err;
 		}
 
-		return $q.all(list.map(function (item) {
-			return item.then(resolve, reject);
-		}))
-		.then(function (res) {
+		return $q.all(list.map(item => item.then(resolve, reject)))
+		.then(res => {
 			if (counter >= 1) {
 				return res;
 			} else {

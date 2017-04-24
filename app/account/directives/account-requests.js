@@ -27,12 +27,12 @@ angular.module('app')
 	}
 
 	function isSigned(tx, pubkey) {
-		return (tx.hasSigned && pubkey in tx.hasSigned)? 'Signed' : 'Unsigned';
+		return (tx.hasSigned && pubkey in tx.hasSigned) ? 'Signed' : 'Unsigned';
 	}
 
 	function reviewPending(context) {
 		$q.when(context)
 		.then(Reviewer.review)
-		.catch(function (){});
+		.catch(() => {});
 	}
 });

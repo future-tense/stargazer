@@ -1,4 +1,4 @@
-/* global angular, console */
+/* global angular */
 
 angular.module('app')
 .directive('extHref', function (platformInfo) {

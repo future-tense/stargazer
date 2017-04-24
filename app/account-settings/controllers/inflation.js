@@ -7,10 +7,10 @@ angular.module('app')
 	$scope.oldName = Wallet.current.alias;
 	$scope.send = {};
 
-	var inflationDest = Wallet.current.inflationDest;
+	const inflationDest = Wallet.current.inflationDest;
 	if (inflationDest) {
 		Reverse.lookupAndFill(
-			function (res) {$scope.send.destination = res;},
+			res => {$scope.send.destination = res;},
 			inflationDest
 		);
 	}
@@ -22,25 +22,25 @@ angular.module('app')
 		};
 
 		Modal.show('app/core/modals/select-contact.html', data)
-		.then(function (dest) {
+		.then(dest => {
 			$scope.send.destination = dest;
 		});
 	};
 
 	$scope.setInflation = function () {
 
-		var currentAccount = Wallet.current;
-		var source = currentAccount.id;
+		const currentAccount = Wallet.current;
+		const source = currentAccount.id;
 
 		currentAccount.horizon().loadAccount(source)
-		.then(function (account) {
+		.then(account => {
 
-			var destInfo = $scope.send.destInfo;
-			var builder = new StellarSdk.TransactionBuilder(account);
+			const destInfo = $scope.send.destInfo;
+			const builder = new StellarSdk.TransactionBuilder(account);
 			builder.addOperation(StellarSdk.Operation.setOptions({
 				inflationDest: destInfo.id
 			}));
-			var tx = builder.build();
+			const tx = builder.build();
 
 			return {
 				tx: tx,
@@ -49,9 +49,7 @@ angular.module('app')
 		})
 
 		.then(Reviewer.review)
-		.then(function () {
-			$rootScope.goBack();
-		});
+		.then(() => $rootScope.goBack());
 
 	};
 });

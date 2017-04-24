@@ -11,9 +11,8 @@ angular.module('app')
 	$scope.model = {};
 	$scope.model.comment = $scope.data.comment;
 
-
 	function buttonText() {
-		return $scope.effect.comment? 'modal.comment.edit' : 'modal.comment.add';
+		return $scope.effect.comment ? 'modal.comment.edit' : 'modal.comment.add';
 	}
 
 	function cancel() {
@@ -30,7 +29,7 @@ angular.module('app')
 		}
 
 		const accountName = Wallet.current.alias;
-		Storage.setItem('history.' + accountName, History.effects[accountName]);
+		Storage.setItem(`history.${accountName}`, History.effects[accountName]);
 	}
 });
 

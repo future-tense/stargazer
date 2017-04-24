@@ -13,12 +13,14 @@ angular.module('app')
 
 	function reverseFederationLookup(accountId) {
 
-		return Wallet.current.horizon().accounts()
-		.accountId(accountId).call()
-		.then(function (accountInfo) {
+		return Wallet.current.horizon()
+		.accounts()
+		.accountId(accountId)
+		.call()
+		.then(accountInfo => {
 			if (accountInfo.home_domain) {
 				return StellarSdk.FederationServer.createForDomain(accountInfo.home_domain)
-				.then(function (federationServer) {
+				.then(federationServer => {
 					return federationServer.resolveAccountId(accountId)
 					.then(res => res.stellar_address)
 					.catch(err => $q.reject(err));
@@ -31,7 +33,7 @@ angular.module('app')
 
 	function lookup(accountId, network, tx) {
 
-		return $q(function(resolve, reject) {
+		return $q((resolve, reject) => {
 			if (accountId in Wallet.accounts) {
 				resolve(Wallet.accounts[accountId].alias);
 			}
@@ -55,7 +57,7 @@ angular.module('app')
 
 				else {
 					reverseFederationLookup(accountId)
-					.then(function (name) {
+					.then(name => {
 						reverseFederationCache[accountId] = name;
 						resolve(name);
 					})

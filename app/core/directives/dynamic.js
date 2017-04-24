@@ -1,3 +1,4 @@
+/* global angular */
 
 angular.module('app')
 .directive('dynamic', function ($compile) {

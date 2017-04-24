@@ -4,30 +4,29 @@ angular.module('app')
 .factory('Anchors', function ($http, $q) {
 	'use strict';
 
+	return {
+		lookup: lookup
+	};
+
 	function lookup(domain) {
 
 		if (!domain) {
 			return $q.reject();
 		}
 
-		var url = 'https://' + domain + '/.well-known/stellar.toml';
-
+		const url = `https://${domain}/.well-known/stellar.toml`;
 		return $http.get(url)
-		.then(function (res) {
+		.then((res) => {
 			try {
-				var config = toml.parse(res.data);
+				const config = toml.parse(res.data);
 				if (config.CURRENCIES) {
 					return config.CURRENCIES;
 				} else {
 					return $q.reject();
 				}
-			} catch (e) {
+			} catch (exception) {
 				return $q.reject();
 			}
 		});
 	}
-
-	return {
-		lookup: lookup
-	};
 });

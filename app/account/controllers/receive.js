@@ -19,20 +19,12 @@ angular.module('app')
 
 	function activate() {
 		if ($scope.hasFederation) {
-			$scope.federation = Wallet.current.federation + '*getstargazer.com';
+			$scope.federation = `${Wallet.current.federation}*getstargazer.com`;
 		}
 		showAddress();
 	}
 
 	function copyToClipboard(text) {
-
-		var showPopover = function () {
-			var text = $translate.instant('tabs.receive.copy');
-			return $ionicLoading.show({
-				template: text,
-				duration: 700
-			});
-		};
 
 		if (platformInfo.isCordova) {
 			window.cordova.plugins.clipboard.copy(text);
@@ -40,17 +32,25 @@ angular.module('app')
 		}
 
 		else if (platformInfo.isElectron) {
-			var electron = require('electron');
+			const electron = require('electron');
 			electron.clipboard.writeText(text);
 			showPopover();
+		}
+
+		function showPopover() {
+			const text = $translate.instant('tabs.receive.copy');
+			return $ionicLoading.show({
+				template: text,
+				duration: 700
+			});
 		}
 	}
 
 	function getMinHeight() {
-		var headerHeight = 2*40;
-		var numButtons = 1 + (Wallet.current.federation === undefined);
-		var buttonGroupHeight = 48*numButtons + 8*(numButtons - 1) + 24;
-		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+		const headerHeight = 2 * 40;
+		const numButtons = 1 + (Wallet.current.federation === undefined);
+		const buttonGroupHeight = 48 * numButtons + 8 * (numButtons - 1) + 24;
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 
 	function request() {
@@ -63,7 +63,7 @@ angular.module('app')
 
 	function showAddress() {
 
-		var account = {
+		const account = {
 			id: Wallet.current.id
 		};
 

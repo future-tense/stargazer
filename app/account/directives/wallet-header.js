@@ -7,7 +7,7 @@ angular.module('app')
 	function link(scope, element, attr) {
 		scope.wallet = Wallet.current;
 
-		scope.toggleLeftMenu = function() {
+		scope.toggleLeftMenu = function () {
 			$ionicSideMenuDelegate.toggleLeft();
 		};
 

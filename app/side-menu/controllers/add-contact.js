@@ -17,10 +17,11 @@ angular.module('app')
 	}
 
 	function onDestInfo(destInfo) {
-		console.log(destInfo);
 		if (destInfo && destInfo.id !== $scope.model.id && destInfo.memo_type !== '') {
+			/* eslint-disable camelcase */
 			$scope.model.memo		= destInfo.memo;
 			$scope.model.memo_type	= destInfo.memo_type;
+			/* eslint-enable camelcase */
 		}
 	}
 
@@ -36,7 +37,9 @@ angular.module('app')
 		}
 
 		if ($scope.model.memo_type) {
+			/* eslint-disable camelcase */
 			contact.memo_type = $scope.model.memo_type;
+			/* eslint-enable camelcase */
 		}
 
 		Contacts.add($scope.model.name, contact);

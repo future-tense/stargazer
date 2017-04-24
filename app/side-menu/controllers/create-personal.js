@@ -17,7 +17,7 @@ angular.module('app')
 		const network = $scope.account.network;
 
 		const accounts = {};
-		Object.keys(Wallet.accounts).forEach(function (key) {
+		Object.keys(Wallet.accounts).forEach(key => {
 			const account = Wallet.accounts[key];
 			if (account.network === network) {
 				accounts[account.alias] = account;
@@ -31,7 +31,7 @@ angular.module('app')
 			const funder		= accounts[funderName];
 
 			funder.horizon().loadAccount(funder.id)
-			.then(function (account) {
+			.then(account => {
 				const tx = new StellarSdk.TransactionBuilder(account)
 				.addOperation(StellarSdk.Operation.createAccount({
 					destination: newAccount.publicKey(),
@@ -45,7 +45,7 @@ angular.module('app')
 				};
 			})
 			.then(Reviewer.review)
-			.then(function () {
+			.then(() => {
 				Wallet.importAccount(
 					newAccount.publicKey(),
 					newAccount.secret(),
@@ -76,7 +76,7 @@ angular.module('app')
 	function getMinHeight() {
 		const headerHeight = 40;
 		const buttonGroupHeight = 48 + 16 + 8;
-		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 
 	function selectAccount() {
@@ -86,7 +86,7 @@ angular.module('app')
 		};
 
 		Modal.show('app/side-menu/modals/select-account.html', data)
-		.then(function (res) {
+		.then(res => {
 			$scope.account.funder = res;
 		});
 	}

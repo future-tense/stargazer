@@ -9,7 +9,7 @@ angular.module('app')
 			type: '=',
 			memo: '='
 		},
-		link: function(scope, element, attributes) {
+		link: function (scope, element, attributes) {
 			scope.memoTypes = [
 				{name: 'memotype.none',		value: null},
 				{name: 'memotype.id',		value: 'id'},

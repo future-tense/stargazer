@@ -1,10 +1,10 @@
 /* global angular, chrome, console */
 
 angular.module('app')
-.factory('platformInfo', function($window) {
+.factory('platformInfo', function ($window) {
 	'use strict';
 
-	var ua = navigator ? navigator.userAgent : null;
+	let ua = navigator ? navigator.userAgent : null;
 
 	if (!ua) {
 		console.log('Could not determine navigator. Using fixed string');

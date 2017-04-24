@@ -3,24 +3,24 @@
 (function () {
 	'use strict';
 
-	function _copyAmount(res, fx, prefix) {
+	function copyAmount(res, fx, prefix) {
 
 		if (!prefix) {
 			prefix = '';
 		}
 
-		res[prefix + 'amount'] = fx[prefix + 'amount'];
+		res[`${prefix}amount`] = fx[`${prefix}amount`];
 		if (fx.asset_type === 'native') {
-			res[prefix + 'asset_code'] = 'XLM';
+			res[`${prefix}asset_code`] = 'XLM';
 		} else {
-			res[prefix + 'asset_code'] = fx[prefix + 'asset_code'];
-			res[prefix + 'asset_issuer'] = fx[prefix + 'asset_issuer'];
+			res[`${prefix}asset_code`] = fx[`${prefix}asset_code`];
+			res[`${prefix}asset_issuer`] = fx[`${prefix}asset_issuer`];
 		}
 	}
 
-	function _parseEffect(fx, op, tx) {
+	function parseEffect(fx, op, tx) {
 
-		var res = {
+		let res = {
 			id:			fx.id,
 			type:		fx.type,
 			hash:		tx.hash,
@@ -30,7 +30,8 @@
 			memoType:	tx.memo_type
 		};
 
-		var handlers = {
+		/* eslint-disable camelcase */
+		const handlers = {
 			'account_created': function () {
 				res.from	= op.funder;
 				res.amount	= fx.starting_balance;
@@ -42,10 +43,10 @@
 					res = null;
 				} else if (op.type === 'account_merge') {
 					res.from = op.account;
-					_copyAmount(res, fx);
+					copyAmount(res, fx);
 				} else {
 					res.from = op.from;
-					_copyAmount(res, fx);
+					copyAmount(res, fx);
 				}
 			},
 			'account_debited': function () {
@@ -53,7 +54,7 @@
 					res = null;
 				} else {
 					res.to = op.to || op.account;	// op.payment || op.create_account(?)
-					_copyAmount(res, fx);
+					copyAmount(res, fx);
 				}
 			},
 			'account_flags_updated': function () {
@@ -88,8 +89,8 @@
 				if (op.type === 'path_payment' && op.from !== op.to && op.from === fx.account) {
 					res = null;
 				} else {
-					_copyAmount(res, fx, 'sold_');
-					_copyAmount(res, fx, 'bought_');
+					copyAmount(res, fx, 'sold_');
+					copyAmount(res, fx, 'bought_');
 				}
 			},
 			'trustline_created': function () {
@@ -109,6 +110,7 @@
 			'trustline_deauthorized': function () {
 			}
 		};
+		/* eslint-enable camelcase */
 
 		if (fx.type in handlers) {
 			handlers[fx.type]();
@@ -129,10 +131,10 @@
 			const accountEffects = History.effects[account.alias];
 
 			return effect.operation()
-			.then(function (operation) {
+			.then((operation) => {
 				return operation.transaction()
-				.then(function (transaction) {
-					const res = _parseEffect(effect, operation, transaction);
+				.then((transaction) => {
+					const res = parseEffect(effect, operation, transaction);
 					if (res) {
 						accountEffects[res.id] = res;
 						return {
@@ -146,17 +148,17 @@
 			});
 		}
 
-		var History = {};
+		const History = {};
 		History.effects = {};
 
 		const accountList = Storage.getItem('accounts') || [];
-		accountList.forEach(function (name) {
-			History.effects[name] = Storage.getItem('history.' + name) || {};
+		accountList.forEach((name) => {
+			History.effects[name] = Storage.getItem(`history.${name}`) || {};
 		});
 
 		History.subscribe = function (account) {
 
-			var promise = $q.when();
+			let promise = $q.when();
 
 			function onmessage(msg) {
 				if (msg.id in History.effects[account.alias]) {
@@ -165,16 +167,16 @@
 
 				function add() {
 					addEffect(msg, account)
-					.then(function (effect) {
+					.then((effect) => {
 						account.pagingToken = msg.paging_token;
 						$rootScope.$broadcast('accountInfoLoaded');
 						$rootScope.$broadcast('newTransaction', effect);
-						Storage.setItem('history.' + account.alias, History.effects[account.alias]);
-						Storage.setItem('account.' + account.alias, account);
+						Storage.setItem(`history.${account.alias}`, History.effects[account.alias]);
+						Storage.setItem(`account.${account.alias}`, account);
 					})
-					.catch(function (err) {
+					.catch(() => {
 						account.pagingToken = msg.paging_token;
-						Storage.setItem('account.' + account.alias, account);
+						Storage.setItem(`account.${account.alias}`, account);
 					});
 				}
 
@@ -196,7 +198,7 @@
 				History.effects[account.alias] = {};
 			}
 
-			var accountEffects = History.effects[account.alias];
+			const accountEffects = History.effects[account.alias];
 
 			return account.horizon().effects()
 			.forAccount(account.id)
@@ -204,27 +206,23 @@
 			.cursor('now')
 			.order('desc')
 			.call()
-			.then(function (effects) {
+			.then((effects) => {
 
 				if (effects.records.length !== 0) {
 					account.pagingToken = effects.records[0].paging_token;
 				}
 
 				//	filter out effects we already have recorded
-				var records = effects.records.filter(function (fx) {
-					return !(fx.id in accountEffects);
-				});
+				const records = effects.records.filter(fx => !(fx.id in accountEffects));
 
-				var promises = records.map(function (fx) {
+				const promises = records.map(fx => {
 					return addEffect(fx, account)
-					.catch(function (err) {
-						return err;
-					});
+					.catch(err => err);
 				});
 
 				return $q.all(promises)
-				.then(function () {
-					Storage.setItem('history.' + account.alias, accountEffects);
+				.then(() => {
+					Storage.setItem(`history.${account.alias}`, accountEffects);
 					$rootScope.$broadcast('accountInfoLoaded');
 				});
 			});
@@ -232,4 +230,4 @@
 
 		return History;
 	});
-})();
+}());

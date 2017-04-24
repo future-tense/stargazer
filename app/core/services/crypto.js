@@ -5,9 +5,9 @@ angular.module('app')
 	'use strict';
 
 	function encryptSeed(seed, key, cipherName, modeName) {
-		var cipher = new sjcl.cipher[cipherName](key);
-		var rawIV = sjcl.random.randomWords(3);
-		var encryptedData = sjcl.mode[modeName].encrypt(
+		const cipher = new sjcl.cipher[cipherName](key);
+		const rawIV = sjcl.random.randomWords(3);
+		const encryptedData = sjcl.mode[modeName].encrypt(
 			cipher,
 			sjcl.codec.utf8String.toBits(seed),
 			rawIV
@@ -21,27 +21,27 @@ angular.module('app')
 
 	function encrypt(seed, password) {
 
-		var saltBits = sjcl.random.randomWords(4);		//	128 bits of salt, was 256 bits
-		var numRounds = 4096;
-		var key = sjcl.misc.pbkdf2(password, saltBits, numRounds);
+		const saltBits = sjcl.random.randomWords(4);		//	128 bits of salt, was 256 bits
+		const numRounds = 4096;
+		const key = sjcl.misc.pbkdf2(password, saltBits, numRounds);
 
-		var salt = sjcl.codec.base64.fromBits(saltBits);
+		const salt = sjcl.codec.base64.fromBits(saltBits);
 
-		var cipherName = 'aes';
-		var modeName = 'gcm';
+		const cipherName = 'aes';
+		const modeName = 'gcm';
 
-		var blob = encryptSeed(seed, key, cipherName, modeName);
+		const blob = encryptSeed(seed, key, cipherName, modeName);
 		return ['1', salt, blob];
 	}
 
 	function decryptSeed(blob, key) {
-		var cipherName = 'aes';
-		var modeName = 'gcm';
+		const cipherName = 'aes';
+		const modeName = 'gcm';
 
-		var cipher = new sjcl.cipher[cipherName](key);
-		var rawIV = sjcl.codec.base64.toBits(blob[0]);
-		var rawCipherText = sjcl.codec.base64.toBits(blob[1]);
-		var decryptedData = sjcl.mode[modeName].decrypt(
+		const cipher = new sjcl.cipher[cipherName](key);
+		const rawIV = sjcl.codec.base64.toBits(blob[0]);
+		const rawCipherText = sjcl.codec.base64.toBits(blob[1]);
+		const decryptedData = sjcl.mode[modeName].decrypt(
 			cipher,
 			rawCipherText,
 			rawIV
@@ -51,14 +51,14 @@ angular.module('app')
 	}
 
 	function decrypt(data, password) {
-		var saltBits = sjcl.codec.base64.toBits(data[1]);
-		var numRounds = 4096;
-		var key = sjcl.misc.pbkdf2(password, saltBits, numRounds);
+		const saltBits = sjcl.codec.base64.toBits(data[1]);
+		const numRounds = 4096;
+		const key = sjcl.misc.pbkdf2(password, saltBits, numRounds);
 		return decryptSeed(data[2], key);
 	}
 
 	return {
-		encrypt:	encrypt,
-		decrypt:	decrypt
+		encrypt: encrypt,
+		decrypt: decrypt
 	};
 });

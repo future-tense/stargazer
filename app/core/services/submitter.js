@@ -19,12 +19,10 @@ angular.module('app')
 	}
 
 	function submitSignature(context, hash) {
-		const sigs = context.signatures.map(function (sig) {
-			return sig.toXDR().toString('base64');
-		});
+		const sigs = context.signatures.map(sig => sig.toXDR().toString('base64'));
 
 		return Constellation.submitSignatures(hash, sigs)
-		.then(function () {
+		.then(() => {
 			Transactions.markAsSigned(hash, context.id);
 		});
 	}
@@ -34,7 +32,7 @@ angular.module('app')
 		const txenv = encodeTransaction(context.tx);
 
 		return Constellation.submitTransaction(txenv, context.network)
-		.then(function () {
+		.then(() => {
 			const data = {
 				txenv: txenv,
 				id: context.id,
@@ -53,6 +51,8 @@ angular.module('app')
 	}
 
 	function encodeTransaction(tx) {
-		return tx.toEnvelope().toXDR().toString('base64');
+		return tx.toEnvelope()
+		.toXDR()
+		.toString('base64');
 	}
 });

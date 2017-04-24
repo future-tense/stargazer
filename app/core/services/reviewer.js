@@ -1,3 +1,5 @@
+/* global angular */
+
 angular.module('app')
 .factory('Reviewer', function (Modal) {
 	'use strict';

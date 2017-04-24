@@ -6,9 +6,8 @@ angular.module('app')
 
     return {
         require: 'ngModel',
-        link: function(scope, element, attributes, ngModel) {
-
-            ngModel.$validators.validSeed = function(modelValue) {
+        link: function (scope, element, attributes, ngModel) {
+            ngModel.$validators.validSeed = function (modelValue) {
 				return StellarSdk.StrKey.isValidEd25519SecretSeed(modelValue);
             };
 		}

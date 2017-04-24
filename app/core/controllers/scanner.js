@@ -20,7 +20,7 @@ angular.module('app')
 
 	function init() {
 		setScanner();
-		$timeout(function() {
+		$timeout(() => {
 			const canvas = document.getElementById('qr-canvas');
 			context = canvas.getContext('2d');
 
@@ -68,12 +68,11 @@ angular.module('app')
 			context.drawImage(video, 0, 0, width, height);
 			try {
 				QRDecoder.decode()
-				.then(function (data) {
+				.then(data => {
 					stopScanning();
 					$scope.modalResolve(data);
 				});
-			} catch (e) {
-				//qrcodeError(e);
+			} catch (exception) {
 			}
 		}
 		scanTimer = $timeout(scan, 800);
@@ -82,14 +81,12 @@ angular.module('app')
 	function stopScanning() {
 		$timeout.cancel(scanTimer);
 		if (localMediaStream && localMediaStream.active) {
-			const localMediaStreamTrack = localMediaStream.getTracks();
-			for (let i = 0; i < localMediaStreamTrack.length; i++) {
-				localMediaStreamTrack[i].stop();
-			}
+			localMediaStream.getTracks()
+			.forEach(track => track.stop());
 		} else {
 			try {
 				localMediaStream.stop();
-			} catch (e) {
+			} catch (exception) {
 				// Older Chromium not support the STOP function
 			}
 		}

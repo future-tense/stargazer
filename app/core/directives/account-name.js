@@ -6,7 +6,7 @@ angular.module('app')
 
 	function link(scope, element, attributes) {
 
-		scope.$watch('id', function () {
+		scope.$watch('id', () => {
 
 			if (scope.id === undefined) {
 				return;
@@ -16,7 +16,7 @@ angular.module('app')
 			Reverse.lookupAndFill(
 				res => {
 					if (res === scope.id) {
-						res = res.slice(0, 4) + '....' + res.slice(-4);
+						res = `${res.slice(0, 4)}....${res.slice(-4)}`;
  					}
 					element[0].innerText = res;
 				},

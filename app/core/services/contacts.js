@@ -4,20 +4,20 @@ angular.module('app')
 .factory('Contacts', function (Horizon, Storage) {
 	'use strict';
 
-	function ignoreCase(a, b) {
-		var nameA = a.toUpperCase();
-		var nameB = b.toUpperCase();
+	function ignoreCase(stringA, stringB) {
+		const nameA = stringA.toUpperCase();
+		const nameB = stringB.toUpperCase();
 		return (nameA > nameB) - (nameA < nameB);
 	}
 
-	var contacts = Storage.getItem('contacts') || {};
+	const contacts = Storage.getItem('contacts') || {};
 
 	return {
 
 		forNetwork: function (network) {
-			var res = [];
-			Object.keys(contacts).forEach(function (name) {
-				var contact = contacts[name];
+			const res = [];
+			Object.keys(contacts).forEach(name => {
+				const contact = contacts[name];
 				if (!contact.network) {
 					contact.network = Horizon.public;
 				}
@@ -52,9 +52,9 @@ angular.module('app')
 				network = Horizon.public;
 			}
 
-			var matches = [];
-			Object.keys(contacts).forEach(function (name) {
-				var contact = contacts[name];
+			const matches = [];
+			Object.keys(contacts).forEach(name => {
+				const contact = contacts[name];
 				if (!contact.network) {
 					contact.network = Horizon.public;
 				}
@@ -65,8 +65,8 @@ angular.module('app')
 			});
 
 			if (memoType && memo) {
-				var memoContact = matches.filter(function (name) {
-					var contact = contacts[name];
+				const memoContact = matches.filter(name => {
+					const contact = contacts[name];
 					return ((memoType === contact.memo_type) && (memo === contact.memo));
 				});
 
@@ -75,8 +75,8 @@ angular.module('app')
 				}
 			}
 
-			var contact = matches.filter(function (name) {
-				var contact = contacts[name];
+			const contact = matches.filter(name => {
+				const contact = contacts[name];
 				return (!contact.memo_type && !contact.memo);
 			});
 

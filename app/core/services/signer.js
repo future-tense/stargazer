@@ -12,11 +12,10 @@ Object.defineProperty(Array.prototype, 'forEachThen', {
 	value: function (callback) {
 		'use strict';
 
-		return this.reduce(function (promise, item) {
-			return promise.then(function () {
-				return callback(item);
-			});
-		}, Promise.resolve());
+		return this.reduce(
+			(promise, item) => promise.then(() => callback(item)),
+			Promise.resolve()
+		);
 	}
 });
 
@@ -24,7 +23,7 @@ angular.module('app')
 .factory('Signer', function ($q, Horizon, Keychain, Wallet) {
 	'use strict';
 
-	var Buffer = buffer.Buffer;
+	const Buffer = buffer.Buffer;
 
 	return {
 		getTransactionHash:		getTransactionHash,
@@ -73,10 +72,10 @@ angular.module('app')
 
 	function getSourceAccounts(tx) {
 
-		var accounts = {};
-		tx.operations.forEach(function (op) {
-			var category = getOperationCategory(op);
-			var source = getSourceAccount(op, tx);
+		const accounts = {};
+		tx.operations.forEach(op => {
+			const category = getOperationCategory(op);
+			const source = getSourceAccount(op, tx);
 			setAccountCategory(accounts, source, category);
 		});
 
@@ -84,9 +83,9 @@ angular.module('app')
 	}
 
 	function hasEnoughSignatures(sourceAccounts) {
-		for (var key in sourceAccounts) {
+		for (const key in sourceAccounts) {
 			if (sourceAccounts.hasOwnProperty(key)) {
-				var account = sourceAccounts[key];
+				const account = sourceAccounts[key];
 				if (account.weight < account.threshold) {
 					return false;
 				}
@@ -97,8 +96,8 @@ angular.module('app')
 	}
 
 	function hasExternalSigners(context) {
-		var signers = Object.keys(context.signers);
-		var localSigners = signers.filter(Keychain.isLocalSigner);
+		const signers = Object.keys(context.signers);
+		const localSigners = signers.filter(Keychain.isLocalSigner);
 		return (signers.length !== localSigners.length);
 	}
 
@@ -121,21 +120,24 @@ angular.module('app')
 	}
 
 	function getTransactionHash(tx, network) {
-		var phrase = Horizon.getNetwork(network).phrase;
-		var base = signatureBase(tx, phrase);
+		const phrase = Horizon.getNetwork(network).phrase;
+		const base = signatureBase(tx, phrase);
 		return StellarSdk.hash(base);
 	}
 
 	function getAccountInfo(context) {
 
-		var progress = context.progress;
-		var sourceAccounts = Object.keys(progress);
-		var accountInfo = sourceAccounts.map(function (source) {
+		const progress = context.progress;
+		const sourceAccounts = Object.keys(progress);
+		const accountInfo = sourceAccounts.map(source => {
 			if (source in Wallet.accounts) {
 				return $q.when(Wallet.accounts[source]);
 			} else {
-				return context.horizon.accounts().accountId(source).call()
-				.catch(function (res) {
+				return context.horizon.accounts()
+				.accountId(source)
+				.call()
+				.catch(res => {
+					/* eslint-disable camelcase */
 					return $q.when({
 						id: source,
 						signers: [{
@@ -149,13 +151,14 @@ angular.module('app')
 							high_threshold:	0
 						}
 					});
+					/* eslint-enable camelcase */
 				});
 			}
 		});
 
 		return $q.all(accountInfo)
-		.then(function (accounts) {
-			accounts.forEach(function (account) {
+		.then(accounts => {
+			accounts.forEach(account => {
 				progress[account.id].signers	= account.signers;
 				progress[account.id].thresholds	= account.thresholds;
 			});
@@ -168,19 +171,19 @@ angular.module('app')
 	//
 
 	function getThresholds(context) {
-		var progress = context.progress;
-		var sourceAccounts = Object.keys(progress);
+		const progress = context.progress;
+		const sourceAccounts = Object.keys(progress);
 
-		sourceAccounts.forEach(function (source) {
-			var account = progress[source];
+		sourceAccounts.forEach(source => {
+			const account = progress[source];
 
-			var thresholds = [
+			const thresholds = [
 				account.thresholds.low_threshold  * account.category[0],
 				account.thresholds.med_threshold  * account.category[1],
 				account.thresholds.high_threshold * account.category[2]
 			];
 
-			var threshold = Math.max.apply(null, thresholds);
+			let threshold = Math.max.apply(null, thresholds);
 			if (threshold === 0) {
 				threshold = 1;
 			}
@@ -199,11 +202,11 @@ angular.module('app')
 	//
 
 	function getSigners(context) {
-		var progress = context.progress;
-		var sourceAccounts = Object.keys(progress);
+		const progress = context.progress;
+		const sourceAccounts = Object.keys(progress);
 
-		var signers = {};
-		sourceAccounts.forEach(function (source) {
+		const signers = {};
+		sourceAccounts.forEach(source => {
 
 			function addSourceAccount(key, value) {
 				if (key in signers) {
@@ -213,8 +216,8 @@ angular.module('app')
 				}
 			}
 
-			var account = progress[source];
-			account.signers.forEach(function (signer) {
+			const account = progress[source];
+			account.signers.forEach(signer => {
 				if (signer.weight !== 0) {
 					addSourceAccount(signer.public_key, {
 						account:	source,
@@ -240,23 +243,24 @@ angular.module('app')
 		const signers = context.signers;
 
 		const signerFromHint = {};
-		Object.keys(signers).forEach(function (key) {
-			const hint = StellarSdk.Keypair.fromPublicKey(key).signatureHint().toString('hex');
+		Object.keys(signers).forEach(key => {
+			const hint = StellarSdk.Keypair.fromPublicKey(key)
+			.signatureHint()
+			.toString('hex');
 			signerFromHint[hint] = key;
 		});
 
 		//	add weights for existing signatures
 
-		context.tx.signatures.forEach(function (sig) {
+		context.tx.signatures.forEach(sig => {
 			const hint = sig.hint().toString('hex');
 			const signer = signerFromHint[hint];
 			const sources = signers[signer];
-			sources.forEach(function (source) {
+			sources.forEach(source => {
 				progress[source.account].weight += source.weight;
 			});
 
 			delete signers[signer];
-
 		});
 
 		context.id			= Object.keys(signers).filter(Keychain.isLocalSigner);

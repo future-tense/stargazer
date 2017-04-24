@@ -22,10 +22,10 @@ angular.module('app')
 	function doRefresh() {
 
 		Wallet.current.refresh()
-		.then(function () {
+		.then(() => {
 			$scope.$broadcast('scroll.refreshComplete');
 		})
-		.catch(function (err) {
+		.catch(err => {
 			$scope.$broadcast('scroll.refreshComplete');
 			// :TODO: Display some message about not being able to refresh
 		});
@@ -33,11 +33,11 @@ angular.module('app')
 
 	function getAssets() {
 
-		return Wallet.current.balances.filter(function (e) {
-			if (e.asset_type === 'native') {
+		return Wallet.current.balances.filter(item => {
+			if (item.asset_type === 'native') {
 				return true;
 			} else {
-				return (e.balance !== '0.0000000');
+				return (item.balance !== '0.0000000');
 			}
 		});
 	}

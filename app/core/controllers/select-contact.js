@@ -23,7 +23,7 @@ angular.module('app')
 		$scope.closeModalService();
 	}
 
-	function select (contact) {
+	function select(contact) {
 		$scope.modalResolve(contact);
 	}
 });

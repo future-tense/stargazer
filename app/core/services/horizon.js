@@ -15,19 +15,20 @@ angular.module('app')
 	}];
 
 	function getNetwork(name) {
-		return networkList.filter(function (network) {
-			return (network.name === name);
-		})[0];
+		return networkList.filter(network => network.name === name)[0];
 	}
 
 	function getHash(passphrase) {
-		return new StellarSdk.Network(passphrase).networkId().toString('hex').slice(0, 8);
+		return new StellarSdk.Network(passphrase)
+		.networkId()
+		.toString('hex')
+		.slice(0, 8);
 	}
 
 	const publicNetwork = getHash('Public Global Stellar Network ; September 2015');
 
 	const networks = {};
-	networkList.forEach(function (network) {
+	networkList.forEach(network => {
 		const hash = getHash(network.phrase);
 		networks[hash] = network;
 	});

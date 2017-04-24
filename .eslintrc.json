@@ -1,0 +1,63 @@
+{
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": false
+		}
+	},
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"rules": {
+		"array-callback-return": 2,
+		"camelcase": 2,
+		"dot-notation": 2,
+		"eol-last": 2,
+		"id-length": 2,
+		"keyword-spacing": 2,
+		"new-cap": 2,
+		"newline-per-chained-call": ["error", {
+			"ignoreChainWithDepth": 2
+		}],
+		"no-array-constructor": 2,
+		"no-case-declarations": 2,
+		"no-confusing-arrow": ["error", {
+			"allowParens": true
+		}],
+		"no-const-assign": 2,
+		"no-dupe-class-members": 2,
+		"no-duplicate-imports": 2,
+		"no-iterator": 2,
+		"no-loop-func": 2,
+		"no-nested-ternary": 2,
+		"no-new-object": 2,
+		"no-plusplus": 2,
+		"no-undef": 2,
+		"no-underscore-dangle": 2,
+		"no-unneeded-ternary": 2,
+		"no-useless-constructor": 2,
+		"no-useless-escape": 2,
+		"no-var": 2,
+		"object-shorthand": ["error", "consistent"],
+		"one-var": ["error", "never"],
+		"prefer-arrow-callback": 2,
+		"prefer-const": 2,
+		"prefer-rest-params": 2,
+		"prefer-spread": 2,
+		"prefer-template": 2,
+		"quotes": ["error", "single"],
+		"semi": 2,
+		"space-before-blocks": 2,
+		"space-before-function-paren": ["error", {
+			"anonymous": "always",
+			"named": "never",
+			"asyncArrow": "ignore"
+		}],
+		"space-infix-ops": 2,
+		"spaced-comment": ["error", "always"],
+		"template-curly-spacing": ["error", "never"],
+		"wrap-iife": 2
+	}
+}

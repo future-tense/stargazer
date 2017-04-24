@@ -3,15 +3,15 @@
 (function () {
 	'use strict';
 
-	var electron	= require('electron');
-	var path		= require('path');
-	var url			= require('url');
+	const electron	= require('electron');
+	const path		= require('path');
+	const url		= require('url');
 
 	// Keep a global reference of the window object, if you don't, the window will
 	// be closed automatically when the JavaScript object is garbage collected.
-	var win;
+	let win;
 
-	var app = electron.app;
+	const app = electron.app;
 	app.on('ready', createWindow);
 	app.on('window-all-closed', close);
 	app.on('activate', activate);
@@ -21,7 +21,7 @@
 	// Some APIs can only be used after this event occurs.
 	function createWindow () {
 
-		var template = [{
+		const template = [{
 			label: "Application",
 			submenu: [
 				{ label: "About Application", selector: "orderFrontStandardAboutPanel:" },
@@ -42,12 +42,12 @@
 
 		// No menu on Windows
 		if (process.platform !== 'win32') {
-			var Menu = electron.Menu;
+			const Menu = electron.Menu;
 			Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 		}
 
 		// Create the browser window.
-		var BrowserWindow = electron.BrowserWindow;
+		const BrowserWindow = electron.BrowserWindow;
 		win = new BrowserWindow({
 			width: 800,
 			height: 600,
@@ -67,7 +67,7 @@
 //		win.webContents.openDevTools();
 
 		// Emitted when the window is closed.
-		win.on('closed', function () {
+		win.on('closed', () => {
 			// Dereference the window object, usually you would store windows
 			// in an array if your app supports multi windows, this is the time
 			// when you should delete the corresponding element.

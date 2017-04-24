@@ -6,16 +6,17 @@ angular.module('app')
 
 	return {
 		require: 'ngModel',
-		link: function(scope, element, attributes, ngModel) {
-
-			scope.flag = ngModel.$viewValue;
-
-			scope.toggle = function () {
-				scope.flag = !scope.flag;
-				ngModel.$setViewValue(scope.flag);
-			};
-		},
+		link: link,
 		templateUrl: 'app/core/templates/advanced-toggle.html'
 	};
 
+	function link(scope, element, attributes, ngModel) {
+
+		scope.flag = ngModel.$viewValue;
+
+		scope.toggle = function () {
+			scope.flag = !scope.flag;
+			ngModel.$setViewValue(scope.flag);
+		};
+	}
 });

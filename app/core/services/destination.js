@@ -4,7 +4,7 @@ angular.module('app')
 .factory('Destination', function ($q, Contacts, Wallet) {
 	'use strict';
 
-	var nullPromise = $q.reject();
+	const nullPromise = $q.reject();
 
 	function lookup(name) {
 
@@ -16,8 +16,8 @@ angular.module('app')
 
 		//	Account Name
 
-		var map = {};
-		Wallet.accountList.forEach(function (account) {
+		const map = {};
+		Wallet.accountList.forEach(account => {
 			map[account.alias] = account.id;
 		});
 
@@ -29,36 +29,45 @@ angular.module('app')
 
 		//	Contact Name
 
-		var contact = Contacts.get(name);
+		const contact = Contacts.get(name);
 		if (contact) {
+			/* eslint-disable camelcase */
 			return $q.resolve({
 				id: contact.id,
 				memo: contact.memo,
 				memo_type: contact.memo_type
 			});
+			/* eslint-enable camelcase */
 		}
 
 		//	Email address -- transform to emailaddress*getstargazer.com
 
-		var isEmail = /^[\w\.\+]+@([\w]+\.)+[\w]{2,}$/.test(name);
+
+		/* eslint-disable no-useless-escape */
+		const isEmail = /^[\w\.\+]+@([\w]+\.)+[\w]{2,}$/.test(name);
+		/* eslint-enable no-useless-escape */
 		if (isEmail) {
 			name += '*getstargazer.com';
 		}
 
 		//	Federated address or Public key
-		var isFederation = /^[^\s\*,]+\*([\w]+\.)+[\w]{2,}$/.test(name);
-		var isPubKey = StellarSdk.StrKey.isValidEd25519PublicKey(name);
+		/* eslint-disable no-useless-escape */
+		const isFederation = /^[^\s\*,]+\*([\w]+\.)+[\w]{2,}$/.test(name);
+		const isPubKey = StellarSdk.StrKey.isValidEd25519PublicKey(name);
 		if (isFederation || isPubKey) {
 
 			return StellarSdk.FederationServer.resolve(name)
-			.then(function (res) {
+			.then(res => {
+				/* eslint-disable camelcase */
 				return {
 					id: res.account_id.trim(),
 					memo: res.memo,
 					memo_type: res.memo_type
 				};
+				/* eslint-enable camelcase */
 			});
 		}
+		/* eslint-enable no-useless-escape */
 
 		return nullPromise;
 	}

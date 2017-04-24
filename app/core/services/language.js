@@ -4,7 +4,7 @@ angular.module('app')
 .factory('Language', function ($translate, Storage) {
 	'use strict';
 
-	var languages = {
+	const languages = {
 		en: {
 			name:	'English',
 			locale:	'en-US'
@@ -43,7 +43,7 @@ angular.module('app')
 		}
 	};
 
-	var current = Storage.getItem('language') || 'en';
+	let current = Storage.getItem('language') || 'en';
 
 	function setCurrent(code) {
 		current = code;
@@ -63,7 +63,7 @@ angular.module('app')
 		},
 
 		getLanguages: function () {
-			return Object.keys(languages).map(function (key) {
+			return Object.keys(languages).map(key => {
 				return {
 					code: key,
 					name: languages[key].name

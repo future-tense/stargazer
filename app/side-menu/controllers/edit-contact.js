@@ -19,16 +19,16 @@ angular.module('app')
 	}
 
 	function getMinHeight() {
-		var headerHeight = 40;
-		var numButtons = 2;
-		var buttonGroupHeight = 48*numButtons + 8*(numButtons - 1) + 24;
-		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+		const headerHeight = 40;
+		const numButtons = 2;
+		const buttonGroupHeight = 48 * numButtons + 8 * (numButtons - 1) + 24;
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 
 	function initModel() {
-		var name = $routeParams.name;
-		var contact = Contacts.get(name);
-		var model = JSON.parse(JSON.stringify(contact));
+		const name = $routeParams.name;
+		const contact = Contacts.get(name);
+		const model = JSON.parse(JSON.stringify(contact));
 		model.name = name;
 		return model;
 	}
@@ -49,11 +49,11 @@ angular.module('app')
 			delete $scope.model.memo_type;
 		}
 
-		var oldName = $routeParams.name;
+		const oldName = $routeParams.name;
 		Contacts.delete(oldName);
 
-		var name = $scope.model.name;
-		var contact = $scope.model;
+		const name = $scope.model.name;
+		const contact = $scope.model;
 		delete contact.name;
 		Contacts.add(name, contact);
 		$rootScope.goBack();

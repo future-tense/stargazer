@@ -38,17 +38,19 @@ angular.module('app')
 			account: account,
 			key: key
 		}));
-		$location.path('/side-menu/import-account/' + data);
+		$location.path(`/side-menu/import-account/${data}`);
 	}
 
 	function handleAccount(account) {
 
 		if (!(account.id in Wallet.accounts) && !Contacts.lookup(account.id, account.network)) {
+			/* eslint-disable camelcase */
 			const data = {
 				id:			account.id,
 				meta:		account.meta,
 				meta_type:	account.meta_type
 			};
+			/* eslint-enable camelcase */
 
 			if (account.network) {
 				data.network = account.network;
@@ -64,12 +66,14 @@ angular.module('app')
 			amount:			payment.amount
 		};
 
+		/* eslint-disable camelcase */
 		if (!payment.asset) {
 			object.asset_type	= 'native';
 		} else {
 			object.asset_code	= payment.asset.code;
 			object.asset_issuer	= payment.asset.issuer;
 		}
+		/* eslint-enable camelcase */
 
 		if (payment.memo) {
 			object.memo = payment.memo;
@@ -85,20 +89,21 @@ angular.module('app')
 
 		if (Keychain.isLocalSigner(id)) {
 			Keychain.signMessage(id, challenge.message)
-			.then(function (sig) {
+			.then(submitResponse);
+		}
 
-				$ionicLoading.show({
-					template: 'Submitting response...'
-				});
+		function submitResponse(sig) {
+			$ionicLoading.show({
+				template: 'Submitting response...'
+			});
 
-				$http.post(challenge.url, {
-					id: id,
-					msg: challenge.message,
-					sig: sig
-				})
-				.finally(function () {
-					$ionicLoading.hide();
-				});
+			$http.post(challenge.url, {
+				id: id,
+				msg: challenge.message,
+				sig: sig
+			})
+			.finally(() => {
+				$ionicLoading.hide();
 			});
 		}
 	}

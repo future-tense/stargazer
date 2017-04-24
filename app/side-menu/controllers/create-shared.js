@@ -29,9 +29,9 @@ angular.module('app')
 	function createAccount() {
 
 		const network = $scope.account.network;
-
 		const accounts = {};
-		Object.keys(Wallet.accounts).forEach(function (key) {
+
+		Object.keys(Wallet.accounts).forEach((key) => {
 			const account = Wallet.accounts[key];
 			if (account.network === network) {
 				accounts[account.alias] = account;
@@ -45,8 +45,9 @@ angular.module('app')
 			const funder		= accounts[funderName];
 			const newAccountId	= newAccount.publicKey();
 
-			funder.horizon().loadAccount(funder.id)
-			.then(function (account) {
+			funder.horizon()
+			.loadAccount(funder.id)
+			.then((account) => {
 
 				const builder = new StellarSdk.TransactionBuilder(account)
 				.addOperation(StellarSdk.Operation.createAccount({
@@ -54,7 +55,7 @@ angular.module('app')
 					startingBalance: $scope.account.amount.toString()
 				}));
 
-				$scope.signers.forEach(function (signer) {
+				$scope.signers.forEach((signer) => {
 					const op = StellarSdk.Operation.setOptions({
 						source: newAccountId,
 						signer: {
@@ -87,7 +88,7 @@ angular.module('app')
 				};
 			})
 			.then(Reviewer.review)
-			.then(function () {
+			.then(() => {
 				Wallet.importAccount(
 					newAccountId,
 					newAccount.secret(),
@@ -115,7 +116,7 @@ angular.module('app')
 	function getMinHeight() {
 		const headerHeight = 40;
 		const buttonGroupHeight = 48 + 16 + 8;
-		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 
 	function selectSigner() {
@@ -125,7 +126,7 @@ angular.module('app')
 		};
 
 		Modal.show('app/core/modals/select-contact.html', data)
-		.then(function (res) {
+		.then((res) => {
 			$scope.account.signer = res;
 		});
 	}
@@ -138,7 +139,7 @@ angular.module('app')
 		};
 
 		Modal.show('app/side-menu/modals/select-account.html', data)
-		.then(function (res) {
+		.then((res) => {
 			$scope.account.funder = res;
 		});
 	}

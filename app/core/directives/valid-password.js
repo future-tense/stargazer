@@ -6,7 +6,7 @@ angular.module('app')
 
 	return {
 		require: 'ngModel',
-		link: function(scope, element, attributes, ngModel) {
+		link: function (scope, element, attributes, ngModel) {
 			ngModel.$validators.validPassword = function (modelValue) {
 				if (modelValue) {
 					return Keychain.isValidPasswordForSigner(attributes.signer, modelValue);

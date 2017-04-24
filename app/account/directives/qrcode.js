@@ -6,7 +6,7 @@ angular.module('app')
 
 	function link(scope, element, attrs) {
 
-		var qrcode = null;
+		let qrcode = null;
 		function renderCode(text) {
 
 			if (qrcode) {
@@ -17,24 +17,25 @@ angular.module('app')
 				return;
 			}
 
-			var styles = $window.getComputedStyle(element[0], null);
-			var width = styles.width.slice(0, -2);
-			var height = styles.height.slice(0, -2);
+			const styles = $window.getComputedStyle(element[0], null);
+			const width = styles.width.slice(0, -2);
+			const height = styles.height.slice(0, -2);
 
-			qrcode = new QRCode('qrcode_' + scope.$id, {
+			qrcode = new QRCode(`qrcode_${scope.$id}`, {
 				text: text,
 				width: width,
 				height: height,
-				colorDark : "#000000",
-				colorLight : "#ffffff",
+				colorDark : '#000000',
+				colorLight : '#ffffff',
 				correctLevel : QRCode.CorrectLevel.L
 			});
+
+			/* eslint-disable no-underscore-dangle */
 			qrcode._el.title = '';
+			/* eslint-enable no-underscore-dangle */
 		}
 
-		scope.$watch('text', function () {
-			renderCode(scope.text);
-		});
+		scope.$watch('text', () => renderCode(scope.text));
 	}
 
 	return {

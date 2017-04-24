@@ -11,7 +11,6 @@ angular.module('app')
 	function show(template, data) {
 
 		const $scope = $rootScope.$new();
-
 		$scope.closeModalService	= close;
 		$scope.modalReject			= reject;
 		$scope.modalResolve			= resolve;
@@ -21,7 +20,7 @@ angular.module('app')
 			scope: $scope,
 			animation: 'slide-in-up'
 		})
-		.then(function (modal) {
+		.then(modal => {
 			$scope.modal = modal;
 			modal.show();
 		});

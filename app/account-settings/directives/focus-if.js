@@ -5,9 +5,9 @@ angular.module('app')
 	'use strict';
 
 	return {
-		link: function(scope, element, attrs) {
-			attrs.$observe('focusIf', function (val){
-				$timeout(function() {
+		link: function (scope, element, attrs) {
+			attrs.$observe('focusIf', val => {
+				$timeout(() => {
 					if (val) {
 						element[0].focus();
 					} else {

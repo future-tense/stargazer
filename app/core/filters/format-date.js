@@ -4,7 +4,7 @@ angular.module('app')
 .filter('formatDate', function (Language) {
 	'use strict';
 
-	var options = {
+	const options = {
 		year:	'numeric',
 		month:	'numeric',
 		day:	'numeric',
@@ -14,7 +14,7 @@ angular.module('app')
 	};
 
 	return function (string) {
-		var date = new Date(string);
+		const date = new Date(string);
 		return date.toLocaleDateString(Language.getLocale(), options);
 	};
 });

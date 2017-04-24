@@ -4,11 +4,10 @@ angular.module('app')
 .controller('TransactionCtrl', function ($routeParams, $scope, Contacts, History, Modal, Wallet) {
 	'use strict';
 
-	$scope.network  = Wallet.current.network;
-	var accountName	= Wallet.current.alias;
-	var effectId	= $routeParams.id;
-
-	var effect = History.effects[accountName][effectId];
+	$scope.network = Wallet.current.network;
+	const accountName = Wallet.current.alias;
+	const effectId = $routeParams.id;
+	const effect = History.effects[accountName][effectId];
 
 	if (effect.type === 'account_created') {
 		$scope.type = 'recv';
@@ -17,7 +16,6 @@ angular.module('app')
 		$scope.counterparty = effect.from;
 		$scope.counterpartyLabel = 'transaction.from';
 		$scope.seed = effect.from;
-
 	}
 
 	else if (effect.type === 'account_credited') {
@@ -39,28 +37,30 @@ angular.module('app')
 	}
 
 	else if (effect.type === 'trade') {
+		/* eslint-disable camelcase */
 		$scope.type = 'trade';
 		$scope.bought_amount = effect.bought_amount;
-		$scope.bought_code = (effect.bought_asset_type === 'native')? 'XLM': effect.bought_asset_code;
+		$scope.bought_code = (effect.bought_asset_type === 'native') ? 'XLM' : effect.bought_asset_code;
 		$scope.sold_amount = effect.sold_amount;
-		$scope.sold_code = (effect.sold_asset_type === 'native')? 'XLM': effect.sold_asset_code;
+		$scope.sold_code = (effect.sold_asset_type === 'native') ? 'XLM' : effect.sold_asset_code;
 		$scope.seed = Wallet.current.id;
+		/* eslint-enable camelcase */
 	}
 
 	$scope.effect = effect;
-	$scope.buttonText = function() {
-		return effect.comment? 'transaction.comment.edit' : 'transaction.comment.add';
+	$scope.buttonText = function () {
+		return effect.comment ? 'transaction.comment.edit' : 'transaction.comment.add';
 	};
 
 	//
 
-	var contactName = Contacts.lookup(
+	const contactName = Contacts.lookup(
 		$scope.counterparty,
 		Wallet.current.network,
 		effect.memoType,
 		effect.memo
 	);
-	var contact = Contacts.get(contactName);
+	const contact = Contacts.get(contactName);
 
 	$scope.isWallet = ($scope.counterparty in Wallet.accounts);
 	$scope.isContact = (contact && contact.memo_type === effect.memoType && contact.memo === effect.memo);
@@ -83,10 +83,12 @@ angular.module('app')
 		};
 
 		if ($scope.type === 'send') {
+			/* eslint-disable camelcase */
 			if (effect.numOps === 1) {
 				data.memo		= effect.memo;
 				data.memo_type	= effect.memoType;
 			}
+			/* eslint-enable camelcase */
 		}
 
 		Modal.show('app/account/modals/add-contact.html', data);

@@ -4,47 +4,43 @@ angular.module('app')
 .factory('Wallet', function ($http, $q, $rootScope, $timeout, $translate, $window, History, Horizon, Keychain, Storage) {
 	'use strict';
 
-	//------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	//	Account
-	//------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
-	function _sortAssetCodes(a, b) {
-		return (a.asset_code > b.asset_code) - (a.asset_code < b.asset_code);
+	function sortAssetCodes(foo, bar) {
+		return (foo.asset_code > bar.asset_code) - (foo.asset_code < bar.asset_code);
 	}
 
 	function parseBalances(res) {
-		var native = res.balances.filter(function (e) {
-			return e.asset_type === 'native';
-		});
+		const native = res.balances.filter(item => item.asset_type === 'native');
+		const creditAlphanum4 = res.balances.filter(item => item.asset_type === 'credit_alphanum4');
+		const creditAlphanum12 = res.balances.filter(item => item.asset_type === 'credit_alphanum12');
 
-		var credit_alphanum4 = res.balances.filter(function (e) {
-			return e.asset_type === 'credit_alphanum4';
-		});
+		creditAlphanum4.sort(sortAssetCodes);
+		creditAlphanum12.sort(sortAssetCodes);
 
-		var credit_alphanum12 = res.balances.filter(function (e) {
-			return e.asset_type === 'credit_alphanum12';
-		});
-
-		credit_alphanum4.sort(_sortAssetCodes);
-		credit_alphanum12.sort(_sortAssetCodes);
-
+		/* eslint-disable camelcase */
 		native[0].asset_code = 'XLM';
-		return native.concat(credit_alphanum4, credit_alphanum12);
+		/* eslint-enable camelcase */
+		return native.concat(creditAlphanum4, creditAlphanum12);
 	}
 
 	function Account(params) {
 
 		this.getAccountInfo = function () {
 
-			var self = this;
+			const self = this;
 
-			return self.horizon().accounts()
-			.accountId(self.id).call()
-			.catch(function (err) {
+			return self.horizon()
+			.accounts()
+			.accountId(self.id)
+			.call()
+			.catch((err) => {
 				$timeout(self.refresh.bind(self), 60000);
 				return $q.reject(err);
 			})
-			.then(function (res) {
+			.then((res) => {
 				self.balances		= parseBalances(res);
 				self.flags			= res.flags;
 				self.inflationDest	= res.inflation_destination;
@@ -53,14 +49,14 @@ angular.module('app')
 				self.subentryCount	= res.subentry_count;
 				self.thresholds		= res.thresholds;
 
-				Storage.setItem('account.' + self.alias, self);
+				Storage.setItem(`account.${self.alias}`, self);
 			});
 		};
 
-		function extend(a, b) {
-			for (var i in b) {
-				if (b.hasOwnProperty(i)) {
-					a[i] = b[i];
+		function extend(foo, bar) {
+			for (const prop in bar) {
+				if (bar.hasOwnProperty(prop)) {
+					foo[prop] = bar[prop];
 				}
 			}
 		}
@@ -83,26 +79,19 @@ angular.module('app')
 
 	//	return true if account has enough balance to send 'amount' XLM in a tx w/ 'numOps' operations
 	Account.prototype.canSend = function (amount, numOps) {
-		return (10000000*(this.getNativeBalance() - this.getReserve() - amount) - 100*numOps) >= 0;
+		return (10000000 * (this.getNativeBalance() - this.getReserve() - amount) - 100 * numOps) >= 0;
 	};
 
 	Account.prototype.refresh = function () {
-
-//		console.log('refreshing ' + this.alias);
-
 		if (this.closeStream) {
 			this.closeStream();
 		}
 
-		const self = this;
+//		const self = this;
 		return this.getAccountInfo()
-		.then(function () {
-			return History.getTransactions(self, 20)
-			.then(function () {
-				History.subscribe(self);
-			});
-		})
-		.catch(function (err) {});
+		.then(() => History.getTransactions(this, 20))
+		.then(() => History.subscribe(this))
+		.catch(err => {});
 	};
 
 	//
@@ -110,7 +99,7 @@ angular.module('app')
 	//
 
 	Account.prototype.getAssetsFromIssuer = function (issuer) {
-		return this.balances.filter(function (asset) {
+		return this.balances.filter((asset) => {
 			if (asset.asset_type === 'native') {
 				return false;
 			} else {
@@ -129,23 +118,17 @@ angular.module('app')
 			return Keychain.isEncrypted(this.id);
 		}
 
-		var signers = this.signers
-		.filter(function (signer) {
-			return (signer.weight !== 0);
-		})
-		.filter(function (signer) {
-			return Keychain.isLocalSigner(signer.public_key);
-		})
-		.filter(function (signer) {
-			return !Keychain.isEncrypted(signer.public_key);
-		});
+		const signers = this.signers
+		.filter(signer => signer.weight !== 0)
+		.filter(signer => Keychain.isLocalSigner(signer.public_key))
+		.filter(signer => !Keychain.isEncrypted(signer.public_key));
 
-		var weight = 0;
-		signers.forEach(function (signer) {
+		let weight = 0;
+		signers.forEach((signer) => {
 			weight += signer.weight;
 		});
 
-		var threshold = this.thresholds.med_threshold;
+		let threshold = this.thresholds.med_threshold;
 		if (threshold === 0) {
 			threshold = 1;
 		}
@@ -169,12 +152,12 @@ angular.module('app')
 		} else {
 			this.badgeCount += 1;
 		}
-		Storage.setItem('account.' + this.alias, this);
+		Storage.setItem(`account.${this.alias}`, this);
 	};
 
 	Account.prototype.clearBadgeCount = function () {
 		this.badgeCount = 0;
-		Storage.setItem('account.' + this.alias, this);
+		Storage.setItem(`account.${this.alias}`, this);
 	};
 
 	Account.prototype.getBadgeCount = function () {
@@ -185,29 +168,28 @@ angular.module('app')
 		}
 	};
 
-	//------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	//	Wallet
-	//------------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
-	var accounts = {};
-	var currentAccount;
+	const accounts = {};
+	let currentAccount;
 
-	var Wallet = {
+	const Wallet = {
 		accounts: accounts,
-		get current () {
+		get current() {
 			return currentAccount;
 		},
-		set current (account) {
+		set current(account) {
 			currentAccount = account;
 			Storage.setItem('currentAccount', account.alias);
 		}
 	};
 
 	Wallet.createEmptyAccount = function (name, network) {
-
-		var keys = StellarSdk.Keypair.random();
-		var publicKey = keys.publicKey();
-		var secret = keys.secret();
+		const keys = StellarSdk.Keypair.random();
+		const publicKey = keys.publicKey();
+		const secret = keys.secret();
 		return Wallet.importAccount(publicKey, secret, name, network);
 	};
 
@@ -221,7 +203,8 @@ angular.module('app')
 			Keychain.addKey(accountId, seed);
 		}
 
-		var opts = {
+		/* eslint-disable camelcase */
+		const opts = {
 			id:			accountId,
 			network:	network,
 			alias:		name,
@@ -231,10 +214,11 @@ angular.module('app')
 				balance: '0'
 			}]
 		};
+		/* eslint-enable camelcase */
 
-		var self = new Account(opts);
+		const self = new Account(opts);
 		accounts[self.id] = self;
-		Storage.setItem('account.' + self.alias, self);
+		Storage.setItem(`account.${self.alias}`, self);
 
 		accountList.insert(self);
 		accountList.save();
@@ -246,7 +230,7 @@ angular.module('app')
 
 	Wallet.renameAccount = function (account, newName) {
 
-		var oldName = account.alias;
+		const oldName = account.alias;
 		if (oldName === newName) {
 			return;
 		}
@@ -255,15 +239,15 @@ angular.module('app')
 		account.alias = newName;
 		delete History.effects[oldName];
 
-		var index = accountList.remove(account);
+		const index = accountList.remove(account);
 		accountList.insert(account);
 
-		Storage.setItem('account.' + newName, account);
-		Storage.setItem('history.' + newName, History.effects[newName]);
+		Storage.setItem(`account.${newName}`, account);
+		Storage.setItem(`history.${newName}`, History.effects[newName]);
 		accountList.save();
 		Storage.setItem('currentAccount', newName);
-		Storage.removeItem('account.' + oldName);
-		Storage.removeItem('history.' + oldName);
+		Storage.removeItem(`account.${oldName}`);
+		Storage.removeItem(`history.${oldName}`);
 	};
 
 	Wallet.removeAccount = function (account) {
@@ -272,28 +256,28 @@ angular.module('app')
 			account.closeStream();
 		}
 
-		var index = accountList.remove(account);
+		const index = accountList.remove(account);
 		accountList.save();
 
-		var currentIndex = Math.max(0, index - 1);
+		const currentIndex = Math.max(0, index - 1);
 		Wallet.current = accountList[currentIndex];
 		Storage.setItem('currentAccount', Wallet.current.alias);
 
 		delete accounts[account.id];
 
-		var name = account.alias;
+		const name = account.alias;
 		delete History.effects[name];
-		Storage.removeItem('account.' + name);
-		Storage.removeItem('history.' + name);
+		Storage.removeItem(`account.${name}`);
+		Storage.removeItem(`history.${name}`);
 	};
 
 	Wallet.getAssetCodeCollisions = function (assets) {
-		var seen = {};
-		var collisions = {};
-		assets.forEach(function (asset) {
+		const seen = {};
+		const collisions = {};
+		assets.forEach((asset) => {
 			if (asset.asset_type !== 'native') {
-				var code = asset.asset_code;
-				var issuer = asset.asset_issuer;
+				const code = asset.asset_code;
+				const issuer = asset.asset_issuer;
 				if (code in seen) {
 					if (!(issuer in seen[code])) {
 						collisions[asset.asset_code] = 1;
@@ -308,23 +292,23 @@ angular.module('app')
 		return collisions;
 	};
 
-	//------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------
 
-	var accountList = Storage.getItem('accounts');
+	let accountList = Storage.getItem('accounts');
 	if (accountList) {
-		accountList = accountList.map(function (name) {
-			var opts = Storage.getItem('account.' + name);
-			var self = new Account(opts);
+		accountList = accountList.map((name) => {
+			const opts = Storage.getItem(`account.${name}`);
+			const self = new Account(opts);
 			accounts[self.id] = self;
 			return self;
 		});
 
-		var accountByName = {};
-		accountList.forEach(function (account) {
+		const accountByName = {};
+		accountList.forEach((account) => {
 			accountByName[account.alias] = account;
 		});
 
-		var currentName = Storage.getItem('currentAccount');
+		const currentName = Storage.getItem('currentAccount');
 		currentAccount = accountByName[currentName];
 	}
 
@@ -338,8 +322,8 @@ angular.module('app')
 			return this.push(account);
 		}
 
-		var self = this;
-		var found = self.some(function (item, index) {
+		const self = this;
+		const found = self.some((item, index) => {
 			if (item.alias.localeCompare(account.alias) > 0) {
 				self.splice(index, 0, account);
 				return true;
@@ -353,36 +337,29 @@ angular.module('app')
 	};
 
 	accountList.remove = function (account) {
-		var index = this.indexOf(account);
+		const index = this.indexOf(account);
 		this.splice(index, 1);
 		return index;
 	};
 
 	accountList.save = function () {
-		var accountNames = this.map(function (account) {
-			return account.alias;
-		});
+		const accountNames = this.map(account => account.alias);
 		Storage.setItem('accounts', accountNames);
 	};
 
 	if (accountList.length === 0) {
-		var accountName = $translate.instant('account.initialname');
+		const accountName = $translate.instant('account.initialname');
 		Wallet.createEmptyAccount(accountName);
 	}
 
 	Wallet.accountList = accountList;
 
-	//------------------------------------------------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------------------------------------
 
-	$rootScope.$on('newTransaction', function(event, args) {
+	$rootScope.$on('newTransaction', (event, args) => {
 
-		function getAccountAsset(account, asset_code, asset_issuer) {
-			var entry = account.balances.filter(function (entry) {
-				if (entry.asset_code === asset_code) {
-					return true;
-				}
-			});
-
+		function getAccountAsset(account, assetCode, assetIssuer) {
+			const entry = account.balances.filter(entry => entry.asset_code === assetCode);
 			return entry.length ? entry[0] : null;
 		}
 
@@ -394,12 +371,16 @@ angular.module('app')
 		const fx = args.res;
 		let asset;
 
-		function plus(a, b) {
-			return new Decimal(a).plus(new Decimal(b)).toFixed(7);
+		function plus(foo, bar) {
+			return new Decimal(foo)
+			.plus(new Decimal(bar))
+			.toFixed(7);
 		}
 
-		function minus(a, b) {
-			return new Decimal(a).minus(new Decimal(b)).toFixed(7);
+		function minus(foo, bar) {
+			return new Decimal(foo)
+			.minus(new Decimal(bar))
+			.toFixed(7);
 		}
 
 		if (fx.type === 'account_credited') {

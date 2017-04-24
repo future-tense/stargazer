@@ -3,7 +3,8 @@
  under electron, so import it as a node module instead
  */
 
-const _decimal = require('decimal.js');
+const decimal = require('decimal.js');
+
 process.once('loaded', () => {
-	global.Decimal = _decimal;
+	global.Decimal = decimal;
 });

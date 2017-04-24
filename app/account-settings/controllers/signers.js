@@ -7,8 +7,6 @@ angular.module('app')
 	$scope.account = Wallet.current;
 
 	$scope.getSigners = function () {
-		return $scope.account.signers.filter(function (signer) {
-			return (signer.weight !== 0);
-		});
+		return $scope.account.signers.filter(signer => signer.weight !== 0);
 	};
 });

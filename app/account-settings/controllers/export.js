@@ -4,7 +4,7 @@ angular.module('app')
 .controller('ExportAccountCtrl', function ($scope, Horizon, Keychain, Wallet) {
 	'use strict';
 
-	var stellar = {
+	const stellar = {
 		account: {
 			network: Wallet.current.network
 		}

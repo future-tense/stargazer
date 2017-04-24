@@ -1,3 +1,5 @@
+/* global angular, require */
+
 angular.module('app')
 .factory('Jazzicon', function () {
 	'use strict';
@@ -12,12 +14,8 @@ angular.module('app')
 		return jazzicon(40, djb2Code(seed));
 	}
 
-	function djb2Code(str){
-		let hash = 5381;
-		for (let i = 0; i < str.length; i++) {
-			const char = str.charCodeAt(i);
-			hash = ((hash << 5) + hash) + char;
-		}
-		return hash;
+	function djb2Code(str) {
+		return [...str].map(char => char.charCodeAt(0))
+		.reduce((hash, item) => (hash << 5) + hash + item, 5381);
 	}
 });

@@ -39,6 +39,5 @@ angular.module('app')
 	.when('/side-menu/settings', {
 		templateUrl: 'app/side-menu/views/settings.html',
 		controller: 'GlobalSettingsCtrl'
-	})
-	;
+	});
 });

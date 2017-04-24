@@ -4,64 +4,24 @@ angular.module('app')
 .controller('ReviewSubmitCtrl', function ($q, $scope, $translate, Humanizer, Keychain, Signer, Submitter, Transactions) {
 	'use strict';
 
+	const context = $scope.data.context;
 	$scope.close = close;
 	$scope.state = 'signing';
 	$scope.message = '';
 	$scope.signer = {};
-
-	const context = $scope.data.context;
 	$scope.network = context.network;
 
-	if (context.hasSigned && context.hasSigned.length === context.signers.length) {
-		$scope.operations = Humanizer.parse(context.tx);
-		$scope.state = 'signed';
-	} else {
-		$q.when(Signer.sign(context))
-		.then(interactiveSign)
-		.then(submit);
-	}
+	activate();
 
-	function interactiveSign() {
-
-		const localSigners	= context.id;
-		const signers		= context.signers;
-		const txHash		= context.txHash;
-		const progress		= context.progress;
-
-		return localSigners.forEachThen(function (signer) {
-			$scope.signer.id			= signer;
-			$scope.signer.isEncrypted	= Keychain.isEncrypted(signer);
-
-			$scope.operations = Humanizer.parse(context.tx, signer);
-
-			const deferred = $q.defer();
-			$scope.sign = function (password) {
-				deferred.resolve(password);
-			};
-			$scope.cancel = function () {
-				deferred.reject();
-			};
-
-			return deferred.promise.then(function (password) {
-				return Keychain.signTransactionHash(signer, txHash, password)
-				.then(function (sig) {
-					context.signatures.push(sig);
-					const sources = signers[signer];
-					sources.forEach(function (source) {
-						progress[source.account].weight += source.weight;
-					});
-
-					delete signers[signer];
-				})
-				.catch(function (err) {});
-			});
-		})
-		.then(function () {
-			return context;
-		})
-		.catch(function () {
-			return context;
-		});
+	function activate() {
+		if (context.hasSigned && context.hasSigned.length === context.signers.length) {
+			$scope.operations = Humanizer.parse(context.tx);
+			$scope.state = 'signed';
+		} else {
+			$q.when(Signer.sign(context))
+			.then(interactiveSign)
+			.then(submit);
+		}
 	}
 
 	function close() {
@@ -72,9 +32,33 @@ angular.module('app')
 		}
 	}
 
-	function submit () {
+	function interactiveSign() {
+		const localSigners = context.id;
+		return localSigners.forEachThen(reviewSigner)
+		.then(() => {})
+		.catch(() => {});
+	}
 
-		console.log(context);
+	function reviewSigner(signer) {
+		$scope.signer.id			= signer;
+		$scope.signer.isEncrypted	= Keychain.isEncrypted(signer);
+		$scope.operations			= Humanizer.parse(context.tx, signer);
+
+		return waitForUserReview()
+		.then(signTransaction);
+	}
+
+	function signTransaction(password) {
+		const signer = $scope.signer.id;
+		const {txHash} = context;
+
+		return Keychain.signTransactionHash(signer, txHash, password)
+		.then(updateProgress)
+		.catch(err => {});
+	}
+
+	function submit() {
+
 		const hash = context.txHash.toString('hex');
 
 		if (Transactions.isPending(hash) && context.signatures.length !== 0) {
@@ -82,11 +66,11 @@ angular.module('app')
 			$scope.message = 'Submitting signature(s)...';
 			$scope.state = 'pending';
 			return Submitter.submitSignature(context, hash)
-			.then(function () {
+			.then(() => {
 				$scope.message = 'Signature(s) sent';
 				$scope.state = 'submitted';
 			})
-			.catch(function () {
+			.catch(() => {
 				$scope.message = 'Submission failed';
 				$scope.state = 'failed';
 			});
@@ -97,11 +81,11 @@ angular.module('app')
 			$scope.message = $translate.instant('transaction.submitting');
 			$scope.state = 'pending';
 			return Submitter.submitTransaction(context)
-			.then(function () {
+			.then(() => {
 				$scope.message = 'Transaction sent';
 				$scope.state = 'submitted';
 			})
-			.catch(function (err) {
+			.catch(err => {
 				$scope.message = 'Transaction failed';
 				$scope.state = 'failed';
 				console.log(err);
@@ -113,11 +97,11 @@ angular.module('app')
 			$scope.message = 'Submitting signing request...';
 			$scope.state = 'pending';
 			return Submitter.submitSigningRequest(context, hash)
-			.then(function () {
+			.then(() => {
 				$scope.message = 'Request sent';
 				$scope.state = 'submitted';
 			})
-			.catch(function () {
+			.catch(() => {
 				$scope.message = 'Submission failed';
 				$scope.state = 'failed';
 			});
@@ -125,5 +109,25 @@ angular.module('app')
 
 		$scope.message = 'Cancelled';
 		$scope.state = 'failed';
+	}
+
+	function updateProgress(sig) {
+		const signer = $scope.signer.id;
+		const {signers, signatures, progress} = context;
+		signatures.push(sig);
+
+		const sources = signers[signer];
+		sources.forEach(source => {
+			progress[source.account].weight += source.weight;
+		});
+
+		delete signers[signer];
+	}
+
+	function waitForUserReview() {
+		const deferred = $q.defer();
+		$scope.sign = password => deferred.resolve(password);
+		$scope.cancel = () => deferred.reject();
+		return deferred.promise;
 	}
 });

@@ -5,11 +5,9 @@ angular.module('app')
 	'use strict';
 
 	return function (scope, element, attrs) {
-		element.bind("keydown keypress keyup", function (event) {
+		element.bind('keydown keypress keyup', event => {
 			if (event.which === 27) {
-				scope.$apply(function () {
-					scope.$eval(attrs.onEsc);
-				});
+				scope.$apply(() => scope.$eval(attrs.onEsc));
 				event.preventDefault();
 			}
 		});

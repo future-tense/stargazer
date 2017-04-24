@@ -25,7 +25,9 @@ angular.module('app')
 		}
 
 		if ($scope.model.memo_type) {
+			/* eslint-disable camelcase */
 			contact.memo_type = $scope.model.memo_type;
+			/* eslint-enable camelcase */
 		}
 
 		Contacts.add($scope.model.name, contact);

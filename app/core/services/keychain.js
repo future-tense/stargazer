@@ -6,8 +6,8 @@ angular.module('app')
 
 	const keychain = {};
 	const keys = Storage.getItem('keys') || [];
-	keys.forEach(function (publicKey) {
-		keychain[publicKey] = Storage.getItem('key.' + publicKey);
+	keys.forEach(publicKey => {
+		keychain[publicKey] = Storage.getItem(`key.${publicKey}`);
 	});
 
 	return {
@@ -54,7 +54,7 @@ angular.module('app')
 
 	function addKey(accountId, seed) {
 		keychain[accountId] = seed;
-		Storage.setItem('key.' + accountId, seed);
+		Storage.setItem(`key.${accountId}`, seed);
 		Storage.setItem('keys', Object.keys(keychain));
 	}
 
@@ -69,7 +69,7 @@ angular.module('app')
 		return StellarSdk.Keypair.fromSecret(key).publicKey();
 	}
 
-	function isEncrypted (signer) {
+	function isEncrypted(signer) {
 		return (typeof keychain[signer] === 'object');
 	}
 
@@ -99,14 +99,14 @@ angular.module('app')
 		let keyStore = keychain[signer];
 		keyStore = Crypto.decrypt(keyStore, password);
 		keychain[signer] = keyStore;
-		Storage.setItem('key.' + signer, keyStore);
+		Storage.setItem(`key.${signer}`, keyStore);
 	}
 
 	function setPassword(signer, password) {
 		let keyStore = keychain[signer];
 		keyStore = Crypto.encrypt(keyStore, password);
 		keychain[signer] = keyStore;
-		Storage.setItem('key.' + signer, keyStore);
+		Storage.setItem(`key.${signer}`, keyStore);
 	}
 
 	function signMessage(signer, message) {

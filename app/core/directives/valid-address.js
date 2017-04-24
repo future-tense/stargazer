@@ -15,11 +15,11 @@ angular.module('app')
 
 			ngModel.$asyncValidators.validAddress = function (address) {
 
-				var setter = $parse(attributes.validAddress).assign;
+				const setter = $parse(attributes.validAddress).assign;
 				setter(scope, null);
 
 				return Destination.lookup(address)
-				.then(function (res) {
+				.then(res => {
 					setter(scope, res);
 					return true;
 				});

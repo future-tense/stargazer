@@ -5,7 +5,7 @@ angular.module('app')
 	'use strict';
 
 	function getItem(key) {
-		var value = $window.localStorage.getItem(key);
+		const value = $window.localStorage.getItem(key);
 		if (value) {
 			return JSON.parse(value);
 		} else {
@@ -14,7 +14,7 @@ angular.module('app')
 	}
 
 	function setItem(key, value) {
-		$window.localStorage.setItem(key, JSON.stringify(value, function (key, value) {
+		$window.localStorage.setItem(key, JSON.stringify(value, (key, value) => {
 			if (key.slice(0, 2) === '$$') {
 				return undefined;
 			}
@@ -27,7 +27,7 @@ angular.module('app')
 		$window.localStorage.removeItem(key);
 	}
 
-	var version = getItem('db-version');
+	const version = getItem('db-version');
 	if (!version) {
 		setItem('db-version', 1);
 	}

@@ -9,12 +9,12 @@ angular.module('app')
 
 	$scope.balances = Wallet.current.balances;
 
-	var assetCodeCollisions = Wallet.getAssetCodeCollisions($scope.balances);
+	const assetCodeCollisions = Wallet.getAssetCodeCollisions($scope.balances);
 
 	$scope.getAssetDescription = function (asset) {
 		if (asset.asset_type !== 'native') {
 			if (asset.asset_code in assetCodeCollisions) {
-				return asset.asset_code + '.' + asset.asset_issuer;
+				return `${asset.asset_code}.${asset.asset_issuer}`;
 			} else {
 				return asset.asset_code;
 			}
@@ -29,7 +29,7 @@ angular.module('app')
 
 	$scope.generateQrCode = function () {
 
-		var payment = {
+		const payment = {
 			destination:	Wallet.current.id,
 			amount:			$scope.model.amount
 		};
@@ -52,7 +52,7 @@ angular.module('app')
 			};
 		}
 
-		var text = {
+		const text = {
 			stellar: {
 				payment: payment
 			}

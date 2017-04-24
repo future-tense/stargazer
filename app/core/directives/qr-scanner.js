@@ -7,7 +7,7 @@ angular.module('app')
 	return {
 		restrict: 'E',
 		scope: {
-			onScan: "&"
+			onScan: '&'
 		},
 		controller: controller,
 		replace: true,
@@ -20,7 +20,7 @@ angular.module('app')
 		const isWP		= platformInfo.isWP;
 		const isIOS		= platformInfo.isIOS;
 
-		$scope.openScanner = isCordova? cordovaOpenScanner : modalOpenScanner;
+		$scope.openScanner = isCordova ? cordovaOpenScanner : modalOpenScanner;
 
 		function cordovaOpenScanner() {
 
@@ -28,13 +28,13 @@ angular.module('app')
 			return $ionicLoading.show({
 				template: text
 			})
-			.then(function () {
+			.then(() => {
 				if (isIOS) {
 					cloudSky.zBar.scan({}, onSuccess, onError);
 				} else {
 					cordova.plugins.barcodeScanner.scan(onSuccess, onError, {
 						resultDisplayDuration: 0,
-						formats : "QR_CODE"
+						formats: 'QR_CODE'
 					});
 				}
 			});
@@ -58,7 +58,7 @@ angular.module('app')
 
 		function modalOpenScanner() {
 			Modal.show('app/core/modals/scanner.html')
-			.then(function (data) {
+			.then(data => {
 				$scope.onScan({
 					data: data
 				});

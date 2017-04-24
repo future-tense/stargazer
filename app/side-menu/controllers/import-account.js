@@ -14,26 +14,26 @@ angular.module('app')
 
 	function activate() {
 		if ($routeParams.data) {
-			var data = JSON.parse(window.atob($routeParams.data));
+			const data = JSON.parse(window.atob($routeParams.data));
 			$scope.encrypted = (typeof data.key === 'object');
 			$scope.scanned = true;
 			$scope.account.seed = data.key;
 			$scope.account.network = data.account.network;
 		}
 
-		var numAccounts = Object.keys(Wallet.accounts).length;
+		const numAccounts = Object.keys(Wallet.accounts).length;
 		$scope.account.alias = $translate.instant('account.defaultname', {number: numAccounts + 1});
 	}
 
 	function getMinHeight() {
-		var headerHeight = 40;
-		var buttonGroupHeight = 48 + 16 + 8;
-		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+		const headerHeight = 40;
+		const buttonGroupHeight = 48 + 16 + 8;
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 
 	function importAccount() {
-		var keyStore  = $scope.account.seed;
-		var accountId = Keychain.idFromKey(keyStore, $scope.account.password);
+		const keyStore  = $scope.account.seed;
+		const accountId = Keychain.idFromKey(keyStore, $scope.account.password);
 		Wallet.importAccount(accountId, keyStore, $scope.account.alias, $scope.account.network);
 		$location.path('/');
 	}

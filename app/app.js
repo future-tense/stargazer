@@ -1,4 +1,4 @@
-/* global angular, navigator, nw, require, StellarSdk */
+/* global angular, navigator, require, StellarSdk */
 
 angular.module('app', [
 	'pascalprecht.translate',

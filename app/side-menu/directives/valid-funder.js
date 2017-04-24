@@ -1,3 +1,4 @@
+/* global angular */
 
 angular.module('app')
 .directive('validFunder', function (Wallet) {
@@ -15,17 +16,13 @@ angular.module('app')
 					return true;
 				}
 
-				var network = scope.network;
+				const network = scope.network;
+				const nameList = Wallet.accountList
+				.filter(account => account.network === network)
+				.map(account => account.alias);
 
-				var names = {};
-				Object.keys(Wallet.accounts).forEach(function (key) {
-					if (Wallet.accounts[key].network === network) {
-						var accountName = Wallet.accounts[key].alias;
-						names[accountName] = 1;
-					}
-				});
-
-				return (name in names);
+				const names = new Set(nameList);
+				return names.has(name);
 			};
 		}
 	};

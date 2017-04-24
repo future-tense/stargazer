@@ -7,14 +7,14 @@ angular.module('app')
 
 	function link(scope, element, attributes) {
 
-		var account = Wallet.current;
+		const account = Wallet.current;
 
-		var network = account.network;
+		const network = account.network;
 		if (network !== Horizon.public) {
 			scope.network = Horizon.getNetwork(network).name;
 		}
 
-		scope.lockClass = account.isLocallySecure()? 'icon-lock' : 'icon-lock-open';
+		scope.lockClass = account.isLocallySecure() ? 'icon-lock' : 'icon-lock-open';
 	}
 
 	return {

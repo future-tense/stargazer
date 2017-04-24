@@ -11,7 +11,7 @@ angular.module('app')
 	function parse(tx, current) {
 
 		const res = [];
-		tx.operations.forEach(function (op) {
+		tx.operations.forEach((op) => {
 
 			const func = {
 				'accountMerge':			accountMergeOp,
@@ -42,7 +42,7 @@ angular.module('app')
 
 	function allowTrustOp(current, account, op, res) {
 		const trustor = getAccount(op.trustor);
-		const asset	  = (current === account)? op.assetCode : getAsset({code:op.assetCode, issuer:account});
+		const asset	  = (current === account) ? op.assetCode : getAsset({code:op.assetCode, issuer:account});
 		if (op.authorize === 'true') {
 			res.push(`Authorize ${trustor} to hold ${asset}`);
 		} else {
@@ -205,21 +205,21 @@ angular.module('app')
 		if (op.setFlags) {
 			if (op.setFlags & 1) {
 				if (current === account) {
-					res.push(`Set authorization required flag`);
+					res.push('Set authorization required flag');
 				} else {
 					res.push(`Set authorization required flag for ${source}`);
 				}
 			}
 			if (op.setFlags & 2) {
 				if (current === account) {
-					res.push(`Set authorization revocable flag`);
+					res.push('Set authorization revocable flag');
 				} else {
 					res.push(`Set authorization revocable flag for ${source}`);
 				}
 			}
 			if (op.setFlags & 4) {
 				if (current === account) {
-					res.push(`Set authorization immutable flag`);
+					res.push('Set authorization immutable flag');
 				} else {
 					res.push(`Set authorization immutable flag for ${source}`);
 				}
@@ -229,21 +229,21 @@ angular.module('app')
 		if (op.clearFlags) {
 			if (op.clearFlags & 1) {
 				if (current === account) {
-					res.push(`Clear authorization required flag`);
+					res.push('Clear authorization required flag');
 				} else {
 					res.push(`Clear authorization required flag for ${source}`);
 				}
 			}
 			if (op.clearFlags & 2) {
 				if (current === account) {
-					res.push(`Clear authorization revocable flag`);
+					res.push('Clear authorization revocable flag');
 				} else {
 					res.push(`Clear authorization revocable flag for ${source}`);
 				}
 			}
 			if (op.clearFlags & 4) {
 				if (current === account) {
-					res.push(`Clear authorization immutable flag`);
+					res.push('Clear authorization immutable flag');
 				} else {
 					res.push(`Clear authorization immutable flag for ${source}`);
 				}
@@ -336,7 +336,7 @@ angular.module('app')
 		}
 	}
 
-	//-----------------------------------------------------------------------//
+	// ------------------------------------------------------------------------
 
 	function getAccount(id) {
 		return `<account-name id="${id}"></account-name>`;
@@ -347,6 +347,6 @@ angular.module('app')
 	}
 
 	function getAsset(asset) {
-		return (asset.code === 'XLM')? 'XLM' : `${asset.code}.<account-name id="${asset.issuer}"></account-name>`;
+		return (asset.code === 'XLM') ? 'XLM' : `${asset.code}.<account-name id="${asset.issuer}"></account-name>`;
 	}
 });

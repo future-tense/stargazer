@@ -16,33 +16,29 @@ angular.module('app')
 
 	function addAnchor() {
 		Modal.show('app/account-settings/modals/add-trustline.html')
-		.then(function (res) {
+		.then(res => {
 
 			Destination.lookup(res.anchor)
-			.then(function (destInfo) {
+			.then(destInfo => {
 				addAsset({
 					issuer: destInfo.id,
 					code:   res.asset
 				});
 			})
-			.catch(function () {
+			.catch(() => {
 				Anchors.lookup(res.anchor)
-				.then(function (assetList){
-					assetList.forEach(addAsset);
-				});
+				.then(assetList => assetList.forEach(addAsset));
 			});
 		});
 	}
 
 	function addAsset(asset) {
 
-		var ids = $scope.anchors.map(function (item) {
-			return item.id;
-		});
+		const ids = $scope.anchors.map(item => item.id);
+		const index = ids.indexOf(asset.issuer);
 
-		var index = ids.indexOf(asset.issuer);
-
-		var value = {
+		const value = {
+			/* eslint-disable camelcase */
 			object: {
 				asset_issuer:	asset.issuer,
 				asset_code:		asset.code,
@@ -50,6 +46,7 @@ angular.module('app')
 			},
 			state:		false,
 			oldState:	false
+			/* eslint-enable camelcase */
 		};
 
 		if (index === -1) {
@@ -60,14 +57,14 @@ angular.module('app')
 				]
 			});
 		} else {
-			var trustlines = $scope.anchors[index].trustlines;
+			const trustlines = $scope.anchors[index].trustlines;
 			trustlines.push(value);
 		}
 	}
 
 	function getAnchors() {
-		var anchors = {};
-		Wallet.current.balances.forEach(function (balance) {
+		const anchors = {};
+		Wallet.current.balances.forEach(balance => {
 			if (balance.asset_type === 'native') {
 				return;
 			}
@@ -82,7 +79,7 @@ angular.module('app')
 			});
 		});
 
-		return Object.keys(anchors).map(function (key) {
+		return Object.keys(anchors).map(key => {
 			return {
 				id: key,
 				trustlines: anchors[key]
@@ -91,14 +88,14 @@ angular.module('app')
 	}
 
 	function getMinHeight() {
-		var headerHeight = 40;
-		var numButtons = 1 + ($scope.isDirty === true);
-		var buttonGroupHeight = 48*numButtons + 8*(numButtons - 1) + 16 + 8;
-		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+		const headerHeight = 40;
+		const numButtons = 1 + ($scope.isDirty === true);
+		const buttonGroupHeight = 48 * numButtons + 8 * (numButtons - 1) + 16 + 8;
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 
 	function getTrustlines() {
-		return $scope.account.balances.filter(function (balance) {
+		return $scope.account.balances.filter(balance => {
 			return balance.asset_type !== 'native';
 		});
 	}
@@ -108,9 +105,9 @@ angular.module('app')
 	}
 
 	function onChange() {
-		var pristine = true;
-		$scope.anchors.forEach(function (anchor) {
-			anchor.trustlines.forEach(function (trustline) {
+		let pristine = true;
+		$scope.anchors.forEach(anchor => {
+			anchor.trustlines.forEach(trustline => {
 				pristine = pristine && (trustline.state === trustline.oldState);
 			});
 		});
@@ -119,46 +116,44 @@ angular.module('app')
 		$scope.minHeight = getMinHeight();
 	}
 
+	function createTransaction(account) {
+
+		const builder = new StellarSdk.TransactionBuilder(account);
+
+		function addOperation(trustline) {
+			const object = trustline.object;
+			const params = {
+				asset: new StellarSdk.Asset(object.asset_code, object.asset_issuer)
+			};
+
+			if (trustline.state === false) {
+				params.limit = '0';
+			}
+
+			builder.addOperation(StellarSdk.Operation.changeTrust(params));
+		}
+
+		$scope.anchors.forEach(anchor => {
+			anchor.trustlines
+			.filter(trustline => trustline.state !== trustline.oldState)
+			.forEach(addOperation);
+		});
+
+		const tx = builder.build();
+
+		return {
+			tx: tx,
+			network: Wallet.current.network
+		};
+	}
+
 	function updateTrustlines() {
 
-		$scope.account.horizon().loadAccount($scope.account.id)
-		.then(function (account) {
-			var builder = new StellarSdk.TransactionBuilder(account);
-
-			$scope.anchors.forEach(function (anchor) {
-				anchor.trustlines.forEach(function (trustline) {
-
-					//	no change
-					if (trustline.state === trustline.oldState) {
-						return;
-					}
-
-					var object = trustline.object;
-					var params = {
-						asset: new StellarSdk.Asset(object.asset_code, object.asset_issuer)
-					};
-
-					if (trustline.state === false) {
-						params.limit = '0';
-					}
-
-					builder.addOperation(StellarSdk.Operation.changeTrust(params));
-				});
-			});
-
-			var tx = builder.build();
-
-			return {
-				tx: tx,
-				network: Wallet.current.network
-			};
-		})
+		$scope.account.horizon()
+		.loadAccount($scope.account.id)
+		.then(createTransaction)
 		.then(Reviewer.review)
-		.then(function () {
-			$scope.account.refresh()
-			.then(function () {
-				$location.path('/');
-			});
-		});
+		.then($scope.account.refresh)
+		.then(() => $location.path('/'));
 	}
 });

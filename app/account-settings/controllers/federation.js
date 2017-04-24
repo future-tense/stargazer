@@ -4,7 +4,7 @@ angular.module('app')
 .controller('AccountFederationCtrl', function ($http, $rootScope, $scope, Keychain, Storage, Wallet) {
 	'use strict';
 
-	var baseUrl = 'https://getstargazer.com/api/federation/';
+	const baseUrl = 'https://getstargazer.com/api/federation/';
 
 	$scope.name = Wallet.current.alias;
 	$scope.accountId = Wallet.current.id;
@@ -14,25 +14,21 @@ angular.module('app')
 
 	$scope.save = function () {
 
-		var signer = Wallet.current.id;
+		const signer = Wallet.current.id;
+		const url = baseUrl + $scope.data.federation;
 
-		var url = baseUrl + $scope.data.federation;
 		Keychain.signMessage(signer, url)
-		.then(function (sig) {
+		.then(sig => {
 			return $http.post(url, {
 				id:		signer,
 				sig:	sig
 			})
-			.then(
-				function (res) {
-					Wallet.current.federation = $scope.data.federation;
-					Storage.setItem('account.' + Wallet.current.alias, Wallet.current);
-					$rootScope.goBack();
-				},
-				function (err) {
-					console.log(err);
-				}
-			);
+			.then(res => {
+				Wallet.current.federation = $scope.data.federation;
+				Storage.setItem(`account.${Wallet.current.alias}`, Wallet.current);
+				$rootScope.goBack();
+			})
+			.catch(err => console.log(err));
 		});
 	};
 })
@@ -41,30 +37,28 @@ angular.module('app')
 
 	return {
 		require: 'ngModel',
-		link: function(scope, element, attributes, ngModel) {
+		link: function (scope, element, attributes, ngModel) {
 			ngModel.$asyncValidators.validFederation = function (name) {
 
 				if (!name) {
 					return $q.reject();
 				}
 
-				var url = 'https://getstargazer.com/api/federation';
+				const url = 'https://getstargazer.com/api/federation';
 				return $http.get(url, {
+					/* eslint-disable id-length */
 					params: {
-						q: name + '*getstargazer.com',
+						q: `${name}*getstargazer.com`,
 						type: 'name'
 					}
+					/* eslint-enable id-length */
 				})
-				.then(
-					function (res) {
-						if (res.data.account_id !== attributes.accountid) {
-							return $q.reject();
-						}
-					},
-					function (err) {
-						console.log(err);
+				.then(res => {
+					if (res.data.account_id !== attributes.accountid) {
+						return $q.reject();
 					}
-				);
+				})
+				.catch(err => console.log(err));
 			};
 		}
 	};

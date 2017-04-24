@@ -13,9 +13,9 @@ angular.module('app')
 	}
 
 	function getMinHeight() {
-		var headerHeight = 40;
-		var buttonGroupHeight = 48 + 16 + 8;
-		return window.innerHeight - (buttonGroupHeight + headerHeight) + 'px';
+		const headerHeight = 40;
+		const buttonGroupHeight = 48 + 16 + 8;
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 });
 

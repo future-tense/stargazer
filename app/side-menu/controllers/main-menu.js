@@ -20,6 +20,6 @@ angular.module('app')
 	}
 
 	function getType(account) {
-		return account.isMultiSig()? 'icon-people' : 'icon-person';
+		return account.isMultiSig() ? 'icon-people' : 'icon-person';
 	}
 });

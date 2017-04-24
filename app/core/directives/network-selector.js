@@ -8,7 +8,7 @@ angular.module('app')
 		scope: {
 			network: '='
 		},
-		link: function(scope, element, attributes) {
+		link: function (scope, element, attributes) {
 
 			if (!scope.network) {
 				scope.network = Horizon.public;

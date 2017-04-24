@@ -5,10 +5,10 @@ angular.module('app')
 	'use strict';
 
 	let eventSource;
-	let transactions = {};
+	const transactions = {};
 	const transactionList = Storage.getItem('transactions') || [];
-	transactionList.forEach(function (hash) {
-		const data = Storage.getItem('tx.' + hash);
+	transactionList.forEach(hash => {
+		const data = Storage.getItem(`tx.${hash}`);
 		data.tx = decodeTransaction(data.txenv);
 		data.hash = hash;
 		transactions[hash] = data;
@@ -27,7 +27,7 @@ angular.module('app')
 		list: transactionList
 	};
 
-	//-----------------------------------------------------------------------//
+	// ------------------------------------------------------------------------
 
 	function addTransaction(hash, payload) {
 
@@ -38,7 +38,7 @@ angular.module('app')
 			payload.hash = hash;
 			payload.signers = {};
 
-			payload.id.forEach(function (id) {
+			payload.id.forEach(id => {
 				if (id !== Wallet.current.id) {
 					Wallet.accounts[id].increaseBadgeCount();
 				}
@@ -49,7 +49,7 @@ angular.module('app')
 
 		else {
 			const tx = transactions[hash];
-			payload.id.forEach(function (id) {
+			payload.id.forEach(id => {
 				tx.signers[id] = 1;
 			});
 			storeTransaction(hash, tx);
@@ -74,7 +74,7 @@ angular.module('app')
 		const tx = transactions[hash];
 
 		const hasSigned = tx.hasSigned || {};
-		signers.forEach(function (id) {
+		signers.forEach(id => {
 			hasSigned[id] = 1;
 		});
 
@@ -84,10 +84,10 @@ angular.module('app')
 
 	function subscribe() {
 		const pubkeys = Wallet.accountList.map(account => account.id);
-		eventSource = Constellation.subscribe(pubkeys, onRequest, onProgress, onAddSigner, null);
+		eventSource = Constellation.subscribe(pubkeys, onRequest, onProgress, onAddSigner, onRemoveSigner);
 	}
 
-	//-----------------------------------------------------------------------//
+	// ------------------------------------------------------------------------
 
 	function onAddSigner(payload) {
 
@@ -98,14 +98,14 @@ angular.module('app')
 		const names = new Set(Wallet.accountList.map(item => item.alias));
 
 		let name;
-		let i = 1;
+		let index = 1;
 		while (true) {
-			const candidate = 'Shared Account #' + i;
+			const candidate = `Shared Account #${index}`;
 			if (!names.has(candidate)) {
 				name = candidate;
 				break;
 			}
-			i += 1;
+			index += 1;
 		}
 
 		Wallet.importAccount(payload.account, null, name, payload.network);
@@ -129,7 +129,7 @@ angular.module('app')
 	function onProgress(payload) {
 
 		const hash = payload.hash;
-		const isDone = Object.keys(payload.progress).every(function (key) {
+		const isDone = Object.keys(payload.progress).every(key => {
 			const account = payload.progress[key];
 			return (account.weight >= account.threshold);
 		});
@@ -140,7 +140,7 @@ angular.module('app')
 			Storage.setItem('transactions', transactionList);
 
 			delete transactions[hash];
-			Storage.removeItem('tx.' + hash);
+			Storage.removeItem(`tx.${hash}`);
 		}
 
 		else {
@@ -165,7 +165,7 @@ angular.module('app')
 			data.hasSigned = tx.hasSigned;
 		}
 
-		Storage.setItem('tx.' + hash, data);
+		Storage.setItem(`tx.${hash}`, data);
 	}
 
 	function decodeTransaction(txenv) {

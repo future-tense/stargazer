@@ -21,20 +21,16 @@ angular.module('app')
 			};
 
 			Modal.show('app/account-settings/modals/remove-password.html', data)
-			.then(function (password) {
-				Keychain.removePassword(accountId, password);
-			})
-			.catch(function () {
+			.then(password => Keychain.removePassword(accountId, password))
+			.catch(() => {
 				$scope.flag.hasPassword = true;
 			});
 		}
 
 		else {
 			Modal.show('app/account-settings/modals/add-password.html')
-			.then(function (password) {
-				Keychain.setPassword(accountId, password);
-			})
-			.then(function () {
+			.then(password => Keychain.setPassword(accountId, password))
+			.then(() => {
 				$scope.flag.hasPassword = false;
 			});
 		}
