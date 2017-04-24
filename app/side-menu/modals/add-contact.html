@@ -25,7 +25,7 @@
 				<input type="text" ng-model="model.address" ng-model-options="{debounce: 200}" placeholder="{{'modal.contact.address.placeholder' | translate}}" required autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="model.destInfo">
 			</label>
 
-			<advanced-toggle ng-model="advanced"></advanced-toggle>
+			<advanced-toggle flag="advanced"></advanced-toggle>
 
 			<div ng-show="advanced">
 				<network-selector network="model.network"></network-selector>
