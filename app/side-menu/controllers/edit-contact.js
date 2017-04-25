@@ -4,14 +4,13 @@ angular.module('app')
 .controller('EditContactCtrl', function ($rootScope, $routeParams, $scope, Contacts) {
 	'use strict';
 
-	$scope.deleteContact = deleteContact;
-	$scope.updateContact = updateContact;
+	$scope.deleteContact  = deleteContact;
+	$scope.updateContact  = updateContact;
+	$scope.onValidAddress = onValidAddress;
 
 	$scope.advanced		= false;
 	$scope.minHeight	= getMinHeight();
 	$scope.model		= initModel();
-
-	$scope.$watch('model.destInfo', onDestInfo);
 
 	function deleteContact() {
 		Contacts.delete($scope.model.name);
@@ -33,10 +32,15 @@ angular.module('app')
 		return model;
 	}
 
-	function onDestInfo(destInfo) {
+	function onValidAddress(destInfo) {
+
 		if (destInfo && destInfo.id !== $scope.model.id && destInfo.memo_type !== '') {
+			$scope.model.destInfo = destInfo;
+			/* eslint-disable camelcase */
 			$scope.model.memo		= destInfo.memo;
 			$scope.model.memo_type	= destInfo.memo_type;
+			/* eslint-enable camelcase */
+
 		}
 	}
 

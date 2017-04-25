@@ -30,7 +30,7 @@
 					<span class="input-label">
 						Signer
 					</span>
-					<input type="text" name="signer" ng-model="account.signer" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="account.destInfo">
+					<input type="text" name="signer" ng-model="account.signer" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="onValidAddress(res)">
 					<a on-tap="selectSigner()" style="position:absolute;right:16px;top:40px;padding-left:16px">
 						<i class="icon icon-book"></i>
 					</a>

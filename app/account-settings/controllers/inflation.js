@@ -27,6 +27,10 @@ angular.module('app')
 		});
 	};
 
+	$scope.onValidAddress = function (res) {
+		$scope.send.destInfo = res;
+	};
+
 	$scope.setInflation = function () {
 
 		const currentAccount = Wallet.current;

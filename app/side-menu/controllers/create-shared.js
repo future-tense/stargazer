@@ -8,6 +8,7 @@ angular.module('app')
 	$scope.selectAccount	= selectAccount;
 	$scope.selectSigner		= selectSigner;
 	$scope.addSigner		= addSigner;
+	$scope.onValidAddress	= onValidAddress;
 
 	$scope.account		= getAccountName();
 	$scope.advanced		= false;
@@ -117,6 +118,10 @@ angular.module('app')
 		const headerHeight = 40;
 		const buttonGroupHeight = 48 + 16 + 8;
 		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
+	}
+
+	function onValidAddress(destInfo) {
+		$scope.account.destInfo = destInfo;
 	}
 
 	function selectSigner() {

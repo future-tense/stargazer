@@ -6,24 +6,29 @@ angular.module('app')
 
     return {
         require: 'ngModel',
-        link: function (scope, element, attributes, ngModel) {
-
-			//
-			//	validate address in ng-model, and set value of valid-address
-			//	attribute to destInfo if valid
-			//
-
-			ngModel.$asyncValidators.validAddress = function (address) {
-
-				const setter = $parse(attributes.validAddress).assign;
-				setter(scope, null);
-
-				return Destination.lookup(address)
-				.then(res => {
-					setter(scope, res);
-					return true;
-				});
-			};
-		}
+        scope: {
+        	validAddress: '&'
+		},
+        link: link
     };
+
+	function link(scope, element, attributes, ngModel) {
+
+		//
+		//	validate address in ng-model, and pass the destInfo to
+		//  callback specified in the valid-address attribute, if valid
+		//
+
+		ngModel.$asyncValidators.validAddress = function (address) {
+			return Destination.lookup(address)
+			.then(res => {
+				scope.validAddress({res: res});
+				return true;
+			})
+			.catch(err => {
+				scope.validAddress(null);
+				return false;
+			});
+		};
+	}
 });

@@ -4,20 +4,20 @@ angular.module('app')
 .controller('AddContactCtrl', function ($route, $scope, Contacts) {
 	'use strict';
 
-	$scope.cancel		= cancel;
-	$scope.saveContact	= saveContact;
+	$scope.cancel = cancel;
+	$scope.saveContact = saveContact;
+	$scope.onValidAddress = onValidAddress;
 
 	$scope.advanced		= false;
 	$scope.model		= {};
-
-	$scope.$watch('model.destInfo', onDestInfo);
 
 	function cancel() {
 		$scope.closeModalService();
 	}
 
-	function onDestInfo(destInfo) {
+	function onValidAddress(destInfo) {
 		if (destInfo && destInfo.id !== $scope.model.id && destInfo.memo_type !== '') {
+			$scope.model.destInfo = destInfo;
 			/* eslint-disable camelcase */
 			$scope.model.memo		= destInfo.memo;
 			$scope.model.memo_type	= destInfo.memo_type;
