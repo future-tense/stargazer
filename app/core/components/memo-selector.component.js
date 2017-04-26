@@ -23,6 +23,6 @@
 		},
 		controller: MemoSelectorController,
 		controllerAs: 'vm',
-		templateUrl: 'app/core/templates/memo-selector.html'
+		templateUrl: 'app/core/components/memo-selector.html'
 	});
 }());

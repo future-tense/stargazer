@@ -28,7 +28,7 @@
 		},
 		controller: NetworkSelectorController,
 		controllerAs: 'vm',
-		templateUrl: 'app/core/templates/network-selector.html'
+		templateUrl: 'app/core/components/network-selector.html'
 	});
 }());
 

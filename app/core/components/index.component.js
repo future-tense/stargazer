@@ -21,6 +21,6 @@
 	angular.module('app')
 	.component('index', {
 		controller: IndexController,
-		templateUrl: 'app/core/templates/index.html'
+		templateUrl: 'app/core/components/index.html'
 	});
 }());

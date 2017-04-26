@@ -16,6 +16,6 @@
 		},
 		controller: AdvancedToggleController,
 		controllerAs: 'vm',
-		templateUrl: 'app/core/templates/advanced-toggle.html'
+		templateUrl: 'app/core/components/advanced-toggle.html'
 	});
 }());
