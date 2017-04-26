@@ -2,7 +2,7 @@
 	<span class="input-label">
 		{{'account.network.label' | translate}}
 	</span>
-	<select ng-model="network">
-		<option ng-repeat="network in networks" value="{{hash(network)}}">{{network.name}}</option>
+	<select ng-model="vm.network">
+		<option ng-repeat="network in vm.networks" value="{{vm.hash(network)}}">{{network.name}}</option>
 	</select>
 </label>
