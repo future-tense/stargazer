@@ -3,10 +3,10 @@
 (function () {
 	'use strict';
 
-	function controller() {
-		this.toggle = () => {
+	class AdvancedToggleController {
+		toggle() {
 			this.flag = !this.flag;
-		};
+		}
 	}
 
 	angular.module('app')
@@ -14,7 +14,7 @@
 		bindings: {
 			flag: '='
 		},
-		controller: controller,
+		controller: AdvancedToggleController,
 		controllerAs: 'vm',
 		templateUrl: 'app/core/templates/advanced-toggle.html'
 	});
