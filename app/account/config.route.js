@@ -6,32 +6,26 @@ angular.module('app')
 
 	$routeProvider
 	.when('/', {
-		templateUrl: 'app/account/views/overview.html',
-		controller: 'OverviewCtrl'
+		template: '<overview></overview>'
 	})
 
 	.when('/account/overview', {
-		templateUrl: 'app/account/views/overview.html',
-		controller: 'OverviewCtrl'
+		template: '<overview></overview>'
 	})
 
 	.when('/account/send/', {
-		templateUrl: 'app/account/views/send.html',
-		controller: 'SendCtrl'
+		template: '<send></send>'
 	})
 
 	.when('/account/recv', {
-		templateUrl: 'app/account/views/receive.html',
-		controller: 'ReceiveCtrl'
+		template: '<receive></receive>'
 	})
 
 	.when('/account/:accountId', {
-		templateUrl: 'app/account/views/overview.html',
-		controller: 'OverviewCtrl'
+		template: '<overview></overview>'
 	})
 
 	.when('/account/transaction/:id', {
-		templateUrl: 'app/account/views/transaction.html',
-		controller: 'TransactionCtrl'
+		template: '<transaction></transaction>'
 	});
 });

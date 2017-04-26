@@ -12,7 +12,7 @@ angular.module('app')
 	$scope.model.comment = $scope.data.comment;
 
 	function buttonText() {
-		return $scope.effect.comment ? 'modal.comment.edit' : 'modal.comment.add';
+		return $scope.data.comment ? 'modal.comment.edit' : 'modal.comment.add';
 	}
 
 	function cancel() {
@@ -23,9 +23,9 @@ angular.module('app')
 		$scope.closeModalService();
 
 		if ($scope.model.comment) {
-			$scope.effect.comment = $scope.model.comment;
+			$scope.data.comment = $scope.model.comment;
 		} else {
-			delete $scope.effect.comment;
+			delete $scope.data.comment;
 		}
 
 		const accountName = Wallet.current.alias;

@@ -2,36 +2,36 @@
 <ion-content class="has-header" scrollbar-y="false">
 
 	<div class="list">
-		<div class="item activity-header" ng-if="type==='send'">
-			<jazzicon seed="{{seed}}"></jazzicon>
+		<div class="item activity-header" ng-if="vm.type==='send'">
+			<jazzicon seed="{{vm.seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
 				{{'transaction.sent' | translate}}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				{{ amount | formatAmount }} {{ code}}
+				{{ vm.amount | formatAmount }} {{ vm.code}}
 			</div>
 		</div>
 
-		<div class="item activity-header" ng-if="type==='recv'">
-			<jazzicon seed="{{seed}}"></jazzicon>
+		<div class="item activity-header" ng-if="vm.type==='recv'">
+			<jazzicon seed="{{vm.seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
 				{{'transaction.received' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				{{ amount | formatAmount }} {{ code}}
+				{{ vm.amount | formatAmount }} {{ vm.code}}
 			</div>
 		</div>
 
-		<div class="item activity-header" ng-if="type==='trade'">
-			<jazzicon seed="{{seed}}"></jazzicon>
+		<div class="item activity-header" ng-if="vm.type==='trade'">
+			<jazzicon seed="{{vm.seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
 				{{'transaction.traded' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				+{{ bought_amount | formatAmount }} {{ bought_code}}
+				+{{ vm.bought_amount | formatAmount }} {{ vm.bought_code}}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
-				-{{ sold_amount | formatAmount }} {{ sold_code}}
+				-{{ vm.sold_amount | formatAmount }} {{ vm.sold_code}}
 			</div>
 		</div>
 
@@ -39,13 +39,13 @@
 			{{'transaction.details' | translate }}
 		</div>
 
-		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="type!=='trade'">
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="vm.type!=='trade'">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label" style="padding-right:20px;flex-shrink:0;width:auto">
-					{{::counterpartyLabel | translate}}
+					{{::vm.counterpartyLabel | translate}}
 				</span>
 				<span class="text-gray" style="flex-shrink:1;justify-content:flex-end;text-overflow:ellipsis;overflow:hidden">
-					<account-name id="{{::counterparty}}" network="{{::network}}" tx="effect"></account-name>
+					<account-name id="{{::vm.counterparty}}" network="{{::vm.network}}" tx="vm.effect"></account-name>
 				</span>
 			</label>
 		</div>
@@ -56,40 +56,40 @@
 					{{'transaction.date' | translate}}
 				</span>
 				<span class="text-gray">
-					{{::effect.date | formatDate}}
+					{{::vm.effect.date | formatDate}}
 				</span>
 			</label>
 		</div>
 
-		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="!isContact && effect.memo">
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="!vm.isContact && vm.effect.memo">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
 					{{'transaction.memo' | translate}}
 				</span>
 				<span class="text-gray">
-					{{::effect.memo}}
+					{{::vm.effect.memo}}
 				</span>
 			</label>
 		</div>
 
-		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="effect.comment">
+		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="vm.effect.comment">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
 					{{'transaction.comment' | translate}}
 				</span>
 				<span class="text-gray">
-					{{effect.comment}}
+					{{vm.effect.comment}}
 				</span>
 			</label>
 		</div>
 	</div>
 
 	<div class="button-group" style="position:absolute;bottom:0">
-		<button class="button button-block button-positive" on-tap="addContact()" ng-if="!isWallet && !isContact && type!=='trade'">
+		<button class="button button-block button-positive" on-tap="vm.addContact()" ng-if="!vm.isWallet && !vm.isContact && vm.type!=='trade'">
 			{{'transaction.contact.add' | translate}}
 		</button>
-		<button class="button button-block button-positive" on-tap="editComment()">
-			{{buttonText() | translate}}
+		<button class="button button-block button-positive" on-tap="vm.editComment()">
+			{{vm.buttonText() | translate}}
 		</button>
 	</div>
 </ion-content>

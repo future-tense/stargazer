@@ -1,16 +1,16 @@
 <wallet-header></wallet-header>
 
-<div ng-switch="isActivated()">
-	<ion-content scrollbar-y="false" ng-switch-when="true">
+<div ng-switch="vm.isActivated()">
+	<ion-content class="has-header" scrollbar-y="false" ng-switch-when="true">
 		<ion-refresher
 			pulling-text="{{'tabs.home.pull' | translate}}"
 			pulling-icon="icon-pull"
-			on-refresh="doRefresh()">
+			on-refresh="vm.doRefresh()">
 		</ion-refresher>
 		<div style="background-color:#00BCD4;color:#FFFFFF">
 			<div style="height:120px;font-size:18px;display:flex;flex-direction:column;justify-content:center">
 				<div>
-					<div style="text-align:center" ng-repeat="asset in getAssets()">
+					<div style="text-align:center" ng-repeat="asset in vm.getAssets()">
 						{{ asset.balance | formatAmount }}
 						{{ asset.asset_code }}
 					</div>
@@ -20,11 +20,11 @@
 		</div>
 
 		<div class="camera-icon" style="position:relative">
-			<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
+			<qr-scanner on-scan="index.onQrCodeScanned(data)"></qr-scanner>
 		</div>
 
 		<account-requests></account-requests>
-		<account-activity account="wallet.current" limit="100" filter="payments"></account-activity>
+		<account-activity account="vm.wallet.current" limit="100" filter="payments"></account-activity>
 	</ion-content>
 
 	<div style="height:100%" ng-switch-when="false">
@@ -34,7 +34,7 @@
 
 		<div style="height:40px;width:100%;position:fixed;bottom:40px">
 			<div class="camera-icon" style="position:relative">
-				<qr-scanner on-scan="onQrCodeScanned(data)"></qr-scanner>
+				<qr-scanner on-scan="index.onQrCodeScanned(data)"></qr-scanner>
 			</div>
 			<account-info></account-info>
 		</div>
