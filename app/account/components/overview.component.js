@@ -50,6 +50,6 @@
 		require: {
 			index: '^index'
 		},
-		templateUrl: 'app/account/views/overview.html'
+		templateUrl: 'app/account/components/overview.html'
 	});
 }());

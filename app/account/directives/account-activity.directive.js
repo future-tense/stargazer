@@ -214,6 +214,6 @@ angular.module('app')
 			filter: '@'
 		},
 		link: link,
-		templateUrl: 'app/account/templates/account-activity.html'
+		templateUrl: 'app/account/directives/account-activity.html'
 	};
 });

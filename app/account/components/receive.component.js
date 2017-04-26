@@ -86,6 +86,6 @@
 	.component('receive', {
 		controller: ReceiveController,
 		controllerAs: 'vm',
-		templateUrl: 'app/account/views/receive.html'
+		templateUrl: 'app/account/components/receive.html'
 	});
 }());

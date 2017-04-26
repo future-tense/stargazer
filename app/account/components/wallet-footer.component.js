@@ -19,6 +19,6 @@
 	.component('walletFooter', {
 		controller: WalletFooterController,
 		controllerAs: 'vm',
-		templateUrl: 'app/account/templates/wallet-footer.html'
+		templateUrl: 'app/account/components/wallet-footer.html'
 	});
 }());

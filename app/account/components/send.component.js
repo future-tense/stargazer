@@ -418,6 +418,6 @@
 	.component('send', {
 		controller: SendController,
 		controllerAs: 'vm',
-		templateUrl: 'app/account/views/send.html'
+		templateUrl: 'app/account/components/send.html'
 	});
 }());

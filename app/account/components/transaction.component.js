@@ -123,7 +123,7 @@
 	.component('transaction',  {
 		controller: TransactionController,
 		controllerAs: 'vm',
-		templateUrl: 'app/account/views/transaction.html'
+		templateUrl: 'app/account/components/transaction.html'
 	});
 }());
 

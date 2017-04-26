@@ -36,6 +36,6 @@
 	.component('accountRequests', {
 		controller: AccountRequestController,
 		controllerAs: 'vm',
-		templateUrl: 'app/account/templates/account-requests.html'
+		templateUrl: 'app/account/components/account-requests.html'
 	});
 }());

@@ -26,6 +26,6 @@
 	.component('accountInfo', {
 		controller: AccountInfoController,
 		controllerAs: 'vm',
-		templateUrl: 'app/account/templates/account-info.html'
+		templateUrl: 'app/account/components/account-info.html'
 	});
 }());

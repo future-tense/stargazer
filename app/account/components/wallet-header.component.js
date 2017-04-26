@@ -26,7 +26,7 @@
 		require: {
 			index: '^index'
 		},
-		templateUrl: 'app/account/templates/wallet-header.html'
+		templateUrl: 'app/account/components/wallet-header.html'
 	});
 }());
 
