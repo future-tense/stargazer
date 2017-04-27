@@ -1,0 +1,42 @@
+<config-navbar heading="{{'settings.trustlines' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+
+<ion-content class="has-header" scrollbar-y="false">
+
+	<div ng-style="{'min-height':vm.minHeight}">
+		<div class="list" ng-repeat="anchor in vm.anchors">
+			<div class="item item-divider">
+				<account-name id="{{::anchor.id}}" network="{{::vm.account.network}}"></account-name>
+			</div>
+
+			<div ng-repeat="trustline in anchor.trustlines">
+				<div ng-switch="vm.hasBalance(trustline)">
+					<div class="item" ng-switch-when="true">
+						<span>{{ trustline.object.asset_code }}</span>
+						<span class="pull-right">{{ trustline.object.balance | formatAmount }}</span>
+					</div>
+
+					<div class="item item-toggle" ng-switch-when="false">
+						{{ trustline.object.asset_code }}
+						<div class="pull-right text-gray">
+							<label class="toggle">
+								<input type="checkbox" ng-change="vm.onChange()" ng-model="trustline.state">
+								<div class="track">
+									<div class="handle"></div>
+								</div>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="button-group">
+		<button class="button button-block button-positive" on-tap="vm.updateTrustlines()" ng-show="vm.isDirty">
+			{{'global.update' | translate}}
+		</button>
+		<button class="button button-block button-positive" on-tap="vm.addAnchor()">
+			{{'settings.trustlines.add' | translate}}
+		</button>
+	</div>
+</ion-content>

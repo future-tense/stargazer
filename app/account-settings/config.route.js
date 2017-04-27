@@ -6,39 +6,30 @@ angular.module('app')
 
 	$routeProvider
 	.when('/account-settings', {
-		templateUrl: 'app/account-settings/views/settings.html',
-		controller: 'AccountSettingsCtrl'
+		template: '<account-settings></account-settings>'
 	})
 	.when('/account-settings/advanced', {
-		templateUrl: 'app/account-settings/views/advanced.html',
-		controller: 'AccountAdvancedCtrl'
+		template: '<advanced-settings></advanced-settings>'
 	})
 	.when('/account-settings/alias', {
-		templateUrl: 'app/account-settings/views/alias.html',
-		controller: 'AccountAliasCtrl'
+		template: '<account-alias></account-alias>'
 	})
 	.when('/account-settings/delete', {
-		templateUrl: 'app/account-settings/views/delete.html',
-		controller: 'DeleteAccountCtrl'
+		template: '<delete-account></delete-account>'
 	})
 	.when('/account-settings/export', {
-		templateUrl: 'app/account-settings/views/export.html',
-		controller: 'ExportAccountCtrl'
+		template: '<export-account></export-account>'
 	})
 	.when('/account-settings/federation', {
-		templateUrl: 'app/account-settings/views/federation.html',
-		controller: 'AccountFederationCtrl'
+		template: '<account-federation></account-federation>'
 	})
 	.when('/account-settings/inflation', {
-		templateUrl: 'app/account-settings/views/inflation.html',
-		controller: 'AccountInflationCtrl'
+		template: '<inflation-destination></inflation-destination>'
 	})
 	.when('/account-settings/signers', {
-		templateUrl: 'app/account-settings/views/signers.html',
-		controller: 'AccountSignersCtrl'
+		template: '<account-signers></account-signers>'
 	})
 	.when('/account-settings/trustlines', {
-		templateUrl: 'app/account-settings/views/trustlines.html',
-		controller: 'AccountTrustlinesCtrl'
+		template: '<account-trustlines></account-trustlines>'
 	});
 });

@@ -10,7 +10,7 @@
 					{{'settings.name' | translate}}
 				</span>
 				<div class="pull-right text-gray">
-					{{account.alias}}
+					{{vm.account.alias}}
 					<span>&raquo;</span>
 				</div>
 			</div>
@@ -22,7 +22,7 @@
 					{{'settings.federation' | translate}}
 				</span>
 				<div class="pull-right text-gray">
-					{{account.federation}}
+					{{vm.account.federation}}
 					<span>&raquo;</span>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 			</span>
 			<div class="pull-right text-gray">
 				<label class="toggle">
-					<input type="checkbox" ng-model="flag.hasPassword" ng-change="togglePassword()">
+					<input type="checkbox" ng-model="vm.flag.hasPassword" ng-change="vm.togglePassword()">
 					<div class="track">
 						<div class="handle"></div>
 					</div>

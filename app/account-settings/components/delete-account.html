@@ -2,17 +2,17 @@
 
 <ion-content class="has-header" scrollbar-y="false">
 	<div class="item item-divider"></div>
-	<form name="form.delete" ng-if="isEncrypted">
+	<form name="form.delete" ng-if="vm.isEncrypted">
 		<label class="item item-input item-inset item-stacked-label">
 			<span class="input-label">
 				{{'settings.delete.password' | translate}}
 			</span>
-			<input type="password" ng-model="account.password" required valid-password signer="{{account.id}}">
+			<input type="password" ng-model="vm.account.password" required valid-password signer="{{vm.account.id}}">
 		</label>
 	</form>
 
 	<div class="button-group" style="position:absolute;bottom:0">
-		<button type="button" class="button button-block button-positive" on-tap="delete()" ng-disabled="isEncrypted && form.delete.$invalid">
+		<button type="button" class="button button-block button-positive" on-tap="vm.deleteAccount()" ng-disabled="vm.isEncrypted && form.delete.$invalid">
 			{{'settings.delete.button' | translate}}
 		</button>
 	</div>

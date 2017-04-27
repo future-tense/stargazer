@@ -6,13 +6,13 @@
 			<div class="item item-divider"></div>
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">{{'settings.name.label' | translate}}</span>
-				<input type="text" id="alias" type="text" name="alias" autocomplete="off" ng-model="data.newName">
+				<input type="text" id="alias" type="text" name="alias" autocomplete="off" ng-model="vm.data.name">
 			</label>
 		</div>
 	</form>
 
 	<div class="button-group" style="position:absolute;bottom:0">
-		<button type="button" class="button button-block button-positive" on-tap="save()">
+		<button type="button" class="button button-block button-positive" on-tap="vm.save()">
 			{{'global.save' | translate}}
 		</button>
 	</div>

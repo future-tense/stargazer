@@ -8,8 +8,8 @@
 			<span class="input-label">
 				{{'settings.federation.label' | translate}}
 			</span>
-				<input type="text" id="alias" type="text" name="alias" ng-model="data.federation"
-					   placeholder="{{'settings.federation.placeholder' | translate}}" autocomplete="off" valid-federation accountid="{{accountId}}">
+				<input type="text" id="alias" type="text" name="alias" ng-model="vm.data.federation"
+					   placeholder="{{'settings.federation.placeholder' | translate}}" autocomplete="off" valid-federation accountid="{{vm.accountId}}">
 			</label>
 		</div>
 	</form>
