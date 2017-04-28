@@ -47,6 +47,7 @@ module.exports = function (grunt) {
 					'bower_components/messageformat/messageformat.js',
 					'bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js',
 					'bower_components/buffer/buffer.min.js',
+					'bower_components/crypto-js/crypto-js.js',
 					'bower_components/decimal.js/decimal.js',
 					'build/bower_components/jsqrcode/lib/qrcode-decoder.min.js',
 					'bower_components/qrcode.js/qrcode.js',

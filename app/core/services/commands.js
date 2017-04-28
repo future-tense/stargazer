@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular, StellarSdk */
 
 angular.module('app')
 .factory('Commands', function ($http, $ionicLoading, $location, Contacts, Keychain, Modal, Wallet) {
@@ -10,25 +10,40 @@ angular.module('app')
 
 	function onQrCodeScanned(qrData) {
 
-		const data = JSON.parse(qrData);
-		if (!data.stellar) {
-			return;
-		}
+		try {
+			const data = JSON.parse(qrData);
+			if (!data.stellar) {
+				return;
+			}
 
-		if (data.stellar.account) {
-			if (data.stellar.key) {
-				handleAccountImport(data.stellar.account, data.stellar.key);
-			} else {
-				handleAccount(data.stellar.account);
+			if (data.stellar.account) {
+				if (data.stellar.key) {
+					handleAccountImport(data.stellar.account, data.stellar.key);
+				} else {
+					handleContact(data.stellar.account);
+				}
+			}
+
+			else if (data.stellar.payment) {
+				handlePayment(data.stellar.payment);
+			}
+
+			else if (data.stellar.challenge) {
+				handleChallenge(data.stellar.challenge);
 			}
 		}
 
-		else if (data.stellar.payment) {
-			handlePayment(data.stellar.payment);
-		}
+		catch (err) {
+			if (qrData.startsWith('centaurus:backup003')) {
+				handleCentaurusImport(qrData);
+			}
 
-		else if (data.stellar.challenge) {
-			handleChallenge(data.stellar.challenge);
+			else if (StellarSdk.StrKey.isValidEd25519PublicKey(qrData)) {
+				const contact = {
+					id: qrData
+				};
+				handleContact(contact);
+			}
 		}
 	}
 
@@ -41,7 +56,16 @@ angular.module('app')
 		$location.path(`/side-menu/import-account/${data}`);
 	}
 
-	function handleAccount(account) {
+	function handleCentaurusImport(backupString) {
+
+		const data = window.btoa(JSON.stringify({
+			cipher: backupString.slice(19)
+		}));
+
+		$location.path(`/side-menu/import-centaurus/${data}`);
+	}
+
+	function handleContact(account) {
 
 		if (!(account.id in Wallet.accounts) && !Contacts.lookup(account.id, account.network)) {
 			/* eslint-disable camelcase */

@@ -1,0 +1,31 @@
+<config-navbar heading="Import a Centaurus Account" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+<ion-content class="has-header" scrollbar-y="false">
+
+	<div ng-style="{'min-height':vm.minHeight}">
+		<form name="importAccountForm" >
+			<div class="list">
+				<div class="item item-divider"></div>
+
+				<label class="item item-input item-inset item-stacked-label">
+					<span class="input-label">
+						{{'account.name.label' | translate}}
+					</span>
+					<input type="text" ng-model="vm.account.alias" required>
+				</label>
+
+				<label class="item item-input item-inset item-stacked-label">
+					<span class="input-label">
+						{{'account.password.label' | translate}}
+					</span>
+					<input type="password" ng-model="vm.account.password" cipher="{{vm.cipher}}" required valid-centaurus-password>
+				</label>
+			</div>
+		</form>
+	</div>
+
+	<div class="button-group">
+		<button class="button button-block button-positive" on-tap="vm.importAccount()" ng-disabled="importAccountForm.$invalid">
+			{{'account.import' | translate}}
+		</button>
+	</div>
+</ion-content>
