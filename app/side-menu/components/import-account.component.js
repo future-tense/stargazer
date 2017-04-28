@@ -1,9 +1,5 @@
 /* global angular, console, StellarSdk */
 
-
-/*
-*/
-
 (function () {
 	'use strict';
 

@@ -4,6 +4,7 @@
 	'use strict';
 
 	class CreateSharedController {
+
 		constructor($location, $translate, Modal, Reviewer, Signer, Wallet) {
 
 			this.$location = $location;
