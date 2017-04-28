@@ -20,7 +20,7 @@
 		</div>
 
 		<div class="camera-icon" style="position:relative">
-			<qr-scanner on-scan="index.onQrCodeScanned(data)"></qr-scanner>
+			<qr-scanner on-scan="vm.index.onQrCodeScanned(data)"></qr-scanner>
 		</div>
 
 		<account-requests></account-requests>
@@ -34,7 +34,7 @@
 
 		<div style="height:40px;width:100%;position:fixed;bottom:40px">
 			<div class="camera-icon" style="position:relative">
-				<qr-scanner on-scan="index.onQrCodeScanned(data)"></qr-scanner>
+				<qr-scanner on-scan="vm.index.onQrCodeScanned(data)"></qr-scanner>
 			</div>
 			<account-info></account-info>
 		</div>
