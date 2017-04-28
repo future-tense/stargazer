@@ -5,8 +5,8 @@
 		<div class="item item-divider"></div>
 		<ion-radio
 			ng-model="choice"
-			ng-repeat="t in languages"
-			ng-change="setLanguage(t.code)"
+			ng-repeat="t in vm.languages"
+			ng-change="vm.setLanguage(t.code)"
 			ng-value="t.code">
 			{{t.name}}
 		</ion-radio>

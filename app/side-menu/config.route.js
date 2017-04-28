@@ -6,38 +6,30 @@ angular.module('app')
 
 	$routeProvider
 	.when('/side-menu/about', {
-		templateUrl: 'app/side-menu/views/about.html',
-		controller: 'AboutCtrl'
+		template: '<about-app></about-app>'
 	})
 	.when('/side-menu/add-account', {
-		templateUrl: 'app/side-menu/views/add-account.html'
+		template: '<add-account></add-account>'
 	})
 	.when('/side-menu/import-account/:data?', {
-		templateUrl: 'app/side-menu/views/import-account.html',
-		controller: 'ImportAccountCtrl'
+		template: '<import-account></import-account>'
 	})
 	.when('/side-menu/create-personal', {
-		templateUrl: 'app/side-menu/views/create-personal.html',
-		controller: 'CreatePersonalAccountCtrl'
+		template: '<create-personal></create-personal>'
 	})
 	.when('/side-menu/create-shared', {
-		templateUrl: 'app/side-menu/views/create-shared.html',
-		controller: 'CreateSharedAccountCtrl'
+		template: '<create-shared></create-shared>'
 	})
 	.when('/side-menu/contacts', {
-		templateUrl: 'app/side-menu/views/contact-list.html',
-		controller: 'ContactListCtrl'
+		template: '<contact-list></contact-list>'
 	})
 	.when('/side-menu/contact/:name', {
-		templateUrl: 'app/side-menu/views/edit-contact.html',
-		controller: 'EditContactCtrl'
+		template: '<edit-contact></edit-contact>'
 	})
 	.when('/side-menu/language', {
-		templateUrl: 'app/side-menu/views/language.html',
-		controller: 'LanguageCtrl'
+		template: '<language></language>'
 	})
 	.when('/side-menu/settings', {
-		templateUrl: 'app/side-menu/views/settings.html',
-		controller: 'GlobalSettingsCtrl'
+		template: '<global-settings></global-settings>'
 	});
 });

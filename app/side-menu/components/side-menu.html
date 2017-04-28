@@ -1,4 +1,4 @@
-<div class="sidebar" ng-controller="MainMenuCtrl">
+<div class="sidebar">
 
 	<ion-content scrollbar-y="false">
 		<div style="display:flex;flex-direction:column;align-items:center;padding:20px 0">
@@ -12,12 +12,12 @@
 					<span class="badge">+</span>
 				</a>
 			</div>
-			<a ng-href="#/account/{{account.id}}" ng-repeat="account in accounts" menu-toggle>
-				<div class="item" ng-class="{selected: account.id === wallet.current.id}">
-					<i class="icon" ng-class="getType(account)"></i>
+			<a ng-href="#/account/{{account.id}}" ng-repeat="account in vm.accounts" menu-toggle>
+				<div class="item" ng-class="{selected: vm.isSelected(account)}">
+					<i class="icon" ng-class="vm.getType(account)"></i>
 					{{account.alias}}
-					<span class="badge badge-solid pull-right" ng-show="getBadgeCount(account) !== 0">
-						{{ getBadgeCount(account)}}
+					<span class="badge badge-solid pull-right" ng-show="vm.getBadgeCount(account) !== 0">
+						{{ vm.getBadgeCount(account)}}
 					</span>
 				</div>
 			</a>

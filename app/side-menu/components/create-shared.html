@@ -1,7 +1,7 @@
 <config-navbar heading="Create a Shared Account" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 <ion-content class="has-header" scrollbar-y="false">
 
-	<div ng-style="{'min-height':minHeight}">
+	<div ng-style="{'min-height':vm.minHeight}">
 		<form name="createAccountForm">
 			<div class="list" style="margin-bottom:8px">
 				<div class="item item-divider"></div>
@@ -9,10 +9,10 @@
 					<span class="input-label">
 						{{'account.name.label' | translate}}
 					</span>
-					<input type="text" ng-model="account.alias" required>
+					<input type="text" ng-model="vm.account.alias" required>
 				</label>
-				<advanced-toggle flag="advanced"></advanced-toggle>
-				<network-selector network="account.network" ng-show="advanced"></network-selector>
+				<advanced-toggle flag="vm.advanced"></advanced-toggle>
+				<network-selector network="vm.account.network" ng-show="vm.advanced"></network-selector>
 			</div>
 
 			<div class="list">
@@ -20,8 +20,8 @@
 					Additional Signers
 				</div>
 
-				<div class="item" ng-show="signers.length !== 0">
-					<div ng-repeat="sig in signers">
+				<div class="item" ng-show="vm.signers.length !== 0">
+					<div ng-repeat="sig in vm.signers">
 						{{ sig.address }}
 					</div>
 				</div>
@@ -30,13 +30,13 @@
 					<span class="input-label">
 						Signer
 					</span>
-					<input type="text" name="signer" ng-model="account.signer" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="onValidAddress(res)">
-					<a on-tap="selectSigner()" style="position:absolute;right:16px;top:40px;padding-left:16px">
+					<input type="text" name="signer" ng-model="vm.account.signer" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
+					<a on-tap="vm.selectSigner()" style="position:absolute;right:16px;top:40px;padding-left:16px">
 						<i class="icon icon-book"></i>
 					</a>
 				</label>
 				<div class="button-group">
-					<button class="button button-block button-positive" on-tap="addSigner()" ng-disabled="!account.destInfo">
+					<button class="button button-block button-positive" on-tap="vm.addSigner()" ng-disabled="!vm.account.destInfo">
 						Add signer
 					</button>
 				</div>
@@ -47,7 +47,7 @@
 					<span class="input-label">
 						{{'Threshold' | translate}}
 					</span>
-					<input type="number" name="threshold" ng-model="account.threshold" placeholder="{{'Threshold' | translate}}" min="1" max="{{1 + signers.length}}">
+					<input type="number" name="threshold" ng-model="vm.account.threshold" placeholder="{{'Threshold' | translate}}" min="1" max="{{1 + vm.signers.length}}">
 				</label>
 			</div>
 
@@ -59,23 +59,23 @@
 					<span class="input-label">
 						{{'account.funding.label' | translate}}
 					</span>
-					<input type="text" ng-model="account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="account.network">
-					<a on-tap="selectAccount()" style="position:absolute;right:16px;top:40px">
+					<input type="text" ng-model="vm.account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="vm.account.network">
+					<a on-tap="vm.selectAccount()" style="position:absolute;right:16px;top:40px">
 						<i class="icon icon-book"></i>
 					</a>
 				</label>
-				<label class="item item-input item-stacked-label" ng-show="account.funder">
+				<label class="item item-input item-stacked-label" ng-show="vm.account.funder">
 					<span class="input-label">
 						{{'account.funding.amount.label' | translate}}
 					</span>
-					<input type="number" ng-model="account.amount" placeholder="{{'account.funding.amount.placeholder' | translate}}" min="{{minimum}}">
+					<input type="number" ng-model="vm.account.amount" placeholder="{{'account.funding.amount.placeholder' | translate}}" min="{{vm.minimum}}">
 				</label>
 			</div>
 		</form>
 	</div>
 
 	<div class="button-group">
-		<button class="button button-block button-positive" on-tap="create()" ng-disabled="!account.funder || createAccountForm.threshold.$invalid">
+		<button class="button button-block button-positive" on-tap="vm.create()" ng-disabled="!vm.account.funder || createAccountForm.threshold.$invalid">
 			Create Account
 		</button>
 	</div>
