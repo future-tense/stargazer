@@ -5,10 +5,10 @@
 
 	class ImportCentaurusController {
 
-		constructor($location, $routeParams, $translate, CentaurusService, Keychain, Wallet) {
+		constructor($location, $routeParams, Translate, CentaurusService, Keychain, Wallet) {
 
 			this.$location = $location;
-			this.$translate = $translate;
+			this.Translate = Translate;
 			this.Keychain = Keychain;
 			this.Wallet = Wallet;
 			this.CentaurusService = CentaurusService;
@@ -28,7 +28,7 @@
 
 		$onInit() {
 			const numAccounts = Object.keys(this.Wallet.accounts).length;
-			this.account.alias = this.$translate.instant('account.defaultname', {number: numAccounts + 1});
+			this.account.alias = this.Translate.instant('account.defaultname', {number: numAccounts + 1});
 		}
 
 		importAccount() {

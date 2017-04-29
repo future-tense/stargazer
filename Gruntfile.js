@@ -43,9 +43,7 @@ module.exports = function (grunt) {
 			vendor: {
 				src: [
 					'bower_components/angular-route/angular-route.min.js',
-					'bower_components/angular-translate/angular-translate.min.js',
 					'bower_components/messageformat/messageformat.js',
-					'bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min.js',
 					'bower_components/buffer/buffer.min.js',
 					'bower_components/crypto-js/crypto-js.js',
 					'bower_components/decimal.js/decimal.js',

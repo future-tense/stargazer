@@ -1,7 +1,7 @@
 /* global angular, console, StellarSdk */
 
 angular.module('app')
-.controller('ReviewSubmitCtrl', function ($q, $scope, $translate, Humanizer, Keychain, Signer, Submitter, Transactions) {
+.controller('ReviewSubmitCtrl', function ($q, $scope, Translate, Humanizer, Keychain, Signer, Submitter, Transactions) {
 	'use strict';
 
 	const context = $scope.data.context;
@@ -78,7 +78,7 @@ angular.module('app')
 
 		if (Signer.hasEnoughSignatures(context.progress)) {
 
-			$scope.message = $translate.instant('transaction.submitting');
+			$scope.message = Translate.instant('transaction.submitting');
 			$scope.state = 'pending';
 			return Submitter.submitTransaction(context)
 			.then(() => {

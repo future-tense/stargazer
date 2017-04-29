@@ -4,7 +4,7 @@
 	'use strict';
 
 	class CreatePersonalController {
-		constructor($location, $translate, Modal, Reviewer, Wallet) {
+		constructor($location, Translate, Modal, Reviewer, Wallet) {
 
 			this.$location = $location;
 			this.Modal = Modal;
@@ -18,7 +18,7 @@
 			function getAccountName() {
 				const accountNum = Wallet.accountList.filter(item => !item.isMultiSig()).length + 1;
 				return {
-					alias: $translate.instant('account.defaultname', {number: accountNum}),
+					alias: Translate.instant('account.defaultname', {number: accountNum}),
 					amount: 20
 				};
 			}

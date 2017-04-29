@@ -1,7 +1,7 @@
 /* global angular, cloudSky, cordova */
 
 angular.module('app')
-.directive('qrScanner', function ($ionicLoading, $rootScope, $timeout, $translate, Modal, platformInfo) {
+.directive('qrScanner', function ($ionicLoading, $rootScope, $timeout, Translate, Modal, platformInfo) {
 	'use strict';
 
 	return {
@@ -24,7 +24,7 @@ angular.module('app')
 
 		function cordovaOpenScanner() {
 
-			const text = $translate.instant('modal.scanner.preparing');
+			const text = Translate.instant('modal.scanner.preparing');
 			return $ionicLoading.show({
 				template: text
 			})

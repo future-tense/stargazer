@@ -6,11 +6,11 @@
 
 	class ReceiveController {
 
-		constructor($ionicLoading, $location, $translate, Horizon, Modal, platformInfo, Wallet) {
+		constructor($ionicLoading, $location, Translate, Horizon, Modal, platformInfo, Wallet) {
 
 			this.$ionicLoading = $ionicLoading;
 			this.$location = $location;
-			this.$translate = $translate;
+			this.Translate = Translate;
 			this.Horizon = Horizon;
 			this.Modal = Modal;
 			this.platformInfo = platformInfo;
@@ -74,7 +74,7 @@
 		}
 
 		showPopover() {
-			const text = this.$translate.instant('tabs.receive.copy');
+			const text = this.Translate.instant('tabs.receive.copy');
 			return this.$ionicLoading.show({
 				template: text,
 				duration: 700

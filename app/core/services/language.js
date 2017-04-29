@@ -1,7 +1,7 @@
 /* global angular */
 
 angular.module('app')
-.factory('Language', function ($translate, Storage) {
+.factory('Language', function (Translate, Storage) {
 	'use strict';
 
 	const languages = {
@@ -48,7 +48,7 @@ angular.module('app')
 	function setCurrent(code) {
 		current = code;
 		Storage.setItem('language', code);
-		$translate.use(code);
+		Translate.use(code);
 	}
 
 	setCurrent(current);

@@ -4,11 +4,11 @@
 	'use strict';
 
 	class ImportAccountController {
-		constructor($location, $routeParams, $translate, Keychain, Wallet) {
+		constructor($location, $routeParams, Translate, Keychain, Wallet) {
 
 			this.$location = $location;
 			this.$routeParams = $routeParams;
-			this.$translate = $translate;
+			this.Translate = Translate;
 			this.Keychain = Keychain;
 			this.Wallet = Wallet;
 
@@ -33,7 +33,7 @@
 			}
 
 			const numAccounts = Object.keys(this.Wallet.accounts).length;
-			this.account.alias = this.$translate.instant('account.defaultname', {number: numAccounts + 1});
+			this.account.alias = this.Translate.instant('account.defaultname', {number: numAccounts + 1});
 		}
 
 		importAccount() {

@@ -5,7 +5,7 @@
 
 	class CreateSharedController {
 
-		constructor($location, $translate, Modal, Reviewer, Signer, Wallet) {
+		constructor($location, Translate, Modal, Reviewer, Signer, Wallet) {
 
 			this.$location = $location;
 			this.Modal = Modal;
@@ -23,7 +23,7 @@
 				const accountNum = getNextSharedAccountNumber();
 				return {
 					alias: `Shared Account #${accountNum}`,
-		//			alias: $translate.instant('account.defaultname', {number: accountNum}),
+		//			alias: Translate.instant('account.defaultname', {number: accountNum}),
 					amount: 20
 				};
 			}

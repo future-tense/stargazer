@@ -2,7 +2,7 @@
 /* jshint multistr: true */
 
 angular.module('app')
-.directive('accountActivity', function ($filter, $interval, $translate, Contacts, History, Jazzicon, Wallet) {
+.directive('accountActivity', function ($filter, $interval, Translate, Contacts, History, Jazzicon, Wallet) {
 	'use strict';
 
 	const formatAmount = $filter('formatAmount');
@@ -27,7 +27,7 @@ angular.module('app')
 		}
 
 		const res = Math.floor(delta);
-		return $translate.instant(message, {RES: res}, 'messageformat');
+		return Translate.instant(message, {RES: res}, 'messageformat');
 	}
 
 	function getComment(tx) {
@@ -51,7 +51,7 @@ angular.module('app')
 			if (name) {
 				return name;
 			} else {
-				return $translate.instant({
+				return Translate.instant({
 					'send':	'transaction.sent',
 					'recv': 'transaction.received',
 					'trade':'transaction.traded'
@@ -169,7 +169,7 @@ angular.module('app')
 			if (scope.history.length !== 0) {
 				html = scope.history.map(tx => renderItem(tx)).join('');
 			} else {
-				const text = $translate.instant('tabs.home.activity.empty');
+				const text = Translate.instant('tabs.home.activity.empty');
 				html = `<div style="text-align: center" class="text-gray">${text}</div>`;
 			}
 			element[0].children[1].innerHTML = html;
