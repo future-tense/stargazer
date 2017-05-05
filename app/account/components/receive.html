@@ -5,15 +5,15 @@
 			<h1 style="margin-top:10px">
 				{{'tabs.receive.heading' | translate}}
 			</h1>
-			<qrcode text="vm.qrtext" ng-click="vm.copyToClipboard(accountId)"></qrcode>
+			<qrcode text="vm.qrtext" ng-click="vm.copyToClipboard(vm.accountId)"></qrcode>
 		</div>
-		<h6 ng-click="vm.copyToClipboard(accountId)"
+		<h6 ng-click="vm.copyToClipboard(vm.accountId)"
 			style="padding-left:16px;padding-right:16px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-			{{accountId}}
+			{{vm.accountId}}
 		</h6>
-		<h6 ng-click="vm.copyToClipboard(federation)"
+		<h6 ng-click="vm.copyToClipboard(vm.federation)"
 			style="text-align:center" ng-if="vm.hasFederation">
-			({{federation}})
+			({{vm.federation}})
 		</h6>
 	</div>
 
