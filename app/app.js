@@ -1,7 +1,6 @@
 /* global angular, navigator, require, StellarSdk */
 
 angular.module('app', [
-//	'pascalprecht.translate',
 	'ngRoute',
 	'ionic'
 ], function ($compileProvider) {
@@ -26,6 +25,7 @@ angular.module('app', [
 })
 
 .constant('TranslationMaps', {
+	/* jshint ignore:start */
 	en: /* @include ../i18n/en.json */,
 	es: /* @include ../i18n/es.json */,
 	fil: /* @include ../i18n/fil.json */,
@@ -35,4 +35,5 @@ angular.module('app', [
 	pl: /* @include ../i18n/pl.json */,
 	sv: /* @include ../i18n/sv.json */,
 	zh: /* @include ../i18n/zh.json */
+	/* jshint ignore:end */
 });
