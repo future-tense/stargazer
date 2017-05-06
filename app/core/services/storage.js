@@ -7,7 +7,11 @@ angular.module('app')
 	function getItem(key) {
 		const value = $window.localStorage.getItem(key);
 		if (value) {
-			return JSON.parse(value);
+			try {
+				return JSON.parse(value);
+			} catch (err) {
+				return null;
+			}
 		} else {
 			return null;
 		}
