@@ -1,7 +1,7 @@
 {
   "name": "Stargazer",
   "description": "A mobile/desktop wallet for the Stellar payments network",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "author": "Future Tense <johan.sten@gmail.com>",
   "main": "index.js",
   "license": "AGPL-3.0",
