@@ -46,7 +46,7 @@
 				object: {
 					asset_issuer:	asset.issuer,
 					asset_code:		asset.code,
-					balance:		0
+					balance:		'0.0000000'
 				},
 				state:		false,
 				oldState:	false
