@@ -22,12 +22,10 @@ angular.module('app')
 					}
 					/* eslint-enable id-length */
 				})
-				.then(res => {
-					if (res.data.account_id !== attributes.accountid) {
-						return $q.reject();
-					}
-				})
-				.catch(err => console.log(err));
+				.then(
+					res => res.data.account_id === attributes.accountid ? res : $q.reject(),
+					res => res
+				);
 			};
 		}
 	};
