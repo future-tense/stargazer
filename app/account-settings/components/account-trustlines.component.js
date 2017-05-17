@@ -155,7 +155,7 @@
 
 			this.account.horizon()
 			.loadAccount(this.account.id)
-			.then(this.createTransaction)
+			.then(res => this.createTransaction(res))
 			.then(this.Reviewer.review)
 			.then(this.account.refresh)
 			.then(() => this.$location.path('/'));
