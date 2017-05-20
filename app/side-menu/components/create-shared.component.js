@@ -54,8 +54,8 @@
 			const network = this.account.network;
 			const accounts = {};
 
-			Object.keys(this.accounts).forEach((key) => {
-				const account = this.accounts[key];
+			Object.keys(this.Wallet.accounts).forEach((key) => {
+				const account = this.Wallet.accounts[key];
 				if (account.network === network) {
 					accounts[account.alias] = account;
 				}
