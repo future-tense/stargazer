@@ -394,7 +394,7 @@
 				.addOperation(operation);
 
 				if (this.send.memo_type) {
-					const memo = new StellarSdk.Memo[this.send.memo_type](this.send.memo);
+					const memo = StellarSdk.Memo[this.send.memo_type](this.send.memo.toString());
 					builder.addMemo(memo);
 				}
 
