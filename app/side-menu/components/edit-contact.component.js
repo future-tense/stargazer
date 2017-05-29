@@ -9,12 +9,12 @@
 		constructor($rootScope, $routeParams, Contacts) {
 
 			this.$rootScope = $rootScope;
-			this.$routeParams = $routeParams;
 			this.Contacts = Contacts;
 
-			this.advanced		= false;
+			this.advanced	= false;
 			this.minHeight	= getMinHeight();
 			this.model		= initModel();
+			this.oldName	= $routeParams.name;
 
 			function getMinHeight() {
 				const headerHeight = 40;
@@ -53,8 +53,7 @@
 				delete this.model.memo_type;
 			}
 
-			const oldName = this.$routeParams.name;
-			this.Contacts.delete(oldName);
+			this.Contacts.delete(this.oldName);
 
 			const name = this.model.name;
 			const contact = this.model;

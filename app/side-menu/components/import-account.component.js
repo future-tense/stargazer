@@ -4,8 +4,9 @@
 	'use strict';
 
 	class ImportAccountController {
-		constructor($location, $routeParams, Translate, Keychain, Wallet) {
+		constructor($ionicLoading, $location, $routeParams, Translate, Keychain, Wallet) {
 
+			this.$ionicLoading = $ionicLoading;
 			this.$location = $location;
 			this.$routeParams = $routeParams;
 			this.Translate = Translate;
@@ -39,8 +40,16 @@
 		importAccount() {
 			const keyStore  = this.account.seed;
 			const accountId = this.Keychain.idFromKey(keyStore, this.account.password);
-			this.Wallet.importAccount(accountId, keyStore, this.account.alias, this.account.network);
-			this.$location.path('/');
+
+			if (!(accountId in this.Wallet.accounts)) {
+				this.Wallet.importAccount(accountId, keyStore, this.account.alias, this.account.network);
+				this.$location.path('/');
+			} else {
+				this.$ionicLoading.show({
+					template: 'Account already exists',
+					duration: 700
+				});
+			}
 		}
 	}
 

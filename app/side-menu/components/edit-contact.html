@@ -8,7 +8,7 @@
 				<span class="input-label">
 					{{'contact.name.label' | translate}}
 				</span>
-				<input type="text" ng-model="vm.model.name" placeholder="{{'contact.name.placeholder' | translate}}" required>
+				<input type="text" ng-model="vm.model.name" placeholder="{{vm.oldName}}" required unique-name="{{vm.oldName}}">
 			</label>
 
 			<label class="item item-input item-stacked-label">
@@ -28,7 +28,7 @@
 	</div>
 
 	<div class="button-group">
-		<button class="button button-block button-positive" on-tap="vm.updateContact()">
+		<button class="button button-block button-positive" on-tap="vm.updateContact()" ng-disabled="contactForm.$invalid">
 			{{'contact.update' | translate}}
 		</button>
 		<button class="button button-block button-positive" on-tap="vm.deleteContact()">

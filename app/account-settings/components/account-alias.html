@@ -1,18 +1,18 @@
 <config-navbar heading="{{'settings.name' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header" scrollbar-y="false">
-	<form>
+	<form name="accountNameForm">
 		<div class="list">
 			<div class="item item-divider"></div>
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">{{'settings.name.label' | translate}}</span>
-				<input type="text" id="alias" type="text" name="alias" autocomplete="off" ng-model="vm.data.name">
+				<input type="text" id="alias" type="text" name="alias" autocomplete="off" ng-model="vm.data.name" required placeholder="{{vm.account.alias}}" unique-name="{{vm.account.alias}}">
 			</label>
 		</div>
 	</form>
 
 	<div class="button-group" style="position:absolute;bottom:0">
-		<button type="button" class="button button-block button-positive" on-tap="vm.save()">
+		<button type="button" class="button button-block button-positive" on-tap="vm.save()" ng-disabled="accountNameForm.$invalid">
 			{{'global.save' | translate}}
 		</button>
 	</div>

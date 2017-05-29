@@ -10,7 +10,7 @@
 					<span class="input-label">
 						{{'account.name.label' | translate}}
 					</span>
-					<input type="text" ng-model="vm.account.alias" required>
+					<input type="text" ng-model="vm.account.alias" required unique-name>
 				</label>
 
 				<label class="item item-input item-inset item-stacked-label" ng-if="!vm.isScanned">
