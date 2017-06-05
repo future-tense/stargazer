@@ -4,8 +4,6 @@ angular.module('app')
 .directive('uniqueName', function (Contacts, Wallet) {
 	'use strict';
 
-	const names = getNames();
-
 	function getNames() {
 		const nameList = Wallet.accountList.map(account => account.alias);
 		const contacts = Contacts.getNames();
@@ -21,7 +19,7 @@ angular.module('app')
 					(attributes.uniqueName === modelValue)) {
 					return true
 				}
-				return !names.has(modelValue);
+				return !getNames().has(modelValue);
 			};
 		}
 	};
