@@ -100,10 +100,12 @@
 
 			if (this.type === 'send') {
 				if (this.effect.numOps === 1) {
-					/* eslint-disable camelcase */
-					data.memo = this.effect.memo;
-					data.memo_type = this.effect.memoType;
-					/* eslint-enable camelcase */
+					if (this.effect.memoType !== 'none') {
+						/* eslint-disable camelcase */
+						data.memo = this.effect.memo;
+						data.memo_type = this.effect.memoType;
+						/* eslint-enable camelcase */
+					}
 				}
 			}
 
