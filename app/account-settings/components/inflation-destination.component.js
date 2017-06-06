@@ -47,10 +47,11 @@
 		setInflation() {
 
 			const source = this.account.id;
+			const destination = this.send.destInfo.id;
+
 			this.account.horizon().loadAccount(source)
 			.then(account => {
 
-				const destination = this.send.destInfo.id;
 				const builder = new StellarSdk.TransactionBuilder(account);
 				builder.addOperation(StellarSdk.Operation.setOptions({
 					inflationDest: destination
@@ -64,7 +65,11 @@
 			})
 
 			.then(this.Reviewer.review)
-			.then(() => this.$rootScope.goBack());
+			.then(() => {
+				this.account.setInflationDest(destination);
+				this.lookupCurrent();
+				this.$rootScope.goBack();
+			});
 		}
 	}
 

@@ -168,6 +168,11 @@ angular.module('app')
 		}
 	};
 
+	Account.prototype.setInflationDest = function (dest) {
+		this.inflationDest = dest;
+		Storage.setItem(`account.${this.alias}`, this);
+	}
+
 	// ------------------------------------------------------------------------
 	//	Wallet
 	// ------------------------------------------------------------------------

@@ -10,7 +10,7 @@
 					{{'settings.inflation.label' | translate}}
 				</span>
 				<input type="text" name="destination" ng-model="vm.send.destination" ng-model-options="{debounce: 200}" placeholder="{{'settings.inflation.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
-				<a on-tap="selectRecipient()" style="position:absolute;right:16px;top:40px">
+				<a on-tap="vm.selectRecipient()" style="position:absolute;right:16px;top:40px">
 					<i class="icon icon-book"></i>
 				</a>
 			</label>
