@@ -15,6 +15,11 @@ module.exports = function (grunt) {
 	// Define the configuration for all the tasks
 	grunt.initConfig({
 
+		clean: [
+			'build',
+			'dist'
+		],
+
 		replace: {
 			jsqrcode: {
 				files: [{
