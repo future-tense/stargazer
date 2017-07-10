@@ -39,18 +39,22 @@
 			{{'transaction.details' | translate }}
 		</div>
 
-		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="vm.type!=='trade'">
-			<label class="item-input" style="padding-left:0;justify-content: space-between;">
+		<a class="item"
+			 style="padding-top: 6px;padding-bottom: 6px;"
+			 ng-if="vm.type!=='trade'"
+			 ng-click="vm.index.copyToClipboard(vm.counterparty)">
+			<div class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label" style="padding-right:20px;flex-shrink:0;width:auto">
 					{{::vm.counterpartyLabel | translate}}
 				</span>
 				<span class="text-gray" style="flex-shrink:1;justify-content:flex-end;text-overflow:ellipsis;overflow:hidden">
 					<account-name id="{{::vm.counterparty}}" network="{{::vm.network}}" tx="vm.effect"></account-name>
 				</span>
-			</label>
-		</div>
+			</div>
+		</a>
 
-		<div class="item" style="padding-top: 6px;padding-bottom: 6px;">
+		<div class="item"
+			 style="padding-top: 6px;padding-bottom: 6px;">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
 					{{'transaction.date' | translate}}
@@ -60,6 +64,22 @@
 				</span>
 			</label>
 		</div>
+
+		<a class="item"
+			 style="padding-top: 6px;padding-bottom: 6px;"
+			 ng-click="vm.index.copyToClipboard(vm.effect.hash)">
+
+			<div class="item-input" style="padding-left:0;justify-content:space-between">
+				<div class="input-label" style="padding-right:20px;flex-shrink:0">
+					{{'Transaction ID' | translate}}
+				</div>
+				<div class="text-gray" style="display:flex;justify-content:flex-end;text-overflow:ellipsis;overflow:hidden">
+					<div style="flex-shrink:1;text-overflow:ellipsis;overflow:hidden;min-width:0">
+						{{::vm.effect.hash}}
+					</div>
+				</div>
+			</div>
+		</a>
 
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="!vm.isContact && vm.effect.memo">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">

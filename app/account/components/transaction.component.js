@@ -125,6 +125,9 @@
 	.component('transaction',  {
 		controller: TransactionController,
 		controllerAs: 'vm',
+		require: {
+			index: '^index'
+		},
 		templateUrl: 'app/account/components/transaction.html'
 	});
 }());

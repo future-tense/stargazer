@@ -3,17 +3,13 @@
 (function () {
 	'use strict';
 
-
 	class ReceiveController {
 
-		constructor($ionicLoading, $location, Translate, Horizon, Modal, platformInfo, Wallet) {
+		constructor($location, Horizon, Modal, Wallet) {
 
-			this.$ionicLoading = $ionicLoading;
 			this.$location = $location;
-			this.Translate = Translate;
 			this.Horizon = Horizon;
 			this.Modal = Modal;
-			this.platformInfo = platformInfo;
 			this.Wallet = Wallet;
 
 			this.accountId		= Wallet.current.id;
@@ -26,20 +22,6 @@
 			}
 
 			this.showAddress();
-		}
-
-		copyToClipboard(text) {
-
-			if (this.platformInfo.isCordova) {
-				window.cordova.plugins.clipboard.copy(text);
-				this.showPopover();
-			}
-
-			else if (this.platformInfo.isElectron) {
-				const electron = require('electron');
-				electron.clipboard.writeText(text);
-				this.showPopover();
-			}
 		}
 
 		getMinHeight() {
@@ -72,20 +54,15 @@
 				}
 			});
 		}
-
-		showPopover() {
-			const text = this.Translate.instant('tabs.receive.copy');
-			return this.$ionicLoading.show({
-				template: text,
-				duration: 700
-			});
-		}
 	}
 
 	angular.module('app')
 	.component('receive', {
 		controller: ReceiveController,
 		controllerAs: 'vm',
+		require: {
+			index: '^index'
+		},
 		templateUrl: 'app/account/components/receive.html'
 	});
 }());
