@@ -1,7 +1,7 @@
 /* global angular, cloudSky, cordova */
 
 angular.module('app')
-.directive('qrScanner', function ($ionicLoading, $rootScope, $timeout, Translate, Modal, platformInfo) {
+.directive('qrScanner', function (QRScanner) {
 	'use strict';
 
 	return {
@@ -15,49 +15,8 @@ angular.module('app')
 	};
 
 	function controller($scope) {
-
-		const isCordova	= platformInfo.isCordova;
-		const isWP		= platformInfo.isWP;
-		const isIOS		= platformInfo.isIOS;
-
-		$scope.openScanner = isCordova ? cordovaOpenScanner : modalOpenScanner;
-
-		function cordovaOpenScanner() {
-
-			const text = Translate.instant('modal.scanner.preparing');
-			return $ionicLoading.show({
-				template: text
-			})
-			.then(() => {
-				if (isIOS) {
-					cloudSky.zBar.scan({}, onSuccess, onError);
-				} else {
-					cordova.plugins.barcodeScanner.scan(onSuccess, onError, {
-						resultDisplayDuration: 0,
-						formats: 'QR_CODE'
-					});
-				}
-			});
-
-			function onSuccess(result) {
-				$ionicLoading.hide();
-				if (isWP && result.cancelled) {
-					return;
-				}
-
-				const data = isIOS ? result : result.text;
-				$scope.onScan({
-					data: data
-				});
-			}
-
-			function onError(error) {
-				$ionicLoading.hide();
-			}
-		}
-
-		function modalOpenScanner() {
-			Modal.show('app/core/modals/scanner.html')
+		$scope.openScanner = function () {
+			QRScanner.open()
 			.then(data => {
 				$scope.onScan({
 					data: data
