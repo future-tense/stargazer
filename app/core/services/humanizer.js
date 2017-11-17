@@ -297,7 +297,7 @@ angular.module('app')
 			}
 		}
 
-		if (op.masterWeight) {
+		if (typeof op.masterWeight !== 'undefined') {
 			if (current === account) {
 				res.push(`Set master weight to ${op.masterWeight}`);
 			} else {
