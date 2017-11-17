@@ -231,6 +231,10 @@ angular.module('app')
 		/* eslint-enable camelcase */
 
 		const self = new Account(opts);
+		if (accountId in accounts) {
+			return self;
+		}
+
 		accounts[self.id] = self;
 		Storage.setItem(`account.${self.alias}`, self);
 
