@@ -198,6 +198,15 @@ angular.module('app')
 		return Wallet.importAccount(publicKey, secret, name, network);
 	};
 
+	Wallet.hasAccount = function (name, network) {
+		const nameList = Wallet.accountList
+		.filter(account => account.network === network)
+		.map(account => account.alias);
+
+		const names = new Set(nameList);
+		return names.has(name);
+	};
+
 	Wallet.importAccount = function (accountId, seed, name, network) {
 
 		if (!network) {

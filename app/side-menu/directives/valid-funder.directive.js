@@ -16,13 +16,7 @@ angular.module('app')
 					return true;
 				}
 
-				const network = scope.network;
-				const nameList = Wallet.accountList
-				.filter(account => account.network === network)
-				.map(account => account.alias);
-
-				const names = new Set(nameList);
-				return names.has(name);
+				return Wallet.hasAccount(name, network);
 			};
 		}
 	};
