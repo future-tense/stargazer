@@ -5,6 +5,10 @@ angular.module('app')
 	'use strict';
 
 	const languages = {
+		de: {
+			name:	'Deutsch',
+			locale:	'de-DE'
+		},
 		en: {
 			name:	'English',
 			locale:	'en-US'
