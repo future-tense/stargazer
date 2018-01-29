@@ -26,6 +26,15 @@ angular.module('app')
 
 	function getKey(signer, password) {
 
+		/* has key gone missing from "keys"? */
+		if (!(signer in keychain)) {
+			const key = Storage.getItem(`key.${signer}`);
+			if (key) {
+				keychain[signer] = key;
+				Storage.setItem('keys', Object.keys(keychain));
+			}
+		}
+
 		const keyStore = keychain[signer];
 		if (typeof keyStore === 'string') {
 			const keys =  StellarSdk.Keypair.fromSecret(keyStore);
