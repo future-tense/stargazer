@@ -20,8 +20,9 @@
 
 	class SendController {
 
-		constructor($location, Modal, Reviewer, Wallet) {
+		constructor($location, Horizon, Modal, Reviewer, Wallet) {
 			this.$location = $location;
+			this.Horizon = Horizon;
 			this.Modal = Modal;
 			this.Reviewer = Reviewer;
 			this.Wallet = Wallet;
@@ -36,8 +37,10 @@
 
 			this.assetCodeCollisions = null;
 			this.hasPath			= false;
-			this.isPathPending	= true;
+			this.isPathPending		= true;
 			this.isPreFilled		= false;
+
+			this.minimumAccountBalance = this.Horizon.getMinimumAccountBalance(this.Wallet.current.network);
 
 			const query = this.$location.search();
 			if (Object.keys(query).length !== 0) {
@@ -229,7 +232,7 @@
 
 			if (this.flags.isUnregistered &&
 				this.send.asset.asset_type === 'native' &&
-				this.send.amount < 20
+				this.send.amount < this.minimumAccountBalance
 			) {
 				return;
 			}

@@ -74,12 +74,14 @@ angular.module('app')
 	};
 
 	Account.prototype.getReserve = function () {
-		return 10 * (2 + this.subentryCount);
+		const fees = Horizon.getFees(this.network);
+		return fees.baseReserve * (2 + this.subentryCount);
 	};
 
 	//	return true if account has enough balance to send 'amount' XLM in a tx w/ 'numOps' operations
 	Account.prototype.canSend = function (amount, numOps) {
-		return (10000000 * (this.getNativeBalance() - this.getReserve() - amount) - 100 * numOps) >= 0;
+		const fees = Horizon.getFees(this.network);
+		return (10000000 * (this.getNativeBalance() - this.getReserve() - amount) - fees.baseFee * numOps) >= 0;
 	};
 
 	Account.prototype.refresh = function () {

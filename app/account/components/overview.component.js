@@ -6,7 +6,7 @@
 
 	class OverviewController {
 
-		constructor($route, $scope, Wallet) {
+		constructor($route, $scope, Horizon, Wallet) {
 			const accountId = $route.current.params.accountId;
 			if (accountId) {
 				Wallet.current = Wallet.accounts[accountId];
@@ -15,6 +15,10 @@
 
 			this.$scope = $scope;
 			this.Wallet = Wallet;
+
+			this.translationData = {
+				number: Horizon.getMinumumAccountBalance(Wallet.current.network)
+			};
 		}
 
 		doRefresh() {

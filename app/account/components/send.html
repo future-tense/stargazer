@@ -51,7 +51,7 @@
 		</div>
 
 		<div class="card" ng-show="vm.showUnregistered()" style="margin-bottom: 100px">
-			Recipient account isn't registered. Send a minimum amount of 20 XLM to activate it.
+			Recipient account isn't registered. Send a minimum amount of {{vm.minimumAccountBalance}} XLM to activate it.
 			<span ng-show="vm.isEmail(vm.send.destination)">
 				Recipient will receive an email with instructions on how to retrieve the funds.
 			</span>

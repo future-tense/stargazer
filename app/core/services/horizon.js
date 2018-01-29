@@ -33,10 +33,46 @@ angular.module('app')
 		networks[hash] = network;
 	});
 
+	function getServer(hash) {
+		const url = networks[hash].server;
+		return new StellarSdk.Server(url);
+	}
+
+	const fees = {};
+
+	function getFees(hash) {
+
+		if (!(hash in fees)) {
+
+			const server = getServer(hash);
+			server.ledgers().order('desc').limit(1).call()
+			.then(function (res) {
+				const ledger = res.records[0];
+				fees[hash] = {
+					baseFee: ledger.base_fee,
+					baseReserve: ledger.base_reserve
+				}
+			})
+
+			fees[hash] = {
+				baseFee: 100,
+				baseReserve: "0.5"
+			}
+		}
+
+		return fees[hash]
+	}
+
 	return {
 		public: publicNetwork,
 
 		getHash: getHash,
+
+		getFees: getFees,
+
+		getMinumumAccountBalance: function (hash) {
+			return getFees(hash).baseReserve * 2;
+		},
 
 		getNetwork: function (hash) {
 			if (!hash) {
@@ -49,9 +85,6 @@ angular.module('app')
 			return networkList;
 		},
 
-		getServer: function (hash) {
-			const url = networks[hash].server;
-			return new StellarSdk.Server(url);
-		}
+		getServer: getServer
 	};
 });

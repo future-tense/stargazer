@@ -4,22 +4,25 @@
 	'use strict';
 
 	class CreatePersonalController {
-		constructor($location, Translate, Modal, Reviewer, Wallet) {
 
+		constructor($location, Translate, Horizon, Modal, Reviewer, Wallet) {
 			this.$location = $location;
 			this.Modal = Modal;
 			this.Reviewer = Reviewer;
 			this.Wallet = Wallet;
 
+			const minBalance = Horizon.getFees(Wallet.current.network).baseReserve * 2;
+
 			this.account = getAccountName();
 			this.advanced = false;
 			this.minHeight = getMinHeight();
+			this.minBalance = minBalance;
 
 			function getAccountName() {
 				const accountNum = Wallet.accountList.filter(item => !item.isMultiSig()).length + 1;
 				return {
 					alias: Translate.instant('account.defaultname', {number: accountNum}),
-					amount: 20
+					amount: minBalance
 				};
 			}
 
@@ -85,7 +88,7 @@
 		selectAccount() {
 			const data = {
 				network: this.account.network,
-				minimum: 20
+				minimum: this.minBalance
 			};
 
 			this.Modal.show('app/side-menu/modals/select-funder.html', data)

@@ -24,7 +24,7 @@
 	"tabs.home.pull":							"Pull to refresh...",
 	"tabs.home.activity":						"Activity",
 	"tabs.home.activity.empty":					"No activity yet",
-	"tabs.home.empty":							"Account is empty. Send 20 XLM to it to activate.",
+	"tabs.home.empty":							"Account is empty. Send {{number}} XLM to it to activate.",
 
 	"tabs.receive":								"Receive",
 	"tabs.receive.button":						"Request a specific amount",
