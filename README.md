@@ -45,7 +45,7 @@ All transactions go through the same steps of being displayed for review before 
 
 ## Translations
 
-- Go to [https://crowdin.com/project/stargazer] and sign up.
+- Go to https://crowdin.com/project/stargazer and sign up.
 - Select the language you want to translate.
 - Select the "en.json" file.
 - Start translating words/phrases.
