@@ -131,7 +131,7 @@
   "contact.edit":"编辑联系人",
   "contact.update":"更新联系人",
   "contact.delete":"删除联系人",
-  "timestamp.seconds":"{RES, plural, other {# 第二}} 前",
+  "timestamp.seconds":"{RES, plural, other {# 秒}} 前",
   "timestamp.minutes":"{RES, plural, other {# 分钟}} 前",
   "timestamp.hours":"{RES, plural, other {# 小时}} 前",
   "timestamp.days":"{RES, plural, other {# 天}} 前"
