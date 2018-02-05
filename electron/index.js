@@ -19,30 +19,38 @@
 	// This method will be called when Electron has finished
 	// initialization and is ready to create browser windows.
 	// Some APIs can only be used after this event occurs.
-	function createWindow () {
+	function createWindow() {
 
 		const template = [{
-			label: "Application",
-			submenu: [
-				{ label: "About Application", selector: "orderFrontStandardAboutPanel:" },
-				{ type: "separator" },
-				{ label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
-			]}, {
-			label: "Edit",
-			submenu: [
-				{ label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-				{ label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-				{ type: "separator" },
-				{ label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-				{ label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-				{ label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-				{ label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-			]}
+				label: 'Application',
+				submenu: [
+					{role: 'about'},
+					{type: 'separator'},
+					{role: 'quit'}
+				]
+			}, {
+				label: 'Edit',
+				submenu: [
+					{role: 'undo'},
+					{role: 'redo'},
+					{type: 'separator'},
+					{role: 'cut'},
+					{role: 'copy'},
+					{role: 'paste'}
+				]
+			}, {
+				label: 'View',
+				submenu: [
+					{role: 'toggledevtools'}
+				]
+			}
 		];
 
 		// No menu on Windows
-		if (process.platform !== 'win32') {
-			const Menu = electron.Menu;
+		const Menu = electron.Menu;
+		if (process.platform === 'win32') {
+			Menu.setMenu(null);
+		} else {
 			Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 		}
 
