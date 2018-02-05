@@ -17,7 +17,7 @@
 			this.Wallet = Wallet;
 
 			this.translationData = {
-				number: Horizon.getMinumumAccountBalance(Wallet.current.network)
+				number: Horizon.getMinimumAccountBalance(Wallet.current.network)
 			};
 		}
 

@@ -51,16 +51,16 @@ angular.module('app')
 				fees[hash] = {
 					baseFee: ledger.base_fee,
 					baseReserve: ledger.base_reserve
-				}
-			})
+				};
+			});
 
 			fees[hash] = {
 				baseFee: 100,
-				baseReserve: "0.5"
-			}
+				baseReserve: '0.5'
+			};
 		}
 
-		return fees[hash]
+		return fees[hash];
 	}
 
 	return {
@@ -70,7 +70,7 @@ angular.module('app')
 
 		getFees: getFees,
 
-		getMinumumAccountBalance: function (hash) {
+		getMinimumAccountBalance: function (hash) {
 			return getFees(hash).baseReserve * 2;
 		},
 
