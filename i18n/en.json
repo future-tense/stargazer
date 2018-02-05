@@ -33,7 +33,7 @@
 	"tabs.receive.heading":						"My Stellar Address",
 
 	"tabs.send":								"Send",
-	"tabs.send.amount.label":					"Amount to receive",
+	"tabs.send.amount.label":					"Amount to send",
 	"tabs.send.amount.placeholder":				"Amount",
 	"tabs.send.destination.label":				"Send to",
 	"tabs.send.destination.placeholder":		"Recipient Address",

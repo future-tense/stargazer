@@ -27,7 +27,7 @@
   "tabs.receive.federation":"Générer une adresse de fédération",
   "tabs.receive.heading":"Mon adresse Stellar",
   "tabs.send":"Envoyer",
-  "tabs.send.amount.label":"Montant à recevoir",
+  "tabs.send.amount.label":"Montant à envoyer",
   "tabs.send.amount.placeholder":"Montant",
   "tabs.send.destination.label":"Envoyer à",
   "tabs.send.destination.placeholder":"Adresse du destinataire",
