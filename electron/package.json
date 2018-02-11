@@ -51,11 +51,11 @@
     }
   },
   "devDependencies": {
-    "electron": "^1.4.15",
-    "electron-builder": "^14.1.1",
-    "electron-builder-squirrel-windows": "^13.10.1"
+    "electron": "^1.7.12",
+    "electron-builder": "^19.56.0",
+    "electron-builder-squirrel-windows": "^20.0.1"
   },
   "dependencies": {
-    "decimal.js": "^7.1.1"
+    "decimal.js": "^9.0.1"
   }
 }
