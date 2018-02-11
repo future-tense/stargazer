@@ -24,7 +24,7 @@
 	"tabs.home.pull":						"Коснитесь, чтобы обновить...",
 	"tabs.home.activity":				"Трансзакции",
 	"tabs.home.activity.empty":	"Нет активности",
-	"tabs.home.empty":					"Пришлите 20 XLM для активации аккаунта.",
+	"tabs.home.empty":					"Пополните аккаунт для активации.",
 
 	"tabs.receive":							"Принять",
 	"tabs.receive.button":			"Запросить определенную сумму",
