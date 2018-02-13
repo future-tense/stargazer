@@ -92,4 +92,4 @@ npm run start
 
 which originate from **Copay**, and are made available under the terms of the **MIT License**.
 
-Copyright &copy; 2016-2017 Future Tense, LLC
+Copyright &copy; 2016-2018 Future Tense, LLC
