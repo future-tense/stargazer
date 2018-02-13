@@ -76,8 +76,8 @@ cd ionic
 npm install -g ionic
 npm install
 
-ionic resources android --icon
-ionic state restore
+ionic cordova resources android --icon
+ionic cordova prepare
 npm run start
 ```
 
