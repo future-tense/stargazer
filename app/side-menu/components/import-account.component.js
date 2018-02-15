@@ -15,13 +15,6 @@
 
 			this.account = {};
 			this.advanced = false;
-			this.minHeight = getMinHeight();
-
-			function getMinHeight() {
-				const headerHeight = 40;
-				const buttonGroupHeight = 48 + 16 + 8;
-				return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
-			}
 		}
 
 		$onInit() {
