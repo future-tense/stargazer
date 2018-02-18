@@ -31,12 +31,12 @@
       ]
     },
     "mac": {
-	  "icon": "build/icons/icon.icns",
-	  "target": [
-		  "dmg",
-		  "zip"
-	  ],
-	  "category": "public.app-category.finance"
+      "icon": "build/icons/icon.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.finance"
     },
     "squirrelWindows": {
       "iconUrl": "https://github.com/johansten/stargazer/blob/master/electron/build/icons/icon.ico?raw=true"
@@ -56,6 +56,7 @@
     "electron-builder-squirrel-windows": "^20.0.1"
   },
   "dependencies": {
-    "decimal.js": "^9.0.1"
+    "decimal.js": "^9.0.1",
+    "stellar-ledger-api": "^2.0.5"
   }
 }
