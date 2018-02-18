@@ -16,7 +16,7 @@ angular.module('app')
 					return true;
 				}
 
-				return Wallet.hasAccount(name, network);
+				return Wallet.hasAccount(name, scope.network);
 			};
 		}
 	};
