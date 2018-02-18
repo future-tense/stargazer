@@ -104,12 +104,27 @@
 		</div>
 	</div>
 
-	<div class="button-group" style="position:absolute;bottom:0">
-		<button class="button button-block button-positive" on-tap="vm.addContact()" ng-if="!vm.isWallet && !vm.isContact && vm.type!=='trade'">
-			{{'transaction.contact.add' | translate}}
-		</button>
-		<button class="button button-block button-positive" on-tap="vm.editComment()">
-			{{vm.buttonText() | translate}}
-		</button>
-	</div>
+	<div class="item item-divider"></div>
+
+	<a href on-tap="vm.addContact()" ng-if="!vm.isWallet && !vm.isContact && vm.type!=='trade'">
+		<div class="item">
+			<span>
+				{{'transaction.contact.add' | translate}}
+			</span>
+			<div class="pull-right text-gray">
+				<span>&raquo;</span>
+			</div>
+		</div>
+	</a>
+
+	<a href on-tap="vm.editComment()">
+		<div class="item">
+			<span>
+				{{vm.buttonText() | translate}}
+			</span>
+			<div class="pull-right text-gray">
+				<span>&raquo;</span>
+			</div>
+		</div>
+	</a>
 </ion-content>
