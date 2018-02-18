@@ -24,6 +24,18 @@ angular.module('app', [
 	}, 100);
 })
 
+.run(function ($rootScope, $location, Wallet) {
+	'use strict';
+
+	$rootScope.$on('$routeChangeStart', function (event, next, current) {
+		if (Wallet.accountList.length === 0) {
+			if (next.$$route.template === '<overview></overview>') {
+				$location.path('/side-menu/add-account');
+			}
+		}
+	});
+})
+
 .constant('TranslationMaps', {
 	/* jshint ignore:start */
 	de: /* @include ../i18n/de.json */,

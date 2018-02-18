@@ -367,11 +367,6 @@ angular.module('app')
 		Storage.setItem('accounts', accountNames);
 	};
 
-	if (accountList.length === 0) {
-		const accountName = Translate.instant('account.initialname');
-		Wallet.createEmptyAccount(accountName);
-	}
-
 	Wallet.accountList = accountList;
 
 	// -----------------------------------------------------------------------------------------------------------------
