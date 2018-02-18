@@ -26,6 +26,7 @@ angular.module('app', [
 
 .constant('TranslationMaps', {
 	/* jshint ignore:start */
+	de: /* @include ../i18n/de.json */,
 	en: /* @include ../i18n/en.json */,
 	es: /* @include ../i18n/es.json */,
 	fil: /* @include ../i18n/fil.json */,
