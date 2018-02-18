@@ -11,25 +11,17 @@
 			this.Reviewer = Reviewer;
 			this.Wallet = Wallet;
 
-			const minBalance = Horizon.getFees(Wallet.current.network).baseReserve * 2;
+			this.minBalance = Horizon.getMinimumAccountBalance(Wallet.current.network);
+			this.state = 1;
 
-			this.account = getAccountName();
-			this.advanced = false;
-			this.minHeight = getMinHeight();
-			this.minBalance = minBalance;
+			this.account = {
+				alias: getAccountName(),
+				amount: this.minBalance
+			};
 
 			function getAccountName() {
 				const accountNum = Wallet.accountList.filter(item => !item.isMultiSig()).length + 1;
-				return {
-					alias: Translate.instant('account.defaultname', {number: accountNum}),
-					amount: minBalance
-				};
-			}
-
-			function getMinHeight() {
-				const headerHeight = 40;
-				const buttonGroupHeight = 48 + 16 + 8;
-				return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
+				return Translate.instant('account.defaultname', {number: accountNum});
 			}
 		}
 
@@ -37,18 +29,18 @@
 
 			const network = this.account.network;
 
-			const accounts = {};
-			Object.keys(this.Wallet.accounts).forEach(key => {
-				const account = this.Wallet.accounts[key];
-				if (account.network === network) {
-					accounts[account.alias] = account;
-				}
-			});
+			if (this.hasValidFunder()) {
 
-			const funderName = this.account.funder;
-			if (funderName in accounts) {
+				const accounts = {};
+				Object.keys(this.Wallet.accounts).forEach(key => {
+					const account = this.Wallet.accounts[key];
+					if (account.network === network) {
+						accounts[account.alias] = account;
+					}
+				});
+
 				const newAccount	= StellarSdk.Keypair.random();
-				const funder		= accounts[funderName];
+				const funder		= accounts[this.account.funder];
 
 				funder.horizon().loadAccount(funder.id)
 				.then(account => {
@@ -85,7 +77,23 @@
 			}
 		}
 
-		selectAccount() {
+		hasValidFunder() {
+			const name = this.account.funder;
+			const network = this.account.network;
+			return this.Wallet.hasAccount(name, network);
+		}
+
+		next() {
+			if (this.state === 1) {
+				this.state = 2;
+			}
+
+			else if (this.state === 2) {
+				this.createAccount();
+			}
+		}
+
+		selectFunder() {
 			const data = {
 				network: this.account.network,
 				minimum: this.minBalance
