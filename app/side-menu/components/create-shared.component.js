@@ -3,39 +3,76 @@
 (function () {
 	'use strict';
 
+	const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
+
 	class CreateSharedController {
 
-		constructor($location, Translate, Modal, Reviewer, Signer, Wallet) {
-
+		constructor($location, Commands, Contacts, Horizon, Modal, QRScanner, Reviewer, Signer, Translate, Wallet) {
 			this.$location = $location;
+			this.Horizon = Horizon;
 			this.Modal = Modal;
+			this.QRScanner = QRScanner;
 			this.Reviewer = Reviewer;
 			this.Signer = Signer;
 			this.Wallet = Wallet;
+			this.Commands = Commands;
+			this.Contacts = Contacts;
 
-			this.account = getAccountName();
-			this.advanced = false;
-			this.minHeight = getMinHeight();
+			this.account = {
+				alias:	getAccountName()
+			};
+
 			this.signers = [];
-			this.minimum = 20;
+			this.state = 0;
+
+			this.currentSignerIndex = 1;
+			this.numCosigners = 2;
+			this.threshold = 1;
 
 			function getAccountName() {
 				const accountNum = getNextSharedAccountNumber();
-				return {
-					alias: `Shared Account #${accountNum}`,
-		//			alias: Translate.instant('account.defaultname', {number: accountNum}),
-					amount: 20
-				};
+				return `Shared Account #${accountNum}`;
 			}
 
 			function getNextSharedAccountNumber() {
 				return Wallet.accountList.filter(item => item.isMultiSig()).length + 1;
 			}
+		}
 
-			function getMinHeight() {
-				const headerHeight = 40;
-				const buttonGroupHeight = 48 + 16 + 8;
-				return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
+		onCosignerCountChange() {
+			this.threshold = Math.min(this.threshold, this.numCosigners);
+		}
+
+		getCosignerOptions() {
+			return range(2, 11);
+		}
+
+		getThresholdOptions() {
+			return range(1, this.numCosigners + 1);
+		}
+
+		hasContacts() {
+			return this.Contacts.forNetwork(this.account.network).length !== 0;
+		}
+
+		next() {
+			if (this.state === 0) {
+				this.state = 1;
+			}
+
+			else if (this.state === 1) {
+				this.addSigner();
+				if (this.signers.length === this.numCosigners) {
+
+					const fees = this.Horizon.getFees(this.account.network);
+					this.minimum = fees.baseReserve * (2 + this.numCosigners);
+					this.account.amount = this.minimum;
+					this.state = 2;
+				}
+			}
+
+			else if (this.state === 2) {
+				this.createAccount();
 			}
 		}
 
@@ -44,10 +81,8 @@
 				address: this.account.signer,
 				id: this.account.destInfo.id
 			});
-
 			this.account.signer = '';
-			this.account.amount += 10;
-			this.minimum += 10;
+			this.currentSignerIndex += 1;
 		}
 
 		createAccount() {
@@ -90,12 +125,13 @@
 						builder.addOperation(op);
 					});
 
-					const threshold = this.account.threshold;
+					const threshold = this.threshold;
 					builder.addOperation(StellarSdk.Operation.setOptions({
 						source: newAccountId,
 						lowThreshold: threshold,
 						medThreshold: threshold,
-						highThreshold: threshold
+						highThreshold: threshold,
+						masterWeight: 0
 					}));
 
 					/*	This signs for the new account */
@@ -130,25 +166,45 @@
 		selectAccount() {
 			const data = {
 				network: this.account.network,
-				minimum: 20 + 10 * this.signers.length,
-				numOps: 1 + this.signers.length
+				heading: 'Select Account'
 			};
 
-			this.Modal.show('app/side-menu/modals/select-funder.html', data)
+			this.Modal.show('app/core/modals/select-account.html', data)
 			.then((res) => {
-				this.account.funder = res;
+				this.account.signer = res;
 			});
 		}
 
-		selectSigner() {
+		selectContact() {
 			const data = {
 				network: this.account.network,
-				heading: 'Select signer'
+				heading: 'Select Contact'
 			};
 
 			this.Modal.show('app/core/modals/select-contact.html', data)
 			.then((res) => {
 				this.account.signer = res;
+			});
+		}
+
+		selectFromQR() {
+			this.QRScanner.open()
+			.then(this.Commands.onContact)
+			.then((res) => {
+				this.account.signer = res.id;
+			});
+		}
+
+		selectFunder() {
+			const data = {
+				network: this.account.network,
+				minimum: this.minimum,
+				numOps: 2 + this.signers.length
+			};
+
+			this.Modal.show('app/side-menu/modals/select-funder.html', data)
+			.then((res) => {
+				this.account.funder = res;
 			});
 		}
 	}
