@@ -1,12 +1,45 @@
 /* global angular, StellarSdk */
 
 angular.module('app')
-.factory('Commands', function ($http, $ionicLoading, $location, Contacts, Keychain, Modal, Wallet) {
+.factory('Commands', function ($http, $ionicLoading, $location, $q, Contacts, Keychain, Modal, Wallet) {
 	'use strict';
 
 	return {
-		onQrCodeScanned: onQrCodeScanned
+		onQrCodeScanned: onQrCodeScanned,
+		onContact: onContact
 	};
+
+	function onContact(qrData) {
+
+		return $q((resolve, reject) => {
+			try {
+				const data = JSON.parse(qrData);
+				if (!data.stellar) {
+					reject();
+				}
+
+				else if (data.stellar.account) {
+					if (!data.stellar.key) {
+						resolve(data.stellar.account);
+					} else {
+						reject();
+					}
+				}
+			}
+
+			catch (err) {
+				if (StellarSdk.StrKey.isValidEd25519PublicKey(qrData)) {
+					const contact = {
+						id: qrData
+					};
+					resolve(contact);
+				}
+				else {
+					reject();
+				}
+			}
+		});
+	}
 
 	function onQrCodeScanned(qrData) {
 

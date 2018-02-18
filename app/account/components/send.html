@@ -1,77 +1,116 @@
 <config-navbar heading="Send" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header" scrollbar-y="false">
-	<div class="list">
-		<div class="item item-divider">
-			{{'tabs.send.info.heading' | translate}}
-		</div>
 
-		<form name="forms.send">
-			<label class="item item-input item-inset item-stacked-label">
-				<span class="input-label">
-					{{'tabs.send.destination.label' | translate}}
-				</span>
-				<input type="text" name="destination" ng-model="vm.send.destination" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
-				<a on-tap="vm.selectRecipient()" style="position:absolute;right:16px;top:40px;padding-left:16px">
-					<i class="icon icon-book"></i>
-				</a>
-				<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap" class="text-gray" ng-show="vm.showRaw()">
-					({{vm.send.destInfo.id}})
-				</span>
-			</label>
+	<div ng-if="vm.state == 1">
+		<div class="list">
+			<div class="item item-divider">
+				{{'tabs.send.info.heading' | translate}}
+			</div>
 
-			<div ng-show="vm.send.destInfo">
-				<div class="item" style="padding-bottom:8px;padding-top:6px">
-					<span class="input-label" style="padding-bottom:0;padding-top:0">
-                        {{'tabs.send.amount.label' | translate}}
-                    </span>
-					<div class="row" style="padding:0">
-						<div class="col" style="padding:0">
-							<label class="item-input item-stacked-label" style="padding-left:0;border-width:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-right:8px">
-								<input type="number" ng-model="vm.send.amount" ng-change="vm.onAmount()" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.amount.placeholder' | translate}}" min="0" style="height:28px">
-							</label>
-						</div>
+			<form name="forms.send">
+				<label class="item item-input item-inset item-stacked-label">
+					<span class="input-label">
+						{{'tabs.send.destination.label' | translate}}
+					</span>
+					<input type="text" name="destination" ng-model="vm.send.destination" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
+				</label>
+				<memo-selector type="vm.send.memo_type" memo="vm.send.memo"></memo-selector>
+			</form>
 
-						<div class="col" style="padding:0;">
-							<label class="item-input item-select item-stacked-label" style="padding-left:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-left:8px">
-								<select ng-model="vm.send.asset" ng-change="vm.onAsset()" ng-options="vm.getAssetDescription(asset) for asset in vm.destinationAssets" style="height:28px;padding-top:3px;padding-bottom:2px">
-								</select>
-							</label>
-						</div>
+			<div class="item item-divider"></div>
+			<a href on-tap="vm.selectAccount()">
+				<div class="item">
+					<span>
+						{{'Select an Account' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
 					</div>
 				</div>
+			</a>
 
-				<advanced-toggle flag="vm.advanced"></advanced-toggle>
-				<memo-selector type="vm.send.memo_type" memo="vm.send.memo" ng-show="vm.advanced"></memo-selector>
+			<a href on-tap="vm.selectContact()" ng-if="vm.hasContacts()">
+				<div class="item">
+					<span>
+						{{'Select a Contact' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+
+			<a href on-tap="vm.selectFromQR()">
+				<div class="item">
+					<span>
+						{{'Scan a QR-code' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+
+			<div class="card" ng-show="forms.send.destination.$viewValue && !vm.send.destInfo">
+				Not a valid recipient address
 			</div>
-		</form>
 
-		<div class="card" ng-show="vm.forms.send.destination.$viewValue && !vm.send.destInfo">
-			Not a valid recipient address
-		</div>
-
-		<div class="card" ng-show="vm.showUnregistered()" style="margin-bottom: 100px">
-			Recipient account isn't registered. Send a minimum amount of {{vm.minimumAccountBalance}} XLM to activate it.
-			<span ng-show="vm.isEmail(vm.send.destination)">
-				Recipient will receive an email with instructions on how to retrieve the funds.
-			</span>
-		</div>
-
-		<div class="card" ng-show="vm.showNoPaths()" style="margin-bottom: 100px">
-			{{'tabs.send.paths.empty' | translate}}
-		</div>
-
-		<div ng-show="vm.showPaths()" style="margin-bottom: 100px">
-			<div class="item item-divider">
-				{{'tabs.send.paths.heading' | translate}}
+			<div class="card" ng-show="vm.showUnregistered()" style="margin-bottom: 100px">
+				Recipient account isn't registered. Send a minimum amount of {{vm.minimumAccountBalance}} XLM to activate it.
+				<span ng-show="vm.isEmail(vm.send.destination)">
+					Recipient will receive an email with instructions on how to retrieve the funds.
+				</span>
 			</div>
-			<div class="item" style="text-align:center" ng-repeat="path in vm.send.pathRecords">
-				<p>{{ path.source_amount | formatAmount }}</p>
-				<p>{{ vm.getSourceAssetDescription(path) }}</p>
-				<button type="button" class="button button-small button-positive" ng-click="vm.submit($index)" ng-disabled="!path.enabled">
-					{{'tabs.send' | translate}}
-				</button>
+		</div>
+
+		<div class="button-group" style="position:absolute;bottom:0">
+			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="!vm.send.destInfo">
+				Next
+			</button>
+		</div>
+	</div>
+
+	<div ng-if="vm.state == 2">
+		<div class="list">
+			<div class="item item-divider"></div>
+			<div class="item" style="padding-bottom:8px;padding-top:6px">
+				<span class="input-label" style="padding-bottom:0;padding-top:0">
+					{{'tabs.send.amount.label' | translate}}
+				</span>
+				<div class="row" style="padding:0">
+					<div class="col" style="padding:0">
+						<label class="item-input item-stacked-label" style="padding-left:0;border-width:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-right:8px">
+							<input type="number" ng-model="vm.send.amount" ng-change="vm.onAmount()" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.amount.placeholder' | translate}}" min="0" style="height:28px">
+						</label>
+					</div>
+
+					<div class="col" style="padding:0;">
+						<label class="item-input item-select item-stacked-label" style="padding-left:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-left:8px">
+							<select ng-model="vm.send.asset" ng-change="vm.onAsset()" ng-options="vm.getAssetDescription(asset) for asset in vm.destinationAssets" style="height:28px;padding-top:3px;padding-bottom:2px">
+							</select>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="card" ng-show="vm.showNoPaths()" style="margin-bottom: 100px">
+				{{'tabs.send.paths.empty' | translate}}
+			</div>
+
+			<div ng-show="vm.showPaths()" style="margin-bottom: 100px">
+				<div class="item item-divider">
+					{{'tabs.send.paths.heading' | translate}}
+				</div>
+				<div class="item" style="text-align:center" ng-repeat="path in vm.send.pathRecords">
+					<p>{{ path.source_amount | formatAmount }}</p>
+					<p>{{ vm.getSourceAssetDescription(path) }}</p>
+					<button type="button" class="button button-small button-positive" ng-click="vm.submit($index)" ng-disabled="!path.enabled">
+						{{'tabs.send' | translate}}
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
+
 </ion-content>

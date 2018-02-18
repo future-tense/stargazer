@@ -20,10 +20,13 @@
 
 	class SendController {
 
-		constructor($location, Horizon, Modal, Reviewer, Wallet) {
+		constructor($location, Commands, Contacts, Horizon, Modal, QRScanner, Reviewer, Wallet) {
 			this.$location = $location;
 			this.Horizon = Horizon;
+			this.Commands = Commands;
+			this.Contacts = Contacts;
 			this.Modal = Modal;
+			this.QRScanner = QRScanner;
 			this.Reviewer = Reviewer;
 			this.Wallet = Wallet;
 		}
@@ -41,6 +44,7 @@
 			this.isPreFilled		= false;
 
 			this.minimumAccountBalance = this.Horizon.getMinimumAccountBalance(this.Wallet.current.network);
+			this.state = 1;
 
 			const query = this.$location.search();
 			if (Object.keys(query).length !== 0) {
@@ -94,6 +98,10 @@
 				asset_issuer:	path.source_asset_issuer
 			});
 			/* eslint-enable camelcase */
+		}
+
+		hasContacts() {
+			return this.Contacts.forNetwork(this.Wallet.current.network).length !== 0;
 		}
 
 		onAmount() {
@@ -202,6 +210,38 @@
 
 		showRaw() {
 			return this.send.destInfo && (this.send.destInfo.id !== this.send.destination);
+		}
+
+		selectAccount() {
+			const data = {
+				network: this.Wallet.current.network,
+				heading: 'modal.recipient.heading'
+			};
+
+			this.Modal.show('app/core/modals/select-account.html', data)
+			.then(dest => {
+				this.send.destination = dest;
+			});
+		}
+
+		selectContact() {
+			const data = {
+				network: this.Wallet.current.network,
+				heading: 'Select Contact'
+			};
+
+			this.Modal.show('app/core/modals/select-contact.html', data)
+			.then(dest => {
+				this.send.destination = dest;
+			});
+		}
+
+		selectFromQR() {
+			this.QRScanner.open()
+			.then(this.Commands.onContact)
+			.then(dest => {
+				this.send.destination = dest;
+			});
 		}
 
 		selectRecipient() {
@@ -414,6 +454,12 @@
 
 		updateCollisions(assets) {
 			this.assetCodeCollisions = this.Wallet.getAssetCodeCollisions(assets);
+		}
+
+		next() {
+			if (this.state === 1) {
+				this.state = 2;
+			}
 		}
 	}
 

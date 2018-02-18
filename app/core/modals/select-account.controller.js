@@ -1,7 +1,7 @@
 /* global angular, console */
 
 angular.module('app')
-.controller('SelectContactCtrl', function ($scope, Contacts) {
+.controller('SelectAccountCtrl', function ($scope, Wallet) {
 	'use strict';
 
 	const network = $scope.data.network;
@@ -9,8 +9,14 @@ angular.module('app')
 	$scope.cancel = cancel;
 	$scope.select = select;
 
-	$scope.contacts = Contacts.forNetwork(network);
+	$scope.accounts = getAccounts();
 	$scope.heading	= $scope.data.heading;
+
+	function getAccounts() {
+		return Wallet.accountList
+		.filter(item => item.network === network)
+		.map(item => item.alias);
+	}
 
 	function cancel() {
 		$scope.closeModalService();
