@@ -48,9 +48,7 @@
 
 		// No menu on Windows
 		const Menu = electron.Menu;
-		if (process.platform === 'win32') {
-			Menu.setMenu(null);
-		} else {
+		if (process.platform !== 'win32') {
 			Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 		}
 
