@@ -18,42 +18,44 @@
 				<memo-selector type="vm.send.memo_type" memo="vm.send.memo"></memo-selector>
 			</form>
 
-			<div class="item item-divider"></div>
-			<a href on-tap="vm.selectAccount()">
-				<div class="item">
+			<div ng-show="!vm.send.destInfo">
+				<div class="item item-divider"></div>
+				<a href on-tap="vm.selectAccount()">
+					<div class="item">
 					<span>
 						{{'Select an Account' | translate}}
 					</span>
-					<div class="pull-right text-gray">
-						<span>&raquo;</span>
+						<div class="pull-right text-gray">
+							<span>&raquo;</span>
+						</div>
 					</div>
-				</div>
-			</a>
+				</a>
 
-			<a href on-tap="vm.selectContact()" ng-if="vm.hasContacts()">
-				<div class="item">
+				<a href on-tap="vm.selectContact()" ng-if="vm.hasContacts()">
+					<div class="item">
 					<span>
 						{{'Select a Contact' | translate}}
 					</span>
-					<div class="pull-right text-gray">
-						<span>&raquo;</span>
+						<div class="pull-right text-gray">
+							<span>&raquo;</span>
+						</div>
 					</div>
-				</div>
-			</a>
+				</a>
 
-			<a href on-tap="vm.selectFromQR()">
-				<div class="item">
+				<a href on-tap="vm.selectFromQR()">
+					<div class="item">
 					<span>
 						{{'Scan a QR-code' | translate}}
 					</span>
-					<div class="pull-right text-gray">
-						<span>&raquo;</span>
+						<div class="pull-right text-gray">
+							<span>&raquo;</span>
+						</div>
 					</div>
-				</div>
-			</a>
+				</a>
 
-			<div class="card" ng-show="forms.send.destination.$viewValue && !vm.send.destInfo">
-				Not a valid recipient address
+				<div class="card" ng-show="forms.send.destination.$viewValue">
+					Not a valid recipient address
+				</div>
 			</div>
 
 			<div class="card" ng-show="vm.showUnregistered()" style="margin-bottom: 100px">
