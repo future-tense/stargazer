@@ -1,9 +1,9 @@
-<config-navbar heading="{{'sidemenu.account' | translate}}" back="{{'global.done' | translate}}"></config-navbar>
+<config-navbar heading="{{vm.heading | translate}}" back="{{vm.done | translate}}"></config-navbar>
 
 <ion-content class="has-header" scrollbar-y="false">
 	<div class="list">
-		<div class="item item-divider">
-		</div>
+		<div class="item item-divider"></div>
+
 		<a href="#/side-menu/create-personal">
 			<div class="item">
 				<span>
@@ -15,10 +15,32 @@
 			</div>
 		</a>
 
+		<a href="#/side-menu/create-shared" ng-if="vm.isInitialized">
+			<div class="item">
+				<span>
+					Create a Shared Account
+				</span>
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
 		<a href="#/side-menu/import-account">
-			<div class="item bottom-border">
+			<div class="item">
 				<span>
 					{{'sidemenu.account.import' | translate}}
+				</span>
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<a href on-tap="vm.importFromQR()">
+			<div class="item bottom-border">
+				<span>
+					{{'Scan a QR-code' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
