@@ -9,6 +9,7 @@
 			this.QRScanner = QRScanner;
 
 			this.isInitialized = Wallet.accountList.length !== 0;
+			this.hasCamera = QRScanner.hasCamera;
 
 			if (this.isInitialized) {
 				this.heading = 'sidemenu.account';

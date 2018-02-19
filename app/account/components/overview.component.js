@@ -6,7 +6,7 @@
 
 	class OverviewController {
 
-		constructor($route, $scope, Horizon, Wallet) {
+		constructor($route, $scope, Horizon, Wallet, QRScanner) {
 			const accountId = $route.current.params.accountId;
 			if (accountId) {
 				Wallet.current = Wallet.accounts[accountId];
@@ -15,6 +15,7 @@
 
 			this.$scope = $scope;
 			this.Wallet = Wallet;
+			this.hasCamera = QRScanner.hasCamera;
 
 			this.translationData = {
 				number: Horizon.getMinimumAccountBalance(Wallet.current.network)

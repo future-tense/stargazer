@@ -19,7 +19,7 @@
 			<account-info></account-info>
 		</div>
 
-		<div class="camera-icon" style="position:relative">
+		<div class="camera-icon" style="position:relative" ng-show="vm.hasCamera()">
 			<qr-scanner on-scan="vm.index.onQrCodeScanned(data)"></qr-scanner>
 		</div>
 
@@ -33,7 +33,7 @@
 		</div>
 
 		<div style="height:40px;width:100%;position:fixed;bottom:40px">
-			<div class="camera-icon" style="position:relative">
+			<div class="camera-icon" style="position:relative" ng-show="vm.hasCamera()">
 				<qr-scanner on-scan="vm.index.onQrCodeScanned(data)"></qr-scanner>
 			</div>
 			<account-info></account-info>

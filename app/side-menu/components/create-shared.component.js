@@ -29,6 +29,8 @@
 			this.numCosigners = 2;
 			this.threshold = 1;
 
+			this.hasCamera = this.QRScanner.hasCamera;
+
 			function getAccountName() {
 				const accountNum = getNextSharedAccountNumber();
 				return `Shared Account #${accountNum}`;

@@ -42,6 +42,7 @@
 			this.hasPath			= false;
 			this.isPathPending		= true;
 			this.isPreFilled		= false;
+			this.hasCamera			= this.QRScanner.hasCamera;
 
 			this.minimumAccountBalance = this.Horizon.getMinimumAccountBalance(this.Wallet.current.network);
 			this.state = 1;

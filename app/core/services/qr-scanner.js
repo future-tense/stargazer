@@ -1,3 +1,5 @@
+/* global angular */
+
 angular.module('app')
 .factory('QRScanner', function ($ionicLoading, $q, Modal, platformInfo, Translate) {
 	'use strict';
@@ -6,11 +8,18 @@ angular.module('app')
 	const isWP		= platformInfo.isWP;
 	const isIOS		= platformInfo.isIOS;
 
-	return {
-		open: isCordova ? cordovaOpenScanner : modalOpenScanner
+	const hasCamera = () => {
+		if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+			return navigator.mediaDevices.enumerateDevices()
+			.then(devices => devices.filter(device => device.kind === 'videoinput').length)
+			.catch(err => 0)
+			.then(res => (res !== 0));
+		} else {
+			return $q.when(false);
+		}
 	};
 
-	function cordovaOpenScanner() {
+	const cordovaOpenScanner = () => {
 
 		const text = Translate.instant('modal.scanner.preparing');
 		return $ionicLoading.show({
@@ -37,9 +46,18 @@ angular.module('app')
 				});
 			}
 		}));
-	}
+	};
 
-	function modalOpenScanner() {
-		return Modal.show('app/core/modals/scanner.html');
-	}
+	const modalOpenScanner = () => Modal.show('app/core/modals/scanner.html');
+
+	//
+	//	:KLUDGE:	ng-show doesn't seem to evaluate the value of the promise itself
+	//
+
+	const test = (promise) => () => promise.$$state.value;
+
+	return {
+		hasCamera: test(hasCamera()),
+		open: isCordova ? cordovaOpenScanner : modalOpenScanner
+	};
 });

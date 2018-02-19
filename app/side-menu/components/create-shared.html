@@ -72,7 +72,7 @@
 					</div>
 				</a>
 
-				<a href on-tap="vm.selectFromQR()">
+				<a href on-tap="vm.selectFromQR()" ng-show="vm.hasCamera()">
 					<div class="item">
 					<span>
 						{{'Scan a QR-code' | translate}}
