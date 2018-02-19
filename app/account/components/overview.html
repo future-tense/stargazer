@@ -8,7 +8,7 @@
 			on-refresh="vm.doRefresh()">
 		</ion-refresher>
 		<div style="background-color:#00BCD4;color:#FFFFFF">
-			<div style="height:120px;font-size:18px;display:flex;flex-direction:column;justify-content:center">
+			<div style="min-height:120px;font-size:18px;display:flex;flex-direction:column;justify-content:center">
 				<div>
 					<div style="text-align:center" ng-repeat="asset in vm.getAssets()">
 						{{ asset.balance | formatAmount }}
