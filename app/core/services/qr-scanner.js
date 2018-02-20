@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular, cloudSky, cordova */
 
 angular.module('app')
 .factory('QRScanner', function ($ionicLoading, $q, Modal, platformInfo, Translate) {
@@ -8,16 +8,22 @@ angular.module('app')
 	const isWP		= platformInfo.isWP;
 	const isIOS		= platformInfo.isIOS;
 
-	const hasCamera = () => {
+	const testCamera = () => {
+
+		const defer = $q.defer();
 		if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-			return navigator.mediaDevices.enumerateDevices()
+			navigator.mediaDevices.enumerateDevices()
 			.then(devices => devices.filter(device => device.kind === 'videoinput').length)
 			.catch(err => 0)
-			.then(res => (res !== 0));
+			.then(res => defer.resolve(res !== 0));
 		} else {
-			return $q.when(false);
+			defer.resolve(false);
 		}
+
+		return defer.promise;
 	};
+
+	const hasCamera = testCamera();
 
 	const cordovaOpenScanner = () => {
 
@@ -57,7 +63,7 @@ angular.module('app')
 	const test = (promise) => () => promise.$$state.value;
 
 	return {
-		hasCamera: test(hasCamera()),
+		hasCamera: test(hasCamera),
 		open: isCordova ? cordovaOpenScanner : modalOpenScanner
 	};
 });
