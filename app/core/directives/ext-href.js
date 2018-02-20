@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular, require */
 
 angular.module('app')
 .directive('extHref', function (platformInfo) {
@@ -10,16 +10,15 @@ angular.module('app')
 	};
 
 	function link(scope, element, attributes) {
-		const url = attributes.extHref;
-		if (platformInfo.isCordova) {
-			element[0].onclick = onclick;
-		} else {
-			element[0].href = url;
-		}
 
-		function onclick() {
-			window.open(url, '_system');
+		const url = attributes.extHref;
+		element[0].onclick = () => {
+			if (platformInfo.isCordova) {
+				window.open(url, '_system');
+			} else {
+				require('electron').shell.openExternal(url);
+			}
 			return false;
-		}
+		};
 	}
 });
