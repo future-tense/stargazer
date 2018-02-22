@@ -1,10 +1,11 @@
 /* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import horizon from '../../core/services/horizon.js';
 
 class OverviewController {
 
-	constructor($route, $scope, Horizon, Wallet, QRScanner) {
+	constructor($route, $scope, Wallet, QRScanner) {
 		const accountId = $route.current.params.accountId;
 		if (accountId) {
 			Wallet.current = Wallet.accounts[accountId];
@@ -16,7 +17,7 @@ class OverviewController {
 		this.hasCamera = QRScanner.hasCamera;
 
 		this.translationData = {
-			number: Horizon.getMinimumAccountBalance(Wallet.current.network)
+			number: horizon.getMinimumAccountBalance(Wallet.current.network)
 		};
 	}
 

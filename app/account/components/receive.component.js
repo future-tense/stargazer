@@ -1,13 +1,13 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import horizon from '../../core/services/horizon.js';
 
 class ReceiveController {
 
-	constructor($location, Horizon, Modal, Wallet) {
+	constructor($location, Modal, Wallet) {
 
 		this.$location = $location;
-		this.Horizon = Horizon;
 		this.Modal = Modal;
 		this.Wallet = Wallet;
 
@@ -43,7 +43,7 @@ class ReceiveController {
 			id: this.Wallet.current.id
 		};
 
-		if (this.Wallet.current.network !== this.Horizon.public) {
+		if (this.Wallet.current.network !== horizon.public) {
 			account.network = this.Wallet.current.network;
 		}
 

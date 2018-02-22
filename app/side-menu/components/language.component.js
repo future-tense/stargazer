@@ -1,20 +1,19 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import language from '../../core/services/language.js';
 
 class LanguageController {
 
-	constructor($rootScope, Language) {
+	constructor($rootScope) {
 
 		this.$rootScope = $rootScope;
-		this.Language = Language;
-
-		this.choice		= Language.getCurrent();
-		this.languages	= Language.getLanguages();
+		this.choice		= language.getCurrent();
+		this.languages	= language.getLanguages();
 	}
 
 	setLanguage(code) {
-		this.Language.setCurrent(code);
+		language.setCurrent(code);
 		this.$rootScope.goBack();
 	}
 }

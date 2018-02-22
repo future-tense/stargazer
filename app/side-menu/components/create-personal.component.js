@@ -2,16 +2,18 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import horizon from '../../core/services/horizon.js';
+import translate from '../../core/services/translate.service.js';
 
 class CreatePersonalController {
 
-	constructor($location, Translate, Horizon, Modal, Reviewer, Wallet) {
+	constructor($location, Modal, Reviewer, Wallet) {
 		this.$location = $location;
 		this.Modal = Modal;
 		this.Reviewer = Reviewer;
 		this.Wallet = Wallet;
 
-		this.minBalance = Horizon.getMinimumAccountBalance(Wallet.current.network);
+		this.minBalance = horizon.getMinimumAccountBalance(Wallet.current.network);
 		this.state = 1;
 
 		this.account = {
@@ -21,7 +23,7 @@ class CreatePersonalController {
 
 		function getAccountName() {
 			const accountNum = Wallet.accountList.filter(item => !item.isMultiSig()).length + 1;
-			return Translate.instant('account.defaultname', {number: accountNum});
+			return translate.instant('account.defaultname', {number: accountNum});
 		}
 	}
 

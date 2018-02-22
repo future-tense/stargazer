@@ -1,9 +1,11 @@
 /* global angular, cloudSky, cordova */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import translate from './translate.service.js';
+import platformInfo from './platform-info.js';
 
 angular.module('app.service.qr-scanner', [])
-.factory('QRScanner', function ($ionicLoading, $q, Modal, platformInfo, Translate) {
+.factory('QRScanner', function ($ionicLoading, $q, Modal) {
 	'use strict';
 
 	const isCordova	= platformInfo.isCordova;
@@ -29,7 +31,7 @@ angular.module('app.service.qr-scanner', [])
 
 	const cordovaOpenScanner = () => {
 
-		const text = Translate.instant('modal.scanner.preparing');
+		const text = translate.instant('modal.scanner.preparing');
 		return $ionicLoading.show({
 			template: text
 		})

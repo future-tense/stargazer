@@ -1,18 +1,18 @@
-/* global angular */
+/* global angular, require */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import translate from '../../core/services/translate.service.js';
+import platformInfo from '../../core/services/platform-info.js';
 
 class IndexController {
-	constructor($ionicLoading, $window, Commands, platformInfo, Translate, Wallet) {
+	constructor($ionicLoading, Commands, Wallet) {
 		this.$ionicLoading = $ionicLoading;
 		this.Commands = Commands;
-		this.platformInfo = platformInfo;
-		this.Translate = Translate;
 		this.Wallet = Wallet;
 
-		this.physicalScreenWidth = $window.innerWidth;
-		angular.element($window).bind('resize', () => {
-			this.physicalScreenWidth = $window.innerWidth;
+		this.physicalScreenWidth = window.innerWidth;
+		angular.element(window).bind('resize', () => {
+			this.physicalScreenWidth = window.innerWidth;
 		});
 	}
 
@@ -21,12 +21,12 @@ class IndexController {
 	}
 
 	copyToClipboard(text) {
-		if (this.platformInfo.isCordova) {
+		if (platformInfo.isCordova) {
 			window.cordova.plugins.clipboard.copy(text);
 			this.showPopover();
 		}
 
-		else if (this.platformInfo.isElectron) {
+		else if (platformInfo.isElectron) {
 			const electron = require('electron');
 			electron.clipboard.writeText(text);
 			this.showPopover();
@@ -38,7 +38,7 @@ class IndexController {
 	}
 
 	showPopover() {
-		const text = this.Translate.instant('tabs.receive.copy');
+		const text = translate.instant('tabs.receive.copy');
 		return this.$ionicLoading.show({
 			template: text,
 			duration: 700

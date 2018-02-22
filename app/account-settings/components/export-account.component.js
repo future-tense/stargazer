@@ -4,7 +4,7 @@ import 'ionic-sdk/release/js/ionic.bundle';
 
 class ExportAccountController {
 
-	constructor(Horizon, Keychain, Wallet) {
+	constructor(Keychain, Wallet) {
 
 		const stellar = {
 			account: {

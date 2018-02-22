@@ -1,10 +1,11 @@
 /* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import contacts from '../../core/services/contacts.js';
 
 class TransactionController {
 
-	constructor($routeParams, Contacts, History, Modal, Wallet) {
+	constructor($routeParams, History, Modal, Wallet) {
 
 		this.Modal = Modal;
 
@@ -51,13 +52,13 @@ class TransactionController {
 			/* eslint-enable camelcase */
 		}
 
-		const contactName = Contacts.lookup(
+		const contactName = contacts.lookup(
 			this.counterparty,
 			network,
 			effect.memoType,
 			effect.memo
 		);
-		const contact = Contacts.get(contactName);
+		const contact = contacts.get(contactName);
 
 		this.isWallet = (this.counterparty in Wallet.accounts);
 		this.isContact = isContact(contact, effect);

@@ -1,9 +1,10 @@
 /* global angular, console, StellarSdk */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import contacts from '../../core/services/contacts.js';
 
 angular.module('app.modal.add-contact', [])
-.controller('AddContactCtrl', function ($route, $scope, Contacts) {
+.controller('AddContactCtrl', function ($route, $scope) {
 	'use strict';
 
 	$scope.cancel = cancel;
@@ -44,7 +45,7 @@ angular.module('app.modal.add-contact', [])
 			/* eslint-enable camelcase */
 		}
 
-		Contacts.add($scope.model.name, contact);
+		contacts.add($scope.model.name, contact);
 		$scope.closeModalService();
 		$route.reload();
 	}

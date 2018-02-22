@@ -1,6 +1,7 @@
 /* global angular, console, localStorage, EventSource */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import storage from '../../core/services/storage.js';
 
 function copyAmount(res, fx, prefix) {
 
@@ -123,7 +124,7 @@ function parseEffect(fx, op, tx) {
 }
 
 angular.module('app.service.history', [])
-.factory('History', function ($http, $q, $rootScope, Horizon, Storage) {
+.factory('History', function ($http, $q, $rootScope) {
 
 	function addEffect(effect, account) {
 
@@ -150,9 +151,9 @@ angular.module('app.service.history', [])
 	const History = {};
 	History.effects = {};
 
-	const accountList = Storage.getItem('accounts') || [];
+	const accountList = storage.getItem('accounts') || [];
 	accountList.forEach((name) => {
-		History.effects[name] = Storage.getItem(`history.${name}`) || {};
+		History.effects[name] = storage.getItem(`history.${name}`) || {};
 	});
 
 	History.subscribe = function (account) {
@@ -170,12 +171,12 @@ angular.module('app.service.history', [])
 					account.pagingToken = msg.paging_token;
 					$rootScope.$broadcast('accountInfoLoaded');
 					$rootScope.$broadcast('newTransaction', effect);
-					Storage.setItem(`history.${account.alias}`, History.effects[account.alias]);
-					Storage.setItem(`account.${account.alias}`, account);
+					storage.setItem(`history.${account.alias}`, History.effects[account.alias]);
+					storage.setItem(`account.${account.alias}`, account);
 				})
 				.catch(() => {
 					account.pagingToken = msg.paging_token;
-					Storage.setItem(`account.${account.alias}`, account);
+					storage.setItem(`account.${account.alias}`, account);
 				});
 			}
 
@@ -221,7 +222,7 @@ angular.module('app.service.history', [])
 
 			return $q.all(promises)
 			.then(() => {
-				Storage.setItem(`history.${account.alias}`, accountEffects);
+				storage.setItem(`history.${account.alias}`, accountEffects);
 				$rootScope.$broadcast('accountInfoLoaded');
 			});
 		});

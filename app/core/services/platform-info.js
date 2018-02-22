@@ -1,29 +1,22 @@
-/* global angular, chrome, console */
+/* global console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
+let ua = navigator ? navigator.userAgent : null;
 
-angular.module('app.service.platform-info', [])
-.factory('platformInfo', function ($window) {
-	'use strict';
+if (!ua) {
+	console.log('Could not determine navigator. Using fixed string');
+	ua = 'dummy user-agent';
+}
 
-	let ua = navigator ? navigator.userAgent : null;
+// Fixes IOS WebKit UA
+ua = ua.replace(/\(\d+\)$/, '');
 
-	if (!ua) {
-		console.log('Could not determine navigator. Using fixed string');
-		ua = 'dummy user-agent';
-	}
-
-	// Fixes IOS WebKit UA
-	ua = ua.replace(/\(\d+\)$/, '');
-
-	// Detect mobile devices
-	return {
-		isAndroid: !!ua.match(/Android/i),
-		isIOS: /iPad|iPhone|iPod/.test(ua) && !$window.MSStream,
-		isWP: !!ua.match(/IEMobile/i),
-		isSafari: Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
-		ua: ua,
-		isCordova: !!$window.cordova,
-		isElectron: !!ua.match(/Electron/i)
-	};
-});
+// Detect mobile devices
+export default {
+	isAndroid: !!ua.match(/Android/i),
+	isIOS: /iPad|iPhone|iPod/.test(ua) && !window.MSStream,
+	isWP: !!ua.match(/IEMobile/i),
+	isSafari: Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
+	ua: ua,
+	isCordova: !!window.cordova,
+	isElectron: !!ua.match(/Electron/i)
+};

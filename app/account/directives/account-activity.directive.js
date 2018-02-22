@@ -2,9 +2,12 @@
 /* jshint multistr: true */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import jazzicon from '../../core/services/jazzicon.js';
+import translate from '../../core/services/translate.service.js';
+import contacts from '../../core/services/contacts.js';
 
 angular.module('app.directive.account-activity', [])
-.directive('accountActivity', function ($filter, $interval, Translate, Contacts, History, Jazzicon, Wallet) {
+.directive('accountActivity', function ($filter, $interval, History, Wallet) {
 	'use strict';
 
 	const formatAmount = $filter('formatAmount');
@@ -29,7 +32,7 @@ angular.module('app.directive.account-activity', [])
 		}
 
 		const res = Math.floor(delta);
-		return Translate.instant(message, {RES: res}, 'messageformat');
+		return translate.instant(message, {RES: res}, 'messageformat');
 	}
 
 	function getComment(tx) {
@@ -39,7 +42,7 @@ angular.module('app.directive.account-activity', [])
 				if (id in Wallet.accounts) {
 					return Wallet.accounts[id].alias;
 				} else {
-					return Contacts.lookup(id, network, tx.memoType, tx.memo);
+					return contacts.lookup(id, network, tx.memoType, tx.memo);
 				}
 			}
 		}
@@ -53,7 +56,7 @@ angular.module('app.directive.account-activity', [])
 			if (name) {
 				return name;
 			} else {
-				return Translate.instant({
+				return translate.instant({
 					'send':	'transaction.sent',
 					'recv': 'transaction.received',
 					'trade':'transaction.traded'
@@ -171,7 +174,7 @@ angular.module('app.directive.account-activity', [])
 			if (scope.history.length !== 0) {
 				html = scope.history.map(tx => renderItem(tx)).join('');
 			} else {
-				const text = Translate.instant('tabs.home.activity.empty');
+				const text = translate.instant('tabs.home.activity.empty');
 				html = `<div style="text-align: center" class="text-gray">${text}</div>`;
 			}
 			element[0].children[1].innerHTML = html;
@@ -181,7 +184,7 @@ angular.module('app.directive.account-activity', [])
 			elements.forEach(elem => {
 				const seed = elem.getAttribute('data-seed');
 				if (seed) {
-					elem.appendChild(Jazzicon.render(seed));
+					elem.appendChild(jazzicon.render(seed));
 				}
 			});
 		}

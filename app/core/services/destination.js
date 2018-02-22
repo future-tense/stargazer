@@ -2,9 +2,10 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import contacts from './contacts.js';
 
 angular.module('app.service.destination', [])
-.factory('Destination', function ($q, Contacts, Wallet) {
+.factory('Destination', function ($q, Wallet) {
 	'use strict';
 
 	const nullPromise = $q.reject();
@@ -32,7 +33,7 @@ angular.module('app.service.destination', [])
 
 		//	Contact Name
 
-		const contact = Contacts.get(name);
+		const contact = contacts.get(name);
 		if (contact) {
 			/* eslint-disable camelcase */
 			return $q.resolve({

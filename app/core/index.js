@@ -31,27 +31,18 @@ import './services/anchors.js';
 import './services/centaurus.js';
 import './services/commands.js';
 import './services/constellation.js';
-import './services/contacts.js';
-import './services/crypto.js';
 import './services/destination.js';
 import './services/history.js';
-import './services/horizon.js';
-import './services/humanizer.js';
-import './services/jazzicon.js';
 import './services/keychain.js';
-import './services/language.js';
-//import './services/ledger-nano.js';
+import './services/ledger-nano.js';
 import './services/modal.js';
-import './services/platform-info.js';
 import './services/qr-decoder.js';
 import './services/qr-scanner.js';
 import './services/reverse.js';
 import './services/reviewer.js';
 import './services/signer.js';
-import './services/storage.js';
 import './services/submitter.js';
 import './services/transactions.js';
-import './services/translate.service.js';
 import './services/wallet.js';
 
 import 'ionic-sdk/release/js/ionic.bundle';
@@ -85,28 +76,19 @@ angular.module('app.core', [
 	'app.modals.submit-password',
 
 	'app.service.anchors',
-	'app.service.centaurus',
 	'app.service.commands',
 	'app.service.constellation',
-	'app.service.contacts',
-	'app.service.crypto',
 	'app.service.destination',
 	'app.service.history',
-	'app.service.horizon',
-	'app.service.humanizer',
-	'app.service.jazzicon',
 	'app.service.keychain',
-	'app.service.language',
+	'app.service.ledger-nano',
 	'app.service.modal',
-	'app.service.platform-info',
 	'app.service.qr-decoder',
 	'app.service.qr-scanner',
 	'app.service.reverse',
 	'app.service.reviewer',
 	'app.service.signer',
-	'app.service.storage',
 	'app.service.submitter',
 	'app.service.transactions',
-	'app.service.translate',
 	'app.service.wallet',
 ]);

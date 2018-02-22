@@ -1,92 +1,88 @@
-/* global angular, console, toml */
+/* global */
 
-import 'ionic-sdk/release/js/ionic.bundle';
+import horizon from './horizon.js';
+import storage from './storage.js';
 
-angular.module('app.service.contacts', [])
-.factory('Contacts', function (Horizon, Storage) {
-	'use strict';
+const contacts = storage.getItem('contacts') || {};
 
-	function ignoreCase(stringA, stringB) {
-		const nameA = stringA.toUpperCase();
-		const nameB = stringB.toUpperCase();
-		return (nameA > nameB) - (nameA < nameB);
-	}
+function ignoreCase(stringA, stringB) {
+	const nameA = stringA.toUpperCase();
+	const nameB = stringB.toUpperCase();
+	return (nameA > nameB) - (nameA < nameB);
+}
 
-	const contacts = Storage.getItem('contacts') || {};
+export default {
 
-	return {
+	forNetwork: function (network) {
+		const res = [];
+		Object.keys(contacts).forEach(name => {
+			const contact = contacts[name];
+			if (!contact.network) {
+				contact.network = horizon.public;
+			}
+			if (contact.network === network) {
+				res.push(name);
+			}
+		});
+		return res.sort(ignoreCase);
+	},
 
-		forNetwork: function (network) {
-			const res = [];
-			Object.keys(contacts).forEach(name => {
-				const contact = contacts[name];
-				if (!contact.network) {
-					contact.network = Horizon.public;
-				}
-				if (contact.network === network) {
-					res.push(name);
-				}
-			});
-			return res.sort(ignoreCase);
-		},
+	getNames: function () {
+		return Object.keys(contacts).sort(ignoreCase);
+	},
 
-		getNames: function () {
-			return Object.keys(contacts).sort(ignoreCase);
-		},
+	get: function (name) {
+		return contacts[name];
+	},
 
-		get: function (name) {
-			return contacts[name];
-		},
+	add: function (name, contact) {
+		contacts[name] = contact;
+		storage.setItem('contacts', contacts);
+	},
 
-		add: function (name, contact) {
-			contacts[name] = contact;
-			Storage.setItem('contacts', contacts);
-		},
+	delete: function (name) {
+		delete contacts[name];
+		storage.setItem('contacts', contacts);
+	},
 
-		delete: function (name) {
-			delete contacts[name];
-			Storage.setItem('contacts', contacts);
-		},
+	lookup: function (accountId, network, memoType, memo) {
 
-		lookup: function (accountId, network, memoType, memo) {
+		if (!network) {
+			network = horizon.public;
+		}
 
-			if (!network) {
-				network = Horizon.public;
+		const matches = [];
+		Object.keys(contacts).forEach(name => {
+			const contact = contacts[name];
+			if (!contact.network) {
+				contact.network = horizon.public;
 			}
 
-			const matches = [];
-			Object.keys(contacts).forEach(name => {
-				const contact = contacts[name];
-				if (!contact.network) {
-					contact.network = Horizon.public;
-				}
-
-				if ((contact.id === accountId) && (contact.network === network)) {
-					matches.push(name);
-				}
-			});
-
-			if (memoType && memo) {
-				const memoContact = matches.filter(name => {
-					const contact = contacts[name];
-					return ((memoType === contact.memo_type) && (memo === contact.memo));
-				});
-
-				if (memoContact.length) {
-					return memoContact[0];
-				}
+			if ((contact.id === accountId) && (contact.network === network)) {
+				matches.push(name);
 			}
+		});
 
-			const contact = matches.filter(name => {
+		if (memoType && memo) {
+			const memoContact = matches.filter(name => {
 				const contact = contacts[name];
-				return (!contact.memo_type && !contact.memo);
+				return ((memoType === contact.memo_type) && (memo === contact.memo));
 			});
 
-			if (contact.length) {
-				return contact[0];
-			} else {
-				return null;
+			if (memoContact.length) {
+				return memoContact[0];
 			}
 		}
-	};
-});
+
+		const contact = matches.filter(name => {
+			const contact = contacts[name];
+			return (!contact.memo_type && !contact.memo);
+		});
+
+		if (contact.length) {
+			return contact[0];
+		} else {
+			return null;
+		}
+	}
+};

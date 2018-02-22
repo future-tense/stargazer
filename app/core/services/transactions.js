@@ -2,16 +2,17 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import storage from '../../core/services/storage.js';
 
 angular.module('app.service.transactions', [])
-.factory('Transactions', function ($rootScope, Constellation, Signer, Storage, Wallet) {
+.factory('Transactions', function ($rootScope, Constellation, Signer, Wallet) {
 	'use strict';
 
 	let eventSource;
 	const transactions = {};
-	const transactionList = Storage.getItem('transactions') || [];
+	const transactionList = storage.getItem('transactions') || [];
 	transactionList.forEach(hash => {
-		const data = Storage.getItem(`tx.${hash}`);
+		const data = storage.getItem(`tx.${hash}`);
 		data.tx = decodeTransaction(data.txenv);
 		data.hash = hash;
 		transactions[hash] = data;
@@ -37,7 +38,7 @@ angular.module('app.service.transactions', [])
 		if (!(hash in transactions)) {
 			transactions[hash] = payload;
 			transactionList.push(hash);
-			Storage.setItem('transactions', transactionList);
+			storage.setItem('transactions', transactionList);
 			payload.hash = hash;
 			payload.signers = {};
 
@@ -140,10 +141,10 @@ angular.module('app.service.transactions', [])
 		if (isDone) {
 			const index = transactionList.indexOf(hash);
 			transactionList.splice(index, 1);
-			Storage.setItem('transactions', transactionList);
+			storage.setItem('transactions', transactionList);
 
 			delete transactions[hash];
-			Storage.removeItem(`tx.${hash}`);
+			storage.removeItem(`tx.${hash}`);
 		}
 
 		else {
@@ -168,7 +169,7 @@ angular.module('app.service.transactions', [])
 			data.hasSigned = tx.hasSigned;
 		}
 
-		Storage.setItem(`tx.${hash}`, data);
+		storage.setItem(`tx.${hash}`, data);
 	}
 
 	function decodeTransaction(txenv) {

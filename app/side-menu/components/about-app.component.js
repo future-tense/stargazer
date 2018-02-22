@@ -1,9 +1,10 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import platformInfo from '../../core/services/platform-info.js';
 
 class AboutAppController {
-	constructor(platformInfo) {
+	constructor() {
 		this.isAndroid = platformInfo.isAndroid;
 	}
 }

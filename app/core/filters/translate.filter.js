@@ -1,18 +1,17 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import translate from '../services/translate.service.js';
 
-angular.module('app.filter.translate', [
-	'app.service.translate'
-])
-.filter('translate', function (Translate) {
+angular.module('app.filter.translate', [])
+.filter('translate', function () {
 	'use strict';
 
 	return function (string, data) {
 		if (!data) {
-			return Translate.instant(string);
+			return translate.instant(string);
 		} else {
-			return Translate.instant(string, data);
+			return translate.instant(string, data);
 		}
 	};
 });

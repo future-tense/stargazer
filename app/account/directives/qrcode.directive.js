@@ -4,7 +4,7 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import QRCode from 'qrcode_js';
 
 angular.module('app.directive.qrcode', [])
-.directive('qrcode', function ($window) {
+.directive('qrcode', function () {
 
 	function link(scope, element, attrs) {
 
@@ -19,7 +19,7 @@ angular.module('app.directive.qrcode', [])
 				return;
 			}
 
-			const styles = $window.getComputedStyle(element[0], null);
+			const styles = window.getComputedStyle(element[0], null);
 			const width = styles.width.slice(0, -2);
 			const height = styles.height.slice(0, -2);
 

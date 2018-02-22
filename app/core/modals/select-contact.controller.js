@@ -1,9 +1,10 @@
 /* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import contacts from '../../core/services/contacts.js';
 
 angular.module('app.modals.select-contact', [])
-.controller('SelectContactCtrl', function ($scope, Contacts) {
+.controller('SelectContactCtrl', function ($scope) {
 	'use strict';
 
 	const network = $scope.data.network;
@@ -11,7 +12,7 @@ angular.module('app.modals.select-contact', [])
 	$scope.cancel = cancel;
 	$scope.select = select;
 
-	$scope.contacts = Contacts.forNetwork(network);
+	$scope.contacts = contacts.forNetwork(network);
 	$scope.heading	= $scope.data.heading;
 
 	function cancel() {

@@ -1,15 +1,15 @@
 /* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import storage from '../../core/services/storage.js';
 
 class AccountFederationController {
 
-	constructor($http, $rootScope, Keychain, Storage, Wallet) {
+	constructor($http, $rootScope, Keychain, Wallet) {
 
 		this.$http = $http;
 		this.$rootScope = $rootScope;
 		this.Keychain = Keychain;
-		this.Storage = Storage;
 
 		this.baseUrl = 'https://getstargazer.com/api/federation/';
 
@@ -34,7 +34,7 @@ class AccountFederationController {
 			})
 			.then(res => {
 				this.account.federation = this.data.federation;
-				this.Storage.setItem(`account.${this.name}`, this.account);
+				storage.setItem(`account.${this.name}`, this.account);
 				this.$rootScope.goBack();
 			})
 			.catch(err => console.log(err));

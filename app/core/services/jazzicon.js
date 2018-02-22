@@ -1,22 +1,13 @@
-/* global angular, jazzicon, require */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import jazzicon from 'jazzicon';
 
-angular.module('app.service.jazzicon', [])
-.factory('Jazzicon', function () {
-	'use strict';
+const djb2Code = (str) =>
+	[...str].map(char => char.charCodeAt(0))
+	.reduce((hash, item) => (hash << 5) + hash + item, 5381);
 
-	return {
-		render: render
-	};
+const render = (seed) => jazzicon(40, djb2Code(seed));
 
-	function render(seed) {
-		return jazzicon(40, djb2Code(seed));
-	}
+export default {
+	render: render
+};
 
-	function djb2Code(str) {
-		return [...str].map(char => char.charCodeAt(0))
-		.reduce((hash, item) => (hash << 5) + hash + item, 5381);
-	}
-});

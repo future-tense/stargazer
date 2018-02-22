@@ -1,9 +1,10 @@
 /* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import contacts from '../../core/services/contacts.js';
 
 angular.module('app.modal.add-contact-from-tx', [])
-.controller('AddContactFromTxCtrl', function ($route, $scope, Contacts) {
+.controller('AddContactFromTxCtrl', function ($route, $scope) {
 	'use strict';
 
 	$scope.cancel		= cancel;
@@ -32,7 +33,7 @@ angular.module('app.modal.add-contact-from-tx', [])
 			/* eslint-enable camelcase */
 		}
 
-		Contacts.add($scope.model.name, contact);
+		contacts.add($scope.model.name, contact);
 		$scope.closeModalService();
 		$route.reload();
 	}

@@ -2,6 +2,7 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import horizon from './horizon.js';
 
 /**
  * Executes a provided (promise-returning) function once per
@@ -23,7 +24,7 @@ Object.defineProperty(Array.prototype, 'forEachThen', {
 });
 
 angular.module('app.service.signer', [])
-.factory('Signer', function ($q, Horizon, Keychain, Wallet) {
+.factory('Signer', function ($q, Keychain, Wallet) {
 	'use strict';
 
 	return {
@@ -121,7 +122,7 @@ angular.module('app.service.signer', [])
 	}
 
 	function getTransactionHash(tx, network) {
-		const phrase = Horizon.getNetwork(network).phrase;
+		const phrase = horizon.getNetwork(network).phrase;
 		const base = signatureBase(tx, phrase);
 		return StellarSdk.hash(base);
 	}
@@ -271,7 +272,7 @@ angular.module('app.service.signer', [])
 	}
 
 	function sign(context) {
-		context.horizon  = Horizon.getServer(context.network);
+		context.horizon  = horizon.getServer(context.network);
 		context.progress = getSourceAccounts(context.tx);
 
 		return $q.when(context)

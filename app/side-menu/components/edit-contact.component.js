@@ -1,13 +1,13 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import contacts from '../../core/services/contacts.js';
 
 class EditContactController {
 
-	constructor($rootScope, $routeParams, Contacts) {
+	constructor($rootScope, $routeParams) {
 
 		this.$rootScope = $rootScope;
-		this.Contacts = Contacts;
 
 		this.advanced	= false;
 		this.minHeight	= getMinHeight();
@@ -23,7 +23,7 @@ class EditContactController {
 
 		function initModel() {
 			const name = $routeParams.name;
-			const contact = Contacts.get(name);
+			const contact = contacts.get(name);
 			const model = JSON.parse(JSON.stringify(contact));
 			model.name = name;
 			return model;
@@ -31,7 +31,7 @@ class EditContactController {
 	}
 
 	deleteContact() {
-		this.Contacts.delete(this.model.name);
+		contacts.delete(this.model.name);
 		this.$rootScope.goBack();
 	}
 
@@ -51,12 +51,12 @@ class EditContactController {
 			delete this.model.memo_type;
 		}
 
-		this.Contacts.delete(this.oldName);
+		contacts.delete(this.oldName);
 
 		const name = this.model.name;
 		const contact = this.model;
 		delete contact.name;
-		this.Contacts.add(name, contact);
+		contacts.add(name, contact);
 		this.$rootScope.goBack();
 	}
 }

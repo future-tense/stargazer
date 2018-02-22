@@ -2,9 +2,10 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import contacts from './contacts.js';
 
 angular.module('app.service.commands', [])
-.factory('Commands', function ($http, $ionicLoading, $location, $q, Contacts, Keychain, Modal, Wallet) {
+.factory('Commands', function ($http, $ionicLoading, $location, $q, Keychain, Modal, Wallet) {
 	'use strict';
 
 	return {
@@ -103,7 +104,7 @@ angular.module('app.service.commands', [])
 
 	function handleContact(account) {
 
-		if (!(account.id in Wallet.accounts) && !Contacts.lookup(account.id, account.network)) {
+		if (!(account.id in Wallet.accounts) && !contacts.lookup(account.id, account.network)) {
 			/* eslint-disable camelcase */
 			const data = {
 				id:			account.id,

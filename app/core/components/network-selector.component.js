@@ -1,22 +1,22 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import horizon from '../../core/services/horizon.js';
 
 class NetworkSelectorController {
 
-	constructor(Horizon) {
-		this.networks = Horizon.getNetworks();
-		this.Horizon = Horizon;
+	constructor() {
+		this.networks = horizon.getNetworks();
 	}
 
 	$onInit() {
 		if (!this.network) {
-			this.network = this.Horizon.public;
+			this.network = horizon.public;
 		}
 	}
 
 	hash(network) {
-		return this.Horizon.getHash(network.phrase);
+		return horizon.getHash(network.phrase);
 	}
 }
 

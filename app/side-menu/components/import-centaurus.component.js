@@ -1,16 +1,16 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import centaurus from '../../core/services/centaurus.js';
+import translate from '../../core/services/translate.service.js';
 
 class ImportCentaurusController {
 
-	constructor($location, $routeParams, Translate, CentaurusService, Keychain, Wallet) {
+	constructor($location, $routeParams, Keychain, Wallet) {
 
 		this.$location = $location;
-		this.Translate = Translate;
 		this.Keychain = Keychain;
 		this.Wallet = Wallet;
-		this.CentaurusService = CentaurusService;
 
 		const data = JSON.parse(window.atob($routeParams.data));
 		this.cipher = data.cipher;
@@ -27,11 +27,11 @@ class ImportCentaurusController {
 
 	$onInit() {
 		const numAccounts = Object.keys(this.Wallet.accounts).length;
-		this.account.alias = this.Translate.instant('account.defaultname', {number: numAccounts + 1});
+		this.account.alias = translate.instant('account.defaultname', {number: numAccounts + 1});
 	}
 
 	importAccount() {
-		const {secret, address} = this.CentaurusService.decrypt(this.cipher, this.account.password);
+		const {secret, address} = centaurus.decrypt(this.cipher, this.account.password);
 		this.Wallet.importAccount(address, secret, this.account.alias);
 		this.$location.path('/');
 	}

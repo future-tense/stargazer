@@ -1,9 +1,10 @@
 /* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import horizon from '../../core/services/horizon.js';
 
 angular.module('app.modal.payment-request', [])
-.controller('PaymentRequestCtrl', function ($scope, Horizon, Wallet) {
+.controller('PaymentRequestCtrl', function ($scope, Wallet) {
 	'use strict';
 
 	$scope.model = {};
@@ -36,7 +37,7 @@ angular.module('app.modal.payment-request', [])
 			amount:			$scope.model.amount
 		};
 
-		if (Wallet.current.network !== Horizon.public) {
+		if (Wallet.current.network !== horizon.public) {
 			payment.network = Wallet.current.network;
 		}
 

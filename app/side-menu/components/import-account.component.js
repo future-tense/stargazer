@@ -1,14 +1,14 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import translate from '../../core/services/translate.service.js';
 
 class ImportAccountController {
-	constructor($ionicLoading, $location, $routeParams, Translate, Keychain, Wallet) {
+	constructor($ionicLoading, $location, $routeParams, Keychain, Wallet) {
 
 		this.$ionicLoading = $ionicLoading;
 		this.$location = $location;
 		this.$routeParams = $routeParams;
-		this.Translate = Translate;
 		this.Keychain = Keychain;
 		this.Wallet = Wallet;
 
@@ -26,7 +26,7 @@ class ImportAccountController {
 		}
 
 		const numAccounts = Object.keys(this.Wallet.accounts).length;
-		this.account.alias = this.Translate.instant('account.defaultname', {number: numAccounts + 1});
+		this.account.alias = translate.instant('account.defaultname', {number: numAccounts + 1});
 	}
 
 	importAccount() {

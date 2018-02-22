@@ -1,9 +1,10 @@
 /* global angular, require */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import platformInfo from './platform-info.js';
 
-angular.module('app.service.ledger-nano')
-.factory('LedgerNano', function ($q, platformInfo) {
+angular.module('app.service.ledger-nano', [])
+.factory('LedgerNano', function ($q) {
 	'use strict';
 
 	let StellarLedger;

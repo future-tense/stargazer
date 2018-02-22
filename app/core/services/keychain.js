@@ -2,15 +2,17 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import crypto from './crypto.js';
+import storage from '../../core/services/storage.js';
 
 angular.module('app.service.keychain', [])
-.factory('Keychain', function ($q, Crypto, Modal, Storage) {
+.factory('Keychain', function ($q, Modal) {
 	'use strict';
 
 	const keychain = {};
-	const keys = Storage.getItem('keys') || [];
+	const keys = storage.getItem('keys') || [];
 	keys.forEach(publicKey => {
-		keychain[publicKey] = Storage.getItem(`key.${publicKey}`);
+		keychain[publicKey] = storage.getItem(`key.${publicKey}`);
 	});
 
 	return {
@@ -31,10 +33,10 @@ angular.module('app.service.keychain', [])
 
 		/* has key gone missing from "keys"? */
 		if (!(signer in keychain)) {
-			const key = Storage.getItem(`key.${signer}`);
+			const key = storage.getItem(`key.${signer}`);
 			if (key) {
 				keychain[signer] = key;
-				Storage.setItem('keys', Object.keys(keychain));
+				storage.setItem('keys', Object.keys(keychain));
 			}
 		}
 
@@ -57,7 +59,7 @@ angular.module('app.service.keychain', [])
 		.then(password => decryptKey(password));
 
 		function decryptKey(password) {
-			const secret = Crypto.decrypt(keyStore, password);
+			const secret = crypto.decrypt(keyStore, password);
 			return StellarSdk.Keypair.fromSecret(secret);
 		}
 	}
@@ -66,8 +68,8 @@ angular.module('app.service.keychain', [])
 
 	function addKey(accountId, seed) {
 		keychain[accountId] = seed;
-		Storage.setItem(`key.${accountId}`, seed);
-		Storage.setItem('keys', Object.keys(keychain));
+		storage.setItem(`key.${accountId}`, seed);
+		storage.setItem('keys', Object.keys(keychain));
 	}
 
 	function getKeyInfo(signer) {
@@ -76,7 +78,7 @@ angular.module('app.service.keychain', [])
 
 	function idFromKey(key, password) {
 		if (typeof key === 'object') {
-			key = Crypto.decrypt(key, password);
+			key = crypto.decrypt(key, password);
 		}
 		return StellarSdk.Keypair.fromSecret(key).publicKey();
 	}
@@ -95,7 +97,7 @@ angular.module('app.service.keychain', [])
 		}
 
 		try {
-			const seed = Crypto.decrypt(keyStore, password);
+			const seed = crypto.decrypt(keyStore, password);
 			return StellarSdk.StrKey.isValidEd25519SecretSeed(seed);
 		} catch (error) {
 			return false;
@@ -109,16 +111,16 @@ angular.module('app.service.keychain', [])
 
 	function removePassword(signer, password) {
 		let keyStore = keychain[signer];
-		keyStore = Crypto.decrypt(keyStore, password);
+		keyStore = crypto.decrypt(keyStore, password);
 		keychain[signer] = keyStore;
-		Storage.setItem(`key.${signer}`, keyStore);
+		storage.setItem(`key.${signer}`, keyStore);
 	}
 
 	function setPassword(signer, password) {
 		let keyStore = keychain[signer];
-		keyStore = Crypto.encrypt(keyStore, password);
+		keyStore = crypto.encrypt(keyStore, password);
 		keychain[signer] = keyStore;
-		Storage.setItem(`key.${signer}`, keyStore);
+		storage.setItem(`key.${signer}`, keyStore);
 	}
 
 	function signMessage(signer, message) {

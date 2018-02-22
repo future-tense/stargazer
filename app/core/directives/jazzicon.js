@@ -1,9 +1,10 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import jazzicon from '../../core/services/jazzicon.js';
 
 angular.module('app.directive.jazzicon', [])
-.directive('jazzicon', function (Jazzicon) {
+.directive('jazzicon', function () {
 	'use strict';
 
 	return {
@@ -12,7 +13,7 @@ angular.module('app.directive.jazzicon', [])
 	};
 
 	function link(scope, element, attributes) {
-		const el = Jazzicon.render(attributes.seed);
+		const el = jazzicon.render(attributes.seed);
 		element[0].appendChild(el);
 	}
 });

@@ -1,13 +1,13 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import contacts from '../../core/services/contacts.js';
 
 class ContactListController {
-	constructor($window, Contacts, Modal) {
-		this.$window = $window;
+	constructor(Modal) {
 		this.Modal = Modal;
 
-		this.names		= Contacts.getNames();
+		this.names		= contacts.getNames();
 		this.minHeight	= this.getMinHeight();
 	}
 
@@ -18,7 +18,7 @@ class ContactListController {
 	getMinHeight() {
 		const headerHeight = 40;
 		const buttonGroupHeight = 48 + 16 + 8;
-		return `${this.$window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
+		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 }
 

@@ -1,10 +1,11 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import language from '../../core/services/language.js';
 
 class GlobalSettingsController {
-	constructor(Language) {
-		this.language = Language.getCurrentName();
+	constructor() {
+		this.language = language.getCurrentName();
 	}
 }
 

@@ -3,9 +3,11 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import 'decimal.js';
+import horizon from './horizon.js';
+import storage from './storage.js';
 
 angular.module('app.service.wallet', [])
-.factory('Wallet', function ($http, $q, $rootScope, $timeout, Translate, $window, History, Horizon, Keychain, Storage) {
+.factory('Wallet', function ($http, $q, $rootScope, $timeout, History, Keychain) {
 	'use strict';
 
 	// ------------------------------------------------------------------------
@@ -53,7 +55,7 @@ angular.module('app.service.wallet', [])
 				self.subentryCount	= res.subentry_count;
 				self.thresholds		= res.thresholds;
 
-				Storage.setItem(`account.${self.alias}`, self);
+				storage.setItem(`account.${self.alias}`, self);
 			});
 		};
 
@@ -70,7 +72,7 @@ angular.module('app.service.wallet', [])
 	}
 
 	Account.prototype.horizon = function () {
-		return Horizon.getServer(this.network);
+		return horizon.getServer(this.network);
 	};
 
 	Account.prototype.getNativeBalance = function () {
@@ -78,13 +80,13 @@ angular.module('app.service.wallet', [])
 	};
 
 	Account.prototype.getReserve = function () {
-		const fees = Horizon.getFees(this.network);
+		const fees = horizon.getFees(this.network);
 		return fees.baseReserve * (2 + this.subentryCount);
 	};
 
 	//	return true if account has enough balance to send 'amount' XLM in a tx w/ 'numOps' operations
 	Account.prototype.canSend = function (amount, numOps) {
-		const fees = Horizon.getFees(this.network);
+		const fees = horizon.getFees(this.network);
 		return (10000000 * (this.getNativeBalance() - this.getReserve() - amount) - fees.baseFee * numOps) >= 0;
 	};
 
@@ -158,12 +160,12 @@ angular.module('app.service.wallet', [])
 		} else {
 			this.badgeCount += 1;
 		}
-		Storage.setItem(`account.${this.alias}`, this);
+		storage.setItem(`account.${this.alias}`, this);
 	};
 
 	Account.prototype.clearBadgeCount = function () {
 		this.badgeCount = 0;
-		Storage.setItem(`account.${this.alias}`, this);
+		storage.setItem(`account.${this.alias}`, this);
 	};
 
 	Account.prototype.getBadgeCount = function () {
@@ -176,7 +178,7 @@ angular.module('app.service.wallet', [])
 
 	Account.prototype.setInflationDest = function (dest) {
 		this.inflationDest = dest;
-		Storage.setItem(`account.${this.alias}`, this);
+		storage.setItem(`account.${this.alias}`, this);
 	};
 
 	// ------------------------------------------------------------------------
@@ -193,7 +195,7 @@ angular.module('app.service.wallet', [])
 		},
 		set current(account) {
 			currentAccount = account;
-			Storage.setItem('currentAccount', account.alias);
+			storage.setItem('currentAccount', account.alias);
 		}
 	};
 
@@ -216,7 +218,7 @@ angular.module('app.service.wallet', [])
 	Wallet.importAccount = function (accountId, seed, name, network) {
 
 		if (!network) {
-			network = Horizon.public;
+			network = horizon.public;
 		}
 
 		if (seed) {
@@ -242,7 +244,7 @@ angular.module('app.service.wallet', [])
 		}
 
 		accounts[self.id] = self;
-		Storage.setItem(`account.${self.alias}`, self);
+		storage.setItem(`account.${self.alias}`, self);
 
 		accountList.insert(self);
 		accountList.save();
@@ -266,12 +268,12 @@ angular.module('app.service.wallet', [])
 		const index = accountList.remove(account);
 		accountList.insert(account);
 
-		Storage.setItem(`account.${newName}`, account);
-		Storage.setItem(`history.${newName}`, History.effects[newName]);
+		storage.setItem(`account.${newName}`, account);
+		storage.setItem(`history.${newName}`, History.effects[newName]);
 		accountList.save();
-		Storage.setItem('currentAccount', newName);
-		Storage.removeItem(`account.${oldName}`);
-		Storage.removeItem(`history.${oldName}`);
+		storage.setItem('currentAccount', newName);
+		storage.removeItem(`account.${oldName}`);
+		storage.removeItem(`history.${oldName}`);
 	};
 
 	Wallet.removeAccount = function (account) {
@@ -285,14 +287,14 @@ angular.module('app.service.wallet', [])
 
 		const currentIndex = Math.max(0, index - 1);
 		Wallet.current = accountList[currentIndex];
-		Storage.setItem('currentAccount', Wallet.current.alias);
+		storage.setItem('currentAccount', Wallet.current.alias);
 
 		delete accounts[account.id];
 
 		const name = account.alias;
 		delete History.effects[name];
-		Storage.removeItem(`account.${name}`);
-		Storage.removeItem(`history.${name}`);
+		storage.removeItem(`account.${name}`);
+		storage.removeItem(`history.${name}`);
 	};
 
 	Wallet.getAssetCodeCollisions = function (assets) {
@@ -318,10 +320,10 @@ angular.module('app.service.wallet', [])
 
 	// -----------------------------------------------------------------------------------------------------------------
 
-	let accountList = Storage.getItem('accounts');
+	let accountList = storage.getItem('accounts');
 	if (accountList) {
 		accountList = accountList.map((name) => {
-			const opts = Storage.getItem(`account.${name}`);
+			const opts = storage.getItem(`account.${name}`);
 			const self = new Account(opts);
 			accounts[self.id] = self;
 			return self;
@@ -332,7 +334,7 @@ angular.module('app.service.wallet', [])
 			accountByName[account.alias] = account;
 		});
 
-		const currentName = Storage.getItem('currentAccount');
+		const currentName = storage.getItem('currentAccount');
 		currentAccount = accountByName[currentName];
 	}
 
@@ -368,7 +370,7 @@ angular.module('app.service.wallet', [])
 
 	accountList.save = function () {
 		const accountNames = this.map(account => account.alias);
-		Storage.setItem('accounts', accountNames);
+		storage.setItem('accounts', accountNames);
 	};
 
 	Wallet.accountList = accountList;

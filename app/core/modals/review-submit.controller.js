@@ -1,9 +1,11 @@
 /* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import humanizer from '../../core/services/humanizer.js';
+import translate from '../../core/services/translate.service.js';
 
 angular.module('app.modals.review-submit', [])
-.controller('ReviewSubmitCtrl', function ($q, $scope, Translate, Humanizer, Keychain, Signer, Submitter, Transactions) {
+.controller('ReviewSubmitCtrl', function ($q, $scope, Keychain, Signer, Submitter, Transactions) {
 	'use strict';
 
 	const context = $scope.data.context;
@@ -17,7 +19,7 @@ angular.module('app.modals.review-submit', [])
 
 	function activate() {
 		if (context.hasSigned && context.hasSigned.length === context.signers.length) {
-			$scope.operations = Humanizer.parse(context.tx);
+			$scope.operations = humanizer.parse(context.tx);
 			$scope.state = 'signed';
 		} else {
 			$q.when(Signer.sign(context))
@@ -44,7 +46,7 @@ angular.module('app.modals.review-submit', [])
 	function reviewSigner(signer) {
 		$scope.signer.id			= signer;
 		$scope.signer.isEncrypted	= Keychain.isEncrypted(signer);
-		$scope.operations			= Humanizer.parse(context.tx, signer);
+		$scope.operations			= humanizer.parse(context.tx, signer);
 
 		return waitForUserReview()
 		.then(signTransaction);
@@ -80,7 +82,7 @@ angular.module('app.modals.review-submit', [])
 
 		if (Signer.hasEnoughSignatures(context.progress)) {
 
-			$scope.message = Translate.instant('transaction.submitting');
+			$scope.message = translate.instant('transaction.submitting');
 			$scope.state = 'pending';
 			return Submitter.submitTransaction(context)
 			.then(() => {

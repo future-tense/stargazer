@@ -1,28 +1,22 @@
 /* global angular, CryptoJS */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import 'crypto-js';
 
-class CentaurusService {
+const decrypt = (cipher, password) => {
+	const plainText = CryptoJS.AES.decrypt(cipher, password).toString(CryptoJS.enc.Utf8);
+	return JSON.parse(plainText);
+};
 
-	decrypt(cipher, password) {
-		const plainText = CryptoJS.AES.decrypt(cipher, password).toString(CryptoJS.enc.Utf8);
-		return JSON.parse(plainText);
+const isValidPassword = (cipher, password) => {
+	try {
+		decrypt(cipher, password);
+		return true;
+	} catch (err) {
+		return false;
 	}
+};
 
-	isValidPassword(cipher, password) {
-		try {
-			this.decrypt(cipher, password);
-			return true;
-		} catch (err) {
-			return false;
-		}
-	}
-}
-
-angular.module('app.service.centaurus', [])
-.service('CentaurusService', CentaurusService);
-
-
-
-
+export default {
+	decrypt: decrypt,
+	isValidPassword: isValidPassword
+};

@@ -1,9 +1,10 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import language from '../../core/services/language.js';
 
 angular.module('app.filter.format-date', [])
-.filter('formatDate', function (Language) {
+.filter('formatDate', function () {
 	'use strict';
 
 	const options = {
@@ -17,7 +18,7 @@ angular.module('app.filter.format-date', [])
 
 	return function (string) {
 		const date = new Date(string);
-		return date.toLocaleDateString(Language.getLocale(), options);
+		return date.toLocaleDateString(language.getLocale(), options);
 	};
 });
 

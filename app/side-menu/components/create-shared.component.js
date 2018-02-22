@@ -2,21 +2,21 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import horizon from '../../core/services/horizon.js';
+import contacts from '../../core/services/contacts.js';
 
 const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
 
 class CreateSharedController {
 
-	constructor($location, Commands, Contacts, Horizon, Modal, QRScanner, Reviewer, Signer, Translate, Wallet) {
+	constructor($location, Commands, Modal, QRScanner, Reviewer, Signer, Wallet) {
 		this.$location = $location;
-		this.Horizon = Horizon;
 		this.Modal = Modal;
 		this.QRScanner = QRScanner;
 		this.Reviewer = Reviewer;
 		this.Signer = Signer;
 		this.Wallet = Wallet;
 		this.Commands = Commands;
-		this.Contacts = Contacts;
 
 		this.account = {
 			alias:	getAccountName()
@@ -54,7 +54,7 @@ class CreateSharedController {
 	}
 
 	hasContacts() {
-		return this.Contacts.forNetwork(this.account.network).length !== 0;
+		return contacts.forNetwork(this.account.network).length !== 0;
 	}
 
 	next() {
@@ -66,7 +66,7 @@ class CreateSharedController {
 			this.addSigner();
 			if (this.signers.length === this.numCosigners) {
 
-				const fees = this.Horizon.getFees(this.account.network);
+				const fees = horizon.getFees(this.account.network);
 				this.minimum = fees.baseReserve * (2 + this.numCosigners);
 				this.account.amount = this.minimum;
 				this.state = 2;

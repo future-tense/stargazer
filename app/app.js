@@ -29,11 +29,9 @@ mod.config(accountRoutes);
 mod.config(settingRoutes);
 mod.config(sideMenuRoutes);
 
-mod.run(function ($ionicPlatform, $rootScope, $route, $window) {
+mod.run(function ($ionicPlatform, $rootScope, $route) {
 
-	console.log('run');
-
-	$rootScope.goBack = () => $window.history.back();
+	$rootScope.goBack = () => window.history.back();
 
 	$ionicPlatform.registerBackButtonAction(function () {
 		if ($route.current.locals.$template !== '<overview></overview>') {
@@ -53,28 +51,4 @@ mod.run(function ($rootScope, $location, Wallet) {
 			}
 		}
 	});
-});
-
-import de from '../i18n/de.json';
-import en from '../i18n/en.json';
-import es from '../i18n/es.json';
-import fil from '../i18n/fil.json';
-import fr from '../i18n/fr.json';
-import hi from '../i18n/hi.json';
-import id from '../i18n/id.json';
-import pl from '../i18n/pl.json';
-import sv from '../i18n/sv.json';
-import zh from '../i18n/zh.json';
-
-mod.constant('TranslationMaps', {
-	de: de,
-	en: en,
-	es: es,
-	fil: fil,
-	fr: fr,
-	hi: hi,
-	id: id,
-	pl: pl,
-	sv: sv,
-	zh: zh
 });

@@ -1,14 +1,15 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import contacts from '../../core/services/contacts.js';
 
 angular.module('app.directive.unique-name', [])
-.directive('uniqueName', function (Contacts, Wallet) {
+.directive('uniqueName', function (Wallet) {
 	'use strict';
 
 	function getNames() {
 		const nameList = Wallet.accountList.map(account => account.alias);
-		const contacts = Contacts.getNames();
+		const contacts = contacts.getNames();
 		return new Set([...nameList, ...contacts]);
 	}
 

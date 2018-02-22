@@ -3,8 +3,10 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import 'decimal.js';
+import contacts from '../../core/services/contacts.js';
+import horizon from '../../core/services/horizon.js';
 
-	function createAsset(json, prefix) {
+function createAsset(json, prefix) {
 	if (!prefix) {
 		prefix = '';
 	}
@@ -21,11 +23,9 @@ import 'decimal.js';
 
 class SendController {
 
-	constructor($location, Commands, Contacts, Horizon, Modal, QRScanner, Reviewer, Wallet) {
+	constructor($location, Commands, Modal, QRScanner, Reviewer, Wallet) {
 		this.$location = $location;
-		this.Horizon = Horizon;
 		this.Commands = Commands;
-		this.Contacts = Contacts;
 		this.Modal = Modal;
 		this.QRScanner = QRScanner;
 		this.Reviewer = Reviewer;
@@ -45,7 +45,7 @@ class SendController {
 		this.isPreFilled		= false;
 		this.hasCamera			= this.QRScanner.hasCamera;
 
-		this.minimumAccountBalance = this.Horizon.getMinimumAccountBalance(this.Wallet.current.network);
+		this.minimumAccountBalance = horizon.getMinimumAccountBalance(this.Wallet.current.network);
 		this.state = 1;
 
 		const query = this.$location.search();
@@ -103,7 +103,7 @@ class SendController {
 	}
 
 	hasContacts() {
-		return this.Contacts.forNetwork(this.Wallet.current.network).length !== 0;
+		return contacts.forNetwork(this.Wallet.current.network).length !== 0;
 	}
 
 	onAmount() {

@@ -3,48 +3,69 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import MessageFormat from 'messageformat';
 
-class TranslateService {
+import de from '../../../i18n/de.json';
+import en from '../../../i18n/en.json';
+import es from '../../../i18n/es.json';
+import fil from '../../../i18n/fil.json';
+import fr from '../../../i18n/fr.json';
+import hi from '../../../i18n/hi.json';
+import id from '../../../i18n/id.json';
+import pl from '../../../i18n/pl.json';
+import sv from '../../../i18n/sv.json';
+import zh from '../../../i18n/zh.json';
 
-	constructor(TranslationMaps) {
-		this.maps = TranslationMaps;
-		this.current = 'en';
-	}
+const maps = {
+	de: de,
+	en: en,
+	es: es,
+	fil: fil,
+	fr: fr,
+	hi: hi,
+	id: id,
+	pl: pl,
+	sv: sv,
+	zh: zh
+};
 
-	use(code) {
-		this.current = code;
-	}
+let current = 'en';
 
-	instant(key, data, type) {
+const use = (code) => {
+	current = code;
+};
 
-		const value = this.translate(key);
-		if (type === 'messageformat') {
-			const mfunc = new MessageFormat(this.current).compile(value);
-			return mfunc(data);
-		}
-
-		if (data) {
-			return value.replace(/{{([^{}]*)}}/g, (match, key) => data[key]);
-		}
-
-		return value;
-	}
-
-	translate(key) {
-		if (this.current !== 'en') {
-			const value = this.maps[this.current][key];
-			if (value) {
-				return value;
-			}
-		}
-
-		const value = this.maps.en[key];
+const translate = (key) => {
+	if (current !== 'en') {
+		const value = maps[current][key];
 		if (value) {
 			return value;
 		}
-
-		return key;
 	}
-}
 
-angular.module('app.service.translate', [])
-.service('Translate', TranslateService);
+	const value = maps.en[key];
+	if (value) {
+		return value;
+	}
+
+	return key;
+};
+
+const instant = (key, data, type) => {
+
+	const value = translate(key);
+	if (type === 'messageformat') {
+		const mfunc = new MessageFormat(current).compile(value);
+		return mfunc(data);
+	}
+
+	if (data) {
+		return value.replace(/{{([^{}]*)}}/g, (match, key) => data[key]);
+	}
+
+	return value;
+};
+
+export default {
+	use: use,
+	instant: instant,
+	translate: translate
+};

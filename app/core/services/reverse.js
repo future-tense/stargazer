@@ -2,9 +2,10 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import contacts from './contacts.js';
 
 angular.module('app.service.reverse', [])
-.factory('Reverse', function ($q, Contacts, Wallet) {
+.factory('Reverse', function ($q, Wallet) {
 	'use strict';
 
 	const reverseFederationCache = {};
@@ -45,9 +46,9 @@ angular.module('app.service.reverse', [])
 
 				let name;
 				if (tx) {
-					name = Contacts.lookup(accountId, network, tx.memoType, tx.memo);
+					name = contacts.lookup(accountId, network, tx.memoType, tx.memo);
 				} else {
-					name = Contacts.lookup(accountId, network);
+					name = contacts.lookup(accountId, network);
 				}
 
 				if (name) {

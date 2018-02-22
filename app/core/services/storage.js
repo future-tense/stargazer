@@ -1,46 +1,40 @@
-/* global angular */
+/* global */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.service.storage', [])
-.factory('Storage', function ($window) {
-	'use strict';
-
-	function getItem(key) {
-		const value = $window.localStorage.getItem(key);
-		if (value) {
-			try {
-				return JSON.parse(value);
-			} catch (err) {
-				return null;
-			}
-		} else {
+function getItem(key) {
+	const value = window.localStorage.getItem(key);
+	if (value) {
+		try {
+			return JSON.parse(value);
+		} catch (err) {
 			return null;
 		}
+	} else {
+		return null;
 	}
+}
 
-	function setItem(key, value) {
-		$window.localStorage.setItem(key, JSON.stringify(value, (key, value) => {
-			if (key.slice(0, 2) === '$$') {
-				return undefined;
-			}
+function setItem(key, value) {
+	window.localStorage.setItem(key, JSON.stringify(value, (key, value) => {
+		if (key.slice(0, 2) === '$$') {
+			return undefined;
+		}
 
-			return value;
-		}));
-	}
+		return value;
+	}));
+}
 
-	function removeItem(key) {
-		$window.localStorage.removeItem(key);
-	}
+function removeItem(key) {
+	window.localStorage.removeItem(key);
+}
 
-	const version = getItem('db-version');
-	if (!version) {
-		setItem('db-version', 1);
-	}
+const version = getItem('db-version');
+if (!version) {
+	setItem('db-version', 1);
+}
 
-	return {
-		getItem: getItem,
-		setItem: setItem,
-		removeItem: removeItem
-	};
-});
+export default {
+	getItem: getItem,
+	setItem: setItem,
+	removeItem: removeItem
+};
+
