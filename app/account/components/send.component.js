@@ -1,4 +1,8 @@
-/* global angular, console, Decimal, StellarSdk */
+/* global angular, console, Decimal */
+
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
+import 'decimal.js';
 
 (function () {
 	'use strict';
@@ -464,7 +468,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.send', [])
 	.component('send', {
 		controller: SendController,
 		controllerAs: 'vm',

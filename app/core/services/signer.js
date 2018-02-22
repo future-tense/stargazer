@@ -1,4 +1,7 @@
-/* global angular, buffer, console, Promise, StellarSdk */
+/* global angular, Buffer, console, Promise */
+
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
 
 /**
  * Executes a provided (promise-returning) function once per
@@ -19,11 +22,9 @@ Object.defineProperty(Array.prototype, 'forEachThen', {
 	}
 });
 
-angular.module('app')
+angular.module('app.service.signer', [])
 .factory('Signer', function ($q, Horizon, Keychain, Wallet) {
 	'use strict';
-
-	const Buffer = buffer.Buffer;
 
 	return {
 		getTransactionHash:		getTransactionHash,

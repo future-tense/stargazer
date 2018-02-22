@@ -1,6 +1,8 @@
 /* global angular, cloudSky, cordova */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.qr-scanner', [])
 .directive('qrScanner', function (QRScanner) {
 	'use strict';
 

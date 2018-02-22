@@ -1,6 +1,8 @@
-/* global angular, StellarSdk */
+/* global angular */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.valid-password', [])
 .directive('validPassword', function (Keychain) {
 	'use strict';
 

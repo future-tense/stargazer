@@ -1,6 +1,8 @@
 /* global angular, require */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.ext-href', [])
 .directive('extHref', function (platformInfo) {
 	'use strict';
 

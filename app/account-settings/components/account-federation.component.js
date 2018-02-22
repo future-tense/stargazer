@@ -1,5 +1,7 @@
 /* global angular, console */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -43,7 +45,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.account-federation', [])
 	.component('accountFederation', {
 		controller: AccountFederationController,
 		controllerAs: 'vm',

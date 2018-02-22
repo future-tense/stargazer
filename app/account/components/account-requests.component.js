@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -32,7 +34,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.account-requests', [])
 	.component('accountRequests', {
 		controller: AccountRequestController,
 		controllerAs: 'vm',

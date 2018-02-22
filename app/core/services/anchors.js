@@ -1,6 +1,9 @@
 /* global angular, toml */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import 'toml-j0.4';
+
+angular.module('app.service.anchors', [])
 .factory('Anchors', function ($http, $q) {
 	'use strict';
 

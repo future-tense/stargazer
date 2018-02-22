@@ -1,5 +1,8 @@
 /* global angular, CryptoJS */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+import 'crypto-js';
+
 (function () {
 	'use strict';
 
@@ -20,7 +23,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.service.centaurus', [])
 	.service('CentaurusService', CentaurusService);
 }());
 

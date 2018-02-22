@@ -1,5 +1,6 @@
 /* global angular, console */
 
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -48,7 +49,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.overview', [])
 	.component('overview', {
 		controller: OverviewController,
 		controllerAs: 'vm',

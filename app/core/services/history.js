@@ -1,5 +1,7 @@
 /* global angular, console, localStorage, EventSource */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -123,7 +125,7 @@
 		return res;
 	}
 
-	angular.module('app')
+	angular.module('app.service.history', [])
 	.factory('History', function ($http, $q, $rootScope, Horizon, Storage) {
 
 		function addEffect(effect, account) {

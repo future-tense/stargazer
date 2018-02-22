@@ -1,6 +1,8 @@
-/* global angular */
+/* global angular, require */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.service.ledger-nano')
 .factory('LedgerNano', function ($q, platformInfo) {
 	'use strict';
 

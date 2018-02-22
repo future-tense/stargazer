@@ -1,8 +1,5 @@
-/* global angular */
 
-angular.module('app')
-.config(function ($routeProvider) {
-	'use strict';
+export default function ($routeProvider) {
 
 	$routeProvider
 	.when('/side-menu/about', {
@@ -35,4 +32,4 @@ angular.module('app')
 	.when('/side-menu/settings', {
 		template: '<global-settings></global-settings>'
 	});
-});
+};

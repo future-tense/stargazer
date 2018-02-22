@@ -1,6 +1,9 @@
-/* global angular, console, StellarSdk */
+/* global angular, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
+
+angular.module('app.service.destination', [])
 .factory('Destination', function ($q, Contacts, Wallet) {
 	'use strict';
 

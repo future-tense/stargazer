@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -47,7 +49,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.index', [])
 	.component('index', {
 		controller: IndexController,
 		controllerAs: 'vm',

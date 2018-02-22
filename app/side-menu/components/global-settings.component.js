@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -9,7 +11,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.global-settings', [])
 	.component('globalSettings', {
 		controller: GlobalSettingsController,
 		controllerAs: 'vm',

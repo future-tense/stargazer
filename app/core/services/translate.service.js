@@ -1,5 +1,8 @@
 /* global angular, MessageFormat */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+import MessageFormat from 'messageformat';
+
 (function () {
 	'use strict';
 
@@ -46,6 +49,6 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.service.translate', [])
 	.service('Translate', TranslateService);
 }());

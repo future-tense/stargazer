@@ -1,4 +1,6 @@
-/* global angular, console, StellarSdk */
+/* global angular */
+
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -46,11 +48,10 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.import-account', [])
 	.component('importAccount', {
 		controller: ImportAccountController,
 		controllerAs: 'vm',
 		templateUrl: 'app/side-menu/components/import-account.html'
 	});
-
 }());

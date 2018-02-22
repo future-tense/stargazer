@@ -1,6 +1,10 @@
-/* global _, angular, console, Decimal, StellarSdk */
+/* global _, angular, console, Decimal */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
+import 'decimal.js';
+
+angular.module('app.service.wallet', [])
 .factory('Wallet', function ($http, $q, $rootScope, $timeout, Translate, $window, History, Horizon, Keychain, Storage) {
 	'use strict';
 

@@ -1,5 +1,6 @@
-/* global angular, console */
+/* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -15,7 +16,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.account-signer', [])
 	.component('accountSigners', {
 		controller: AccountSignersController,
 		controllerAs: 'vm',

@@ -1,10 +1,11 @@
-/* global angular, require */
+/* global angular, jazzicon, require */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import jazzicon from 'jazzicon';
+
+angular.module('app.service.jazzicon', [])
 .factory('Jazzicon', function () {
 	'use strict';
-
-	const jazzicon = require('jazzicon');
 
 	return {
 		render: render

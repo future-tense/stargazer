@@ -1,6 +1,8 @@
 /* global angular */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.valid-address', [])
 .directive('validAddress', function ($parse, Destination) {
 	'use strict';
 

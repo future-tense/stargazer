@@ -1,11 +1,12 @@
-/* global angular */
+/* global angular, qrcode */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import 'jsqrcode';		//	https://github.com/keifergu/jsqrcode
+
+angular.module('app.service.qr-decoder', [])
 .factory('QRDecoder', function ($q) {
 	'use strict';
 
-	//	uses the jsqrcode bower component
-	const qrcode = window.qrcode;
 	let prevResult;
 
 	return {

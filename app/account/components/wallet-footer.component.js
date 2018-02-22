@@ -1,5 +1,6 @@
-/* global angular, console */
+/* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -15,7 +16,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.wallet-footer', [])
 	.component('walletFooter', {
 		controller: WalletFooterController,
 		controllerAs: 'vm',

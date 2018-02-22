@@ -1,4 +1,6 @@
-/* global angular, console, StellarSdk */
+/* global angular, console */
+
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -121,7 +123,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.transaction', [])
 	.component('transaction',  {
 		controller: TransactionController,
 		controllerAs: 'vm',

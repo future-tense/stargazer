@@ -1,6 +1,8 @@
 /* global angular */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.account-name', [])
 .directive('accountName', function (Reverse) {
 	'use strict';
 

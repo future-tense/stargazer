@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -20,7 +22,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.delete-account', [])
 	.component('deleteAccount', {
 		controller: DeleteAccountController,
 		controllerAs: 'vm',

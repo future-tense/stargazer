@@ -1,6 +1,8 @@
 /* global angular */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.dynamic', [])
 .directive('dynamic', function ($compile) {
 	return {
 		restrict: 'A',

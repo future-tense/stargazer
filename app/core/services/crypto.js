@@ -1,6 +1,9 @@
 /* global angular, sjcl */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import 'sjcl';
+
+angular.module('app.service.crypto', [])
 .factory('Crypto', function () {
 	'use strict';
 

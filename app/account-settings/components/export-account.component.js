@@ -1,5 +1,7 @@
 /* global angular, console */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -21,7 +23,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.export-account', [])
 	.component('exportAccount', {
 		controller: ExportAccountController,
 		controllerAs: 'vm',

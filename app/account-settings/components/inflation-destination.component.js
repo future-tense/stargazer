@@ -1,4 +1,7 @@
-/* global angular, console, StellarSdk */
+/* global angular, console */
+
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
 
 (function () {
 	'use strict';
@@ -73,7 +76,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.inflation-destination', [])
 	.component('inflationDestination', {
 		controller: InflationDestinationController,
 		controllerAs: 'vm',

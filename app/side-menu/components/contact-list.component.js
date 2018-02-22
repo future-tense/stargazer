@@ -1,5 +1,6 @@
-/* global angular, console, StellarSdk */
+/* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -24,7 +25,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.contact-list', [])
 	.component('contactList', {
 		controller: ContactListController,
 		controllerAs: 'vm',

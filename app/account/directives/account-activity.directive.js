@@ -1,7 +1,9 @@
 /* global angular */
 /* jshint multistr: true */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.account-activity', [])
 .directive('accountActivity', function ($filter, $interval, Translate, Contacts, History, Jazzicon, Wallet) {
 	'use strict';
 

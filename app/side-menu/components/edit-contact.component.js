@@ -1,5 +1,6 @@
-/* global angular, console, StellarSdk */
+/* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -63,7 +64,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.edit-account', [])
 	.component('editContact', {
 		controller: EditContactController,
 		controllerAs: 'vm',

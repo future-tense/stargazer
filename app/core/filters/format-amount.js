@@ -1,6 +1,8 @@
 /* global angular, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.filter.format-amount', [])
 .filter('formatAmount', function (Language) {
 	'use strict';
 

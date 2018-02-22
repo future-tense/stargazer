@@ -1,4 +1,6 @@
-/* global angular, console, require */
+/* global angular */
+
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -56,7 +58,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.receive', [])
 	.component('receive', {
 		controller: ReceiveController,
 		controllerAs: 'vm',

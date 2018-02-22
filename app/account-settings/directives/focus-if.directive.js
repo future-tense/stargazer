@@ -1,6 +1,8 @@
 /* global angular, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.focus-if', [])
 .directive('focusIf', function ($timeout) {
 	'use strict';
 

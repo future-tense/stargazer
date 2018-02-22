@@ -1,6 +1,8 @@
 /* global angular, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.modal.payment-request', [])
 .controller('PaymentRequestCtrl', function ($scope, Horizon, Wallet) {
 	'use strict';
 

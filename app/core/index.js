@@ -1,0 +1,112 @@
+/* global angular */
+
+import './components/advanced-toggle.component.js';
+import './components/index.component.js';
+import './components/memo-selector.component.js';
+import './components/network-selector.component';
+
+import './directives/account-name.js';
+import './directives/dynamic.js';
+import './directives/ext-href.js';
+import './directives/jazzicon.js';
+import './directives/on-enter.js';
+import './directives/on-esc.js';
+import './directives/qr-scanner.js';
+import './directives/unique-name.js';
+import './directives/valid-address.js';
+import './directives/valid-password.js';
+import './directives/valid-seed.js';
+
+import './filters/format-amount.js';
+import './filters/format-date.js';
+import './filters/translate.filter.js';
+
+import './modals/review-submit.controller.js';
+import './modals/scanner.controller.js';
+import './modals/select-account.controller.js';
+import './modals/select-contact.controller.js';
+import './modals/submit-password.controller.js';
+
+import './services/anchors.js';
+import './services/centaurus.js';
+import './services/commands.js';
+import './services/constellation.js';
+import './services/contacts.js';
+import './services/crypto.js';
+import './services/destination.js';
+import './services/history.js';
+import './services/horizon.js';
+import './services/humanizer.js';
+import './services/jazzicon.js';
+import './services/keychain.js';
+import './services/language.js';
+//import './services/ledger-nano.js';
+import './services/modal.js';
+import './services/platform-info.js';
+import './services/qr-decoder.js';
+import './services/qr-scanner.js';
+import './services/reverse.js';
+import './services/reviewer.js';
+import './services/signer.js';
+import './services/storage.js';
+import './services/submitter.js';
+import './services/transactions.js';
+import './services/translate.service.js';
+import './services/wallet.js';
+
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.core', [
+	'app.component.advanced-toggle',
+	'app.component.index',
+	'app.component.memo-selector',
+	'app.component.network-selector',
+
+	'app.directive.account-name',
+	'app.directive.dynamic',
+	'app.directive.ext-href',
+	'app.directive.jazzicon',
+	'app.directive.on-enter',
+	'app.directive.on-esc',
+	'app.directive.qr-scanner',
+	'app.directive.unique-name',
+	'app.directive.valid-address',
+	'app.directive.valid-password',
+	'app.directive.valid-seed',
+
+	'app.filter.format-amount',
+	'app.filter.format-date',
+	'app.filter.translate',
+
+	'app.modals.review-submit',
+	'app.modals.scanner',
+	'app.modals.select-account',
+	'app.modals.select-contact',
+	'app.modals.submit-password',
+
+	'app.service.anchors',
+	'app.service.centaurus',
+	'app.service.commands',
+	'app.service.constellation',
+	'app.service.contacts',
+	'app.service.crypto',
+	'app.service.destination',
+	'app.service.history',
+	'app.service.horizon',
+	'app.service.humanizer',
+	'app.service.jazzicon',
+	'app.service.keychain',
+	'app.service.language',
+	'app.service.modal',
+	'app.service.platform-info',
+	'app.service.qr-decoder',
+	'app.service.qr-scanner',
+	'app.service.reverse',
+	'app.service.reviewer',
+	'app.service.signer',
+	'app.service.storage',
+	'app.service.submitter',
+	'app.service.transactions',
+	'app.service.translate',
+	'app.service.wallet',
+]);

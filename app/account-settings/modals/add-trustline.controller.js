@@ -1,6 +1,8 @@
 /* global angular, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.modal.add-trustline', [])
 .controller('AddTrustlineCtrl', function ($scope, Destination) {
 	'use strict';
 

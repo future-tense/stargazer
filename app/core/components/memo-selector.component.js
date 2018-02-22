@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -15,7 +17,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.memo-selector', [])
 	.component('memoSelector', {
 		bindings: {
 			type: '=',

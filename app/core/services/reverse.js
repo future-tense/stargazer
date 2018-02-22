@@ -1,6 +1,9 @@
-/* global angular, StellarSdk */
+/* global angular */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
+
+angular.module('app.service.reverse', [])
 .factory('Reverse', function ($q, Contacts, Wallet) {
 	'use strict';
 

@@ -1,8 +1,5 @@
-/* global angular */
 
-angular.module('app')
-.config(function ($routeProvider) {
-	'use strict';
+export default function ($routeProvider) {
 
 	$routeProvider
 	.when('/', {
@@ -28,4 +25,4 @@ angular.module('app')
 	.when('/account/transaction/:id', {
 		template: '<transaction></transaction>'
 	});
-});
+};

@@ -1,6 +1,8 @@
 /* global angular, console, toml */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.service.contacts', [])
 .factory('Contacts', function (Horizon, Storage) {
 	'use strict';
 

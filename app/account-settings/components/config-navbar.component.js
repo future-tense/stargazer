@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -14,7 +16,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.config-navbar', [])
 	.component('configNavbar', {
 		bindings: {
 			heading: '@',
@@ -24,6 +26,5 @@
 		controllerAs: 'vm',
 		templateUrl: 'app/account-settings/components/config-navbar.html'
 	});
-
 }());
 

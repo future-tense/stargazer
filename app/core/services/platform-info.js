@@ -1,6 +1,8 @@
 /* global angular, chrome, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.service.platform-info', [])
 .factory('platformInfo', function ($window) {
 	'use strict';
 

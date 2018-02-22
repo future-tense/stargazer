@@ -1,9 +1,5 @@
-/* global angular */
 
-angular.module('app')
-.config(function ($routeProvider) {
-	'use strict';
-
+export default function ($routeProvider) {
 	$routeProvider
 	.when('/account-settings', {
 		template: '<account-settings></account-settings>'
@@ -32,4 +28,4 @@ angular.module('app')
 	.when('/account-settings/trustlines', {
 		template: '<account-trustlines></account-trustlines>'
 	});
-});
+};

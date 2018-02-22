@@ -1,6 +1,9 @@
-/* global angular, StellarSdk */
+/* global angular */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
+
+angular.module('app.service.commands', [])
 .factory('Commands', function ($http, $ionicLoading, $location, $q, Contacts, Keychain, Modal, Wallet) {
 	'use strict';
 

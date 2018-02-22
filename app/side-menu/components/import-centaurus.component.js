@@ -1,4 +1,6 @@
-/* global angular, console, StellarSdk */
+/* global angular */
+
+import 'ionic-sdk/release/js/ionic.bundle';
 
 (function () {
 	'use strict';
@@ -38,7 +40,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.import-centaurus', [])
 	.component('importCentaurus', {
 		controller: ImportCentaurusController,
 		controllerAs: 'vm',

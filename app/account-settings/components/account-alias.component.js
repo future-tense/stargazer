@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -21,7 +23,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.account-alias', [])
 	.component('accountAlias', {
 		controller: AccountAliasController,
 		controllerAs: 'vm',

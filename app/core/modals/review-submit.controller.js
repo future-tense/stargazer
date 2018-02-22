@@ -1,6 +1,8 @@
-/* global angular, console, StellarSdk */
+/* global angular, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.modals.review-submit', [])
 .controller('ReviewSubmitCtrl', function ($q, $scope, Translate, Humanizer, Keychain, Signer, Submitter, Transactions) {
 	'use strict';
 

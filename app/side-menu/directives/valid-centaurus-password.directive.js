@@ -1,6 +1,8 @@
 /* global angular*/
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.directive.valid-centaurus-password', [])
 .directive('validCentaurusPassword', function (CentaurusService) {
 	'use strict';
 

@@ -1,6 +1,10 @@
 /* global angular */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.filter.translate', [
+	'app.service.translate'
+])
 .filter('translate', function (Translate) {
 	'use strict';
 

@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 (function () {
 	'use strict';
 
@@ -19,7 +21,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.wallet-header', [])
 	.component('walletHeader', {
 		controller: WalletHeaderController,
 		controllerAs: 'vm',

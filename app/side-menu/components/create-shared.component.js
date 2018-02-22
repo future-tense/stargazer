@@ -1,4 +1,7 @@
-/* global angular, StellarSdk */
+/* global angular */
+
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
 
 (function () {
 	'use strict';
@@ -211,7 +214,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.create-shared', [])
 	.component('createShared', {
 		controller: CreateSharedController,
 		controllerAs: 'vm',

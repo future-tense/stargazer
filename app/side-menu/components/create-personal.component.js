@@ -1,4 +1,7 @@
-/* global angular, StellarSdk */
+/* global angular */
+
+import 'ionic-sdk/release/js/ionic.bundle';
+import StellarSdk from 'stellar-sdk';
 
 (function () {
 	'use strict';
@@ -106,7 +109,7 @@
 		}
 	}
 
-	angular.module('app')
+	angular.module('app.component.create-personal', [])
 	.component('createPersonal', {
 		controller: CreatePersonalController,
 		controllerAs: 'vm',

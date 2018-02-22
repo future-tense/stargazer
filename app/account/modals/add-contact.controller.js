@@ -1,6 +1,8 @@
-/* global angular, console, StellarSdk */
+/* global angular, console */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+
+angular.module('app.modal.add-contact-from-tx', [])
 .controller('AddContactFromTxCtrl', function ($route, $scope, Contacts) {
 	'use strict';
 

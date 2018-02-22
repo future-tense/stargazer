@@ -1,8 +1,10 @@
-/* global angular, console, QRCode */
+/* global angular, QRCode */
 
-angular.module('app')
+import 'ionic-sdk/release/js/ionic.bundle';
+import QRCode from 'qrcode_js';
+
+angular.module('app.directive.qrcode', [])
 .directive('qrcode', function ($window) {
-	'use strict';
 
 	function link(scope, element, attrs) {
 
