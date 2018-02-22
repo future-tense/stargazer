@@ -1,6 +1,5 @@
-/* global sjcl */
 
-import 'sjcl';
+import sjcl from 'sjcl';
 
 const encryptSeed = (seed, key, cipherName, modeName) => {
 	const cipher = new sjcl.cipher[cipherName](key);
