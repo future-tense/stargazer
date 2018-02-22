@@ -2,35 +2,31 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
-(function () {
-	'use strict';
+class NetworkSelectorController {
 
-	class NetworkSelectorController {
+	constructor(Horizon) {
+		this.networks = Horizon.getNetworks();
+		this.Horizon = Horizon;
+	}
 
-		constructor(Horizon) {
-			this.networks = Horizon.getNetworks();
-			this.Horizon = Horizon;
-		}
-
-		$onInit() {
-			if (!this.network) {
-				this.network = this.Horizon.public;
-			}
-		}
-
-		hash(network) {
-			return this.Horizon.getHash(network.phrase);
+	$onInit() {
+		if (!this.network) {
+			this.network = this.Horizon.public;
 		}
 	}
 
-	angular.module('app.component.network-selector', [])
-	.component('networkSelector', {
-		bindings: {
-			network: '='
-		},
-		controller: NetworkSelectorController,
-		controllerAs: 'vm',
-		templateUrl: 'app/core/components/network-selector.html'
-	});
-}());
+	hash(network) {
+		return this.Horizon.getHash(network.phrase);
+	}
+}
+
+angular.module('app.component.network-selector', [])
+.component('networkSelector', {
+	bindings: {
+		network: '='
+	},
+	controller: NetworkSelectorController,
+	controllerAs: 'vm',
+	templateUrl: 'app/core/components/network-selector.html'
+});
 

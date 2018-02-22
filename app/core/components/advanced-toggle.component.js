@@ -2,22 +2,18 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
-(function () {
-	'use strict';
-
-	class AdvancedToggleController {
-		toggle() {
-			this.flag = !this.flag;
-		}
+class AdvancedToggleController {
+	toggle() {
+		this.flag = !this.flag;
 	}
+}
 
-	angular.module('app.component.advanced-toggle', [])
-	.component('advancedToggle', {
-		bindings: {
-			flag: '='
-		},
-		controller: AdvancedToggleController,
-		controllerAs: 'vm',
-		templateUrl: 'app/core/components/advanced-toggle.html'
-	});
-}());
+angular.module('app.component.advanced-toggle', [])
+.component('advancedToggle', {
+	bindings: {
+		flag: '='
+	},
+	controller: AdvancedToggleController,
+	controllerAs: 'vm',
+	templateUrl: 'app/core/components/advanced-toggle.html'
+});

@@ -3,221 +3,217 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 
-(function () {
-	'use strict';
+const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
 
-	const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
+class CreateSharedController {
 
-	class CreateSharedController {
+	constructor($location, Commands, Contacts, Horizon, Modal, QRScanner, Reviewer, Signer, Translate, Wallet) {
+		this.$location = $location;
+		this.Horizon = Horizon;
+		this.Modal = Modal;
+		this.QRScanner = QRScanner;
+		this.Reviewer = Reviewer;
+		this.Signer = Signer;
+		this.Wallet = Wallet;
+		this.Commands = Commands;
+		this.Contacts = Contacts;
 
-		constructor($location, Commands, Contacts, Horizon, Modal, QRScanner, Reviewer, Signer, Translate, Wallet) {
-			this.$location = $location;
-			this.Horizon = Horizon;
-			this.Modal = Modal;
-			this.QRScanner = QRScanner;
-			this.Reviewer = Reviewer;
-			this.Signer = Signer;
-			this.Wallet = Wallet;
-			this.Commands = Commands;
-			this.Contacts = Contacts;
+		this.account = {
+			alias:	getAccountName()
+		};
 
-			this.account = {
-				alias:	getAccountName()
-			};
+		this.signers = [];
+		this.state = 0;
 
-			this.signers = [];
-			this.state = 0;
+		this.currentSignerIndex = 1;
+		this.numCosigners = 2;
+		this.threshold = 1;
 
-			this.currentSignerIndex = 1;
-			this.numCosigners = 2;
-			this.threshold = 1;
+		this.hasCamera = this.QRScanner.hasCamera;
 
-			this.hasCamera = this.QRScanner.hasCamera;
-
-			function getAccountName() {
-				const accountNum = getNextSharedAccountNumber();
-				return `Shared Account #${accountNum}`;
-			}
-
-			function getNextSharedAccountNumber() {
-				return Wallet.accountList.filter(item => item.isMultiSig()).length + 1;
-			}
+		function getAccountName() {
+			const accountNum = getNextSharedAccountNumber();
+			return `Shared Account #${accountNum}`;
 		}
 
-		onCosignerCountChange() {
-			this.threshold = Math.min(this.threshold, this.numCosigners);
+		function getNextSharedAccountNumber() {
+			return Wallet.accountList.filter(item => item.isMultiSig()).length + 1;
+		}
+	}
+
+	onCosignerCountChange() {
+		this.threshold = Math.min(this.threshold, this.numCosigners);
+	}
+
+	getCosignerOptions() {
+		return range(2, 11);
+	}
+
+	getThresholdOptions() {
+		return range(1, this.numCosigners + 1);
+	}
+
+	hasContacts() {
+		return this.Contacts.forNetwork(this.account.network).length !== 0;
+	}
+
+	next() {
+		if (this.state === 0) {
+			this.state = 1;
 		}
 
-		getCosignerOptions() {
-			return range(2, 11);
-		}
+		else if (this.state === 1) {
+			this.addSigner();
+			if (this.signers.length === this.numCosigners) {
 
-		getThresholdOptions() {
-			return range(1, this.numCosigners + 1);
-		}
-
-		hasContacts() {
-			return this.Contacts.forNetwork(this.account.network).length !== 0;
-		}
-
-		next() {
-			if (this.state === 0) {
-				this.state = 1;
-			}
-
-			else if (this.state === 1) {
-				this.addSigner();
-				if (this.signers.length === this.numCosigners) {
-
-					const fees = this.Horizon.getFees(this.account.network);
-					this.minimum = fees.baseReserve * (2 + this.numCosigners);
-					this.account.amount = this.minimum;
-					this.state = 2;
-				}
-			}
-
-			else if (this.state === 2) {
-				this.createAccount();
+				const fees = this.Horizon.getFees(this.account.network);
+				this.minimum = fees.baseReserve * (2 + this.numCosigners);
+				this.account.amount = this.minimum;
+				this.state = 2;
 			}
 		}
 
-		addSigner() {
-			this.signers.push({
-				address: this.account.signer,
-				id: this.account.destInfo.id
-			});
-			this.account.signer = '';
-			this.currentSignerIndex += 1;
+		else if (this.state === 2) {
+			this.createAccount();
 		}
+	}
 
-		createAccount() {
-			const network = this.account.network;
-			const accounts = {};
+	addSigner() {
+		this.signers.push({
+			address: this.account.signer,
+			id: this.account.destInfo.id
+		});
+		this.account.signer = '';
+		this.currentSignerIndex += 1;
+	}
 
-			Object.keys(this.Wallet.accounts).forEach((key) => {
-				const account = this.Wallet.accounts[key];
-				if (account.network === network) {
-					accounts[account.alias] = account;
-				}
-			});
+	createAccount() {
+		const network = this.account.network;
+		const accounts = {};
 
-			const funderName = this.account.funder;
-			if (funderName in accounts) {
+		Object.keys(this.Wallet.accounts).forEach((key) => {
+			const account = this.Wallet.accounts[key];
+			if (account.network === network) {
+				accounts[account.alias] = account;
+			}
+		});
 
-				const newAccount	= StellarSdk.Keypair.random();
-				const funder		= accounts[funderName];
-				const newAccountId	= newAccount.publicKey();
+		const funderName = this.account.funder;
+		if (funderName in accounts) {
 
-				funder.horizon()
-				.loadAccount(funder.id)
-				.then((account) => {
+			const newAccount	= StellarSdk.Keypair.random();
+			const funder		= accounts[funderName];
+			const newAccountId	= newAccount.publicKey();
 
-					const builder = new StellarSdk.TransactionBuilder(account)
-					.addOperation(StellarSdk.Operation.createAccount({
-						destination: newAccount.publicKey(),
-						startingBalance: this.account.amount.toString()
-					}));
+			funder.horizon()
+			.loadAccount(funder.id)
+			.then((account) => {
 
-					this.signers.forEach((signer) => {
-						const op = StellarSdk.Operation.setOptions({
-							source: newAccountId,
-							signer: {
-								ed25519PublicKey: signer.id,
-								weight: 1
-							}
-						});
+				const builder = new StellarSdk.TransactionBuilder(account)
+				.addOperation(StellarSdk.Operation.createAccount({
+					destination: newAccount.publicKey(),
+					startingBalance: this.account.amount.toString()
+				}));
 
-						builder.addOperation(op);
+				this.signers.forEach((signer) => {
+					const op = StellarSdk.Operation.setOptions({
+						source: newAccountId,
+						signer: {
+							ed25519PublicKey: signer.id,
+							weight: 1
+						}
 					});
 
-					const threshold = this.threshold;
-					builder.addOperation(StellarSdk.Operation.setOptions({
-						source: newAccountId,
-						lowThreshold: threshold,
-						medThreshold: threshold,
-						highThreshold: threshold,
-						masterWeight: 0
-					}));
-
-					/*	This signs for the new account */
-
-					const tx = builder.build();
-					const hash = this.Signer.getTransactionHash(tx, network);
-					const sig = newAccount.signDecorated(hash);
-					tx.signatures.push(sig);
-
-					return {
-						tx: tx,
-						network: network
-					};
-				})
-				.then(this.Reviewer.review)
-				.then(() => {
-					this.Wallet.importAccount(
-						newAccountId,
-						newAccount.secret(),
-						this.account.alias,
-						network
-					);
-					this.$location.path('/');
+					builder.addOperation(op);
 				});
-			}
-		}
 
-		onValidAddress(destInfo) {
-			this.account.destInfo = destInfo;
-		}
+				const threshold = this.threshold;
+				builder.addOperation(StellarSdk.Operation.setOptions({
+					source: newAccountId,
+					lowThreshold: threshold,
+					medThreshold: threshold,
+					highThreshold: threshold,
+					masterWeight: 0
+				}));
 
-		selectAccount() {
-			const data = {
-				network: this.account.network,
-				heading: 'Select Account'
-			};
+				/*	This signs for the new account */
 
-			this.Modal.show('app/core/modals/select-account.html', data)
-			.then((res) => {
-				this.account.signer = res;
-			});
-		}
+				const tx = builder.build();
+				const hash = this.Signer.getTransactionHash(tx, network);
+				const sig = newAccount.signDecorated(hash);
+				tx.signatures.push(sig);
 
-		selectContact() {
-			const data = {
-				network: this.account.network,
-				heading: 'Select Contact'
-			};
-
-			this.Modal.show('app/core/modals/select-contact.html', data)
-			.then((res) => {
-				this.account.signer = res;
-			});
-		}
-
-		selectFromQR() {
-			this.QRScanner.open()
-			.then(this.Commands.onContact)
-			.then((res) => {
-				this.account.signer = res.id;
-			});
-		}
-
-		selectFunder() {
-			const data = {
-				network: this.account.network,
-				minimum: this.minimum,
-				numOps: 2 + this.signers.length
-			};
-
-			this.Modal.show('app/side-menu/modals/select-funder.html', data)
-			.then((res) => {
-				this.account.funder = res;
+				return {
+					tx: tx,
+					network: network
+				};
+			})
+			.then(this.Reviewer.review)
+			.then(() => {
+				this.Wallet.importAccount(
+					newAccountId,
+					newAccount.secret(),
+					this.account.alias,
+					network
+				);
+				this.$location.path('/');
 			});
 		}
 	}
 
-	angular.module('app.component.create-shared', [])
-	.component('createShared', {
-		controller: CreateSharedController,
-		controllerAs: 'vm',
-		templateUrl: 'app/side-menu/components/create-shared.html'
-	});
-}());
+	onValidAddress(destInfo) {
+		this.account.destInfo = destInfo;
+	}
+
+	selectAccount() {
+		const data = {
+			network: this.account.network,
+			heading: 'Select Account'
+		};
+
+		this.Modal.show('app/core/modals/select-account.html', data)
+		.then((res) => {
+			this.account.signer = res;
+		});
+	}
+
+	selectContact() {
+		const data = {
+			network: this.account.network,
+			heading: 'Select Contact'
+		};
+
+		this.Modal.show('app/core/modals/select-contact.html', data)
+		.then((res) => {
+			this.account.signer = res;
+		});
+	}
+
+	selectFromQR() {
+		this.QRScanner.open()
+		.then(this.Commands.onContact)
+		.then((res) => {
+			this.account.signer = res.id;
+		});
+	}
+
+	selectFunder() {
+		const data = {
+			network: this.account.network,
+			minimum: this.minimum,
+			numOps: 2 + this.signers.length
+		};
+
+		this.Modal.show('app/side-menu/modals/select-funder.html', data)
+		.then((res) => {
+			this.account.funder = res;
+		});
+	}
+}
+
+angular.module('app.component.create-shared', [])
+.component('createShared', {
+	controller: CreateSharedController,
+	controllerAs: 'vm',
+	templateUrl: 'app/side-menu/components/create-shared.html'
+});
