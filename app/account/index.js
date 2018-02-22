@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 import './components/account-info.component.js';
 import './components/account-requests.component.js';
 import './components/overview.component.js';
@@ -16,7 +18,7 @@ import './modals/add-contact.controller.js';
 import './modals/edit-txcomment.controller.js';
 import './modals/payment-request.controller.js';
 
-import 'ionic-sdk/release/js/ionic.bundle';
+import routes from './config.route.js';
 
 angular.module('app.account', [
 	'app.component.account-info',
@@ -32,4 +34,5 @@ angular.module('app.account', [
 	'app.modal.add-contact-from-tx',
 	'app.modal.edit-txcomment',
 	'app.modal.payment-request'
-]);
+])
+.config(routes);

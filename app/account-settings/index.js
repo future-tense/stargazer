@@ -1,5 +1,7 @@
 /* global angular*/
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 import './components/account-alias.component.js';
 import './components/account-federation.component.js';
 import './components/account-settings.component.js';
@@ -19,7 +21,7 @@ import './modals/add-password.controller.js';
 import './modals/add-trustline.controller.js';
 import './modals/remove-password.controller.js';
 
-import 'ionic-sdk/release/js/ionic.bundle';
+import routes from './config.route.js';
 
 angular.module('app.settings', [
 	'app.component.account-alias',
@@ -40,4 +42,5 @@ angular.module('app.settings', [
 	'app.modal.add-password',
 	'app.modal.add-trustline',
 	'app.modal.remove-password'
-]);
+])
+.config(routes);

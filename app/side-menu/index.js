@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 import './components/about-app.component.js';
 import './components/add-account.component.js';
 import './components/contact-list.component.js';
@@ -19,7 +21,7 @@ import './directives/valid-password2.directive.js';
 import './modals/add-contact.controller.js';
 import './modals/select-funder.controller.js';
 
-import 'ionic-sdk/release/js/ionic.bundle';
+import routes from './config.route.js';
 
 angular.module('app.side-menu', [
 	'app.component.about-app',
@@ -40,4 +42,5 @@ angular.module('app.side-menu', [
 
 	'app.modal.add-contact',
 	'app.modal.select-funder'
-]);
+])
+.config(routes);

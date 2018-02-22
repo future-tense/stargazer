@@ -8,10 +8,6 @@ import './account-settings/index.js';
 import './core/index.js';
 import './side-menu/index.js';
 
-import accountRoutes from './account/config.route.js';
-import settingRoutes from './account-settings/config.route.js';
-import sideMenuRoutes from './side-menu/config.route.js';
-
 const mod =
 angular.module('app', [
 	'ngRoute',
@@ -24,10 +20,6 @@ angular.module('app', [
 ], function ($compileProvider) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|mailto|file|chrome-extension|market):)|#/);
 });
-
-mod.config(accountRoutes);
-mod.config(settingRoutes);
-mod.config(sideMenuRoutes);
 
 mod.run(function ($ionicPlatform, $rootScope, $route) {
 
