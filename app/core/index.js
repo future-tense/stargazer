@@ -1,5 +1,7 @@
 /* global angular */
 
+import 'ionic-sdk/release/js/ionic.bundle';
+
 import './components/advanced-toggle.component.js';
 import './components/index.component.js';
 import './components/memo-selector.component.js';
@@ -44,8 +46,6 @@ import './services/signer.js';
 import './services/submitter.js';
 import './services/transactions.js';
 import './services/wallet.js';
-
-import 'ionic-sdk/release/js/ionic.bundle';
 
 angular.module('app.core', [
 	'app.component.advanced-toggle',

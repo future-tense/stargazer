@@ -1,4 +1,3 @@
-
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';

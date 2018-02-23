@@ -1,8 +1,8 @@
- /* global angular, qrcode */
+/* global angular, qrcode */
 
- import 'ionic-sdk/release/js/ionic.bundle';
+import 'ionic-sdk/release/js/ionic.bundle';
 
- angular.module('app.modals.scanner', [])
+angular.module('app.modals.scanner', [])
 .controller('scannerController', function ($scope, $timeout, QRDecoder) {
 	'use strict';
 
