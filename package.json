@@ -23,6 +23,7 @@
     "grunt-file-sloc": "0.0.1",
     "grunt-preprocess": "^5.1.0",
     "grunt-replace": "^1.0.1",
+    "hard-source-webpack-plugin": "^0.5.18",
     "ionic-sdk": "git+https://github.com/ionic-team/ionic.git#v1.3.2",
     "jazzicon": "git+https://github.com/flyswatter/jazzicon.git#8e51499",
     "jit-grunt": "^0.10.0",

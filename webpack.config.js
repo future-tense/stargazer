@@ -2,6 +2,7 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const config = {
 	context: path.resolve(__dirname, 'app'),
@@ -31,7 +32,11 @@ const config = {
 
 	externals: {
 		'electron': 'commonjs electron'
-	}
+	},
+
+	plugins: [
+		new HardSourceWebpackPlugin()
+	]
 };
 
 module.exports = config;
