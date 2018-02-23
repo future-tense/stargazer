@@ -1,5 +1,5 @@
 
-export default function ($routeProvider) {
+export default /* @ngInject */ function ($routeProvider) {
 
 	$routeProvider
 	.when('/', {
