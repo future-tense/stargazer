@@ -1,8 +1,7 @@
-/* global angular, console, Decimal */
+/* global angular, console */
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
-import 'decimal.js';
 import contacts from '../../core/services/contacts.js';
 import horizon from '../../core/services/horizon.js';
 

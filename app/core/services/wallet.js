@@ -2,7 +2,7 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
-import 'decimal.js';
+import Decimal from 'decimal.js';
 import horizon from './horizon.js';
 import storage from './storage.js';
 
