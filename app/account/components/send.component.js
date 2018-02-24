@@ -246,23 +246,6 @@ class SendController {
 		});
 	}
 
-	selectRecipient() {
-
-		//	invalidate form records first
-		this.send.pathRecords = [];
-		this.send.destInfo = null;
-
-		const data = {
-			network: this.Wallet.current.network,
-			heading: 'modal.recipient.heading'
-		};
-
-		this.Modal.show('app/core/modals/select-contact.html', data)
-		.then(dest => {
-			this.send.destination = dest;
-		});
-	}
-
 	getPaths() {
 
 		this.isPathPending	= true;
