@@ -8,6 +8,7 @@ import './components/account-settings.component.js';
 import './components/account-signers.component.js';
 import './components/account-trustlines.component.js';
 import './components/advanced-settings.component.js';
+import './components/close-account.component.js';
 import './components/config-navbar.component.js';
 import './components/delete-account.component.js';
 import './components/export-account.component.js';
@@ -30,6 +31,7 @@ angular.module('app.settings', [
 	'app.component.account-signer',
 	'app.component.account-trustlines',
 	'app.component.advanced-settings',
+	'app.component.close-account',
 	'app.component.config-navbar',
 	'app.component.delete-account',
 	'app.component.export-account',

@@ -13,6 +13,9 @@ export default /* @ngInject */ function ($routeProvider) {
 	.when('/account-settings/delete', {
 		template: '<delete-account></delete-account>'
 	})
+	.when('/account-settings/close', {
+		template: '<close-account></close-account>'
+	})
 	.when('/account-settings/export', {
 		template: '<export-account></export-account>'
 	})

@@ -1,0 +1,66 @@
+<config-navbar heading="{{'Close Account' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+
+<ion-content class="has-header" scrollbar-y="false">
+
+	<div class="list">
+		<div class="item item-divider">
+			{{'tabs.send.info.heading' | translate}}
+		</div>
+
+		<form name="forms.close">
+			<label class="item item-input item-inset item-stacked-label">
+					<span class="input-label">
+						{{'tabs.send.destination.label' | translate}}
+					</span>
+				<input type="text" name="destination" ng-model="vm.data.destination" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
+			</label>
+			<memo-selector type="vm.data.memo_type" memo="vm.data.memo" ng-show="vm.data.destInfo"></memo-selector>
+		</form>
+
+		<div ng-show="!vm.data.destInfo">
+			<div class="item item-divider"></div>
+			<a href on-tap="vm.selectAccount()">
+				<div class="item">
+					<span>
+						{{'Select an Account' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+
+			<a href on-tap="vm.selectContact()" ng-if="vm.hasContacts">
+				<div class="item">
+					<span>
+						{{'Select a Contact' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+
+			<a href on-tap="vm.selectFromQR()" ng-show="vm.hasCamera">
+				<div class="item">
+					<span>
+						{{'Scan a QR-code' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+
+			<div class="card" ng-show="forms.close.destination.$viewValue">
+				Not a valid recipient address
+			</div>
+		</div>
+	</div>
+
+	<div class="button-group" style="position:absolute;bottom:0">
+		<button type="button" class="button button-block button-positive" on-tap="vm.closeAccount()" ng-disabled="!vm.data.destInfo">
+			{{'Close Account' | translate}}
+		</button>
+	</div>
+</ion-content>
