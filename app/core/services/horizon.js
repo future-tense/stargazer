@@ -40,15 +40,22 @@ function getFees(hash) {
 		server.ledgers().order('desc').limit(1).call()
 		.then(res => {
 			const ledger = res.records[0];
-			fees[hash] = {
-				baseFee: ledger.base_fee,
-				baseReserve: ledger.base_reserve
-			};
+			if ('base_fee' in ledger) {
+				fees[hash] = {
+					baseFee: ledger.base_fee,
+					baseReserve: ledger.base_reserve
+				};
+			} else {
+				fees[hash] = {
+					baseFee: ledger.base_fee_in_stroops,
+					baseReserve: ledger.base_reserve_in_stroops / 10000000.0
+				};
+			}
 		});
 
 		fees[hash] = {
 			baseFee: 100,
-			baseReserve: '0.5'
+			baseReserve: 0.5
 		};
 	}
 
