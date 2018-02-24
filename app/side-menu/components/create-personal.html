@@ -2,7 +2,7 @@
 <ion-content class="has-header" scrollbar-y="false">
 
 	<div ng-if="vm.state == 1">
-		<form name="createAccountForm">
+		<form name="createAccount">
 			<div class="list" style="margin-bottom:8px">
 				<div class="item item-divider"></div>
 				<label class="item item-input item-inset item-stacked-label">
@@ -16,7 +16,7 @@
 		</form>
 
 		<div class="button-group" style="position:absolute;bottom:0">
-			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="createAccountForm.$invalid">
+			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="createAccount.$invalid">
 				Next
 			</button>
 		</div>
@@ -28,26 +28,26 @@
 				{{'account.funding.heading' | translate}}
 			</div>
 			<label class="item item-input item-inset item-stacked-label">
-				<span class="input-label">
-					{{'account.funding.label' | translate}}
-				</span>
+			<span class="input-label">
+				{{'account.funding.label' | translate}}
+			</span>
 				<input type="text" ng-model="vm.account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="vm.account.network">
 			</label>
 
 			<label class="item item-input item-stacked-label" ng-show="vm.hasValidFunder()">
-				<span class="input-label">
-					{{'account.funding.amount.label' | translate}}
-				</span>
+			<span class="input-label">
+				{{'account.funding.amount.label' | translate}}
+			</span>
 				<input type="number" ng-model="vm.account.amount" placeholder="{{'account.funding.amount.placeholder' | translate}}" min="vm.minBalance">
 			</label>
 
 			<div class="item item-divider"></div>
 
-			<a href on-tap="vm.selectFunder()">
+			<a href on-tap="vm.selectFunder()" ng-hide="vm.hasValidFunder()">
 				<div class="item">
-					<span>
-						{{'Select a Funding Account' | translate}}
-					</span>
+				<span>
+					{{'Select a Funding Account' | translate}}
+				</span>
 					<div class="pull-right text-gray">
 						<span>&raquo;</span>
 					</div>
@@ -55,15 +55,14 @@
 			</a>
 		</div>
 
-		<div class="card" ng-if="!vm.hasValidFunder()">
+		<div class="card" ng-show="!vm.hasValidFunder()">
 			{{'account.funding.text' | translate}}
 		</div>
 
 		<div class="button-group" style="position:absolute;bottom:0">
-			<button class="button button-block button-positive" on-tap="vm.next()">
+			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="vm.hasValidFunder() && (vm.account.amount < vm.minBalance)">
 				Create Account
 			</button>
 		</div>
 	</div>
 </ion-content>
-
