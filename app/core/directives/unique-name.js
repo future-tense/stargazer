@@ -20,7 +20,7 @@ angular.module('app.directive.unique-name', [])
 
 				if ((attributes.uniqueName) &&
 					(attributes.uniqueName === modelValue)) {
-					return true
+					return true;
 				}
 				return !getNames().has(modelValue);
 			};
