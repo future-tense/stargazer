@@ -127,6 +127,16 @@ class SendController {
 			return;
 		}
 
+		/* eslint-disable camelcase */
+		if (destInfo.memo_type) {
+			this.send.memo_type	= destInfo.memo_type;
+			this.send.memo		= destInfo.memo;
+		} else {
+			this.send.memo_type	= null;
+			this.send.memo		= null;
+		}
+		/* eslint-enable camelcase */
+
 		const currentAccount = this.Wallet.current;
 
 		currentAccount.horizon()
@@ -137,16 +147,6 @@ class SendController {
 		//	destInfo.id is a registered account
 
 		.then(res => {
-			/* eslint-disable camelcase */
-			if (destInfo.memo_type) {
-				this.send.memo_type	= destInfo.memo_type;
-				this.send.memo		= destInfo.memo;
-			} else {
-				this.send.memo_type	= null;
-				this.send.memo		= null;
-			}
-			/* eslint-enable camelcase */
-
 			const assetSortFunction = function (foo, bar) {
 				return foo.asset_code > bar.asset_code;
 			};
