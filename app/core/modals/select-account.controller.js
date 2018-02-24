@@ -1,4 +1,4 @@
-/* global angular, console */
+/* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
@@ -11,8 +11,14 @@ angular.module('app.modals.select-account', [])
 	$scope.cancel = cancel;
 	$scope.select = select;
 
-	$scope.accounts = getAccounts();
 	$scope.heading	= $scope.data.heading;
+
+	const accountList = getAccounts();
+	if ('filter' in $scope.data) {
+		$scope.accounts = accountList.filter($scope.data.filter);
+	} else {
+		$scope.accounts = accountList;
+	}
 
 	function getAccounts() {
 		return Wallet.accountList
