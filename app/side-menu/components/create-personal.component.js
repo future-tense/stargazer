@@ -13,12 +13,10 @@ class CreatePersonalController {
 		this.Reviewer = Reviewer;
 		this.Wallet = Wallet;
 
-		this.minBalance = horizon.getMinimumAccountBalance(Wallet.current.network);
 		this.state = 1;
 
 		this.account = {
-			alias: getAccountName(),
-			amount: this.minBalance
+			alias: getAccountName()
 		};
 
 		function getAccountName() {
@@ -87,6 +85,7 @@ class CreatePersonalController {
 
 	next() {
 		if (this.state === 1) {
+			this.minBalance = horizon.getMinimumAccountBalance(this.Wallet.current.network);
 			this.state = 2;
 		}
 
@@ -104,6 +103,7 @@ class CreatePersonalController {
 		this.Modal.show('app/side-menu/modals/select-funder.html', data)
 		.then(res => {
 			this.account.funder = res;
+			this.account.amount = this.minBalance;
 		});
 	}
 }
