@@ -12,8 +12,14 @@ angular.module('app.modals.select-contact', [])
 	$scope.cancel = cancel;
 	$scope.select = select;
 
-	$scope.contacts = contacts.forNetwork(network);
 	$scope.heading	= $scope.data.heading;
+
+	const contactList = contacts.forNetwork(network);
+	if ('filter' in $scope.data) {
+		$scope.contacts = contactList.filter($scope.data.filter);
+	} else {
+		$scope.contacts = contactList;
+	}
 
 	function cancel() {
 		$scope.closeModalService();

@@ -180,7 +180,8 @@ class CreateSharedController {
 	selectContact() {
 		const data = {
 			network: this.account.network,
-			heading: 'Select Contact'
+			heading: 'Select Contact',
+			filter: (name) => !('memo' in contacts.get(name))
 		};
 
 		this.Modal.show('app/core/modals/select-contact.html', data)
