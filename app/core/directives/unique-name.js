@@ -9,8 +9,8 @@ angular.module('app.directive.unique-name', [])
 
 	function getNames() {
 		const nameList = Wallet.accountList.map(account => account.alias);
-		const contacts = contacts.getNames();
-		return new Set([...nameList, ...contacts]);
+		const contactList = contacts.getNames();
+		return new Set([...nameList, ...contactList]);
 	}
 
 	return {
