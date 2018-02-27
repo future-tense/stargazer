@@ -8,7 +8,8 @@ export default angular.module('selectContactModule', [])
 .component('selectContact', {
 	bindings: {
 		network: '=',
-		destination: '='
+		destination: '=',
+		filter: '='
 	},
 	controller: SelectContactController,
 	controllerAs: 'vm',

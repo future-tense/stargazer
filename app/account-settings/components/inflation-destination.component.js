@@ -2,7 +2,6 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
-import contacts from '../../core/services/contacts';
 import horizon from '../../core/services/horizon';
 
 class InflationDestinationController {
@@ -36,10 +35,6 @@ class InflationDestinationController {
 		return this.account.network === horizon.public;
 	}
 
-	hasContacts() {
-		return contacts.forNetwork(this.account.network).length !== 0;
-	}
-
 	onValidAddress(res) {
 		this.data.destInfo = res;
 	}
@@ -51,19 +46,6 @@ class InflationDestinationController {
 		};
 
 		this.Modal.show('app/core/modals/select-account.html', data)
-		.then((res) => {
-			this.data.destination = res;
-		});
-	}
-
-	selectContact() {
-		const data = {
-			network: this.account.network,
-			heading: 'Select Contact',
-			filter: (name) => !('memo' in contacts.get(name))
-		};
-
-		this.Modal.show('app/core/modals/select-contact.html', data)
 		.then((res) => {
 			this.data.destination = res;
 		});

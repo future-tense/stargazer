@@ -1,7 +1,6 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
-import contacts from '../../core/services/contacts';
 import StellarSdk from 'stellar-sdk';
 
 class CloseAccountController {
@@ -17,7 +16,6 @@ class CloseAccountController {
 		this.form = {};
 		this.account = Wallet.current;
 		this.hasCamera = this.QRScanner.hasCamera();
-		this.hasContacts = contacts.forNetwork(this.Wallet.current.network).length !== 0;
 		this.data = {};
 	}
 
@@ -53,18 +51,6 @@ class CloseAccountController {
 		});
 	}
 
-	selectContact() {
-		const data = {
-			network: this.account.network,
-			heading: 'Select Contact'
-		};
-
-		this.Modal.show('app/core/modals/select-contact.html', data)
-		.then(dest => {
-			this.data.destination = dest;
-		});
-	}
-
 	selectFromQR() {
 		this.QRScanner.open()
 		.then(this.Commands.onContact)
@@ -79,8 +65,8 @@ class CloseAccountController {
 		.loadAccount(this.account.id)
 		.then((account) => {
 
-			const builder = new StellarSdk.TransactionBuilder(account)
-			.addOperation(StellarSdk.Operation.accountMerge({
+			const builder = new StellarSdk.TransactionBuilder(account);
+			builder.addOperation(StellarSdk.Operation.accountMerge({
 				source: this.account.id,
 				destination: this.data.destInfo.id
 			}));

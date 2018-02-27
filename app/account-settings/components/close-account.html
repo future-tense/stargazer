@@ -30,16 +30,10 @@
 				</div>
 			</a>
 
-			<a href on-tap="vm.selectContact()" ng-if="vm.hasContacts">
-				<div class="item">
-					<span>
-						{{'Select a Contact' | translate}}
-					</span>
-					<div class="pull-right text-gray">
-						<span>&raquo;</span>
-					</div>
-				</div>
-			</a>
+			<select-contact
+				network="vm.account.network"
+				destination="vm.data.destination"
+			</select-contact>
 
 			<a href on-tap="vm.selectFromQR()" ng-show="vm.hasCamera">
 				<div class="item">

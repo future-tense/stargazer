@@ -2,7 +2,6 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
-import contacts from '../../core/services/contacts.js';
 import horizon from '../../core/services/horizon.js';
 
 function createAsset(json, prefix) {
@@ -99,10 +98,6 @@ class SendController {
 			asset_issuer:	path.source_asset_issuer
 		});
 		/* eslint-enable camelcase */
-	}
-
-	hasContacts() {
-		return contacts.forNetwork(this.Wallet.current.network).length !== 0;
 	}
 
 	onAmount() {
@@ -220,18 +215,6 @@ class SendController {
 		};
 
 		this.Modal.show('app/core/modals/select-account.html', data)
-		.then(dest => {
-			this.send.destination = dest;
-		});
-	}
-
-	selectContact() {
-		const data = {
-			network: this.Wallet.current.network,
-			heading: 'Select Contact'
-		};
-
-		this.Modal.show('app/core/modals/select-contact.html', data)
 		.then(dest => {
 			this.send.destination = dest;
 		});

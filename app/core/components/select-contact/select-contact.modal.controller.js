@@ -8,10 +8,8 @@ export default /* @ngInject */ function ($scope) {
 	$scope.cancel = cancel;
 	$scope.select = select;
 
-	$scope.heading	= $scope.data.heading;
-
 	const contactList = contacts.forNetwork(network);
-	if ('filter' in $scope.data) {
+	if ($scope.data.filter) {
 		$scope.contacts = contactList.filter($scope.data.filter);
 	} else {
 		$scope.contacts = contactList;
