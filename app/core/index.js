@@ -6,6 +6,7 @@ import './components/advanced-toggle.component.js';
 import './components/index.component.js';
 import './components/memo-selector.component.js';
 import './components/network-selector.component';
+import selectContactModule from './components/select-contact';
 
 import './directives/account-name.js';
 import './directives/dynamic.js';
@@ -26,7 +27,6 @@ import './filters/translate.filter.js';
 import './modals/review-submit.controller.js';
 import './modals/scanner.controller.js';
 import './modals/select-account.controller.js';
-import './modals/select-contact.controller.js';
 import './modals/submit-password.controller.js';
 
 import './services/anchors.js';
@@ -52,6 +52,7 @@ angular.module('app.core', [
 	'app.component.index',
 	'app.component.memo-selector',
 	'app.component.network-selector',
+	selectContactModule.name,
 
 	'app.directive.account-name',
 	'app.directive.dynamic',
@@ -72,7 +73,6 @@ angular.module('app.core', [
 	'app.modals.review-submit',
 	'app.modals.scanner',
 	'app.modals.select-account',
-	'app.modals.select-contact',
 	'app.modals.submit-password',
 
 	'app.service.anchors',

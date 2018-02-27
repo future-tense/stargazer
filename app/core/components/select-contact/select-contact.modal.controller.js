@@ -1,12 +1,8 @@
-/* global angular, console */
+/* global */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-import contacts from '../../core/services/contacts.js';
+import contacts from '../../services/contacts.js';
 
-angular.module('app.modals.select-contact', [])
-.controller('SelectContactCtrl', function ($scope) {
-	'use strict';
-
+export default /* @ngInject */ function ($scope) {
 	const network = $scope.data.network;
 
 	$scope.cancel = cancel;
@@ -28,4 +24,4 @@ angular.module('app.modals.select-contact', [])
 	function select(contact) {
 		$scope.modalResolve(contact);
 	}
-});
+}
