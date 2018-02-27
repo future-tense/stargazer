@@ -1,0 +1,24 @@
+<ion-modal-view ng-controller="SelectPoolCtrl">
+	<ion-header-bar align-title="center" class="tab-bar">
+		<button on-tap="cancel()" class="button button-clear button-white">
+			{{'modal.close' | translate}}
+		</button>
+		<h1 class="title ellipsis">
+			{{ 'Select an Inflation pool' | translate}}
+		</h1>
+	</ion-header-bar>
+
+	<ion-content class="modal-content text-center fix-modals-touch" ng-init="init()" scrollbar-y="false">
+		<div class="list">
+			<div class="item item-divider">
+				{{'Pools' | translate}}
+			</div>
+			<a on-tap="select(pool)" ng-repeat="pool in pools">
+				<div class="item">
+					{{ pool }}
+				</div>
+			</a>
+		</div>
+	</ion-content>
+
+</ion-modal-view>

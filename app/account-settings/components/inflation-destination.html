@@ -9,16 +9,50 @@
 				<span class="input-label">
 					{{'settings.inflation.label' | translate}}
 				</span>
-				<input type="text" name="destination" ng-model="vm.send.destination" ng-model-options="{debounce: 200}" placeholder="{{'settings.inflation.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
-				<a on-tap="vm.selectRecipient()" style="position:absolute;right:16px;top:40px">
-					<i class="icon icon-book"></i>
-				</a>
+				<input type="text" name="destination" ng-model="vm.data.destination" ng-model-options="{debounce: 200}" placeholder="{{'settings.inflation.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
 			</label>
 		</form>
+
+		<div ng-hide="vm.data.destInfo">
+			<div class="item item-divider"></div>
+
+			<a href on-tap="vm.selectAccount()">
+				<div class="item">
+					<span>
+						{{'Select an Account' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+
+			<a href on-tap="vm.selectContact()" ng-if="vm.hasContacts()">
+				<div class="item">
+					<span>
+						{{'Select a Contact' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+
+			<a href on-tap="vm.selectPool()" ng-if="vm.isPublic()">
+				<div class="item">
+					<span>
+						{{'Select an Inflation pool' | translate}}
+					</span>
+					<div class="pull-right text-gray">
+						<span>&raquo;</span>
+					</div>
+				</div>
+			</a>
+		</div>
 	</div>
 
 	<div class="button-group" style="position:absolute;bottom:0">
-		<button class="button button-block button-positive" on-tap="vm.setInflation()" ng-disabled="inflationForm.$invalid || inflationForm.$pending">
+		<button class="button button-block button-positive" on-tap="vm.setInflation()" ng-disabled="inflationForm.$invalid">
 			{{'global.save' | translate}}
 		</button>
 	</div>

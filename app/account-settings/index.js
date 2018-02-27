@@ -21,6 +21,7 @@ import './directives/valid-federation.directive.js';
 import './modals/add-password.controller.js';
 import './modals/add-trustline.controller.js';
 import './modals/remove-password.controller.js';
+import './modals/select-pool.js';
 
 import routes from './config.route.js';
 
@@ -43,6 +44,7 @@ angular.module('app.settings', [
 
 	'app.modal.add-password',
 	'app.modal.add-trustline',
-	'app.modal.remove-password'
+	'app.modal.remove-password',
+	'app.modal.select-pool'
 ])
 .config(routes);

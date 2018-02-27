@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import contacts from '../../core/services/contacts';
+import horizon from '../../core/services/horizon';
 
 class InflationDestinationController {
 
@@ -13,7 +15,7 @@ class InflationDestinationController {
 		this.Reviewer = Reviewer;
 
 		this.account = Wallet.current;
-		this.send = {};
+		this.data = {};
 
 		this.lookupCurrent();
 	}
@@ -22,32 +24,62 @@ class InflationDestinationController {
 		const inflationDest = this.account.inflationDest;
 		if (inflationDest) {
 			this.Reverse.lookupAndFill(
-				res => {this.send.destination = res;},
+				res => {
+					this.data.destination = res;
+				},
 				inflationDest
 			);
 		}
 	}
 
-	onValidAddress(res) {
-		this.send.destInfo = res;
+	isPublic() {
+		return this.account.network === horizon.public;
 	}
 
-	selectRecipient() {
+	hasContacts() {
+		return contacts.forNetwork(this.account.network).length !== 0;
+	}
+
+	onValidAddress(res) {
+		this.data.destInfo = res;
+	}
+
+	selectAccount() {
 		const data = {
 			network: this.account.network,
-			heading: 'Select Inflation Destination'
+			heading: 'Select Account'
+		};
+
+		this.Modal.show('app/core/modals/select-account.html', data)
+		.then((res) => {
+			this.data.destination = res;
+		});
+	}
+
+	selectContact() {
+		const data = {
+			network: this.account.network,
+			heading: 'Select Contact',
+			filter: (name) => !('memo' in contacts.get(name))
 		};
 
 		this.Modal.show('app/core/modals/select-contact.html', data)
-		.then(dest => {
-			this.send.destination = dest;
+		.then((res) => {
+			this.data.destination = res;
+		});
+	}
+
+	selectPool() {
+		this.Modal.show('app/account-settings/modals/select-pool.html')
+		.then((res) => {
+			this.data.destination = res;
 		});
 	}
 
 	setInflation() {
 
 		const source = this.account.id;
-		const destination = this.send.destInfo.id;
+		const destination = this.data.destInfo.id;
 
 		this.account.horizon().loadAccount(source)
 		.then(account => {
