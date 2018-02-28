@@ -1,10 +1,22 @@
-/* global angular, qrcode */
+/* global */
 
-import 'ionic-sdk/release/js/ionic.bundle';
+import qrcode from 'jsqrcode';
 
-angular.module('app.modals.scanner', [])
-.controller('scannerController', function ($scope, $timeout, QRDecoder) {
-	'use strict';
+let prevResult;
+
+const decode = () => new Promise((resolve, reject) => {
+	qrcode.callback = data => {
+		if (prevResult !== data) {
+			prevResult = data;
+		} else {
+			resolve(data);
+		}
+	};
+
+	qrcode.decode();
+});
+
+export default /* @ngInject */ function ($scope, $timeout) {
 
 	$scope.init		= init;
 	$scope.cancel	= cancel;
@@ -69,12 +81,13 @@ angular.module('app.modals.scanner', [])
 		if (localMediaStream) {
 			context.drawImage(video, 0, 0, width, height);
 			try {
-				QRDecoder.decode()
+				decode()
 				.then(data => {
 					stopScanning();
 					$scope.modalResolve(data);
 				});
 			} catch (exception) {
+				console.log('exception', exception);
 			}
 		}
 		scanTimer = $timeout(scan, 800);
@@ -95,4 +108,4 @@ angular.module('app.modals.scanner', [])
 		localMediaStream = null;
 		video.src = '';
 	}
-});
+}

@@ -1,12 +1,9 @@
-/* global angular, cloudSky, cordova */
+/* global cloudSky, cordova */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-import translate from './translate.service.js';
-import platformInfo from './platform-info.js';
+import translate from '../../services/translate.service.js';
+import platformInfo from '../../services/platform-info.js';
 
-angular.module('app.service.qr-scanner', [])
-.factory('QRScanner', function ($ionicLoading, $q, Modal) {
-	'use strict';
+export default /* @ngInject */ function ($ionicLoading, $q, Modal) {
 
 	const isCordova	= platformInfo.isCordova;
 	const isWP		= platformInfo.isWP;
@@ -58,7 +55,7 @@ angular.module('app.service.qr-scanner', [])
 		}));
 	};
 
-	const modalOpenScanner = () => Modal.show('app/core/modals/scanner.html');
+	const modalOpenScanner = () => Modal.show('app/core/components/qr-scanner/scanner.modal.html');
 
 	//
 	//	:KLUDGE:	ng-show doesn't seem to evaluate the value of the promise itself
@@ -70,4 +67,4 @@ angular.module('app.service.qr-scanner', [])
 		hasCamera: test(hasCamera),
 		open: isCordova ? cordovaOpenScanner : modalOpenScanner
 	};
-});
+};

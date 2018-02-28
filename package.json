@@ -27,7 +27,7 @@
     "ionic-sdk": "git+https://github.com/ionic-team/ionic.git#v1.3.2",
     "jazzicon": "git+https://github.com/flyswatter/jazzicon.git#8e51499",
     "jit-grunt": "^0.10.0",
-    "jsqrcode": "0.0.7",
+    "jsqrcode": "git+https://github.com/johansten/qrcode-decoder-js.git",
     "messageformat": "^1.1.1",
     "qrcode_js": "^1.0.0",
     "sjcl": "^1.0.7",
