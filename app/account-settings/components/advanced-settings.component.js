@@ -5,6 +5,9 @@ import 'ionic-sdk/release/js/ionic.bundle';
 class AdvancedSettingsController {
 
 	constructor(Reverse, Wallet) {
+
+		this.hasOtherSigners = Wallet.current.signers.length !== 1;
+
 		const inflationDest = Wallet.current.inflationDest;
 		if (inflationDest) {
 			Reverse.lookupAndFill(
