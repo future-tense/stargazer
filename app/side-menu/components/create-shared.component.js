@@ -157,10 +157,18 @@ class CreateSharedController {
 		this.account.destInfo = destInfo;
 	}
 
+	isSigner(name) {
+		return this.signers.map(item => item.address).includes(name);
+	}
+
+	accountFilter(account) {
+		return !this.isSigner(account);
+	}
+
 	/* filter out contacts that have been added already, or has a memo set  */
 	contactFilter(contact) {
 		const [name, item] = contact;
-		return !('memo' in item) && (!this.signers.includes(name));
+		return !('memo' in item) && (!this.isSigner(name));
 	}
 
 	selectFunder() {

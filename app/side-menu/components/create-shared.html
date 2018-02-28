@@ -51,19 +51,21 @@
 				<div class="item item-divider"></div>
 
 				<select-account
-					network="vm.Wallet.current.network"
-					destination="vm.account.signer">
+					network="vm.account.network"
+					destination="vm.account.signer"
+					filter="vm.accountFilter"
+					bind="vm">
 				</select-account>
 
 				<select-contact
-					network="vm.Wallet.current.network"
+					network="vm.account.network"
 					destination="vm.account.signer"
 					filter="vm.contactFilter"
 					bind="vm">
 				</select-contact>
 
 				<select-from-qr
-					network="vm.Wallet.current.network"
+					network="vm.account.network"
 					destination="vm.account.signer">
 				</select-from-qr>
 			</div>
