@@ -2,12 +2,14 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import selectContactModule from './components/select-contact';
+import qrScannerModule from './components/qr-scanner';
+import txReviewerModule from './components/tx-reviewer';
+
 import './components/advanced-toggle.component.js';
 import './components/index.component.js';
 import './components/memo-selector.component.js';
 import './components/network-selector.component';
-import selectContactModule from './components/select-contact';
-import qrScannerModule from './components/qr-scanner';
 
 import './directives/account-name.js';
 import './directives/dynamic.js';
@@ -24,7 +26,6 @@ import './filters/format-amount.js';
 import './filters/format-date.js';
 import './filters/translate.filter.js';
 
-import './modals/review-submit.controller.js';
 import './modals/select-account.controller.js';
 import './modals/submit-password.controller.js';
 
@@ -37,19 +38,19 @@ import './services/history.js';
 import './services/keychain.js';
 import './services/modal.js';
 import './services/reverse.js';
-import './services/reviewer.js';
 import './services/signer.js';
 import './services/submitter.js';
 import './services/transactions.js';
 import './services/wallet.js';
 
 angular.module('app.core', [
+	selectContactModule.name,
+	qrScannerModule.name,
+	txReviewerModule.name,
 	'app.component.advanced-toggle',
 	'app.component.index',
 	'app.component.memo-selector',
 	'app.component.network-selector',
-	selectContactModule.name,
-	qrScannerModule.name,
 
 	'app.directive.account-name',
 	'app.directive.dynamic',
@@ -66,7 +67,6 @@ angular.module('app.core', [
 	'app.filter.format-date',
 	'app.filter.translate',
 
-	'app.modals.review-submit',
 	'app.modals.select-account',
 	'app.modals.submit-password',
 
@@ -78,7 +78,6 @@ angular.module('app.core', [
 	'app.service.keychain',
 	'app.service.modal',
 	'app.service.reverse',
-	'app.service.reviewer',
 	'app.service.signer',
 	'app.service.submitter',
 	'app.service.transactions',

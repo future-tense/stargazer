@@ -1,12 +1,9 @@
 /* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-import humanizer from '../../core/services/humanizer.js';
-import translate from '../../core/services/translate.service.js';
+import translate from '../../services/translate.service.js';
+import humanizer from './humanizer.js';
 
-angular.module('app.modals.review-submit', [])
-.controller('ReviewSubmitCtrl', function ($q, $scope, Keychain, Signer, Submitter, Transactions) {
-	'use strict';
+export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Transactions) {
 
 	const context = $scope.data.context;
 	$scope.close = close;
@@ -22,7 +19,7 @@ angular.module('app.modals.review-submit', [])
 			$scope.operations = humanizer.parse(context.tx);
 			$scope.state = 'signed';
 		} else {
-			$q.when(Signer.sign(context))
+			Promise.resolve(Signer.sign(context))
 			.then(interactiveSign)
 			.then(submit);
 		}
@@ -129,9 +126,9 @@ angular.module('app.modals.review-submit', [])
 	}
 
 	function waitForUserReview() {
-		const deferred = $q.defer();
-		$scope.sign = password => deferred.resolve(password);
-		$scope.cancel = () => deferred.reject();
-		return deferred.promise;
+		return new Promise((resolve, reject) => {
+			$scope.sign = password => resolve(password);
+			$scope.cancel = () => reject();
+		});
 	}
-});
+}
