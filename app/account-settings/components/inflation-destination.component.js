@@ -39,18 +39,6 @@ class InflationDestinationController {
 		this.data.destInfo = res;
 	}
 
-	selectAccount() {
-		const data = {
-			network: this.account.network,
-			heading: 'Select Account'
-		};
-
-		this.Modal.show('app/core/modals/select-account.html', data)
-		.then((res) => {
-			this.data.destination = res;
-		});
-	}
-
 	selectPool() {
 		this.Modal.show('app/account-settings/modals/select-pool.html')
 		.then((res) => {

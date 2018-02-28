@@ -5,9 +5,8 @@ import StellarSdk from 'stellar-sdk';
 
 class CloseAccountController {
 
-	constructor($location, Modal, Reviewer, Wallet) {
+	constructor($location, Reviewer, Wallet) {
 		this.$location = $location;
-		this.Modal = Modal;
 		this.Reviewer = Reviewer;
 		this.Wallet = Wallet;
 
@@ -35,17 +34,8 @@ class CloseAccountController {
 		}
 	}
 
-	selectAccount() {
-		const data = {
-			network: this.account.network,
-			heading: 'modal.recipient.heading',
-			filter: account => account !== this.account.alias
-		};
-
-		this.Modal.show('app/core/modals/select-account.html', data)
-		.then(dest => {
-			this.data.destination = dest;
-		});
+	filter(account) {
+		return account !== this.account.alias;
 	}
 
 	closeAccount() {

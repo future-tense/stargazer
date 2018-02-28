@@ -21,9 +21,8 @@ function createAsset(json, prefix) {
 
 class SendController {
 
-	constructor($location, Modal, Reviewer, Wallet) {
+	constructor($location, Reviewer, Wallet) {
 		this.$location = $location;
-		this.Modal = Modal;
 		this.Reviewer = Reviewer;
 		this.Wallet = Wallet;
 	}
@@ -203,18 +202,6 @@ class SendController {
 
 	showRaw() {
 		return this.send.destInfo && (this.send.destInfo.id !== this.send.destination);
-	}
-
-	selectAccount() {
-		const data = {
-			network: this.Wallet.current.network,
-			heading: 'modal.recipient.heading'
-		};
-
-		this.Modal.show('app/core/modals/select-account.html', data)
-		.then(dest => {
-			this.send.destination = dest;
-		});
 	}
 
 	getPaths() {

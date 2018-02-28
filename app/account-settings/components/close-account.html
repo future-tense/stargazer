@@ -19,16 +19,13 @@
 
 		<div ng-show="!vm.data.destInfo">
 			<div class="item item-divider"></div>
-			<a href on-tap="vm.selectAccount()">
-				<div class="item">
-					<span>
-						{{'Select an Account' | translate}}
-					</span>
-					<div class="pull-right text-gray">
-						<span>&raquo;</span>
-					</div>
-				</div>
-			</a>
+
+			<select-account
+				network="vm.account.network"
+				destination="vm.data.destination"
+				filter="vm.filter"
+				bind="vm">
+			</select-account>
 
 			<select-contact
 				network="vm.account.network"

@@ -157,18 +157,6 @@ class CreateSharedController {
 		this.account.destInfo = destInfo;
 	}
 
-	selectAccount() {
-		const data = {
-			network: this.account.network,
-			heading: 'Select Account'
-		};
-
-		this.Modal.show('app/core/modals/select-account.html', data)
-		.then((res) => {
-			this.account.signer = res;
-		});
-	}
-
 	/* filter out contacts that have been added already, or has a memo set  */
 	contactFilter(contact) {
 		const [name, item] = contact;
