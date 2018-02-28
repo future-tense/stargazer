@@ -51,11 +51,11 @@
     }
   },
   "devDependencies": {
-    "electron": "^1.7.12",
     "electron-builder": "^19.56.0",
     "electron-builder-squirrel-windows": "^20.0.1"
   },
   "dependencies": {
+    "electron": "^1.8.2",
     "stellar-ledger-api": "^2.0.5"
   }
 }
