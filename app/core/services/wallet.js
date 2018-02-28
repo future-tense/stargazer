@@ -79,6 +79,10 @@ angular.module('app.service.wallet', [])
 		return this.balances[0].balance;
 	};
 
+	Account.prototype.isActivated = function () {
+		return this.balances[0].balance !== '0';
+	};
+
 	Account.prototype.getReserve = function () {
 		const fees = horizon.getFees(this.network);
 		return fees.baseReserve * (2 + this.subentryCount);

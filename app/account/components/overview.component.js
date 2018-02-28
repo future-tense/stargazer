@@ -43,7 +43,7 @@ class OverviewController {
 	}
 
 	isActivated() {
-		return this.Wallet.current.getNativeBalance() !== '0';
+		return this.Wallet.current.isActivated();
 	}
 }
 

@@ -28,7 +28,7 @@
 			</div>
 		</a>
 
-		<a href="#/account-settings/trustlines">
+		<a href="#/account-settings/trustlines" ng-if="vm.isActivated()">
 			<div class="item">
 				<span>
 					{{'settings.trustlines' | translate}}
@@ -68,7 +68,7 @@
 			</div>
 		</div>
 
-		<a href="#/account-settings/signers">
+		<a href="#/account-settings/signers" ng-if="vm.isActivated()">
 			<div class="item bottom-border">
 				<span>
 					{{'settings.signers' | translate}}

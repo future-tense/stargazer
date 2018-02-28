@@ -6,15 +6,25 @@ class AdvancedSettingsController {
 
 	constructor(Reverse, Wallet) {
 
-		this.hasOtherSigners = Wallet.current.signers.length !== 1;
+		this.account = Wallet.current;
 
-		const inflationDest = Wallet.current.inflationDest;
+		if ('signers' in this.account) {
+			this.hasOtherSigners = this.account.signers.length !== 1;
+		} else {
+			this.hasOtherSigners = false;
+		}
+
+		const inflationDest = this.account.inflationDest;
 		if (inflationDest) {
 			Reverse.lookupAndFill(
 				res => {this.inflationDest = res;},
 				inflationDest
 			);
 		}
+	}
+
+	isActivated() {
+		return this.account.isActivated();
 	}
 }
 

@@ -16,6 +16,10 @@ class AccountSettingsController {
 		};
 	}
 
+	isActivated() {
+		return this.account.isActivated();
+	}
+
 	hasPassword() {
 		return this.Keychain.isEncrypted(this.accountId);
 	}
