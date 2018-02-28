@@ -2,6 +2,7 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import selectAccountModule from './components/select-account';
 import selectContactModule from './components/select-contact';
 import selectFromQRModule from './components/select-from-qr';
 import qrScannerModule from './components/qr-scanner';
@@ -27,7 +28,6 @@ import './filters/format-amount.js';
 import './filters/format-date.js';
 import './filters/translate.filter.js';
 
-import './modals/select-account.controller.js';
 import './modals/submit-password.controller.js';
 
 import './services/anchors.js';
@@ -45,6 +45,7 @@ import './services/transactions.js';
 import './services/wallet.js';
 
 angular.module('app.core', [
+	selectAccountModule.name,
 	selectContactModule.name,
 	selectFromQRModule.name,
 	qrScannerModule.name,
@@ -69,7 +70,6 @@ angular.module('app.core', [
 	'app.filter.format-date',
 	'app.filter.translate',
 
-	'app.modals.select-account',
 	'app.modals.submit-password',
 
 	'app.service.anchors',

@@ -1,10 +1,5 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.modals.select-account', [])
-.controller('SelectAccountCtrl', function ($scope, Wallet) {
-	'use strict';
+export default/* @ngInject */ function ($scope, Wallet) {
 
 	const network = $scope.data.network;
 
@@ -14,8 +9,8 @@ angular.module('app.modals.select-account', [])
 	$scope.heading	= $scope.data.heading;
 
 	const accountList = getAccounts();
-	if ('filter' in $scope.data) {
-		$scope.accounts = accountList.filter($scope.data.filter);
+	if ($scope.data.filter) {
+		$scope.accounts = accountList.filter($scope.data.filter, $scope.data.bind);
 	} else {
 		$scope.accounts = accountList;
 	}
@@ -33,4 +28,4 @@ angular.module('app.modals.select-account', [])
 	function select(contact) {
 		$scope.modalResolve(contact);
 	}
-});
+};
