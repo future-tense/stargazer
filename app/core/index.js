@@ -3,6 +3,7 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 
 import selectContactModule from './components/select-contact';
+import selectFromQRModule from './components/select-from-qr';
 import qrScannerModule from './components/qr-scanner';
 import txReviewerModule from './components/tx-reviewer';
 
@@ -45,6 +46,7 @@ import './services/wallet.js';
 
 angular.module('app.core', [
 	selectContactModule.name,
+	selectFromQRModule.name,
 	qrScannerModule.name,
 	txReviewerModule.name,
 	'app.component.advanced-toggle',

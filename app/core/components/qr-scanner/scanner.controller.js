@@ -81,8 +81,7 @@ export default /* @ngInject */ function ($scope, $timeout) {
 		if (localMediaStream) {
 			context.drawImage(video, 0, 0, width, height);
 			try {
-				decode()
-				.then(data => {
+				decode().then(data => {
 					stopScanning();
 					$scope.modalResolve(data);
 				});
