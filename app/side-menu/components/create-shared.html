@@ -67,16 +67,10 @@
 					filter="vm.contactFilter">
 				</select-contact>
 
-				<a href on-tap="vm.selectFromQR()" ng-show="vm.hasCamera()">
-					<div class="item">
-					<span>
-						{{'Scan a QR-code' | translate}}
-					</span>
-						<div class="pull-right text-gray">
-							<span>&raquo;</span>
-						</div>
-					</div>
-				</a>
+				<select-from-qr
+					network="vm.Wallet.current.network"
+					destination="vm.account.signer">
+				</select-from-qr>
 			</div>
 		</div>
 

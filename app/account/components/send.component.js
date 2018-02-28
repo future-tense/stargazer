@@ -21,11 +21,9 @@ function createAsset(json, prefix) {
 
 class SendController {
 
-	constructor($location, Commands, Modal, QRScanner, Reviewer, Wallet) {
+	constructor($location, Modal, Reviewer, Wallet) {
 		this.$location = $location;
-		this.Commands = Commands;
 		this.Modal = Modal;
-		this.QRScanner = QRScanner;
 		this.Reviewer = Reviewer;
 		this.Wallet = Wallet;
 	}
@@ -41,7 +39,6 @@ class SendController {
 		this.hasPath			= false;
 		this.isPathPending		= true;
 		this.isPreFilled		= false;
-		this.hasCamera			= this.QRScanner.hasCamera;
 
 		this.minimumAccountBalance = horizon.getMinimumAccountBalance(this.Wallet.current.network);
 		this.state = 1;
@@ -215,14 +212,6 @@ class SendController {
 		};
 
 		this.Modal.show('app/core/modals/select-account.html', data)
-		.then(dest => {
-			this.send.destination = dest;
-		});
-	}
-
-	selectFromQR() {
-		this.QRScanner.open()
-		.then(this.Commands.onContact)
 		.then(dest => {
 			this.send.destination = dest;
 		});

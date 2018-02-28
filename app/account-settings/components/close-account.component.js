@@ -5,17 +5,14 @@ import StellarSdk from 'stellar-sdk';
 
 class CloseAccountController {
 
-	constructor($location, Commands, Modal, QRScanner, Reviewer, Wallet) {
+	constructor($location, Modal, Reviewer, Wallet) {
 		this.$location = $location;
-		this.Commands = Commands;
 		this.Modal = Modal;
-		this.QRScanner = QRScanner;
 		this.Reviewer = Reviewer;
 		this.Wallet = Wallet;
 
 		this.form = {};
 		this.account = Wallet.current;
-		this.hasCamera = this.QRScanner.hasCamera();
 		this.data = {};
 	}
 
@@ -46,14 +43,6 @@ class CloseAccountController {
 		};
 
 		this.Modal.show('app/core/modals/select-account.html', data)
-		.then(dest => {
-			this.data.destination = dest;
-		});
-	}
-
-	selectFromQR() {
-		this.QRScanner.open()
-		.then(this.Commands.onContact)
 		.then(dest => {
 			this.data.destination = dest;
 		});

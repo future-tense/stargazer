@@ -11,14 +11,12 @@ let signers = [];
 
 class CreateSharedController {
 
-	constructor($location, Commands, Modal, QRScanner, Reviewer, Signer, Wallet) {
+	constructor($location, Modal, Reviewer, Signer, Wallet) {
 		this.$location = $location;
 		this.Modal = Modal;
-		this.QRScanner = QRScanner;
 		this.Reviewer = Reviewer;
 		this.Signer = Signer;
 		this.Wallet = Wallet;
-		this.Commands = Commands;
 
 		this.account = {
 			alias:	getAccountName()
@@ -30,8 +28,6 @@ class CreateSharedController {
 		this.currentSignerIndex = 1;
 		this.numCosigners = 2;
 		this.threshold = 1;
-
-		this.hasCamera = this.QRScanner.hasCamera;
 
 		function getAccountName() {
 			const accountNum = getNextSharedAccountNumber();
@@ -178,14 +174,6 @@ class CreateSharedController {
 	/* filter out contacts that have been added already, or has a memo set  */
 	contactFilter(name) {
 		return !('memo' in contacts.get(name)) && (!signers.includes(name));
-	}
-
-	selectFromQR() {
-		this.QRScanner.open()
-		.then(this.Commands.onContact)
-		.then((res) => {
-			this.account.signer = res.id;
-		});
 	}
 
 	selectFunder() {

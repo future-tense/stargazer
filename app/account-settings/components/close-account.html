@@ -35,16 +35,10 @@
 				destination="vm.data.destination"
 			</select-contact>
 
-			<a href on-tap="vm.selectFromQR()" ng-show="vm.hasCamera">
-				<div class="item">
-					<span>
-						{{'Scan a QR-code' | translate}}
-					</span>
-					<div class="pull-right text-gray">
-						<span>&raquo;</span>
-					</div>
-				</div>
-			</a>
+			<select-from-qr
+				network="vm.Wallet.current.network"
+				destination="vm.data.destination">
+			</select-from-qr>
 
 			<div class="card" ng-show="forms.close.destination.$viewValue">
 				Not a valid recipient address
