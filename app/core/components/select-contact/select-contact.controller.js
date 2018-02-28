@@ -12,7 +12,8 @@ export default class SelectContactController {
 	selectContact() {
 		const data = {
 			network: this.network,
-			filter: this.filter
+			filter: this.filter,
+			bind: this.bind
 		};
 
 		this.Modal.show('app/core/components/select-contact/select-contact.modal.html', data)

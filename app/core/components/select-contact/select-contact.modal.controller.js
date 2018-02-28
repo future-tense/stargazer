@@ -10,10 +10,12 @@ export default /* @ngInject */ function ($scope) {
 
 	const contactList = contacts.forNetwork(network);
 	if ($scope.data.filter) {
-		$scope.contacts = contactList.filter($scope.data.filter);
+		$scope.contacts = contactList.filter($scope.data.filter, $scope.data.bind);
 	} else {
 		$scope.contacts = contactList;
 	}
+
+	$scope.contacts = $scope.contacts.map(tuple => tuple[0]);
 
 	function cancel() {
 		$scope.closeModalService();

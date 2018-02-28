@@ -7,8 +7,6 @@ import contacts from '../../core/services/contacts.js';
 
 const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
 
-let signers = [];
-
 class CreateSharedController {
 
 	constructor($location, Modal, Reviewer, Signer, Wallet) {
@@ -22,7 +20,7 @@ class CreateSharedController {
 			alias:	getAccountName()
 		};
 
-		signers = [];
+		this.signers = [];
 		this.state = 0;
 
 		this.currentSignerIndex = 1;
@@ -58,7 +56,7 @@ class CreateSharedController {
 
 		else if (this.state === 1) {
 			this.addSigner();
-			if (signers.length === this.numCosigners) {
+			if (this.signers.length === this.numCosigners) {
 
 				const fees = horizon.getFees(this.account.network);
 				this.minimum = fees.baseReserve * (2 + this.numCosigners);
@@ -73,7 +71,7 @@ class CreateSharedController {
 	}
 
 	addSigner() {
-		signers.push({
+		this.signers.push({
 			address: this.account.signer,
 			id: this.account.destInfo.id
 		});
@@ -109,7 +107,7 @@ class CreateSharedController {
 					startingBalance: this.account.amount.toString()
 				}));
 
-				signers.forEach((signer) => {
+				this.signers.forEach((signer) => {
 					const op = StellarSdk.Operation.setOptions({
 						source: newAccountId,
 						signer: {
@@ -172,15 +170,16 @@ class CreateSharedController {
 	}
 
 	/* filter out contacts that have been added already, or has a memo set  */
-	contactFilter(name) {
-		return !('memo' in contacts.get(name)) && (!signers.includes(name));
+	contactFilter(contact) {
+		const [name, item] = contact;
+		return !('memo' in item) && (!this.signers.includes(name));
 	}
 
 	selectFunder() {
 		const data = {
 			network: this.account.network,
 			minimum: this.minimum,
-			numOps: 2 + signers.length
+			numOps: 2 + this.signers.length
 		};
 
 		this.Modal.show('app/side-menu/modals/select-funder.html', data)

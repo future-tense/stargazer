@@ -9,7 +9,8 @@ export default angular.module('selectContactModule', [])
 	bindings: {
 		network: '=',
 		destination: '=',
-		filter: '='
+		filter: '=',
+		bind: '='
 	},
 	controller: SelectContactController,
 	controllerAs: 'vm',
