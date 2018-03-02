@@ -1,6 +1,6 @@
 /* global */
 
-import qrcode from 'jsqrcode';
+import qrcode from 'esqrcode';
 
 let prevResult;
 

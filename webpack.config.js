@@ -17,7 +17,7 @@ const config = {
 			test: /\.js$/,
 			include: [
 				path.resolve(__dirname, 'app'),
-				path.resolve(__dirname, 'node_modules/jsqrcode'),
+				path.resolve(__dirname, 'node_modules/esqrcode'),
 				path.resolve(__dirname, 'node_modules/stellarterm-directory')
 			],
 			use: [{
