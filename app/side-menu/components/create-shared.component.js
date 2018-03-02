@@ -3,7 +3,6 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon.js';
-import contacts from '../../core/services/contacts.js';
 
 const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
 
