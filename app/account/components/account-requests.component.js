@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import accountRequestTemplate from './account-requests.html';
+
 class AccountRequestController {
 
 	constructor($q, Reviewer, Transactions, Wallet) {
@@ -35,5 +37,5 @@ angular.module('app.component.account-requests', [])
 .component('accountRequests', {
 	controller: AccountRequestController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account/components/account-requests.html'
+	template: accountRequestTemplate
 });

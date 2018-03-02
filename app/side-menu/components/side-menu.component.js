@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import sideMenuTemplate from './side-menu.html';
+
 class SideMenuController {
 
 	constructor(Wallet) {
@@ -30,5 +32,5 @@ angular.module('app.component.side-menu', [])
 .component('sideMenu', {
 	controller: SideMenuController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/side-menu.html'
+	template: sideMenuTemplate
 });

@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import memoSelectorTemplate from './memo-selector.html';
+
 const types = [
 	{name: 'memotype.none',		value: null},
 	{name: 'memotype.id',		value: 'id'},
@@ -34,5 +36,5 @@ angular.module('app.component.memo-selector', [])
 	},
 	controller: MemoSelectorController,
 	controllerAs: 'vm',
-	templateUrl: 'app/core/components/memo-selector.html'
+	template: memoSelectorTemplate
 });

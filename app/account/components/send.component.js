@@ -5,6 +5,8 @@ import StellarSdk from 'stellar-sdk';
 import directory from 'stellarterm-directory';
 import horizon from '../../core/services/horizon.js';
 
+import sendTemplate from './send.html';
+
 function createAsset(json, prefix) {
 	if (!prefix) {
 		prefix = '';
@@ -428,5 +430,5 @@ angular.module('app.component.send', [])
 .component('send', {
 	controller: SendController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account/components/send.html'
+	template: sendTemplate
 });

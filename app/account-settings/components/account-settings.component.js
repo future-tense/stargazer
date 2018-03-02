@@ -1,6 +1,9 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+import removePasswordModal from '../modals/remove-password.html';
+import addPasswordModal from '../modals/add-password.html';
+import accountSettingsTemplate from './account-settings.html';
 
 class AccountSettingsController {
 
@@ -39,7 +42,7 @@ class AccountSettingsController {
 				signer: this.accountId
 			};
 
-			this.Modal.show('app/account-settings/modals/remove-password.html', data)
+			this.Modal.show(removePasswordModal, data)
 			.then(password => this.removePassword(password))
 			.catch(() => {
 				this.flag.hasPassword = true;
@@ -47,7 +50,7 @@ class AccountSettingsController {
 		}
 
 		else {
-			this.Modal.show('app/account-settings/modals/add-password.html')
+			this.Modal.show(addPasswordModal)
 			.then(password => this.setPassword(password))
 			.then(() => {
 				this.flag.hasPassword = false;
@@ -60,5 +63,5 @@ angular.module('app.component.account-settings', [])
 .component('accountSettings', {
 	controller: AccountSettingsController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/account-settings.html'
+	template: accountSettingsTemplate
 });

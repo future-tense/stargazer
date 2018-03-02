@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import advancedToggleTemplate from './advanced-toggle.html';
+
 class AdvancedToggleController {
 	toggle() {
 		this.flag = !this.flag;
@@ -15,5 +17,5 @@ angular.module('app.component.advanced-toggle', [])
 	},
 	controller: AdvancedToggleController,
 	controllerAs: 'vm',
-	templateUrl: 'app/core/components/advanced-toggle.html'
+	template: advancedToggleTemplate
 });

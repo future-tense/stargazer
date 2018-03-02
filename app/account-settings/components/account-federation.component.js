@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import storage from '../../core/services/storage.js';
 
+import accountFederationTemplate from './account-federation.html';
+
 class AccountFederationController {
 
 	constructor($http, $rootScope, Keychain, Wallet) {
@@ -46,5 +48,5 @@ angular.module('app.component.account-federation', [])
 .component('accountFederation', {
 	controller: AccountFederationController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/account-federation.html'
+	template: accountFederationTemplate
 });

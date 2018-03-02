@@ -15,7 +15,11 @@ const config = {
 	module: {
 		rules: [{
 			test: /\.js$/,
-			include: path.resolve(__dirname, 'app'),
+			include: [
+				path.resolve(__dirname, 'app'),
+				path.resolve(__dirname, 'node_modules/jsqrcode'),
+				path.resolve(__dirname, 'node_modules/stellarterm-directory')
+			],
 			use: [{
 				loader: 'babel-loader',
 				query: {
@@ -23,6 +27,12 @@ const config = {
 					plugins: ['angularjs-annotate']
 				}
 			}]
+		},{
+			test: /\.html$/,
+			loader: 'html-loader'
+		},{
+			test: /\.svg$/,
+			loader: 'svg-loader'
 		}]
 	},
 

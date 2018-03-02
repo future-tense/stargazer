@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import accountSignersTemplate from './account-signers.html';
+
 class AccountSignersController {
 
 	constructor(Wallet) {
@@ -17,6 +19,6 @@ angular.module('app.component.account-signer', [])
 .component('accountSigners', {
 	controller: AccountSignersController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/account-signers.html'
+	template: accountSignersTemplate
 });
 

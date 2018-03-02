@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import deleteAccountTemplate from './delete-account.html';
+
 class DeleteAccountController {
 
 	constructor($location, Keychain, Wallet) {
@@ -23,6 +25,6 @@ angular.module('app.component.delete-account', [])
 .component('deleteAccount', {
 	controller: DeleteAccountController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/delete-account.html'
+	template: deleteAccountTemplate
 });
 

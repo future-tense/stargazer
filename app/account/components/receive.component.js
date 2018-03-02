@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
+import paymentRequestModal from '../modals/payment-request.html';
+import receiveTemplate from './receive.html';
 
 class ReceiveController {
 
@@ -31,7 +33,7 @@ class ReceiveController {
 	}
 
 	request() {
-		this.Modal.show('app/account/modals/payment-request.html');
+		this.Modal.show(paymentRequestModal);
 	}
 
 	setFederation() {
@@ -62,5 +64,5 @@ angular.module('app.component.receive', [])
 	require: {
 		index: '^index'
 	},
-	templateUrl: 'app/account/components/receive.html'
+	template: receiveTemplate
 });

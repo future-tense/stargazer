@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import walletFooterTemplate from './wallet-footer.html';
+
 class WalletFooterController {
 
 	constructor(Wallet) {
@@ -17,5 +19,5 @@ angular.module('app.component.wallet-footer', [])
 .component('walletFooter', {
 	controller: WalletFooterController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account/components/wallet-footer.html'
+	template: walletFooterTemplate
 });

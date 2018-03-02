@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
 
+import overviewTemplate from './overview.html';
+
 class OverviewController {
 
 	constructor($route, $scope, Wallet, QRScanner) {
@@ -54,5 +56,5 @@ angular.module('app.component.overview', [])
 	require: {
 		index: '^index'
 	},
-	templateUrl: 'app/account/components/overview.html'
+	template: overviewTemplate
 });

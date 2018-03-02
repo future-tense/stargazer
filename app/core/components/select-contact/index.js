@@ -4,6 +4,8 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import SelectContactController from './select-contact.controller';
 import SelectContactModal from './select-contact.modal.controller';
 
+import selectContactTemplate from './select-contact.html';
+
 export default angular.module('selectContactModule', [])
 .component('selectContact', {
 	bindings: {
@@ -14,6 +16,6 @@ export default angular.module('selectContactModule', [])
 	},
 	controller: SelectContactController,
 	controllerAs: 'vm',
-	templateUrl: 'app/core/components/select-contact/select-contact.html'
+	template: selectContactTemplate
 })
 .controller('SelectContactCtrl', SelectContactModal);

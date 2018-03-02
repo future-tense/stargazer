@@ -3,6 +3,9 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import contacts from '../../core/services/contacts.js';
 
+import addContactModal from '../modals/add-contact.html';
+import contactListTemplate from './contact-list.html';
+
 class ContactListController {
 	constructor(Modal) {
 		this.Modal = Modal;
@@ -12,7 +15,7 @@ class ContactListController {
 	}
 
 	addContact() {
-		this.Modal.show('app/side-menu/modals/add-contact.html');
+		this.Modal.show(addContactModal);
 	}
 
 	getMinHeight() {
@@ -26,5 +29,5 @@ angular.module('app.component.contact-list', [])
 .component('contactList', {
 	controller: ContactListController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/contact-list.html'
+	template: contactListTemplate
 });

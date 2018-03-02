@@ -4,6 +4,8 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import centaurus from '../../core/services/centaurus.js';
 import translate from '../../core/services/translate.service.js';
 
+import importCentaurusTemplate from './import-centaurus.html';
+
 class ImportCentaurusController {
 
 	constructor($location, $routeParams, Keychain, Wallet) {
@@ -41,5 +43,5 @@ angular.module('app.component.import-centaurus', [])
 .component('importCentaurus', {
 	controller: ImportCentaurusController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/import-centaurus.html'
+	template: importCentaurusTemplate
 });

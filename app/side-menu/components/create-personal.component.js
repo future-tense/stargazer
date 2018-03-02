@@ -5,6 +5,9 @@ import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon.js';
 import translate from '../../core/services/translate.service.js';
 
+import selectFunderModal from '../modals/select-funder.html';
+import createPersonalTemplate from './create-personal.html';
+
 class CreatePersonalController {
 
 	constructor($location, Modal, Reviewer, Wallet) {
@@ -100,7 +103,7 @@ class CreatePersonalController {
 			minimum: this.minBalance
 		};
 
-		this.Modal.show('app/side-menu/modals/select-funder.html', data)
+		this.Modal.show(selectFunderModal, data)
 		.then(res => {
 			this.account.funder = res;
 			this.account.amount = this.minBalance;
@@ -112,5 +115,5 @@ angular.module('app.component.create-personal', [])
 .component('createPersonal', {
 	controller: CreatePersonalController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/create-personal.html'
+	template: createPersonalTemplate
 });

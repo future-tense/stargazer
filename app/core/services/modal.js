@@ -18,14 +18,11 @@ angular.module('app.service.modal', [])
 		$scope.modalResolve			= resolve;
 		$scope.data					= data;
 
-		$ionicModal.fromTemplateUrl(template, {
+		$scope.modal = $ionicModal.fromTemplate(template, {
 			scope: $scope,
 			animation: 'slide-in-up'
-		})
-		.then(modal => {
-			$scope.modal = modal;
-			modal.show();
 		});
+		$scope.modal.show();
 
 		const deferred = $q.defer();
 		return deferred.promise;

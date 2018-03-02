@@ -3,6 +3,7 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import SelectAccountController from './select-account.component';
 import SelectAccountModalController from './select-account.modal.controller';
+import selectAccountTemplate from './select-account.html';
 
 export default angular.module('selectAccountModule', [])
 .component('selectAccount', {
@@ -14,7 +15,7 @@ export default angular.module('selectAccountModule', [])
 	},
 	controller: SelectAccountController,
 	controllerAs: 'vm',
-	templateUrl: 'app/core/components/select-account/select-account.html'
+	template: selectAccountTemplate
 })
 .controller('SelectAccountCtrl', SelectAccountModalController);
 

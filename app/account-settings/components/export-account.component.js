@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import exportAccountTemplate from './export-account.html';
+
 class ExportAccountController {
 
 	constructor(Keychain, Wallet) {
@@ -32,5 +34,5 @@ angular.module('app.component.export-account', [])
 	require: {
 		index: '^index'
 	},
-	templateUrl: 'app/account-settings/components/export-account.html'
+	template: exportAccountTemplate
 });

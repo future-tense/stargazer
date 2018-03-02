@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import advancedSettingsTemplate from './advanced-settings.html';
+
 class AdvancedSettingsController {
 
 	constructor(Reverse, Wallet) {
@@ -32,6 +34,6 @@ angular.module('app.component.advanced-settings', [])
 .component('advancedSettings', {
 	controller: AdvancedSettingsController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/advanced-settings.html'
+	template: advancedSettingsTemplate
 });
 

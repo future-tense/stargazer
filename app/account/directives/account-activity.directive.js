@@ -6,6 +6,8 @@ import jazzicon from '../../core/services/jazzicon.js';
 import translate from '../../core/services/translate.service.js';
 import contacts from '../../core/services/contacts.js';
 
+import accountActivityTemplate from './account-activity.html';
+
 angular.module('app.directive.account-activity', [])
 .directive('accountActivity', function ($filter, $interval, History, Wallet) {
 	'use strict';
@@ -219,6 +221,6 @@ angular.module('app.directive.account-activity', [])
 			filter: '@'
 		},
 		link: link,
-		templateUrl: 'app/account/directives/account-activity.html'
+		template: accountActivityTemplate
 	};
 });

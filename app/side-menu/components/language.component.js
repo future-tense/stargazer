@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import language from '../../core/services/language.js';
 
+import languageTemplate from './language.html';
+
 class LanguageController {
 
 	constructor($rootScope) {
@@ -22,5 +24,5 @@ angular.module('app.component.language', [])
 .component('language', {
 	controller: LanguageController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/language.html'
+	template: languageTemplate
 });

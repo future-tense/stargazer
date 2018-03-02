@@ -3,6 +3,8 @@
 import translate from '../../services/translate.service.js';
 import platformInfo from '../../services/platform-info.js';
 
+import scannerModal from './scanner.modal.html';
+
 export default /* @ngInject */ function ($ionicLoading, $q, Modal) {
 
 	const isCordova	= platformInfo.isCordova;
@@ -55,7 +57,7 @@ export default /* @ngInject */ function ($ionicLoading, $q, Modal) {
 		}));
 	};
 
-	const modalOpenScanner = () => Modal.show('app/core/components/qr-scanner/scanner.modal.html');
+	const modalOpenScanner = () => Modal.show(scannerModal);
 
 	//
 	//	:KLUDGE:	ng-show doesn't seem to evaluate the value of the promise itself

@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
 
+import networkSelectorTemplate from './network-selector.html';
+
 class NetworkSelectorController {
 
 	constructor() {
@@ -27,6 +29,6 @@ angular.module('app.component.network-selector', [])
 	},
 	controller: NetworkSelectorController,
 	controllerAs: 'vm',
-	templateUrl: 'app/core/components/network-selector.html'
+	template: networkSelectorTemplate
 });
 

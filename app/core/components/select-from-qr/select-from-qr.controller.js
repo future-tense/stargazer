@@ -1,5 +1,5 @@
 
-export default class SelectFromQrController {
+export default /* @ngInject */ class SelectFromQrController {
 
 	constructor(Commands, QRScanner) {
 		this.Commands  = Commands;
@@ -15,3 +15,5 @@ export default class SelectFromQrController {
 		});
 	}
 }
+
+SelectFromQrController.$inject = ['Commands', 'QRScanner'];

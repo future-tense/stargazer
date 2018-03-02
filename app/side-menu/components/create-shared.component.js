@@ -4,6 +4,9 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon.js';
 
+import selectFunderModal from '../modals/select-funder.html';
+import createSharedTemplate from './create-shared.html';
+
 const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
 
 class CreateSharedController {
@@ -177,7 +180,7 @@ class CreateSharedController {
 			numOps: 2 + this.signers.length
 		};
 
-		this.Modal.show('app/side-menu/modals/select-funder.html', data)
+		this.Modal.show(selectFunderModal, data)
 		.then((res) => {
 			this.account.funder = res;
 		});
@@ -188,5 +191,5 @@ angular.module('app.component.create-shared', [])
 .component('createShared', {
 	controller: CreateSharedController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/create-shared.html'
+	template: createSharedTemplate
 });

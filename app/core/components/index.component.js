@@ -4,6 +4,8 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import translate from '../../core/services/translate.service.js';
 import platformInfo from '../../core/services/platform-info.js';
 
+import indexTemplate from './index.html';
+
 class IndexController {
 	constructor($ionicLoading, Commands, Wallet) {
 		this.$ionicLoading = $ionicLoading;
@@ -50,5 +52,5 @@ angular.module('app.component.index', [])
 .component('index', {
 	controller: IndexController,
 	controllerAs: 'vm',
-	templateUrl: 'app/core/components/index.html'
+	template: indexTemplate
 });

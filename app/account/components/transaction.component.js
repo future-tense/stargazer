@@ -3,6 +3,10 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import contacts from '../../core/services/contacts.js';
 
+import addContactModal from '../modals/add-contact.html';
+import editTxCommentModal from '../modals/edit-txcomment.html';
+import transactionTemplate from './transaction.html';
+
 class TransactionController {
 
 	constructor($routeParams, History, Modal, Wallet) {
@@ -109,7 +113,7 @@ class TransactionController {
 			}
 		}
 
-		this.Modal.show('app/account/modals/add-contact.html', data);
+		this.Modal.show(addContactModal, data);
 	}
 
 	buttonText() {
@@ -117,7 +121,7 @@ class TransactionController {
 	}
 
 	editComment() {
-		this.Modal.show('app/account/modals/edit-txcomment.html', this.effect);
+		this.Modal.show(editTxCommentModal, this.effect);
 	}
 }
 
@@ -128,5 +132,5 @@ angular.module('app.component.transaction', [])
 	require: {
 		index: '^index'
 	},
-	templateUrl: 'app/account/components/transaction.html'
+	template: transactionTemplate
 });

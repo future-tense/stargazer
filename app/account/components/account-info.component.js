@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
 
+import accountInfoTemplate from './account-info.html';
+
 class AccountInfoController {
 
 	constructor(Wallet) {
@@ -23,5 +25,5 @@ angular.module('app.component.account-info', [])
 .component('accountInfo', {
 	controller: AccountInfoController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account/components/account-info.html'
+	template: accountInfoTemplate
 });

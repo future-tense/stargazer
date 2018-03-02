@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import accountAliasTemplate from './account-alias.html';
+
 class AccountAliasController {
 
 	constructor($rootScope, Wallet) {
@@ -24,5 +26,5 @@ angular.module('app.component.account-alias', [])
 .component('accountAlias', {
 	controller: AccountAliasController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/account-alias.html'
+	template: accountAliasTemplate
 });

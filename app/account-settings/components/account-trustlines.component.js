@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import addTrustlineModal from '../modals/add-trustline.html';
+import accountTrustlinesTemplate from './account-trustlines.html';
 
 class AccountTrustlinesController {
 
@@ -19,7 +21,7 @@ class AccountTrustlinesController {
 	}
 
 	addAnchor() {
-		this.Modal.show('app/account-settings/modals/add-trustline.html')
+		this.Modal.show(addTrustlineModal)
 		.then(res => {
 			this.Destination.lookup(res.anchor)
 			.then(destInfo => {
@@ -166,5 +168,5 @@ angular.module('app.component.account-trustlines', [])
 .component('accountTrustlines', {
 	controller: AccountTrustlinesController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/account-trustlines.html'
+	template: accountTrustlinesTemplate
 });

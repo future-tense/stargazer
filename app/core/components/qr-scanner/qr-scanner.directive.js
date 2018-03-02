@@ -12,6 +12,8 @@ export default /* @ngInject */ function (QRScanner) {
 		};
 	}
 
+	controller.$inject = ['$scope'];
+
 	return {
 		restrict: 'E',
 		scope: {

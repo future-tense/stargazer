@@ -1,5 +1,7 @@
 
-export default class SelectAccountController {
+import modalTemplate from './select-account.modal.html';
+
+export default /* @ngInject */ class SelectAccountController {
 	constructor(Modal) {
 		this.Modal = Modal;
 	}
@@ -11,9 +13,11 @@ export default class SelectAccountController {
 			bind: this.bind
 		};
 
-		this.Modal.show('app/core/components/select-account/select-account.modal.html', data)
+		this.Modal.show(modalTemplate, data)
 		.then(dest => {
 			this.destination = dest;
 		});
 	}
 }
+
+SelectAccountController.$inject = ['Modal'];

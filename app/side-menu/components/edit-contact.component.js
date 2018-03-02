@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import contacts from '../../core/services/contacts.js';
 
+import editContactTemplate from './edit-contact.html';
+
 class EditContactController {
 
 	constructor($rootScope, $routeParams) {
@@ -65,5 +67,5 @@ angular.module('app.component.edit-account', [])
 .component('editContact', {
 	controller: EditContactController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/edit-contact.html'
+	template: editContactTemplate
 });

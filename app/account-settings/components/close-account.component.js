@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 
+import closeAccountTemplate from './close-account.html';
+
 class CloseAccountController {
 
 	constructor($location, Reviewer, Wallet) {
@@ -66,6 +68,6 @@ angular.module('app.component.close-account', [])
 .component('closeAccount', {
 	controller: CloseAccountController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/close-account.html'
+	template: closeAccountTemplate
 });
 

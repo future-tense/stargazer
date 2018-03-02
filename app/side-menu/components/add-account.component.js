@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import addAccountTemplate from './add-account.html';
+
 class AddAccountController {
 	constructor(Commands, QRScanner, Wallet) {
 		this.Commands = Commands;
@@ -29,5 +31,5 @@ angular.module('app.component.add-account', [])
 .component('addAccount', {
 	controller: AddAccountController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/add-account.html'
+	template: addAccountTemplate
 });

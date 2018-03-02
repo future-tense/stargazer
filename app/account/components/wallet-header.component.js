@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import walletHeaderTemplate from './wallet-header.html';
+
 class WalletHeaderController {
 	constructor($ionicSideMenuDelegate, $location, Wallet) {
 		this.wallet = Wallet.current;
@@ -25,6 +27,6 @@ angular.module('app.component.wallet-header', [])
 	require: {
 		index: '^index'
 	},
-	templateUrl: 'app/account/components/wallet-header.html'
+	template: walletHeaderTemplate
 });
 

@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon';
+import selectPoolModal from '../modals/select-pool.html';
+import inflationDestinationTemplate from './inflation-destination.html';
 
 class InflationDestinationController {
 
@@ -40,7 +42,7 @@ class InflationDestinationController {
 	}
 
 	selectPool() {
-		this.Modal.show('app/account-settings/modals/select-pool.html')
+		this.Modal.show(selectPoolModal)
 		.then((res) => {
 			this.data.destination = res;
 		});
@@ -79,5 +81,5 @@ angular.module('app.component.inflation-destination', [])
 .component('inflationDestination', {
 	controller: InflationDestinationController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/inflation-destination.html'
+	template: inflationDestinationTemplate
 });

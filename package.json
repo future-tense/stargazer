@@ -24,6 +24,7 @@
     "grunt-preprocess": "^5.1.0",
     "grunt-replace": "^1.0.1",
     "hard-source-webpack-plugin": "^0.5.18",
+    "html-loader": "^0.5.5",
     "ionic-sdk": "git+https://github.com/ionic-team/ionic.git#v1.3.2",
     "jazzicon": "git+https://github.com/flyswatter/jazzicon.git#8e51499",
     "jit-grunt": "^0.10.0",
@@ -33,6 +34,7 @@
     "sjcl": "^1.0.7",
     "stellar-sdk": "^0.8.0",
     "stellarterm-directory": "^0.2.2",
+    "svg-loader": "0.0.2",
     "toml-j0.4": "^1.1.1",
     "webpack": "^3.11.0"
   }

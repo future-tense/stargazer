@@ -2,6 +2,8 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 
+import configNavbarTemplate from './config-navbar.html';
+
 class ConfigNavbarController {
 
 	constructor($rootScope) {
@@ -21,6 +23,6 @@ angular.module('app.component.config-navbar', [])
 	},
 	controller: ConfigNavbarController,
 	controllerAs: 'vm',
-	templateUrl: 'app/account-settings/components/config-navbar.html'
+	template: configNavbarTemplate
 });
 

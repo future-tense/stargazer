@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import translate from '../../core/services/translate.service.js';
 
+import importAccountTemplate from './import-account.html';
+
 class ImportAccountController {
 	constructor($ionicLoading, $location, $routeParams, Keychain, Wallet) {
 
@@ -49,5 +51,5 @@ angular.module('app.component.import-account', [])
 .component('importAccount', {
 	controller: ImportAccountController,
 	controllerAs: 'vm',
-	templateUrl: 'app/side-menu/components/import-account.html'
+	template: importAccountTemplate
 });
