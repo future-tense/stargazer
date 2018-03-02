@@ -59,8 +59,8 @@ Some of the phrases, specifically the `XX days/hours/minutes/seconds ago` ones, 
 ### Building the baseline app
 ```
 npm install
-bower install
-grunt build
+npm run clean
+npm run build, or npm run build-prod
 ```
 
 ### Building for desktop
