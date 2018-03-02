@@ -23,7 +23,7 @@ class ExportAccountController {
 		});
 
 		this.key = key;
-		this.isEncrypted = Keychain.isEncrypted(account);
+		this.isEncrypted = Keychain.isEncrypted(account.id);
 	}
 }
 
