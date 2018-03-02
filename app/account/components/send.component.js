@@ -114,6 +114,7 @@ class SendController {
 		}
 
 		if (!destInfo) {
+			this.requiresMemo = false;
 			this.hasPath = false;
 			this.isPathPending = true;
 			delete this.send.amount;

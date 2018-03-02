@@ -39,14 +39,18 @@
 				<div class="card" ng-show="forms.send.destination.$viewValue">
 					Not a valid recipient address
 				</div>
-			</div>
 
-			<div class="card" ng-show="vm.showUnregistered()" style="margin-bottom: 100px">
-				Recipient account isn't registered. Send a minimum amount of {{vm.minimumAccountBalance}} XLM to activate it.
-				<span ng-show="vm.isEmail(vm.send.destination)">
-					Recipient will receive an email with instructions on how to retrieve the funds.
-				</span>
+				<div class="card" ng-show="vm.requiresMemo && !vm.send.memo" style="margin-bottom: 100px">
+					This recipient requires a memo
+				</div>
 			</div>
+		</div>
+
+		<div class="card" ng-show="vm.showUnregistered()" style="margin-bottom: 100px">
+			Recipient account isn't registered. Send a minimum amount of {{vm.minimumAccountBalance}} XLM to activate it.
+			<span ng-show="vm.isEmail(vm.send.destination)">
+					Recipient will receive an email with instructions on how to retrieve the funds.
+			</span>
 		</div>
 
 		<div class="button-group" style="position:absolute;bottom:0">
