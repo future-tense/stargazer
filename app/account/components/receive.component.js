@@ -15,29 +15,12 @@ class ReceiveController {
 
 		this.accountId		= Wallet.current.id;
 		this.hasFederation	= (Wallet.current.federation !== undefined);
-		this.minHeight		= this.getMinHeight();
 		this.qrtext			= '';
-
-		if (this.hasFederation) {
-			this.federation = `${this.Wallet.current.federation}*getstargazer.com`;
-		}
-
 		this.showAddress();
-	}
-
-	getMinHeight() {
-		const headerHeight = 2 * 40;
-		const numButtons = 1 + (this.Wallet.current.federation === undefined);
-		const buttonGroupHeight = 48 * numButtons + 8 * (numButtons - 1) + 24;
-		return `${window.innerHeight - (buttonGroupHeight + headerHeight)}px`;
 	}
 
 	request() {
 		this.Modal.show(paymentRequestModal);
-	}
-
-	setFederation() {
-		this.$location.path('/account-settings/federation');
 	}
 
 	showAddress() {
