@@ -6,17 +6,22 @@ class ExportAccountController {
 
 	constructor(Keychain, Wallet) {
 
+		const account = Wallet.current;
+		const key = Keychain.getKeyInfo(account.id);
+
 		const stellar = {
 			account: {
-				network: Wallet.current.network
-			}
+				network: account.network
+			},
+			key: key
 		};
-
-		stellar.key = Keychain.getKeyInfo(Wallet.current.id);
 
 		this.text = JSON.stringify({
 			stellar: stellar
 		});
+
+		this.key = key;
+		this.isEncrypted = Keychain.isEncrypted(account);
 	}
 }
 
@@ -24,5 +29,8 @@ angular.module('app.component.export-account', [])
 .component('exportAccount', {
 	controller: ExportAccountController,
 	controllerAs: 'vm',
+	require: {
+		index: '^index'
+	},
 	templateUrl: 'app/account-settings/components/export-account.html'
 });

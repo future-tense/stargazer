@@ -8,5 +8,18 @@
 		<div class="item" style="display:flex; flex-direction: column; align-items: center;">
 			<qrcode text="vm.text"></qrcode>
 		</div>
+
+		<div ng-if="!vm.isEncrypted">
+			<div class="item item-divider">
+				{{'Private Key' | translate}}
+			</div>
+
+			<h6 ng-click="vm.index.copyToClipboard(vm.key)"
+				class="item"
+				style="padding-left:16px;padding-right:16px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+				{{vm.key}}
+			</h6>
+		</div>
+
 	</div>
 </ion-content>
