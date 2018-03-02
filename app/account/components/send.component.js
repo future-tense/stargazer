@@ -2,6 +2,7 @@
 
 import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
+import directory from 'stellarterm-directory';
 import horizon from '../../core/services/horizon.js';
 
 function createAsset(json, prefix) {
@@ -126,6 +127,23 @@ class SendController {
 			this.send.memo		= null;
 		}
 		/* eslint-enable camelcase */
+
+		const directoryItem = directory.getDestination(destInfo.id);
+		if (directoryItem) {
+			if ('requiredMemoType' in directoryItem) {
+				const table = {
+					'MEMO_TEXT': 'text',
+					'MEMO_ID':	'id'
+				};
+
+				/* eslint-disable camelcase */
+				this.send.memo_type = table[directoryItem.requiredMemoType];
+				this.requiresMemo = true;
+				/* eslint-enable camelcase */
+			}
+		} else {
+			this.requiresMemo = false;
+		}
 
 		const currentAccount = this.Wallet.current;
 

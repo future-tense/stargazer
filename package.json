@@ -32,6 +32,7 @@
     "qrcode_js": "^1.0.0",
     "sjcl": "^1.0.7",
     "stellar-sdk": "^0.8.0",
+    "stellarterm-directory": "^0.2.2",
     "toml-j0.4": "^1.1.1",
     "webpack": "^3.11.0"
   }

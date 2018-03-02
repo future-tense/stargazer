@@ -15,7 +15,7 @@
 					</span>
 					<input type="text" name="destination" ng-model="vm.send.destination" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
 				</label>
-				<memo-selector type="vm.send.memo_type" memo="vm.send.memo" ng-show="vm.send.destInfo"></memo-selector>
+				<memo-selector type="vm.send.memo_type" memo="vm.send.memo" req="vm.requiresMemo" ng-show="vm.send.destInfo"></memo-selector>
 			</form>
 
 			<div ng-show="!vm.send.destInfo">
