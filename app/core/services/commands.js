@@ -4,6 +4,8 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import contacts from './contacts.js';
 
+const isEmpty = (obj) => Object.keys(obj).length === 0;
+
 angular.module('app.service.commands', [])
 .factory('Commands', function ($http, $ionicLoading, $location, $q, Keychain, Modal, Wallet) {
 	'use strict';
@@ -128,7 +130,7 @@ angular.module('app.service.commands', [])
 		};
 
 		/* eslint-disable camelcase */
-		if (!payment.asset) {
+		if (!payment.asset || isEmpty(payment.asset)) {
 			object.asset_type	= 'native';
 		} else {
 			object.asset_code	= payment.asset.code;
