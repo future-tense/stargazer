@@ -11,6 +11,7 @@ import fr from '../../../i18n/fr.json';
 import hi from '../../../i18n/hi.json';
 import id from '../../../i18n/id.json';
 import pl from '../../../i18n/pl.json';
+import ru from '../../../i18n/ru.json';
 import sv from '../../../i18n/sv.json';
 import zh from '../../../i18n/zh.json';
 
@@ -23,6 +24,7 @@ const maps = {
 	hi: hi,
 	id: id,
 	pl: pl,
+	ru: ru,
 	sv: sv,
 	zh: zh
 };
