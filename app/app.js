@@ -4,6 +4,8 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import 'angular-route';
 
 import homePageModule from './pages/home';
+import receivePageModule from './pages/receive';
+
 import './account/index.js';
 import './account-settings/index.js';
 import './core/index.js';
@@ -15,6 +17,7 @@ angular.module('app', [
 	'ionic',
 
 	homePageModule.name,
+	receivePageModule.name,
 	'app.core',
 	'app.account',
 	'app.settings',

@@ -1,12 +1,7 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
 
-angular.module('app.modal.payment-request', [])
-.controller('PaymentRequestCtrl', function ($scope, Wallet) {
-	'use strict';
-
+export default /* @ngInject */ function ($scope, Wallet) {
 	$scope.model = {};
 	$scope.showResult = false;
 
@@ -64,4 +59,4 @@ angular.module('app.modal.payment-request', [])
 		$scope.text = JSON.stringify(text);
 		$scope.showResult = true;
 	};
-});
+}

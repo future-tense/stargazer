@@ -1,11 +1,8 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
-import paymentRequestModal from '../modals/payment-request.html';
-import receiveTemplate from './receive.html';
+import paymentRequestModal from './payment-request.html';
 
-class ReceiveController {
+export default class ReceiveController {
 
 	constructor($location, Modal, Wallet) {
 
@@ -39,13 +36,3 @@ class ReceiveController {
 		});
 	}
 }
-
-angular.module('app.component.receive', [])
-.component('receive', {
-	controller: ReceiveController,
-	controllerAs: 'vm',
-	require: {
-		index: '^index'
-	},
-	template: receiveTemplate
-});
