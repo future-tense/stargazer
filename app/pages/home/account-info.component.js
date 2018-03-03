@@ -1,11 +1,8 @@
 /* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
 
-import accountInfoTemplate from './account-info.html';
-
-class AccountInfoController {
+export default class AccountInfoController {
 
 	constructor(Wallet) {
 		this.Wallet = Wallet;
@@ -20,10 +17,3 @@ class AccountInfoController {
 		this.lockClass = this.account.isLocallySecure() ? 'icon-lock' : 'icon-lock-open';
 	}
 }
-
-angular.module('app.component.account-info', [])
-.component('accountInfo', {
-	controller: AccountInfoController,
-	controllerAs: 'vm',
-	template: accountInfoTemplate
-});

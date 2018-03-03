@@ -3,6 +3,7 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import 'angular-route';
 
+import homePageModule from './pages/home';
 import './account/index.js';
 import './account-settings/index.js';
 import './core/index.js';
@@ -13,6 +14,7 @@ angular.module('app', [
 	'ngRoute',
 	'ionic',
 
+	homePageModule.name,
 	'app.core',
 	'app.account',
 	'app.settings',

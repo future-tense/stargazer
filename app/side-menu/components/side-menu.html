@@ -12,7 +12,7 @@
 					<span class="badge">+</span>
 				</a>
 			</div>
-			<a ng-href="#/account/{{account.id}}" ng-repeat="account in vm.accounts" menu-toggle>
+			<a ng-href="#/page/home/{{account.id}}" ng-repeat="account in vm.accounts" menu-toggle>
 				<div class="item" ng-class="{selected: vm.isSelected(account)}">
 					<i class="icon" ng-class="vm.getType(account)"></i>
 					{{account.alias}}

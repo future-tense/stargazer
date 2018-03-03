@@ -1,16 +1,12 @@
-/* global angular */
 /* jshint multistr: true */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import jazzicon from '../../core/services/jazzicon.js';
 import translate from '../../core/services/translate.service.js';
 import contacts from '../../core/services/contacts.js';
 
 import accountActivityTemplate from './account-activity.html';
 
-angular.module('app.directive.account-activity', [])
-.directive('accountActivity', function ($filter, $interval, History, Wallet) {
-	'use strict';
+export default function /* @ngInject */ accountActivityController($filter, $interval, History, Wallet) {
 
 	const formatAmount = $filter('formatAmount');
 
@@ -76,7 +72,7 @@ angular.module('app.directive.account-activity', [])
 		}
 
 		return '\
-			<a class="feed-item" href="#/account/transaction/' + tx.id +'">\
+			<a class="feed-item" href="#/page/transaction/' + tx.id +'">\
 				<div class="feed-item-icon" data-seed="' + getSeed(tx) + '"></div>\
 				<div class="feed-item-comment">' + getComment(tx) + '</div>\
 				<div class="payment">\
@@ -106,65 +102,65 @@ angular.module('app.directive.account-activity', [])
 			};
 
 			const filtered = array.filter(fx => fx.type in paymentTypes)
-			.map(fx => {
+				.map(fx => {
 
-				const res = {
-					id: fx.id
-				};
+					const res = {
+						id: fx.id
+					};
 
-				/* eslint-disable camelcase */
-				if (fx.type === 'account_debited') {
-					res.desc = `-${formatAmount(fx.amount)} ${fx.asset_code}`;
-					res.amount = fx.amount;
-					res.asset_code = fx.asset_code;
-				}
-
-				else if (fx.type === 'account_credited') {
-					res.desc = `+${formatAmount(fx.amount)} ${fx.asset_code}`;
-					res.amount = fx.amount;
-					res.asset_code = fx.asset_code;
-				}
-
-				else if (fx.type === 'account_created') {
-					res.desc = `+${formatAmount(fx.amount)} XLM`;
-					res.amount = fx.amount;
-					res.asset_code = 'XLM';
-				}
-
-				else if (fx.type === 'trade') {
-					if (!fx.sold_asset_code) {
-						fx.sold_asset_code = 'XLM';
+					/* eslint-disable camelcase */
+					if (fx.type === 'account_debited') {
+						res.desc = `-${formatAmount(fx.amount)} ${fx.asset_code}`;
+						res.amount = fx.amount;
+						res.asset_code = fx.asset_code;
 					}
 
-					if (!fx.bought_asset_code) {
-						fx.bought_asset_code = 'XLM';
+					else if (fx.type === 'account_credited') {
+						res.desc = `+${formatAmount(fx.amount)} ${fx.asset_code}`;
+						res.amount = fx.amount;
+						res.asset_code = fx.asset_code;
 					}
 
-					res.desc = `-${formatAmount(fx.sold_amount)} ${fx.sold_asset_code}` +
-						` / +${formatAmount(fx.bought_amount)} ${fx.bought_asset_code}`;
+					else if (fx.type === 'account_created') {
+						res.desc = `+${formatAmount(fx.amount)} XLM`;
+						res.amount = fx.amount;
+						res.asset_code = 'XLM';
+					}
 
-					res.sold_amount = fx.sold_amount;
-					res.sold_asset_code = fx.sold_asset_code;
-					res.bought_amount = fx.bought_amount;
-					res.bought_asset_code = fx.bought_asset_code;
-				}
-				/* eslint-enable camelcase */
+					else if (fx.type === 'trade') {
+						if (!fx.sold_asset_code) {
+							fx.sold_asset_code = 'XLM';
+						}
 
-				const date = new Date(fx.date);
-				res.timestamp = date.getTime() / 1000;
-				res.type = paymentTypes[fx.type];
-				res.comment = fx.comment;
-				res.memoType = fx.memoType;
-				res.memo = fx.memo;
+						if (!fx.bought_asset_code) {
+							fx.bought_asset_code = 'XLM';
+						}
 
-				if (fx.to) {
-					res.counterparty = fx.to;
-				} else if (fx.from) {
-					res.counterparty = fx.from;
-				}
+						res.desc = `-${formatAmount(fx.sold_amount)} ${fx.sold_asset_code}` +
+							` / +${formatAmount(fx.bought_amount)} ${fx.bought_asset_code}`;
 
-				return res;
-			});
+						res.sold_amount = fx.sold_amount;
+						res.sold_asset_code = fx.sold_asset_code;
+						res.bought_amount = fx.bought_amount;
+						res.bought_asset_code = fx.bought_asset_code;
+					}
+					/* eslint-enable camelcase */
+
+					const date = new Date(fx.date);
+					res.timestamp = date.getTime() / 1000;
+					res.type = paymentTypes[fx.type];
+					res.comment = fx.comment;
+					res.memoType = fx.memoType;
+					res.memo = fx.memo;
+
+					if (fx.to) {
+						res.counterparty = fx.to;
+					} else if (fx.from) {
+						res.counterparty = fx.from;
+					}
+
+					return res;
+				});
 
 			scope.history = filtered.sort(
 				(foo, bar) => (foo.id < bar.id) - (foo.id > bar.id)
@@ -223,4 +219,4 @@ angular.module('app.directive.account-activity', [])
 		link: link,
 		template: accountActivityTemplate
 	};
-});
+}

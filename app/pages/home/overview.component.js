@@ -1,11 +1,7 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import horizon from '../../core/services/horizon.js';
 
-import overviewTemplate from './overview.html';
-
-class OverviewController {
+export default class OverviewController {
 
 	constructor($route, $scope, Wallet, QRScanner) {
 		const accountId = $route.current.params.accountId;
@@ -48,13 +44,3 @@ class OverviewController {
 		return this.Wallet.current.isActivated();
 	}
 }
-
-angular.module('app.component.overview', [])
-.component('overview', {
-	controller: OverviewController,
-	controllerAs: 'vm',
-	require: {
-		index: '^index'
-	},
-	template: overviewTemplate
-});

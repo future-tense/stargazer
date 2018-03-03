@@ -2,27 +2,15 @@
 export default /* @ngInject */ function ($routeProvider) {
 
 	$routeProvider
-	.when('/', {
-		template: '<overview></overview>'
-	})
-
-	.when('/account/overview', {
-		template: '<overview></overview>'
-	})
-
-	.when('/account/send/', {
+	.when('/page/send/', {
 		template: '<send></send>'
 	})
 
-	.when('/account/recv', {
+	.when('/page/recv', {
 		template: '<receive></receive>'
 	})
 
-	.when('/account/:accountId', {
-		template: '<overview></overview>'
-	})
-
-	.when('/account/transaction/:id', {
+	.when('/page/transaction/:id', {
 		template: '<transaction></transaction>'
 	});
 };
