@@ -1,12 +1,9 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 
-import closeAccountTemplate from './close-account.html';
+export default class CloseAccountController {
 
-class CloseAccountController {
-
+	/* @ngInject */
 	constructor($location, Reviewer, Wallet) {
 		this.$location = $location;
 		this.Reviewer = Reviewer;
@@ -63,11 +60,3 @@ class CloseAccountController {
 		.then(() => this.$location.path('/'));
 	}
 }
-
-angular.module('app.component.close-account', [])
-.component('closeAccount', {
-	controller: CloseAccountController,
-	controllerAs: 'vm',
-	template: closeAccountTemplate
-});
-

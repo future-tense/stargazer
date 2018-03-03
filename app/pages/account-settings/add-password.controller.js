@@ -1,11 +1,5 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.modal.add-password', [])
-.controller('AddPasswordCtrl', function ($scope) {
-	'use strict';
-
+export default /* @ngInject */ function ($scope) {
 	$scope.form = {};
 	$scope.model = {};
 	$scope.confirm = false;
@@ -25,4 +19,4 @@ angular.module('app.modal.add-password', [])
 	$scope.cancel = function () {
 		$scope.closeModalService();
 	};
-});
+}

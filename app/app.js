@@ -3,6 +3,7 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import 'angular-route';
 
+import accountSettingsPageModule from './pages/account-settings';
 import addAccountPageModule from './pages/add-account';
 import globalSettingsPageModule from './pages/global-settings';
 import homePageModule from './pages/home';
@@ -10,7 +11,6 @@ import receivePageModule from './pages/receive';
 import sendPageModule from './pages/send';
 import transactionPageModule from './pages/transaction';
 
-import './account-settings/index.js';
 import './core/index.js';
 import './side-menu/index.js';
 
@@ -19,6 +19,7 @@ angular.module('app', [
 	'ngRoute',
 	'ionic',
 
+	accountSettingsPageModule.name,
 	addAccountPageModule.name,
 	globalSettingsPageModule.name,
 	homePageModule.name,
@@ -27,7 +28,6 @@ angular.module('app', [
 	transactionPageModule.name,
 
 	'app.core',
-	'app.settings',
 	'app.side-menu'
 ], function ($compileProvider) {
 	$compileProvider.aHrefSanitizationWhitelist(/^\s*((https?|mailto|file|chrome-extension|market):)|#/);

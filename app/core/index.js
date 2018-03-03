@@ -12,6 +12,7 @@ import './components/advanced-toggle.component.js';
 import './components/index.component.js';
 import './components/memo-selector.component.js';
 import './components/network-selector.component';
+import './components/config-navbar.component';
 
 import './directives/account-name.js';
 import './directives/dynamic.js';
@@ -54,6 +55,7 @@ angular.module('app.core', [
 	'app.component.index',
 	'app.component.memo-selector',
 	'app.component.network-selector',
+	'app.component.config-navbar',
 
 	'app.directive.account-name',
 	'app.directive.dynamic',

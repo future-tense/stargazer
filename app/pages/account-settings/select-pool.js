@@ -1,15 +1,10 @@
-/* global angular, console */
-
-import 'ionic-sdk/release/js/ionic.bundle';
 
 const pools = {
 	'XLMPool.com': 'GA3FUYFOPWZ25YXTCA73RK2UGONHCO27OHQRSGV3VCE67UEPEFEDCOPA',
 	'Lumenaut.net': 'GCCD6AJOYZCUAQLX32ZJF2MKFFAUJ53PVCFQI3RHWKL3V47QYE2BNAUT'
 };
 
-angular.module('app.modal.select-pool', [])
-.controller('SelectPoolCtrl', function ($scope) {
-	'use strict';
+export default /* @ngInject */ function ($scope) {
 
 	$scope.pools = Object.keys(pools);
 	$scope.cancel = cancel;
@@ -23,4 +18,4 @@ angular.module('app.modal.select-pool', [])
 		const pool = pools[res];
 		$scope.modalResolve(pool);
 	}
-});
+}

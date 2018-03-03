@@ -1,13 +1,11 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon';
-import selectPoolModal from '../modals/select-pool.html';
-import inflationDestinationTemplate from './inflation-destination.html';
+import selectPoolModal from './select-pool.html';
 
-class InflationDestinationController {
+export default class InflationDestinationController {
 
+	/* @ngInject */
 	constructor($rootScope, Modal, Reverse, Reviewer, Wallet) {
 
 		this.$rootScope = $rootScope;
@@ -76,10 +74,3 @@ class InflationDestinationController {
 		});
 	}
 }
-
-angular.module('app.component.inflation-destination', [])
-.component('inflationDestination', {
-	controller: InflationDestinationController,
-	controllerAs: 'vm',
-	template: inflationDestinationTemplate
-});

@@ -1,10 +1,5 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.modal.remove-password', [])
-.controller('RemovePasswordCtrl', function ($scope) {
-	'use strict';
+export default /* @ngInject */ function ($scope) {
 
 	$scope.form  = {};
 	$scope.model = {};
@@ -19,4 +14,4 @@ angular.module('app.modal.remove-password', [])
 	$scope.cancel = function () {
 		$scope.closeModalService();
 	};
-});
+}

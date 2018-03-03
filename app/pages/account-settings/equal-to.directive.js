@@ -1,11 +1,5 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.directive.equal-to', [])
-.directive('equalTo', function () {
-	'use strict';
-
+export default /* @ngInject */ function () {
 	return {
 		require: 'ngModel',
 		scope: {
@@ -19,5 +13,4 @@ angular.module('app.directive.equal-to', [])
 			scope.$watch('otherModelValue', () => ngModel.$validate());
 		}
 	};
-
-});
+}

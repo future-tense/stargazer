@@ -1,11 +1,5 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.directive.focus-if', [])
-.directive('focusIf', function ($timeout) {
-	'use strict';
-
+export default /* @ngInject */function ($timeout) {
 	return {
 		link: function (scope, element, attrs) {
 			attrs.$observe('focusIf', val => {
@@ -19,5 +13,4 @@ angular.module('app.directive.focus-if', [])
 			});
 		}
 	};
-
-});
+}

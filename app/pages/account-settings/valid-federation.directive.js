@@ -1,10 +1,5 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.directive.valid-federation', [])
-.directive('validFederation', function ($http, $q) {
-	'use strict';
+export default /* @ngInject */ function ($http, $q) {
 
 	return {
 		require: 'ngModel',
@@ -31,4 +26,4 @@ angular.module('app.directive.valid-federation', [])
 			};
 		}
 	};
-});
+}

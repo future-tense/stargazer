@@ -1,12 +1,10 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-import removePasswordModal from '../modals/remove-password.html';
-import addPasswordModal from '../modals/add-password.html';
-import accountSettingsTemplate from './account-settings.html';
+import removePasswordModal from './remove-password.html';
+import addPasswordModal from './add-password.html';
 
-class AccountSettingsController {
+export default class AccountSettingsController {
 
+	/* @ngInject */
 	constructor(Keychain, Modal, Wallet) {
 		this.Keychain = Keychain;
 		this.Modal = Modal;
@@ -58,10 +56,3 @@ class AccountSettingsController {
 		}
 	}
 }
-
-angular.module('app.component.account-settings', [])
-.component('accountSettings', {
-	controller: AccountSettingsController,
-	controllerAs: 'vm',
-	template: accountSettingsTemplate
-});

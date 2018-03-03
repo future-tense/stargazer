@@ -4,7 +4,7 @@
 	<div class="list">
 		<div class="item item-divider"></div>
 
-		<a href="#/account-settings/inflation" ng-if="vm.isActivated()">
+		<a href="#/page/account-settings/inflation" ng-if="vm.isActivated()">
 			<div class="item" style="display:flex;justify-content:space-between">
 				<div style="padding-right:20px;flex-shrink:0">
 					{{'settings.inflation' | translate}}
@@ -18,7 +18,7 @@
 			</div>
 		</a>
 
-		<a href="#/account-settings/export">
+		<a href="#/page/account-settings/export">
 			<div class="item">
 				<span>
 					{{'settings.export' | translate}}
@@ -29,7 +29,7 @@
 			</div>
 		</a>
 
-		<a href="#/account-settings/close" ng-if="vm.isActivated() && !vm.hasOtherSigners">
+		<a href="#/page/account-settings/close" ng-if="vm.isActivated() && !vm.hasOtherSigners">
 			<div class="item">
 				<span>
 					Close Account
@@ -40,7 +40,7 @@
 			</div>
 		</a>
 
-		<a href="#/account-settings/delete">
+		<a href="#/page/account-settings/delete">
 			<div class="item">
 				<span>
 					{{'settings.delete' | translate}}

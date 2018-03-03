@@ -1,12 +1,10 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
-import addTrustlineModal from '../modals/add-trustline.html';
-import accountTrustlinesTemplate from './account-trustlines.html';
+import addTrustlineModal from './add-trustline.html';
 
-class AccountTrustlinesController {
+export default class AccountTrustlinesController {
 
+	/* @ngInject */
 	constructor($location, Anchors, Destination, Modal, Reviewer, Wallet) {
 
 		this.$location = $location;
@@ -163,10 +161,3 @@ class AccountTrustlinesController {
 		.then(() => this.$location.path('/'));
 	}
 }
-
-angular.module('app.component.account-trustlines', [])
-.component('accountTrustlines', {
-	controller: AccountTrustlinesController,
-	controllerAs: 'vm',
-	template: accountTrustlinesTemplate
-});

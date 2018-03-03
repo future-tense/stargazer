@@ -13,6 +13,6 @@ export default class WalletHeaderController {
 	}
 
 	openSettings() {
-		this.$location.path('/account-settings');
+		this.$location.path('/page/account-settings');
 	}
 }

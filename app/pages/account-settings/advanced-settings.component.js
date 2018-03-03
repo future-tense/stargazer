@@ -1,11 +1,7 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
+export default class AdvancedSettingsController {
 
-import advancedSettingsTemplate from './advanced-settings.html';
-
-class AdvancedSettingsController {
-
+	/* @ngInject */
 	constructor(Reverse, Wallet) {
 
 		this.account = Wallet.current;
@@ -30,10 +26,4 @@ class AdvancedSettingsController {
 	}
 }
 
-angular.module('app.component.advanced-settings', [])
-.component('advancedSettings', {
-	controller: AdvancedSettingsController,
-	controllerAs: 'vm',
-	template: advancedSettingsTemplate
-});
 
