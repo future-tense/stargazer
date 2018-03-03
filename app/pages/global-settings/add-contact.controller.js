@@ -1,11 +1,7 @@
-/* global angular, console, StellarSdk */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import contacts from '../../core/services/contacts.js';
 
-angular.module('app.modal.add-contact', [])
-.controller('AddContactCtrl', function ($route, $scope) {
-	'use strict';
+export default /* @ngInject */ function ($route, $scope) {
 
 	$scope.cancel = cancel;
 	$scope.saveContact = saveContact;
@@ -49,5 +45,5 @@ angular.module('app.modal.add-contact', [])
 		$scope.closeModalService();
 		$route.reload();
 	}
-});
+}
 

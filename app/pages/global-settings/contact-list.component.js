@@ -1,12 +1,10 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import contacts from '../../core/services/contacts.js';
+import addContactModal from './add-contact.html';
 
-import addContactModal from '../modals/add-contact.html';
-import contactListTemplate from './contact-list.html';
+export default class ContactListController {
 
-class ContactListController {
+	/* @ngInject */
 	constructor(Modal) {
 		this.Modal = Modal;
 
@@ -25,9 +23,4 @@ class ContactListController {
 	}
 }
 
-angular.module('app.component.contact-list', [])
-.component('contactList', {
-	controller: ContactListController,
-	controllerAs: 'vm',
-	template: contactListTemplate
-});
+

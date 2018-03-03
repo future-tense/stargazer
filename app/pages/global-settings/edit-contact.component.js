@@ -1,12 +1,9 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import contacts from '../../core/services/contacts.js';
 
-import editContactTemplate from './edit-contact.html';
+export default class EditContactController {
 
-class EditContactController {
-
+	/* @ngInject */
 	constructor($rootScope, $routeParams) {
 
 		this.$rootScope = $rootScope;
@@ -62,10 +59,3 @@ class EditContactController {
 		this.$rootScope.goBack();
 	}
 }
-
-angular.module('app.component.edit-account', [])
-.component('editContact', {
-	controller: EditContactController,
-	controllerAs: 'vm',
-	template: editContactTemplate
-});

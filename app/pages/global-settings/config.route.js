@@ -2,19 +2,19 @@
 export default /* @ngInject */ function ($routeProvider) {
 
 	$routeProvider
-	.when('/side-menu/about', {
+	.when('/page/global-settings/about', {
 		template: '<about-app></about-app>'
 	})
-	.when('/side-menu/contacts', {
+	.when('/page/global-settings/contacts', {
 		template: '<contact-list></contact-list>'
 	})
-	.when('/side-menu/contact/:name', {
+	.when('/page/global-settings/contact/:name', {
 		template: '<edit-contact></edit-contact>'
 	})
-	.when('/side-menu/language', {
+	.when('/page/global-settings/language', {
 		template: '<language></language>'
 	})
-	.when('/side-menu/settings', {
+	.when('/page/global-settings/', {
 		template: '<global-settings></global-settings>'
 	});
 };
