@@ -1,13 +1,11 @@
 /* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import contacts from '../../core/services/contacts.js';
 
-import addContactModal from '../modals/add-contact.html';
-import editTxCommentModal from '../modals/edit-txcomment.html';
-import transactionTemplate from './transaction.html';
+import addContactModal from './add-contact.html';
+import editTxCommentModal from './edit-txcomment.html';
 
-class TransactionController {
+export default class TransactionController {
 
 	constructor($routeParams, History, Modal, Wallet) {
 
@@ -124,13 +122,3 @@ class TransactionController {
 		this.Modal.show(editTxCommentModal, this.effect);
 	}
 }
-
-angular.module('app.component.transaction', [])
-.component('transaction',  {
-	controller: TransactionController,
-	controllerAs: 'vm',
-	require: {
-		index: '^index'
-	},
-	template: transactionTemplate
-});

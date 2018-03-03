@@ -1,12 +1,7 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import storage from '../../core/services/storage.js';
 
-angular.module('app.modal.edit-txcomment', [])
-.controller('EditTransactionCommentCtrl', function ($scope, History, Wallet) {
-	'use strict';
-
+export default /* @ngInject */ function ($scope, History, Wallet) {
 	$scope.cancel = cancel;
 	$scope.buttonText = buttonText;
 	$scope.saveComment = saveComment;
@@ -34,5 +29,4 @@ angular.module('app.modal.edit-txcomment', [])
 		const accountName = Wallet.current.alias;
 		storage.setItem(`history.${accountName}`, History.effects[accountName]);
 	}
-});
-
+}

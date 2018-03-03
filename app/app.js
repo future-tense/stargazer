@@ -5,6 +5,7 @@ import 'angular-route';
 
 import homePageModule from './pages/home';
 import receivePageModule from './pages/receive';
+import transactionPageModule from './pages/transaction';
 
 import './account/index.js';
 import './account-settings/index.js';
@@ -18,6 +19,7 @@ angular.module('app', [
 
 	homePageModule.name,
 	receivePageModule.name,
+	transactionPageModule.name,
 	'app.core',
 	'app.account',
 	'app.settings',
