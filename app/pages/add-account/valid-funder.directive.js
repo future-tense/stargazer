@@ -1,11 +1,5 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.directive.valid-funder', [])
-.directive('validFunder', function (Wallet) {
-	'use strict';
-
+export default /* @ngInject */ function (Wallet) {
 	return {
 		require: 'ngModel',
 		scope: {
@@ -22,4 +16,4 @@ angular.module('app.directive.valid-funder', [])
 			};
 		}
 	};
-});
+}

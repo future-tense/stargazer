@@ -1,13 +1,10 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-import centaurus from '../../core/services/centaurus.js';
 import translate from '../../core/services/translate.service.js';
+import centaurus from './centaurus.js';
 
-import importCentaurusTemplate from './import-centaurus.html';
+export default class ImportCentaurusController {
 
-class ImportCentaurusController {
-
+	/* @ngInject */
 	constructor($location, $routeParams, Keychain, Wallet) {
 
 		this.$location = $location;
@@ -38,10 +35,3 @@ class ImportCentaurusController {
 		this.$location.path('/');
 	}
 }
-
-angular.module('app.component.import-centaurus', [])
-.component('importCentaurus', {
-	controller: ImportCentaurusController,
-	controllerAs: 'vm',
-	template: importCentaurusTemplate
-});

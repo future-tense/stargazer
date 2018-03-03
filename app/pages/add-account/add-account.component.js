@@ -1,10 +1,7 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
+export default class AddAccountController {
 
-import addAccountTemplate from './add-account.html';
-
-class AddAccountController {
+	/* @ngInject */
 	constructor(Commands, QRScanner, Wallet) {
 		this.Commands = Commands;
 		this.QRScanner = QRScanner;
@@ -26,10 +23,3 @@ class AddAccountController {
 		.then(this.Commands.onQrCodeScanned);
 	}
 }
-
-angular.module('app.component.add-account', [])
-.component('addAccount', {
-	controller: AddAccountController,
-	controllerAs: 'vm',
-	template: addAccountTemplate
-});

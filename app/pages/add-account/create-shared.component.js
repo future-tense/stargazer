@@ -1,16 +1,14 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon.js';
 
-import selectFunderModal from '../modals/select-funder.html';
-import createSharedTemplate from './create-shared.html';
+import selectFunderModal from './select-funder.html';
 
 const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
 
-class CreateSharedController {
+export default class CreateSharedController {
 
+	/* @ngInject */
 	constructor($location, Modal, Reviewer, Signer, Wallet) {
 		this.$location = $location;
 		this.Modal = Modal;
@@ -186,10 +184,3 @@ class CreateSharedController {
 		});
 	}
 }
-
-angular.module('app.component.create-shared', [])
-.component('createShared', {
-	controller: CreateSharedController,
-	controllerAs: 'vm',
-	template: createSharedTemplate
-});

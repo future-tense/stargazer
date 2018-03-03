@@ -3,6 +3,7 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import 'angular-route';
 
+import addAccountPageModule from './pages/add-account';
 import homePageModule from './pages/home';
 import receivePageModule from './pages/receive';
 import sendPageModule from './pages/send';
@@ -17,10 +18,12 @@ angular.module('app', [
 	'ngRoute',
 	'ionic',
 
+	addAccountPageModule.name,
 	homePageModule.name,
 	receivePageModule.name,
 	sendPageModule.name,
 	transactionPageModule.name,
+
 	'app.core',
 	'app.settings',
 	'app.side-menu'

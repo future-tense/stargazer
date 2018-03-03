@@ -1,15 +1,13 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon.js';
 import translate from '../../core/services/translate.service.js';
 
-import selectFunderModal from '../modals/select-funder.html';
-import createPersonalTemplate from './create-personal.html';
+import selectFunderModal from './select-funder.html';
 
-class CreatePersonalController {
+export default class CreatePersonalController {
 
+	/* @ngInject */
 	constructor($location, Modal, Reviewer, Wallet) {
 		this.$location = $location;
 		this.Modal = Modal;
@@ -110,10 +108,3 @@ class CreatePersonalController {
 		});
 	}
 }
-
-angular.module('app.component.create-personal', [])
-.component('createPersonal', {
-	controller: CreatePersonalController,
-	controllerAs: 'vm',
-	template: createPersonalTemplate
-});

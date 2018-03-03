@@ -5,21 +5,6 @@ export default /* @ngInject */ function ($routeProvider) {
 	.when('/side-menu/about', {
 		template: '<about-app></about-app>'
 	})
-	.when('/side-menu/add-account', {
-		template: '<add-account></add-account>'
-	})
-	.when('/side-menu/import-account/:data?', {
-		template: '<import-account></import-account>'
-	})
-	.when('/side-menu/import-centaurus/:data', {
-		template: '<import-centaurus></import-centaurus>'
-	})
-	.when('/side-menu/create-personal', {
-		template: '<create-personal></create-personal>'
-	})
-	.when('/side-menu/create-shared', {
-		template: '<create-shared></create-shared>'
-	})
 	.when('/side-menu/contacts', {
 		template: '<contact-list></contact-list>'
 	})

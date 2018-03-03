@@ -1,10 +1,5 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.modal.select-funder', [])
-.controller('SelectFundingAccountCtrl', function ($scope, Wallet) {
-	'use strict';
+export default /* @ngInject */ function ($scope, Wallet) {
 
 	$scope.cancel = cancel;
 	$scope.select = select;
@@ -29,5 +24,4 @@ angular.module('app.modal.select-funder', [])
 	function select(contact) {
 		$scope.modalResolve(contact);
 	}
-});
-
+}

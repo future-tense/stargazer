@@ -32,7 +32,6 @@ import './filters/translate.filter.js';
 import './modals/submit-password.controller.js';
 
 import './services/anchors.js';
-import './services/centaurus.js';
 import './services/commands.js';
 import './services/constellation.js';
 import './services/destination.js';

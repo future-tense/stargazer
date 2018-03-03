@@ -1,11 +1,9 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import translate from '../../core/services/translate.service.js';
 
-import importAccountTemplate from './import-account.html';
+export default class ImportAccountController {
 
-class ImportAccountController {
+	/* @ngInject */
 	constructor($ionicLoading, $location, $routeParams, Keychain, Wallet) {
 
 		this.$ionicLoading = $ionicLoading;
@@ -46,10 +44,3 @@ class ImportAccountController {
 		}
 	}
 }
-
-angular.module('app.component.import-account', [])
-.component('importAccount', {
-	controller: ImportAccountController,
-	controllerAs: 'vm',
-	template: importAccountTemplate
-});
