@@ -5,9 +5,9 @@ import 'angular-route';
 
 import homePageModule from './pages/home';
 import receivePageModule from './pages/receive';
+import sendPageModule from './pages/send';
 import transactionPageModule from './pages/transaction';
 
-import './account/index.js';
 import './account-settings/index.js';
 import './core/index.js';
 import './side-menu/index.js';
@@ -19,9 +19,9 @@ angular.module('app', [
 
 	homePageModule.name,
 	receivePageModule.name,
+	sendPageModule.name,
 	transactionPageModule.name,
 	'app.core',
-	'app.account',
 	'app.settings',
 	'app.side-menu'
 ], function ($compileProvider) {

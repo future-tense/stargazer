@@ -1,11 +1,7 @@
-/* global angular, console */
 
-import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import directory from 'stellarterm-directory';
 import horizon from '../../core/services/horizon.js';
-
-import sendTemplate from './send.html';
 
 function createAsset(json, prefix) {
 	if (!prefix) {
@@ -22,7 +18,7 @@ function createAsset(json, prefix) {
 	}
 }
 
-class SendController {
+export default class SendController {
 
 	constructor($location, Reviewer, Wallet) {
 		this.$location = $location;
@@ -426,10 +422,3 @@ class SendController {
 		}
 	}
 }
-
-angular.module('app.component.send', [])
-.component('send', {
-	controller: SendController,
-	controllerAs: 'vm',
-	template: sendTemplate
-});

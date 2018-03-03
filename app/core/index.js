@@ -19,6 +19,7 @@ import './directives/ext-href.js';
 import './directives/jazzicon.js';
 import './directives/on-enter.js';
 import './directives/on-esc.js';
+import './directives/qrcode.directive';
 import './directives/unique-name.js';
 import './directives/valid-address.js';
 import './directives/valid-password.js';
@@ -61,6 +62,7 @@ angular.module('app.core', [
 	'app.directive.jazzicon',
 	'app.directive.on-enter',
 	'app.directive.on-esc',
+	'app.directive.qrcode',
 	'app.directive.unique-name',
 	'app.directive.valid-address',
 	'app.directive.valid-password',
