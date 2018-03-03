@@ -1,11 +1,7 @@
-/* global angular */
 
-import 'ionic-sdk/release/js/ionic.bundle';
+export default class SideMenuController {
 
-import sideMenuTemplate from './side-menu.html';
-
-class SideMenuController {
-
+	/* @ngInject */
 	constructor(Wallet) {
 		this.wallet = Wallet;
 		this.accounts = Wallet.accountList;
@@ -27,10 +23,3 @@ class SideMenuController {
 		return account.id === this.wallet.current.id;
 	}
 }
-
-angular.module('app.component.side-menu', [])
-.component('sideMenu', {
-	controller: SideMenuController,
-	controllerAs: 'vm',
-	template: sideMenuTemplate
-});

@@ -6,7 +6,7 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const config = {
 	context: path.resolve(__dirname, 'app'),
-	entry: './app.js',
+	entry: './root/app.js',
 	output: {
 		path: path.resolve(__dirname, 'dist/js'),
 		filename: 'stargazer.js'

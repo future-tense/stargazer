@@ -1,12 +1,11 @@
 /* global angular, require */
 
-import 'ionic-sdk/release/js/ionic.bundle';
-import translate from '../../core/services/translate.service.js';
-import platformInfo from '../../core/services/platform-info.js';
+import translate from '../core/services/translate.service.js';
+import platformInfo from '../core/services/platform-info.js';
 
-import indexTemplate from './index.html';
+export default class IndexController {
 
-class IndexController {
+	/* @ngInject */
 	constructor($ionicLoading, Commands, Wallet) {
 		this.$ionicLoading = $ionicLoading;
 		this.Commands = Commands;
@@ -47,10 +46,3 @@ class IndexController {
 		});
 	}
 }
-
-angular.module('app.component.index', [])
-.component('index', {
-	controller: IndexController,
-	controllerAs: 'vm',
-	template: indexTemplate
-});

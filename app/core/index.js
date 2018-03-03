@@ -9,7 +9,6 @@ import qrScannerModule from './components/qr-scanner';
 import txReviewerModule from './components/tx-reviewer';
 
 import './components/advanced-toggle.component.js';
-import './components/index.component.js';
 import './components/memo-selector.component.js';
 import './components/network-selector.component';
 import './components/config-navbar.component';
@@ -45,14 +44,13 @@ import './services/submitter.js';
 import './services/transactions.js';
 import './services/wallet.js';
 
-angular.module('app.core', [
+export default angular.module('coreModule', [
 	selectAccountModule.name,
 	selectContactModule.name,
 	selectFromQRModule.name,
 	qrScannerModule.name,
 	txReviewerModule.name,
 	'app.component.advanced-toggle',
-	'app.component.index',
 	'app.component.memo-selector',
 	'app.component.network-selector',
 	'app.component.config-navbar',
