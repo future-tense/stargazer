@@ -3,6 +3,7 @@ import horizon from '../../core/services/horizon.js';
 
 export default class OverviewController {
 
+	/* @ngInject */
 	constructor($route, $scope, Wallet, QRScanner) {
 		const accountId = $route.current.params.accountId;
 		if (accountId) {

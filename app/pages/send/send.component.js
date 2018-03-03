@@ -20,6 +20,7 @@ function createAsset(json, prefix) {
 
 export default class SendController {
 
+	/* @ngInject */
 	constructor($location, Reviewer, Wallet) {
 		this.$location = $location;
 		this.Reviewer = Reviewer;

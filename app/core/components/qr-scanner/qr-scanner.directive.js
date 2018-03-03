@@ -1,6 +1,7 @@
 
 export default /* @ngInject */ function (QRScanner) {
 
+	/* @ngInject */
 	function controller($scope) {
 		$scope.openScanner = function () {
 			QRScanner.open()
@@ -11,8 +12,6 @@ export default /* @ngInject */ function (QRScanner) {
 			});
 		};
 	}
-
-	controller.$inject = ['$scope'];
 
 	return {
 		restrict: 'E',

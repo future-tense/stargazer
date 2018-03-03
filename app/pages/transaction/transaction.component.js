@@ -7,6 +7,7 @@ import editTxCommentModal from './edit-txcomment.html';
 
 export default class TransactionController {
 
+	/* @ngInject */
 	constructor($routeParams, History, Modal, Wallet) {
 
 		this.Modal = Modal;

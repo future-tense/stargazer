@@ -1,11 +1,7 @@
-/* global angular */
-
-import 'ionic-sdk/release/js/ionic.bundle';
-
-import accountRequestTemplate from './account-requests.html';
 
 export default class AccountRequestController {
 
+	/* @ngInject */
 	constructor($q, Reviewer, Transactions, Wallet) {
 		this.$q = $q;
 		this.Reviewer = Reviewer;

@@ -4,6 +4,7 @@ import paymentRequestModal from './payment-request.html';
 
 export default class ReceiveController {
 
+	/* @ngInject */
 	constructor($location, Modal, Wallet) {
 
 		this.$location = $location;

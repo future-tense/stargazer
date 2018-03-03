@@ -107,7 +107,5 @@ export default /* @ngInject */ function ($scope, $timeout) {
 		localMediaStream = null;
 		video.src = '';
 	}
-
-	this.$inject = ['$scope', '$timeout'];
 }
 

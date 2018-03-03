@@ -1,9 +1,9 @@
-/* global angular */
 
 import horizon from '../../core/services/horizon.js';
 
 export default class AccountInfoController {
 
+	/* @ngInject */
 	constructor(Wallet) {
 		this.Wallet = Wallet;
 	}

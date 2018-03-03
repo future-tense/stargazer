@@ -6,7 +6,7 @@ import contacts from '../../core/services/contacts.js';
 
 import accountActivityTemplate from './account-activity.html';
 
-export default function /* @ngInject */ accountActivityController($filter, $interval, History, Wallet) {
+export default /* @ngInject */ function  accountActivityController($filter, $interval, History, Wallet) {
 
 	const formatAmount = $filter('formatAmount');
 

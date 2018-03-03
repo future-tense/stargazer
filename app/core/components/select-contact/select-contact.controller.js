@@ -1,7 +1,9 @@
 import contacts from '../../services/contacts';
 import selectContactModal from './select-contact.modal.html';
 
-export default /* @ngInject */ class SelectContactController {
+export default class SelectContactController {
+
+	/* @ngInject */
 	constructor(Modal) {
 		this.Modal = Modal;
 	}
@@ -23,5 +25,3 @@ export default /* @ngInject */ class SelectContactController {
 		});
 	}
 }
-
-SelectContactController.$inject = ['Modal'];

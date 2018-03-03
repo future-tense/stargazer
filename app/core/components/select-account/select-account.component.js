@@ -1,7 +1,9 @@
 
 import modalTemplate from './select-account.modal.html';
 
-export default /* @ngInject */ class SelectAccountController {
+export default class SelectAccountController {
+
+	/* @ngInject */
 	constructor(Modal) {
 		this.Modal = Modal;
 	}
@@ -19,5 +21,3 @@ export default /* @ngInject */ class SelectAccountController {
 		});
 	}
 }
-
-SelectAccountController.$inject = ['Modal'];

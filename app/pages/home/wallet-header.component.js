@@ -1,5 +1,7 @@
 
 export default class WalletHeaderController {
+
+	/* @ngInject */
 	constructor($ionicSideMenuDelegate, $location, Wallet) {
 		this.wallet = Wallet.current;
 		this.$location = $location;
