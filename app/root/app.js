@@ -3,6 +3,8 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 import 'angular-route';
 
+import storage from '../core/services/storage';
+
 import pagesModule from '../pages';
 import coreModule from '../core';
 
@@ -25,9 +27,16 @@ function /* @ngInject */ backButton($ionicPlatform, $rootScope, $route) {
 function /* @ngInject */ routeChange($rootScope, $location, Wallet) {
 
 	$rootScope.$on('$routeChangeStart', (event, next, current) => {
-		if (Wallet.accountList.length === 0) {
-			if (next.$$route.template === '<overview></overview>') {
+		if (next.$$route.template === '<overview></overview>') {
+			if (Wallet.accountList.length === 0) {
 				$location.path('/page/add-account');
+			}
+		}
+
+		else if (next.$$route.template === '<add-account></add-account>') {
+			const check = storage.getItem('acceptedTOS');
+			if (check === null || (check !== null && check === false)) {
+				$location.path('/page/disclaimer');
 			}
 		}
 	});

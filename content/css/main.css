@@ -5,6 +5,10 @@ body {
 	color: #444;
 }
 
+disclaimer i {
+	font-style: italic;
+}
+
 /* remove spinners on number inputs */
 
 input[type=number]::-webkit-outer-spin-button,
