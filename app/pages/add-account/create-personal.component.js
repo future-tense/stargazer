@@ -86,7 +86,7 @@ export default class CreatePersonalController {
 
 	next() {
 		if (this.state === 1) {
-			this.minBalance = horizon.getMinimumAccountBalance(this.Wallet.current.network);
+			this.minBalance = horizon.getMinimumAccountBalance(this.account.network);
 			this.state = 2;
 		}
 
