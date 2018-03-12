@@ -26,10 +26,23 @@
 			</div>
 		</a>
 
+		<div class="item item-divider"></div>
+
 		<a href="#/page/add-account/import-account">
 			<div class="item">
 				<span>
-					{{'sidemenu.account.import' | translate}}
+					{{'Import from a Secret Key' | translate}}
+				</span>
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
+		<a href="#/page/add-account/import-phrase">
+			<div class="item">
+				<span>
+					{{'Import from a Seed Phrase' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
@@ -40,7 +53,7 @@
 		<a href on-tap="vm.importFromQR()" ng-show="vm.hasCamera()">
 			<div class="item bottom-border">
 				<span>
-					{{'Scan a QR-code' | translate}}
+					{{'Import from a QR-code' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>

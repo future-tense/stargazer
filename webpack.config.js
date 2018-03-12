@@ -17,6 +17,7 @@ const config = {
 			test: /\.js$/,
 			include: [
 				path.resolve(__dirname, 'app'),
+				path.resolve(__dirname, 'node_modules/ed25519-hd-key'),
 				path.resolve(__dirname, 'node_modules/esqrcode'),
 				path.resolve(__dirname, 'node_modules/stellarterm-directory')
 			],
@@ -37,7 +38,8 @@ const config = {
 	},
 
 	node: {
-		Buffer: true
+		Buffer: true,
+		fs: 'empty'
 	},
 
 	externals: {

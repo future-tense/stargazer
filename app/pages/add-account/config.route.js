@@ -8,7 +8,10 @@ export default /* @ngInject */ function ($routeProvider) {
 		.when('/page/add-account/import-account/:data?', {
 			template: '<import-account></import-account>'
 		})
-		.when('/page/import-centaurus/:data', {
+		.when('/page/add-account/import-phrase', {
+			template: '<import-phrase></import-phrase>'
+		})
+		.when('/page/add-account/import-centaurus/:data', {
 			template: '<import-centaurus></import-centaurus>'
 		})
 		.when('/page/add-account/create-personal', {
