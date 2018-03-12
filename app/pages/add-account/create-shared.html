@@ -19,13 +19,18 @@
 					<select ng-model="vm.numCosigners" ng-change="vm.onCosignerCountChange()" ng-options="value for value in vm.getCosignerOptions()"></select>
 				</label>
 
-				<label class="item item-input item-select item-stacked-label">
+				<label class="item item-input item-select item-stacked-label" ng-if="!vm.advanced">
 					<span class="input-label">
 						Required number of signatures
 					</span>
 					<select ng-model="vm.threshold" ng-options="value for value in vm.getThresholdOptions()"></select>
 				</label>
-
+				<label class="item item-input item-inset item-stacked-label" ng-if="vm.advanced">
+					<span class="input-label">
+						{{'Required Signing Threshold' | translate}}
+					</span>
+					<input type="number" ng-model="vm.threshold" min="1" max="255">
+				</label>
 			</div>
 		</form>
 
@@ -45,6 +50,13 @@
 					Co-Signer #{{vm.currentSignerIndex}}
 				</span>
 				<input type="text" name="signer" ng-model="vm.account.signer" ng-model-options="{debounce: 200}" placeholder="{{'Co-signer address' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
+			</label>
+
+			<label class="item item-input item-inset item-stacked-label" ng-if="vm.advanced">
+				<span class="input-label">
+					{{'Signing Weight' | translate}}
+				</span>
+				<input type="number" ng-model="vm.account.weight" min="1" max="255">
 			</label>
 
 			<div ng-hide="vm.account.destInfo">

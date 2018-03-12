@@ -1,6 +1,7 @@
 
 import StellarSdk from 'stellar-sdk';
 import horizon from '../../core/services/horizon.js';
+import storage from '../../core/services/storage';
 
 import selectFunderModal from './select-funder.html';
 
@@ -17,9 +18,11 @@ export default class CreateSharedController {
 		this.Wallet = Wallet;
 
 		this.account = {
-			alias:	getAccountName()
+			alias:	getAccountName(),
+			weight: 1
 		};
 
+		this.advanced = storage.getItem('advanced');
 		this.signers = [];
 		this.state = 0;
 
@@ -73,9 +76,11 @@ export default class CreateSharedController {
 	addSigner() {
 		this.signers.push({
 			address: this.account.signer,
-			id: this.account.destInfo.id
+			id: this.account.destInfo.id,
+			weight: this.account.weight
 		});
 		this.account.signer = '';
+		this.account.weight = 1;
 		this.currentSignerIndex += 1;
 	}
 
@@ -112,7 +117,7 @@ export default class CreateSharedController {
 						source: newAccountId,
 						signer: {
 							ed25519PublicKey: signer.id,
-							weight: 1
+							weight: signer.weight
 						}
 					});
 
