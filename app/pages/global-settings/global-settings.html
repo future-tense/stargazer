@@ -30,6 +30,22 @@
 
 		<div class="item item-divider"></div>
 
+		<div class="item item-toggle">
+			<span>
+				{{'Advanced Mode' | translate}}
+			</span>
+			<div class="pull-right text-gray">
+				<label class="toggle">
+					<input type="checkbox" ng-model="vm.advanced" ng-change="vm.toggleAdvanced()">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+			</div>
+		</div>
+
+		<div class="item item-divider"></div>
+
 		<a href="#/page/global-settings/about">
 			<div class="item bottom-border">
 				<span>
