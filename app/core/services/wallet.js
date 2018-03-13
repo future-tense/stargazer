@@ -254,6 +254,18 @@ angular.module('app.service.wallet', [])
 			asset.balance = plus(asset.balance, fx.bought_amount);
 		}
 
+		else if (fx.type === 'account_removed') {
+			/* eslint-disable camelcase */
+			account.balances = [{
+				asset_type: 'native',
+				asset_code: 'XLM',
+				balance: '0'
+			}];
+			/* eslint-enable camelcase */
+
+			storage.setItem(`account.${account.alias}`, account);
+		}
+
 		if (account !== Wallet.current) {
 			account.increaseBadgeCount();
 		}
