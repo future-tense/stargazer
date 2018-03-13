@@ -2,6 +2,7 @@
 import StellarSdk from 'stellar-sdk';
 import directory from 'stellarterm-directory';
 import horizon from '../../core/services/horizon.js';
+import {sortAssets} from '../../core/services/account';
 
 function createAsset(json, prefix) {
 	if (!prefix) {
@@ -155,27 +156,11 @@ export default class SendController {
 		//	destInfo.id is a registered account
 
 		.then(res => {
-			const assetSortFunction = function (foo, bar) {
-				return foo.asset_code > bar.asset_code;
-			};
-
 			this.updateCollisions(res.balances.concat(this.Wallet.current.balances));
 
 			//	append any issuing assets we hold in the wallet
 			const issuing = currentAccount.getAssetsFromIssuer(destInfo.id);
-
-			const assets = res.balances.concat(issuing);
-			const native = assets.filter(item => item.asset_type === 'native');
-			const creditAlphanum4 = assets.filter(item => item.asset_type === 'credit_alphanum4');
-			const creditAlphanum12 = assets.filter(item => item.asset_type === 'credit_alphanum12');
-
-			creditAlphanum4.sort(assetSortFunction);
-			creditAlphanum12.sort(assetSortFunction);
-
-			/* eslint-disable camelcase */
-			native[0].asset_code = 'XLM';
-			/* eslint-enable camelcase */
-			this.destinationAssets = native.concat(creditAlphanum4, creditAlphanum12);
+			this.destinationAssets = sortAssets(res.balances.concat(issuing));
 			this.send.asset = this.destinationAssets[0];
 			this.flags.isUnregistered = false;
 		})
