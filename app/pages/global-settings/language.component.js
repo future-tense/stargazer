@@ -13,6 +13,7 @@ export default class LanguageController {
 
 	setLanguage(code) {
 		language.setCurrent(code);
+		this.$rootScope.$broadcast('languageChange');
 		this.$rootScope.goBack();
 	}
 }

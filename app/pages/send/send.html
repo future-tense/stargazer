@@ -1,19 +1,19 @@
-<config-navbar heading="Send" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+<config-navbar heading="{{'page.send' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header" scrollbar-y="false">
 
 	<div ng-if="vm.state == 1">
 		<div class="list">
 			<div class="item item-divider">
-				{{'tabs.send.info.heading' | translate}}
+				{{'page.send.info.heading' | translate}}
 			</div>
 
 			<form name="forms.send">
 				<label class="item item-input item-inset item-stacked-label">
 					<span class="input-label">
-						{{'tabs.send.destination.label' | translate}}
+						{{'page.send.destination.label' | translate}}
 					</span>
-					<input type="text" name="destination" ng-model="vm.send.destination" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
+					<input type="text" name="destination" ng-model="vm.send.destination" ng-model-options="{debounce: 200}" placeholder="{{'page.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
 				</label>
 				<memo-selector type="vm.send.memo_type" memo="vm.send.memo" req="vm.requiresMemo" ng-show="vm.send.destInfo"></memo-selector>
 			</form>
@@ -55,7 +55,7 @@
 
 		<div class="button-group" style="position:absolute;bottom:0">
 			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="!vm.send.destInfo || (vm.send.memo_type && ! vm.send.memo)">
-				Next
+				{{'global.next' | translate}}
 			</button>
 		</div>
 	</div>
@@ -65,12 +65,12 @@
 			<div class="item item-divider"></div>
 			<div class="item" style="padding-bottom:8px;padding-top:6px">
 				<span class="input-label" style="padding-bottom:0;padding-top:0">
-					{{'tabs.send.amount.label' | translate}}
+					{{'page.send.amount.label' | translate}}
 				</span>
 				<div class="row" style="padding:0">
 					<div class="col" style="padding:0">
 						<label class="item-input item-stacked-label" style="padding-left:0;border-width:0;border:#CCC;border-style:solid;padding-top:0;padding-bottom:0;border-width:0 0 1px 0;margin-right:8px">
-							<input type="number" ng-model="vm.send.amount" ng-change="vm.onAmount()" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.amount.placeholder' | translate}}" min="0" style="height:28px">
+							<input type="number" ng-model="vm.send.amount" ng-change="vm.onAmount()" ng-model-options="{debounce: 200}" placeholder="{{'page.send.amount.placeholder' | translate}}" min="0" style="height:28px">
 						</label>
 					</div>
 
@@ -84,18 +84,18 @@
 			</div>
 
 			<div class="card" ng-show="vm.showNoPaths()" style="margin-bottom: 100px">
-				{{'tabs.send.paths.empty' | translate}}
+				{{'page.send.paths.empty' | translate}}
 			</div>
 
 			<div ng-show="vm.showPaths()" style="margin-bottom: 100px">
 				<div class="item item-divider">
-					{{'tabs.send.paths.heading' | translate}}
+					{{'page.send.paths.heading' | translate}}
 				</div>
 				<div class="item" style="text-align:center" ng-repeat="path in vm.send.pathRecords">
 					<p>{{ path.source_amount | formatAmount }}</p>
 					<p>{{ vm.getSourceAssetDescription(path) }}</p>
 					<button type="button" class="button button-small button-positive" ng-click="vm.submit($index)" ng-disabled="!path.enabled">
-						{{'tabs.send' | translate}}
+						{{'page.send' | translate}}
 					</button>
 				</div>
 			</div>

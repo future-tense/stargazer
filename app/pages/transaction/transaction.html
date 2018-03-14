@@ -1,11 +1,11 @@
-<config-navbar heading="{{'transaction.heading' | translate}}" back="{{'global.done' | translate}}"></config-navbar>
+<config-navbar heading="{{'page.transaction.heading' | translate}}" back="{{'global.done' | translate}}"></config-navbar>
 <ion-content class="has-header" scrollbar-y="false">
 
 	<div class="list">
 		<div class="item activity-header" ng-if="vm.type==='send'">
 			<jazzicon seed="{{vm.seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
-				{{'transaction.sent' | translate}}
+				{{'page.transaction.sent' | translate}}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				{{ vm.amount | formatAmount }} {{ vm.code}}
@@ -15,7 +15,7 @@
 		<div class="item activity-header" ng-if="vm.type==='recv'">
 			<jazzicon seed="{{vm.seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
-				{{'transaction.received' | translate }}
+				{{'page.transaction.received' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				{{ vm.amount | formatAmount }} {{ vm.code}}
@@ -25,7 +25,7 @@
 		<div class="item activity-header" ng-if="vm.type==='trade'">
 			<jazzicon seed="{{vm.seed}}"></jazzicon>
 			<div class="text-gray" style="margin-bottom:8px">
-				{{'transaction.traded' | translate }}
+				{{'page.transaction.traded' | translate }}
 			</div>
 			<div style="font-size:24px;margin-bottom:8px">
 				+{{ vm.bought_amount | formatAmount }} {{ vm.bought_code}}
@@ -36,7 +36,7 @@
 		</div>
 
 		<div class="item item-divider">
-			{{'transaction.details' | translate }}
+			{{'page.transaction.details' | translate }}
 		</div>
 
 		<a class="item"
@@ -57,7 +57,7 @@
 			 style="padding-top: 6px;padding-bottom: 6px;">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
-					{{'transaction.date' | translate}}
+					{{'page.transaction.date' | translate}}
 				</span>
 				<span class="text-gray">
 					{{::vm.effect.date | formatDate}}
@@ -84,7 +84,7 @@
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-if="!vm.isContact && vm.effect.memo">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
-					{{'transaction.memo' | translate}}
+					{{'page.transaction.memo' | translate}}
 				</span>
 				<span class="text-gray">
 					{{::vm.effect.memo}}
@@ -95,7 +95,7 @@
 		<div class="item" style="padding-top: 6px;padding-bottom: 6px;" ng-show="vm.effect.comment">
 			<label class="item-input" style="padding-left:0;justify-content: space-between;">
 				<span class="input-label">
-					{{'transaction.comment' | translate}}
+					{{'page.transaction.comment' | translate}}
 				</span>
 				<span class="text-gray">
 					{{vm.effect.comment}}
@@ -109,7 +109,7 @@
 	<a href on-tap="vm.addContact()" ng-if="!vm.isWallet && !vm.isContact && vm.type!=='trade'">
 		<div class="item">
 			<span>
-				{{'transaction.contact.add' | translate}}
+				{{'page.transaction.contact.add' | translate}}
 			</span>
 			<div class="pull-right text-gray">
 				<span>&raquo;</span>

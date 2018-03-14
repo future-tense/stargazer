@@ -1,10 +1,14 @@
+import translate from '../../core/services/translate.service';
 
 export default class SideMenuController {
 
 	/* @ngInject */
-	constructor(Wallet) {
+	constructor($rootScope, Wallet) {
 		this.wallet = Wallet;
 		this.accounts = Wallet.accountList;
+
+		this.translateTexts();
+		$rootScope.$on('languageChange', () => this.translateTexts());
 	}
 
 	getBadgeCount(account) {
@@ -13,6 +17,13 @@ export default class SideMenuController {
 		} else {
 			return 0;
 		}
+	}
+
+	translateTexts() {
+		this.text = {
+			accounts: translate.instant('page.sidemenu.accounts'),
+			settings: translate.instant('page.sidemenu.settings')
+		};
 	}
 
 	getType(account) {

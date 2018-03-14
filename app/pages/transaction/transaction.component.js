@@ -22,7 +22,7 @@ export default class TransactionController {
 			this.code = 'XLM';
 			this.amount = effect.amount;
 			this.counterparty = effect.from;
-			this.counterpartyLabel = 'transaction.from';
+			this.counterpartyLabel = 'page.transaction.from';
 			this.seed = effect.from;
 		}
 
@@ -31,7 +31,7 @@ export default class TransactionController {
 			this.code = effect.asset_code;
 			this.amount = effect.amount;
 			this.counterparty = effect.from;
-			this.counterpartyLabel = 'transaction.from';
+			this.counterpartyLabel = 'page.transaction.from';
 			this.seed = effect.from;
 		}
 
@@ -40,7 +40,7 @@ export default class TransactionController {
 			this.code = effect.asset_code;
 			this.amount = effect.amount;
 			this.counterparty = effect.to;
-			this.counterpartyLabel = 'transaction.to';
+			this.counterpartyLabel = 'page.transaction.to';
 			this.seed = effect.to;
 		}
 
@@ -116,7 +116,7 @@ export default class TransactionController {
 	}
 
 	buttonText() {
-		return this.effect.comment ? 'transaction.comment.edit' : 'transaction.comment.add';
+		return this.effect.comment ? 'page.transaction.comment.edit' : 'page.transaction.comment.add';
 	}
 
 	editComment() {

@@ -3,7 +3,7 @@
 <div ng-switch="vm.isActivated()" style="height:100%">
 	<ion-content class="has-header" scrollbar-y="false" ng-switch-when="true">
 		<ion-refresher
-			pulling-text="{{'tabs.home.pull' | translate}}"
+			pulling-text="{{'page.home.pull' | translate}}"
 			pulling-icon="icon-pull"
 			on-refresh="vm.doRefresh()">
 		</ion-refresher>
@@ -29,7 +29,7 @@
 
 	<div style="height:100%" ng-switch-when="false">
 		<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%">
-			<div>{{'tabs.home.empty' | translate:vm.translationData}}</div>
+			<div>{{'page.home.empty' | translate:vm.translationData}}</div>
 		</div>
 
 		<div style="height:40px;width:100%;position:fixed;bottom:40px">

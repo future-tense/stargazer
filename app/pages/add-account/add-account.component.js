@@ -10,10 +10,8 @@ export default class AddAccountController {
 		this.hasCamera = QRScanner.hasCamera;
 
 		if (this.isInitialized) {
-			this.heading = 'sidemenu.account';
 			this.done = 'global.done';
 		} else {
-			this.heading = 'Create an Account';
 			this.done = '';
 		}
 	}

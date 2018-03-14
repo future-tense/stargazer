@@ -39,7 +39,7 @@ export default class IndexController {
 	}
 
 	showPopover() {
-		const text = translate.instant('tabs.receive.copy');
+		const text = translate.instant('page.receive.copy');
 		return this.$ionicLoading.show({
 			template: text,
 			duration: 700

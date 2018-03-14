@@ -4,15 +4,15 @@
 
 	<div class="list">
 		<div class="item item-divider">
-			{{'tabs.send.info.heading' | translate}}
+			{{'page.send.info.heading' | translate}}
 		</div>
 
 		<form name="forms.close">
 			<label class="item item-input item-inset item-stacked-label">
-					<span class="input-label">
-						{{'tabs.send.destination.label' | translate}}
-					</span>
-				<input type="text" name="destination" ng-model="vm.data.destination" ng-model-options="{debounce: 200}" placeholder="{{'tabs.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
+				<span class="input-label">
+					{{'page.send.destination.label' | translate}}
+				</span>
+				<input type="text" name="destination" ng-model="vm.data.destination" ng-model-options="{debounce: 200}" placeholder="{{'page.send.destination.placeholder' | translate}}" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="vm.onValidAddress(res)">
 			</label>
 			<memo-selector type="vm.data.memo_type" memo="vm.data.memo" ng-show="vm.data.destInfo"></memo-selector>
 		</form>

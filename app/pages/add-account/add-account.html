@@ -1,4 +1,4 @@
-<config-navbar heading="{{vm.heading | translate}}" back="{{vm.done | translate}}"></config-navbar>
+<config-navbar heading="{{'page.add-account' | translate}}" back="{{vm.done | translate}}"></config-navbar>
 
 <ion-content class="has-header" scrollbar-y="false">
 	<div class="list">
@@ -7,7 +7,7 @@
 		<a href="#/page/add-account/create-personal">
 			<div class="item">
 				<span>
-					Create a Personal Account
+					{{'page.add-account.create-personal' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
@@ -18,7 +18,7 @@
 		<a href="#/page/add-account/create-shared" ng-if="vm.isInitialized">
 			<div class="item">
 				<span>
-					Create a Shared Account
+					{{'page.add-account.create-shared' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
@@ -31,7 +31,7 @@
 		<a href="#/page/add-account/import-account">
 			<div class="item">
 				<span>
-					{{'Import from a Secret Key' | translate}}
+					{{'page.add-account.import-secret' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
@@ -42,7 +42,7 @@
 		<a href="#/page/add-account/import-phrase">
 			<div class="item">
 				<span>
-					{{'Import from a Seed Phrase' | translate}}
+					{{'page.add-account.import-phrase' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>
@@ -53,7 +53,7 @@
 		<a href on-tap="vm.importFromQR()" ng-show="vm.hasCamera()">
 			<div class="item bottom-border">
 				<span>
-					{{'Import from a QR-code' | translate}}
+					{{'page.add-account.import-qr' | translate}}
 				</span>
 				<div class="pull-right text-gray">
 					<span>&raquo;</span>

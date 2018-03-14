@@ -55,9 +55,9 @@ export default /* @ngInject */ function  accountActivityController($filter, $int
 				return name;
 			} else {
 				return translate.instant({
-					'send':	'transaction.sent',
-					'recv': 'transaction.received',
-					'trade':'transaction.traded'
+					'send':	'page.transaction.sent',
+					'recv': 'page.transaction.received',
+					'trade':'page.transaction.traded'
 				}[tx.type]);
 			}
 		}
@@ -172,7 +172,7 @@ export default /* @ngInject */ function  accountActivityController($filter, $int
 			if (scope.history.length !== 0) {
 				html = scope.history.map(tx => renderItem(tx)).join('');
 			} else {
-				const text = translate.instant('tabs.home.activity.empty');
+				const text = translate.instant('page.home.activity.empty');
 				html = `<div style="text-align: center" class="text-gray">${text}</div>`;
 			}
 			element[0].children[1].innerHTML = html;
