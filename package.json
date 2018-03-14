@@ -21,6 +21,7 @@
     "crypto-js": "^3.1.9-1",
     "decimal.js": "^9.0.1",
     "esqrcode": "0.0.1",
+    "file-loader": "^1.1.11",
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "hard-source-webpack-plugin": "^0.5.18",
@@ -34,7 +35,6 @@
     "stellar-hd-wallet": "0.0.4",
     "stellar-sdk": "^0.8.0",
     "stellarterm-directory": "^0.2.2",
-    "svg-loader": "0.0.2",
     "toml-j0.4": "^1.1.1",
     "webpack": "^3.11.0"
   }

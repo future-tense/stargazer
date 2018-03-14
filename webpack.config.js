@@ -8,8 +8,8 @@ const config = {
 	context: path.resolve(__dirname, 'app'),
 	entry: './root/app.js',
 	output: {
-		path: path.resolve(__dirname, 'dist/js'),
-		filename: 'stargazer.js'
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'js/stargazer.js'
 	},
 
 	module: {
@@ -33,7 +33,10 @@ const config = {
 			loader: 'html-loader'
 		},{
 			test: /\.svg$/,
-			loader: 'svg-loader'
+			loader: 'file-loader',
+			options: {
+				outputPath: 'images'
+			}
 		}]
 	},
 
