@@ -1,6 +1,6 @@
 {
   "name": "stargazer-wallet",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "description": "ionic: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
