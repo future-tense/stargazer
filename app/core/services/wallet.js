@@ -148,6 +148,46 @@ angular.module('app.service.wallet', [])
 		return collisions;
 	};
 
+	const getNextSharedAccountNumber = () => {
+		return Wallet.accountList.filter(item => item.isMultiSig()).length + 1;
+	};
+
+	const getNextPersonalAccountNumber = () => {
+		return Wallet.accountList.filter(item => !item.isMultiSig()).length + 1;
+	};
+
+	const isMultiSig = (account) => {
+
+		if (!account.signers) {
+			return false;
+		}
+
+		const signers = account.signers.filter(signer => signer.weight !== 0);
+		return (signers.length !== 1);
+	};
+
+	Wallet.setDefaultName = function (account) {
+
+		return horizon.getServer(account.network)
+		.accounts()
+		.accountId(account.id)
+		.call()
+		.then(res => {
+			//	figure out if personal or shared
+			if (isMultiSig(res)) {
+				const number = getNextSharedAccountNumber();
+				account.alias = `Shared Account #${number}`;
+			} else {
+				const number = getNextPersonalAccountNumber();
+				account.alias = `Personal Account #${number}`;
+			}
+		})
+		.catch(err => {
+			const number = getNextPersonalAccountNumber();
+			account.alias = `Personal Account #${number}`;
+		});
+	};
+
 	// -----------------------------------------------------------------------------------------------------------------
 
 	let accountList = storage.getItem('accounts');

@@ -1,6 +1,5 @@
 
 import StellarHDWallet from 'stellar-hd-wallet';
-import translate from '../../core/services/translate.service.js';
 
 export default class ImportPhraseController {
 
@@ -12,20 +11,17 @@ export default class ImportPhraseController {
 		this.Keychain = Keychain;
 		this.Wallet = Wallet;
 
+		this.state = 1;
 		this.account = {
 			index: 0
 		};
-
-		const numAccounts = Object.keys(this.Wallet.accounts).length;
-		this.account.alias = translate.instant('account.defaultname', {number: numAccounts + 1});
-		this.advanced = false;
 	}
 
 	onChange() {
 		const wallet = StellarHDWallet.fromMnemonic(this.account.phrase);
-		this.publicKey = wallet.getPublicKey(this.account.index);
+		this.account.id = wallet.getPublicKey(this.account.index);
 
-		if (this.publicKey in this.Wallet.accounts) {
+		if (this.account.id in this.Wallet.accounts) {
 			this.existing = true;
 			this.$ionicLoading.show({
 				template: 'Account already exists',
@@ -45,5 +41,14 @@ export default class ImportPhraseController {
 
 		this.Wallet.importAccount(accountId, keyStore, this.account.alias, this.account.network);
 		this.$location.path('/');
+	}
+
+	next() {
+		if (this.state === 1) {
+			this.Wallet.setDefaultName(this.account)
+			.then(() => {
+				this.state = 2;
+			});
+		}
 	}
 }

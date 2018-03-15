@@ -1,42 +1,59 @@
-<config-navbar heading="{{'page.add-account.account.import' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+<config-navbar heading="{{'page.add-account.import' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 <ion-content class="has-header" scrollbar-y="false">
 
-	<div class="list">
-		<form name="importAccountForm">
-			<div class="item item-divider"></div>
+	<div ng-show="vm.state==1">
+		<div class="list">
+			<form name="importAccountForm">
+				<div class="item item-divider"></div>
 
-			<label class="item item-input item-inset item-stacked-label">
-				<span class="input-label">
-					{{'account.name.label' | translate}}
-				</span>
-				<input type="text" ng-model="vm.account.alias" required unique-name>
-			</label>
-
-			<label class="item item-input item-inset item-stacked-label">
+				<label class="item item-input item-inset item-stacked-label">
 				<span class="input-label">
 					{{'Seed Phrase' | translate}}
 				</span>
-				<input type="text" ng-model="vm.account.phrase" ng-change="vm.onChange()" required valid-phrase>
-			</label>
+					<input type="text" ng-model="vm.account.phrase" ng-change="vm.onChange()" required valid-phrase>
+				</label>
 
-			<label class="item item-input item-inset item-stacked-label">
+				<label class="item item-input item-inset item-stacked-label">
 				<span class="input-label">
 					{{'Account Index' | translate}}
 				</span>
-				<input type="number" ng-model="vm.account.index" ng-change="vm.onChange()" min="0" required>
-			</label>
+					<input type="number" ng-model="vm.account.index" ng-change="vm.onChange()" min="0" required>
+				</label>
 
-			<network-selector network="vm.account.network"></network-selector>
-		</form>
+				<network-selector network="vm.account.network"></network-selector>
+			</form>
 
-		<div style="padding:8px 16px" ng-hide="importAccountForm.$invalid">
-			{{ vm.publicKey }}
+			<div style="padding:8px 16px" ng-hide="importAccountForm.$invalid">
+				{{ vm.account.id }}
+			</div>
+		</div>
+
+		<div class="button-group" style="position:absolute;bottom:0">
+			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="importAccountForm.$invalid || vm.existing">
+				{{'global.next' | translate}}
+			</button>
 		</div>
 	</div>
 
-	<div class="button-group" style="position:absolute;bottom:0">
-		<button class="button button-block button-positive" on-tap="vm.importAccount()" ng-disabled="importAccountForm.$invalid || vm.existing">
-			{{'account.import' | translate}}
-		</button>
+	<div ng-show="vm.state==2">
+		<div class="list">
+			<form name="nameForm">
+				<div class="item item-divider"></div>
+
+				<label class="item item-input item-inset item-stacked-label">
+				<span class="input-label">
+					{{'account.name.label' | translate}}
+				</span>
+					<input type="text" ng-model="vm.account.alias" required unique-name>
+				</label>
+			</form>
+		</div>
+
+		<div class="button-group" style="position:absolute;bottom:0">
+			<button class="button button-block button-positive" on-tap="vm.importAccount()" ng-disabled="nameForm.$invalid">
+				{{'account.import' | translate}}
+			</button>
+		</div>
 	</div>
+
 </ion-content>

@@ -27,6 +27,7 @@
 	"page.add-account.import-secret": 			"Import from a Secret Key",
 	"page.add-account.import-phrase": 			"Import from a Seed Phrase",
 	"page.add-account.import-qr": 				"Import from a QR-code",
+	"page.add-account.import":					"Import an Account",
 
 	"page.disclaimer":							"Terms of Service",
 	"page.disclaimer.accept":					"Accept",
