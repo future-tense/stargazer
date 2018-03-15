@@ -29,6 +29,9 @@ import exportAccountTemplate from './export-account.html';
 import InflationDestinationController from './inflation-destination.component';
 import inflationDestinationTemplate from './inflation-destination.html';
 
+import RecoveryPhraseController from './recovery-phrase.component';
+import recoveryPhraseTemplate from './recovery-phrase.html';
+
 import addPasswordModal from './add-password.controller';
 import addTrustlineModal from './add-trustline.controller';
 import removePasswordModal from './remove-password.controller';
@@ -89,6 +92,11 @@ export default angular.module('accountSettingsPageModule', [])
 	controller: InflationDestinationController,
 	controllerAs: 'vm',
 	template: inflationDestinationTemplate
+})
+.component('recoveryPhrase', {
+	controller: RecoveryPhraseController,
+	controllerAs: 'vm',
+	template: recoveryPhraseTemplate
 })
 .controller('AddPasswordCtrl', addPasswordModal)
 .controller('AddTrustlineCtrl', addTrustlineModal)

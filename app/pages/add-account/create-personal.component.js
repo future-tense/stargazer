@@ -1,8 +1,10 @@
 
 import StellarSdk from 'stellar-sdk';
+import StellarHDWallet from 'stellar-hd-wallet';
+import shuffle from 'shuffle-array';
+
 import horizon from '../../core/services/horizon.js';
 import translate from '../../core/services/translate.service.js';
-
 import selectFunderModal from './select-funder.html';
 
 export default class CreatePersonalController {
@@ -28,26 +30,33 @@ export default class CreatePersonalController {
 
 	createAccount() {
 
+		const wallet = StellarHDWallet.fromMnemonic(this.mnemonic);
+		const publicKey = wallet.getPublicKey(0);
+		const secret = wallet.getSecret(0);
+		const name = this.account.alias;
+
 		const network = this.account.network;
 
-		if (this.hasValidFunder()) {
+		const storeAccount = () => {
+			const account = this.Wallet.importAccount(publicKey, secret, name, network);
+			if (!this.result) {
+				account.mnemonic = this.mnemonic;
+				account.store();
+			}
+			this.$location.path('/');
+		};
 
-			const accounts = {};
-			Object.keys(this.Wallet.accounts).forEach(key => {
-				const account = this.Wallet.accounts[key];
-				if (account.network === network) {
-					accounts[account.alias] = account;
-				}
-			});
+		const funder = this.Wallet.accountList.find(item => {
+			return item.alias === this.account.funder && item.network === network;
+		});
 
-			const newAccount	= StellarSdk.Keypair.random();
-			const funder		= accounts[this.account.funder];
+		if (funder) {
 
 			funder.horizon().loadAccount(funder.id)
 			.then(account => {
 				const tx = new StellarSdk.TransactionBuilder(account)
 				.addOperation(StellarSdk.Operation.createAccount({
-					destination: newAccount.publicKey(),
+					destination: publicKey,
 					startingBalance: this.account.amount.toString()
 				}))
 				.build();
@@ -58,23 +67,11 @@ export default class CreatePersonalController {
 				};
 			})
 			.then(this.Reviewer.review)
-			.then(() => {
-				this.Wallet.importAccount(
-					newAccount.publicKey(),
-					newAccount.secret(),
-					this.account.alias,
-					network
-				);
-				this.$location.path('/');
-			});
+			.then(() => storeAccount);
 		}
 
 		else {
-			this.Wallet.createEmptyAccount(
-				this.account.alias,
-				network
-			);
-			this.$location.path('/');
+			storeAccount();
 		}
 	}
 
@@ -84,6 +81,22 @@ export default class CreatePersonalController {
 		return this.Wallet.hasAccount(name, network);
 	}
 
+	tap1(index) {
+		this.result.push(this.words[index]);
+		this.words.splice(index, 1);
+		this.match = this.result.join(' ') === this.mnemonic;
+	}
+
+	tap2(index) {
+		this.words.push(this.result[index]);
+		this.result.splice(index, 1);
+	}
+
+	skip() {
+		this.state = 4;
+		this.next();
+	}
+
 	next() {
 		if (this.state === 1) {
 			this.minBalance = horizon.getMinimumAccountBalance(this.account.network);
@@ -91,6 +104,18 @@ export default class CreatePersonalController {
 		}
 
 		else if (this.state === 2) {
+			this.mnemonic = StellarHDWallet.generateMnemonic();
+			this.words = this.mnemonic.split(' ');
+			this.state = 3;
+		}
+
+		else if (this.state === 3) {
+			this.result = [];
+			this.shuffled = shuffle(this.words);
+			this.state = 4;
+		}
+
+		else if (this.state === 4) {
 			this.createAccount();
 		}
 	}

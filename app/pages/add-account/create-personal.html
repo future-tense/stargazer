@@ -1,4 +1,4 @@
-<config-navbar heading="{{'page.add-account.account.create' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+<config-navbar heading="{{'page.add-account.create' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 <ion-content class="has-header" scrollbar-y="false">
 
 	<div ng-if="vm.state == 1">
@@ -23,21 +23,21 @@
 	</div>
 
 	<div ng-if="vm.state == 2">
-		<div class="list">
+		<div style="height:100%" class="list">
 			<div class="item item-divider">
 				{{'account.funding.heading' | translate}}
 			</div>
 			<label class="item item-input item-inset item-stacked-label">
-			<span class="input-label">
-				{{'account.funding.label' | translate}}
-			</span>
+				<span class="input-label">
+					{{'account.funding.label' | translate}}
+				</span>
 				<input type="text" ng-model="vm.account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="vm.account.network">
 			</label>
 
 			<label class="item item-input item-stacked-label" ng-show="vm.hasValidFunder()">
-			<span class="input-label">
-				{{'account.funding.amount.label' | translate}}
-			</span>
+				<span class="input-label">
+					{{'account.funding.amount.label' | translate}}
+				</span>
 				<input type="number" ng-model="vm.account.amount" placeholder="{{'account.funding.amount.placeholder' | translate}}" min="vm.minBalance">
 			</label>
 
@@ -53,16 +53,96 @@
 					</div>
 				</div>
 			</a>
+
+			<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%" ng-show="!vm.hasValidFunder()">
+				<div>{{'account.funding.text' | translate}}</div>
+			</div>
 		</div>
 
-		<div class="card" ng-show="!vm.hasValidFunder()">
-			{{'account.funding.text' | translate}}
-		</div>
 
 		<div class="button-group" style="position:absolute;bottom:0">
 			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="vm.hasValidFunder() && (vm.account.amount < vm.minBalance)">
-				Create Account
+				{{'global.next' | translate}}
 			</button>
 		</div>
 	</div>
+
+	<div ng-if="vm.state == 3">
+		<div class="list">
+
+			<div class="item item-divider"></div>
+			<div class="item" style="white-space:normal">
+				Please write down the following words, preferably on a piece of paper.
+				Anyone who has access to these words can access your account.
+			</div>
+
+			<div class="item item-divider"></div>
+			<div class="item">
+				<div class="row">
+					<div class="col col-33">
+						<ol start="1" style="margin-left:20px;list-style:decimal">
+							<li ng-repeat="word in vm.words.slice(0,8)">{{word}}</li>
+						</ol>
+					</div>
+					<div class="col col-33">
+						<ol start="9" style="margin-left:20px;list-style:decimal">
+							<li ng-repeat="word in vm.words.slice(8,16)">{{word}}</li>
+						</ol>
+					</div>
+					<div class="col col-33">
+						<ol start="17" style="margin-left:20px;list-style:decimal">
+							<li ng-repeat="word in vm.words.slice(16,24)">{{word}}</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="button-group" style="position:absolute;bottom:0">
+			<button class="button button-block button-clear button-stable" on-tap="vm.skip()">
+				{{'Skip backup' | translate}}
+			</button>
+			<button class="button button-block button-positive" on-tap="vm.next()">
+				{{'global.next' | translate}}
+			</button>
+		</div>
+	</div>
+
+	<div ng-if="vm.state == 4">
+		<div class="list">
+
+			<div class="item item-divider"></div>
+			<div class="item" style="white-space:normal">
+				Please tap each word in the correct order.
+			</div>
+
+			<div class="item item-divider"></div>
+			<div class="item">
+				<div class="row">
+					<ul>
+						<li style="float:left;padding:8px 16px;" ng-repeat="word in vm.result track by $index" on-tap="vm.tap2($index)">
+							{{word}}
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="item item-divider"></div>
+			<div class="item" ng-hide="vm.match">
+				<div class="row">
+					<ul>
+						<li style="float:left;padding:8px 16px;" ng-repeat="word in vm.shuffled track by $index" on-tap="vm.tap1($index)">
+							{{word}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="button-group" style="position:absolute;bottom:0">
+			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="!vm.match">
+				{{'global.next' | translate}}
+			</button>
+		</div>
+	</div>
+
 </ion-content>

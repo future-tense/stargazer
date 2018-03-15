@@ -26,6 +26,9 @@ export default /* @ngInject */ function ($routeProvider) {
 	.when('/page/account-settings/trustlines', {
 		template: '<account-trustlines></account-trustlines>'
 	})
+	.when('/page/account-settings/recovery-phrase', {
+		template: '<recovery-phrase></recovery-phrase>'
+	})
 	.when('/page/account-settings', {
 		template: '<account-settings></account-settings>'
 	});

@@ -56,6 +56,17 @@
 			</div>
 		</div>
 
+		<a href="#/page/account-settings/recovery-phrase" ng-if="vm.account.mnemonic">
+			<div class="item bottom-border">
+				<span>
+					{{'Backup Recovery Phrase' | translate}}
+				</span>
+				<div class="pull-right text-gray">
+					<span>&raquo;</span>
+				</div>
+			</div>
+		</a>
+
 		<a href="#/page/account-settings/signers" ng-if="vm.isActivated()">
 			<div class="item bottom-border">
 				<span>

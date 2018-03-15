@@ -31,6 +31,7 @@
     "lodash": "^4.17.5",
     "messageformat": "^1.1.1",
     "qrcode_js": "^1.0.0",
+    "shuffle-array": "^1.0.1",
     "sjcl": "^1.0.7",
     "stellar-hd-wallet": "0.0.4",
     "stellar-sdk": "^0.8.0",

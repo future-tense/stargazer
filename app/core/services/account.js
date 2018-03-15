@@ -44,9 +44,12 @@ export class Account {
 			self.signers		= res.signers;
 			self.subentryCount	= res.subentry_count;
 			self.thresholds		= res.thresholds;
-
-			storage.setItem(`account.${self.alias}`, self);
+			self.store();
 		});
+	}
+
+	store() {
+		storage.setItem(`account.${this.alias}`, this);
 	}
 
 	horizon() {
@@ -142,12 +145,12 @@ export class Account {
 		} else {
 			this.badgeCount += 1;
 		}
-		storage.setItem(`account.${this.alias}`, this);
+		this.store();
 	}
 
 	clearBadgeCount() {
 		this.badgeCount = 0;
-		storage.setItem(`account.${this.alias}`, this);
+		this.store();
 	}
 
 	getBadgeCount() {
@@ -160,6 +163,6 @@ export class Account {
 
 	setInflationDest(dest) {
 		this.inflationDest = dest;
-		storage.setItem(`account.${this.alias}`, this);
+		this.store();
 	}
 }

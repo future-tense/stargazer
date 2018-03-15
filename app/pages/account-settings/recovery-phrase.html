@@ -1,0 +1,78 @@
+<config-navbar heading="{{'page.recovery-phrase' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
+<ion-content class="has-header" scrollbar-y="false">
+
+	<div ng-if="vm.state == 1">
+		<div class="list">
+
+			<div class="item item-divider"></div>
+			<div class="item" style="white-space:normal">
+				Please write down the following words, preferably on a piece of paper.
+				Anyone who has access to these words can access your account.
+			</div>
+
+			<div class="item item-divider"></div>
+			<div class="item">
+				<div class="row">
+					<div class="col col-33">
+						<ol start="1" style="margin-left:20px;list-style:decimal">
+							<li ng-repeat="word in vm.words.slice(0,8)">{{word}}</li>
+						</ol>
+					</div>
+					<div class="col col-33">
+						<ol start="9" style="margin-left:20px;list-style:decimal">
+							<li ng-repeat="word in vm.words.slice(8,16)">{{word}}</li>
+						</ol>
+					</div>
+					<div class="col col-33">
+						<ol start="17" style="margin-left:20px;list-style:decimal">
+							<li ng-repeat="word in vm.words.slice(16,24)">{{word}}</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="button-group" style="position:absolute;bottom:0">
+			<button class="button button-block button-positive" on-tap="vm.next()">
+				{{'global.next' | translate}}
+			</button>
+		</div>
+	</div>
+
+	<div ng-if="vm.state == 2">
+		<div class="list">
+			<div class="item item-divider"></div>
+			<div class="item" style="white-space:normal">
+				Please tap each word in the correct order.
+			</div>
+
+			<div class="item item-divider"></div>
+			<div class="item">
+				<div class="row">
+					<ul>
+						<li style="float:left;margin:8px;padding:8px 16px;" ng-repeat="word in vm.result track by $index" on-tap="vm.tap2($index)">
+							{{word}}
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="item item-divider"></div>
+			<div class="item" ng-hide="vm.match">
+				<div class="row">
+					<ul>
+						<li style="float:left;margin:8px;padding:8px 16px;" ng-repeat="word in vm.shuffled track by $index" on-tap="vm.tap1($index)">
+							{{word}}
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="button-group" style="position:absolute;bottom:0">
+			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="!vm.match">
+				{{'global.next' | translate}}
+			</button>
+		</div>
+	</div>
+
+</ion-content>
