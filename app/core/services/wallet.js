@@ -4,7 +4,7 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import Decimal from 'decimal.js';
 
-import {Account} from './account';
+import {Account, sortAssets} from './account';
 import horizon from './horizon';
 import storage from './storage';
 
@@ -276,7 +276,16 @@ angular.module('app.service.wallet', [])
 
 		if (fx.type === 'account_credited') {
 			asset = getAccountAsset(account, fx.asset_code, fx.asset_issuer);
-			asset.balance = plus(asset.balance, fx.amount);
+			if (asset) {
+				asset.balance = plus(asset.balance, fx.amount);
+			} else {
+				account.balances.push({
+					asset_code: fx.asset_code,
+					asset_isser: fx.asset_issuer,
+					balance: fx.amount
+				});
+				account.balances = sortAssets(account.balances);
+			}
 		}
 
 		else if (fx.type === 'account_debited') {
@@ -291,7 +300,16 @@ angular.module('app.service.wallet', [])
 			asset.balance = minus(asset.balance, fx.sold_amount);
 
 			asset = getAccountAsset(account, fx.bought_asset_code, fx.bought_asset_issuer);
-			asset.balance = plus(asset.balance, fx.bought_amount);
+			if (asset) {
+				asset.balance = plus(asset.balance, fx.bought_amount);
+			} else {
+				account.balances.push({
+					asset_code: fx.asset_code,
+					asset_isser: fx.asset_issuer,
+					balance: fx.bought_amount
+				});
+				account.balances = sortAssets(account.balances);
+			}
 		}
 
 		else if (fx.type === 'account_removed') {
