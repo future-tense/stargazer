@@ -1,7 +1,7 @@
 <config-navbar heading="{{'page.add-account.create' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
-<ion-content class="has-header" scrollbar-y="false">
 
-	<div ng-if="vm.state == 1">
+<div ng-if="vm.state == 1">
+	<ion-content class="has-header" scrollbar-y="false">
 		<form name="createAccount">
 			<div class="list" style="margin-bottom:8px">
 				<div class="item item-divider"></div>
@@ -20,10 +20,12 @@
 				{{'global.next' | translate}}
 			</button>
 		</div>
-	</div>
+	</ion-content>
+</div>
 
-	<div ng-if="vm.state == 2">
-		<div style="height:100%" class="list">
+<div ng-if="vm.state == 2">
+	<ion-content class="has-header" scrollbar-y="false">
+		<div class="list">
 			<div class="item item-divider">
 				{{'account.funding.heading' | translate}}
 			</div>
@@ -53,21 +55,22 @@
 					</div>
 				</div>
 			</a>
-
-			<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%" ng-show="!vm.hasValidFunder()">
-				<div>{{'account.funding.text' | translate}}</div>
-			</div>
 		</div>
 
+		<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;flex:1" ng-show="!vm.hasValidFunder()">
+			<div style="margin:0 16px">{{'account.funding.text' | translate}}</div>
+		</div>
 
-		<div class="button-group" style="position:absolute;bottom:0">
+		<div class="button-group">
 			<button class="button button-block button-positive" on-tap="vm.next()" ng-disabled="vm.hasValidFunder() && (vm.account.amount < vm.minBalance)">
 				{{'global.next' | translate}}
 			</button>
 		</div>
-	</div>
+	</ion-content>
+</div>
 
-	<div ng-if="vm.state == 3">
+<div ng-if="vm.state == 3">
+	<ion-content class="has-header" scrollbar-y="false">
 		<div class="list">
 
 			<div class="item item-divider"></div>
@@ -105,9 +108,11 @@
 				{{'global.next' | translate}}
 			</button>
 		</div>
-	</div>
+	</ion-content>
+</div>
 
-	<div ng-if="vm.state == 4">
+<div ng-if="vm.state == 4">
+	<ion-content class="has-header" scrollbar-y="false">
 		<div class="list">
 
 			<div class="item item-divider"></div>
@@ -143,6 +148,5 @@
 				{{'global.next' | translate}}
 			</button>
 		</div>
-	</div>
-
-</ion-content>
+	</ion-content>
+</div>

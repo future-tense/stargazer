@@ -1,8 +1,8 @@
 <config-navbar heading="{{'settings.delete' | translate}}" back="&lt;&nbsp;{{'global.back' | translate}}"></config-navbar>
 
 <ion-content class="has-header" scrollbar-y="false">
-	<div class="item item-divider"></div>
 	<form name="form.delete" ng-if="vm.isEncrypted">
+		<div class="item item-divider"></div>
 		<label class="item item-input item-inset item-stacked-label">
 			<span class="input-label">
 				{{'settings.delete.password' | translate}}
@@ -11,7 +11,11 @@
 		</label>
 	</form>
 
-	<div class="button-group" style="position:absolute;bottom:0">
+	<div style="display:flex;flex-direction:column;justify-content:center;align-items:center;flex:1">
+		<div style="margin:0 16px">Delete account will permanently remove the account from your device</div>
+	</div>
+
+	<div class="button-group">
 		<button type="button" class="button button-block button-positive" on-tap="vm.deleteAccount()" ng-disabled="vm.isEncrypted && form.delete.$invalid">
 			{{'settings.delete.button' | translate}}
 		</button>
