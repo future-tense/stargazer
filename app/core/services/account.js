@@ -76,7 +76,7 @@ export class Account {
 	}
 
 	refresh() {
-		if (this.closeStream) {
+		if ('closeStream' in this) {
 			this.closeStream();
 		}
 
