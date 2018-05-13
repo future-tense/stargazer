@@ -12,8 +12,8 @@ export default class ContactListController {
 		this.minHeight	= this.getMinHeight();
 	}
 
-	addContact() {
-		this.Modal.show(addContactModal);
+	addContact(data) {
+		this.Modal.show(addContactModal, data);
 	}
 
 	getMinHeight() {

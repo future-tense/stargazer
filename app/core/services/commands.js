@@ -4,6 +4,8 @@ import 'ionic-sdk/release/js/ionic.bundle';
 import StellarSdk from 'stellar-sdk';
 import contacts from './contacts.js';
 
+import ContactListController from '../../pages/global-settings/contact-list.component';
+
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 angular.module('app.service.commands', [])
@@ -92,7 +94,7 @@ angular.module('app.service.commands', [])
 			account: account,
 			key: key
 		}));
-		$location.path(`/side-menu/import-account/${data}`);
+		$location.path(`/page/add-account/import-account/${data}`);
 	}
 
 	function handleCentaurusImport(backupString) {
@@ -101,7 +103,7 @@ angular.module('app.service.commands', [])
 			cipher: backupString.slice(19)
 		}));
 
-		$location.path(`/side-menu/import-centaurus/${data}`);
+		$location.path(`/page/add-account/import-centaurus/${data}`);
 	}
 
 	function handleContact(account) {
@@ -119,7 +121,8 @@ angular.module('app.service.commands', [])
 				data.network = account.network;
 			}
 
-			Modal.show('app/account/modals/add-contact.html', data);
+			/* :KLUDGE: */
+			new ContactListController(Modal).addContact(data);
 		}
 	}
 
@@ -142,7 +145,7 @@ angular.module('app.service.commands', [])
 			object.memo = payment.memo;
 		}
 
-		$location.path('/account/send')
+		$location.path('/page/send')
 		.search(object);
 	}
 

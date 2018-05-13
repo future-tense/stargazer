@@ -24,6 +24,10 @@ export default class ImportAccountController {
 			this.isScanned = true;
 			this.account.seed = data.key;
 			this.account.network = data.account.network;
+
+			if (!this.isEncrypted) {
+				this.state = 2;
+			}
 		}
 
 		const numAccounts = Object.keys(this.Wallet.accounts).length;

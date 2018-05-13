@@ -4,25 +4,25 @@
 	<div ng-show="vm.state==1">
 		<div class="list">
 			<form name="importAccountForm">
-					<div class="item item-divider"></div>
+				<div class="item item-divider"></div>
 
-					<label class="item item-input item-inset item-stacked-label" ng-if="!vm.isScanned">
-						<span class="input-label">
-							{{'account.seed.label' | translate}}
-						</span>
-						<input type="text" ng-model="vm.account.seed" ng-change="vm.onChange()" required valid-seed>
-					</label>
+				<label class="item item-input item-inset item-stacked-label" ng-if="!vm.isScanned">
+					<span class="input-label">
+						{{'account.seed.label' | translate}}
+					</span>
+					<input type="text" ng-model="vm.account.seed" ng-change="vm.onChange()" required valid-seed>
+				</label>
 
-					<label class="item item-input item-inset item-stacked-label" ng-if="vm.isEncrypted">
-						<span class="input-label">
-							{{'account.password.label' | translate}}
-						</span>
-						<input type="password" ng-model="vm.account.password" ng-change="vm.onChange()" seed="vm.account.seed" valid-password2 required>
-					</label>
+				<label class="item item-input item-inset item-stacked-label" ng-if="vm.isEncrypted">
+					<span class="input-label">
+						{{'account.password.label' | translate}}
+					</span>
+					<input type="password" ng-model="vm.account.password" ng-change="vm.onChange()" seed="vm.account.seed" valid-password2 required>
+				</label>
 
-					<div ng-if="!vm.isScanned">
-						<network-selector network="vm.account.network"></network-selector>
-					</div>
+				<div ng-if="!vm.isScanned">
+					<network-selector network="vm.account.network"></network-selector>
+				</div>
 			</form>
 
 			<div style="padding:8px 16px" ng-hide="importAccountForm.$invalid">
