@@ -51,9 +51,10 @@
     }
   },
   "devDependencies": {
-    "electron": "^1.8.2",
-    "electron-builder": "^19.56.0",
-    "electron-builder-squirrel-windows": "^20.0.1"
+    "ajv": "^6.5.2",
+    "electron": "^2.0.5",
+    "electron-builder": "^20.24.4",
+    "electron-builder-squirrel-windows": "^20.24.2"
   },
   "dependencies": {}
 }
