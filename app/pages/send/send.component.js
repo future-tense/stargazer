@@ -1,6 +1,6 @@
 
 import StellarSdk from 'stellar-sdk';
-import directory from 'stellarterm-directory';
+import memoDestinations from './memo-destinations';
 import horizon from '../../core/services/horizon.js';
 import {sortAssets} from '../../core/services/account';
 
@@ -129,19 +129,11 @@ export default class SendController {
 		}
 		/* eslint-enable camelcase */
 
-		const directoryItem = directory.getDestination(destInfo.id);
-		if (directoryItem) {
-			if ('requiredMemoType' in directoryItem) {
-				const table = {
-					'MEMO_TEXT': 'text',
-					'MEMO_ID':	'id'
-				};
-
-				/* eslint-disable camelcase */
-				this.send.memo_type = table[directoryItem.requiredMemoType];
-				this.requiresMemo = true;
-				/* eslint-enable camelcase */
-			}
+		if (destInfo.id in memoDestinations) {
+			/* eslint-disable camelcase */
+			this.send.memo_type = memoDestinations[destInfo.id];
+			this.requiresMemo = true;
+			/* eslint-enable camelcase */
 		} else {
 			this.requiresMemo = false;
 		}

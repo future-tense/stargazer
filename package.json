@@ -26,7 +26,6 @@
     "sjcl": "^1.0.7",
     "stellar-hd-wallet": "0.0.6",
     "stellar-sdk": "^0.8.2",
-    "stellarterm-directory": "^0.2.2",
     "toml-j0.4": "^1.1.1"
   },
   "devDependencies": {
