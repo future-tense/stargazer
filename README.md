@@ -1,5 +1,7 @@
 # Stargazer
 
+[![Build Status](https://travis-ci.org/future-tense/stargazer.svg?branch=set-up-travis-for-builds)](https://travis-ci.org/future-tense/stargazer)
+
 A wallet application for the [Stellar](https://stellar.org) platform. Desktop and Mobile.
 
 
