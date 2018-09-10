@@ -67,7 +67,7 @@ export default class CreatePersonalController {
 				};
 			})
 			.then(this.Reviewer.review)
-			.then(() => storeAccount);
+			.then(storeAccount);
 		}
 
 		else {
@@ -93,8 +93,7 @@ export default class CreatePersonalController {
 	}
 
 	skip() {
-		this.state = 4;
-		this.next();
+		this.createAccount();
 	}
 
 	next() {
