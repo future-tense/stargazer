@@ -4,7 +4,7 @@ import memoDestinations from './memo-destinations';
 import horizon from '../../core/services/horizon.js';
 import {sortAssets} from '../../core/services/account';
 
-function createAsset(json, prefix) {
+const createAsset = (json, prefix) => {
 	if (!prefix) {
 		prefix = '';
 	}
@@ -17,7 +17,10 @@ function createAsset(json, prefix) {
 			json[`${prefix}asset_issuer`]
 		);
 	}
-}
+};
+
+const getAssetKey = (record, prefix) => ((record[`${prefix}type`] === 'native') ?
+	'native' : record[`${prefix}issuer`] + record[`${prefix}code`]);
 
 export default class SendController {
 
@@ -199,7 +202,7 @@ export default class SendController {
 		return this.send.destInfo && (this.send.destInfo.id !== this.send.destination);
 	}
 
-	getPaths() {
+	async getPaths() {
 
 		this.isPathPending	= true;
 		this.hasPath		= false;
@@ -268,59 +271,57 @@ export default class SendController {
 		const asset = createAsset(this.send.asset);
 		const dest = destInfo.id;
 
-		currentAccount.horizon()
+		const res = await currentAccount.horizon()
 		.paths(source, dest, asset, this.send.amount)
-		.call()
-		.then(res => {
+		.call();
 
-			if (res.records.length) {
+		this.isPathPending = false;
 
-				//
-				//	filter paths... keep the cheapest path per asset,
-				//	excluding paths with a zero cost
-				//
+		if (!res.records.length) {
+			return;
+		}
 
-				const paths = {};
+		if (Number(res.records[0].destination_amount) !== this.send.amount) {
+			return;
+		}
 
-				res.records
-				.filter(record => record.source_amount !== '0.0000000')
-				.forEach(record => {
-					const key = (record.source_asset_type === 'native') ?
-						'native' : record.source_asset_issuer + record.source_asset_code;
+		//
+		//	filter paths... keep the cheapest path per asset,
+		//	excluding paths with a zero cost
+		//
 
-					if (key in paths) {
-						if ((paths[key].source_amount - record.source_amount) > 0) {
-							paths[key] = record;
-						}
-					} else {
-						paths[key] = record;
-					}
-				});
+		const paths = {};
 
-				//
-				//	go through the remaining paths and disable the ones that are underfunded
-				//
+		res.records
+		.filter(record => record.source_amount !== '0.0000000')
+		.forEach(record => {
 
-				currentAccount.balances.forEach(asset => {
-					const key = (asset.asset_code === 'XLM') ?
-						'native' : asset.asset_issuer + asset.asset_code;
-
-					if (key in paths) {
-						const amount = paths[key].source_amount;
-						if (asset.asset_code === 'XLM') {
-							paths[key].enabled = currentAccount.canSend(amount, 1);
-						} else {
-							paths[key].enabled = ((asset.balance - amount) >= 0) && currentAccount.canSend(0, 1);
-						}
-					}
-				});
-
-				this.send.pathRecords = Object.keys(paths).map(key => paths[key]);
-				this.hasPath = (this.send.pathRecords.length !== 0);
+			const key = getAssetKey(record, 'source_asset_');
+			if ((key in paths) && ((paths[key].source_amount - record.source_amount) <= 0)) {
+				return;
 			}
 
-			this.isPathPending = false;
+			paths[key] = record;
 		});
+
+		//
+		//	go through the remaining paths and disable the ones that are underfunded
+		//
+
+		currentAccount.balances.forEach(asset => {
+			const key = getAssetKey(asset, 'asset_');
+			if (key in paths) {
+				const amount = paths[key].source_amount;
+				if (asset.asset_type === 'native') {
+					paths[key].enabled = currentAccount.canSend(amount, 1);
+				} else {
+					paths[key].enabled = ((asset.balance - amount) >= 0) && currentAccount.canSend(0, 1);
+				}
+			}
+		});
+
+		this.send.pathRecords = Object.keys(paths).map(key => paths[key]);
+		this.hasPath = (this.send.pathRecords.length !== 0);
 	}
 
 	submit(index) {
