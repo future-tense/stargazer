@@ -393,6 +393,8 @@ ion-side-menu.menu {
 	overflow:hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	width: 100%;
+	max-width: 100%;
 }
 
 .item-select:after {
