@@ -1,7 +1,7 @@
-/* global angular, console */
+/* global console */
 
-import translate from '../../services/translate.service.js';
-import humanizer from './humanizer.js';
+import translate from '../../services/translate.service';
+import humanizer from './humanizer';
 
 export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Transactions) {
 
@@ -14,14 +14,14 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 
 	activate();
 
-	function activate() {
+	async function activate() {
 		if (context.hasSigned && context.hasSigned.length === context.signers.length) {
 			$scope.operations = humanizer.parse(context.tx);
 			$scope.state = 'signed';
 		} else {
-			Promise.resolve(Signer.sign(context))
-			.then(interactiveSign)
-			.then(submit);
+			await Signer.init(context);
+			await interactiveSign(context);
+			submit();
 		}
 	}
 
@@ -33,11 +33,17 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 		}
 	}
 
-	function interactiveSign() {
-		const localSigners = context.id;
-		return localSigners.forEachThen(reviewSigner)
-		.then(() => {})
-		.catch(() => {});
+	async function interactiveSign() {
+
+		const localSigners = context.signers.filter(Keychain.isLocalSigner);
+		for (const signer of localSigners) {
+			await reviewSigner(signer);
+		}
+		context.id = localSigners;
+	}
+
+	function hasExternalSigners(context) {
+		return (context.signers.length !== context.id.length);
 	}
 
 	function reviewSigner(signer) {
@@ -77,8 +83,7 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 			});
 		}
 
-		if (Signer.hasEnoughSignatures(context.progress)) {
-
+		if (Signer.isApproved(context)) {
 			$scope.message = translate.instant('transaction.submitting');
 			$scope.state = 'pending';
 			return Submitter.submitTransaction(context)
@@ -93,7 +98,7 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 			});
 		}
 
-		if (Signer.hasExternalSigners(context) && context.signatures.length !== 0) {
+		if (hasExternalSigners(context) && context.signatures.length !== 0) {
 
 			$scope.message = 'Submitting signing request...';
 			$scope.state = 'pending';
@@ -113,21 +118,12 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 	}
 
 	function updateProgress(sig) {
-		const signer = $scope.signer.id;
-		const {signers, signatures, progress} = context;
-		signatures.push(sig);
-
-		const sources = signers[signer];
-		sources.forEach(source => {
-			progress[source.account].weight += source.weight;
-		});
-
-		delete signers[signer];
+		Signer.addSignature(context, sig);
 	}
 
 	function waitForUserReview() {
 		return new Promise((resolve, reject) => {
-			$scope.sign = password => resolve(password);
+			$scope.sign   = (password) => resolve(password);
 			$scope.cancel = () => reject();
 		});
 	}

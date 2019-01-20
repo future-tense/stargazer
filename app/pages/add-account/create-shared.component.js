@@ -1,8 +1,9 @@
 
 import StellarSdk from 'stellar-sdk';
-import horizon from '../../core/services/horizon.js';
-import storage from '../../core/services/storage';
+import multisig from '@futuretense/stellar-multisig';
 
+import horizon from '../../core/services/horizon';
+import storage from '../../core/services/storage';
 import selectFunderModal from './select-funder.html';
 
 const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
@@ -10,11 +11,10 @@ const range = (l, r) => new Array(r - l).fill().map((_, k) => k + l);
 export default class CreateSharedController {
 
 	/* @ngInject */
-	constructor($location, Modal, Reviewer, Signer, Wallet) {
+	constructor($location, Modal, Reviewer, Wallet) {
 		this.$location = $location;
 		this.Modal = Modal;
 		this.Reviewer = Reviewer;
-		this.Signer = Signer;
 		this.Wallet = Wallet;
 
 		this.account = {
@@ -136,7 +136,8 @@ export default class CreateSharedController {
 				/*	This signs for the new account */
 
 				const tx = builder.build();
-				const hash = this.Signer.getTransactionHash(tx, network);
+				const networkId = horizon.getNetworkId(network);
+				const hash = multisig.getTransactionHash(tx, networkId);
 				const sig = newAccount.signDecorated(hash);
 				tx.signatures.push(sig);
 

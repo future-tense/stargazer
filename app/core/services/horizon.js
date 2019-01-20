@@ -27,6 +27,13 @@ networkList.forEach(network => {
 	networks[hash] = network;
 });
 
+function getNetwork(hash) {
+	if (!hash) {
+		hash = publicNetwork;
+	}
+	return networks[hash];
+}
+
 function getServer(hash) {
 	const url = networks[hash].server;
 	return new StellarSdk.Server(url);
@@ -64,17 +71,16 @@ function getFees(hash) {
 
 export default {
 	public: publicNetwork,
-	getHash: getHash,
-	getFees: getFees,
+	getHash,
+	getFees,
 	getMinimumAccountBalance: hash => getFees(hash).baseReserve * 2,
 
-	getNetwork: function (hash) {
-		if (!hash) {
-			hash = publicNetwork;
-		}
-		return networks[hash];
+	getNetwork,
+
+	getNetworkId: function (hash) {
+		return StellarSdk.hash(getNetwork(hash).phrase);
 	},
 
 	getNetworks: () => networkList,
-	getServer: getServer
+	getServer
 };

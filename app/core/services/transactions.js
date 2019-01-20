@@ -1,11 +1,15 @@
 /* global angular */
 
 import 'ionic-sdk/release/js/ionic.bundle';
+
 import StellarSdk from 'stellar-sdk';
-import storage from '../../core/services/storage.js';
+import multisig from '@futuretense/stellar-multisig';
+
+import storage from './storage';
+import horizon from './horizon';
 
 angular.module('app.service.transactions', [])
-.factory('Transactions', function ($rootScope, Constellation, Signer, Wallet) {
+.factory('Transactions', function ($rootScope, Constellation, Wallet) {
 	'use strict';
 
 	let eventSource;
@@ -125,7 +129,8 @@ angular.module('app.service.transactions', [])
 
 	function onRequest(payload) {
 		const tx = new StellarSdk.Transaction(payload.txenv);
-		const hash = Signer.getTransactionHash(tx, payload.network).toString('hex');
+		const networkId = horizon.getNetworkId(payload.network);
+		const hash = multisig.getTransactionHash(tx, networkId);
 		payload.tx = tx;
 		addTransaction(hash, payload);
 	}

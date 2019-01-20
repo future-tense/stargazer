@@ -39,8 +39,8 @@ import './services/history.js';
 import './services/keychain.js';
 import './services/modal.js';
 import './services/reverse.js';
-import './services/signer.js';
-import './services/submitter.js';
+import './components/tx-reviewer/signer.service.js';
+import './components/tx-reviewer/submitter.service.js';
 import './services/transactions.js';
 import './services/wallet.js';
 
@@ -81,8 +81,6 @@ export default angular.module('coreModule', [
 	'app.service.keychain',
 	'app.service.modal',
 	'app.service.reverse',
-	'app.service.signer',
-	'app.service.submitter',
 	'app.service.transactions',
 	'app.service.wallet',
 ]);

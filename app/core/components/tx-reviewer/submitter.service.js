@@ -1,24 +1,12 @@
-/* global angular, console */
+import horizon from '../../services/horizon';
 
-import 'ionic-sdk/release/js/ionic.bundle';
-
-angular.module('app.service.submitter', [])
-.factory('Submitter', function (Modal, Constellation, Transactions) {
-	'use strict';
+export default /* @ngInject */ function (Modal, Constellation, Transactions) {
 
 	return {
-		submit:					submit,
 		submitSignature:		submitSignature,
 		submitSigningRequest:	submitSigningRequest,
 		submitTransaction:		submitTransaction
 	};
-
-	function submit(context) {
-		const data = {
-			context: context
-		};
-		return Modal.show('app/core/modals/review-submit.html', data);
-	}
 
 	function submitSignature(context, hash) {
 		const sigs = context.signatures.map(sig => sig.toXDR().toString('base64'));
@@ -49,7 +37,8 @@ angular.module('app.service.submitter', [])
 
 	function submitTransaction(context) {
 		context.tx.signatures.push(...context.signatures);
-		return context.horizon.submitTransaction(context.tx);
+		const server = horizon.getServer(context.network);
+		return server.submitTransaction(context.tx);
 	}
 
 	function encodeTransaction(tx) {
@@ -57,4 +46,4 @@ angular.module('app.service.submitter', [])
 		.toXDR()
 		.toString('base64');
 	}
-});
+}
