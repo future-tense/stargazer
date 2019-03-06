@@ -358,7 +358,11 @@ export default class SendController {
 
 			else {
 				const path = record.path.map(item => {
-					return new StellarSdk.Asset(item.asset_code, item.asset_issuer);
+					if (item.asset_type === 'native') {
+						return StellarSdk.Asset.native();
+					} else {
+						return new StellarSdk.Asset(item.asset_code, item.asset_issuer);
+					}
 				});
 
 				operation = StellarSdk.Operation.pathPayment({
