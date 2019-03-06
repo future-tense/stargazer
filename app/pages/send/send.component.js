@@ -404,7 +404,9 @@ export default class SendController {
 		})
 		.then(this.Reviewer.review)
 		.then(() => this.$location.path('/'))
-		.catch(() => {});
+		.catch((err) => {
+			console.log(err);
+		});
 	}
 
 	updateCollisions(assets) {
