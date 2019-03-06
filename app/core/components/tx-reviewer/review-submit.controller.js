@@ -66,9 +66,10 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 
 	function submit() {
 
+		const hasNewSignatures = context.signatures.length !== 0;
 		const hash = context.txHash.toString('hex');
 
-		if (Transactions.isPending(hash) && context.signatures.length !== 0) {
+		if (hasNewSignatures && Transactions.isPending(hash)) {
 
 			$scope.message = 'Submitting signature(s)...';
 			$scope.state = 'pending';
@@ -98,7 +99,7 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 			});
 		}
 
-		if (hasExternalSigners(context) && context.signatures.length !== 0) {
+		if (hasNewSignatures && hasExternalSigners(context)) {
 
 			$scope.message = 'Submitting signing request...';
 			$scope.state = 'pending';
