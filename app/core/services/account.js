@@ -113,8 +113,8 @@ export class Account {
 
 		const signers = this.signers
 		.filter(signer => signer.weight !== 0)
-		.filter(signer => this.Keychain.isLocalSigner(signer.public_key))
-		.filter(signer => !this.Keychain.isEncrypted(signer.public_key));
+		.filter(signer => this.Keychain.isLocalSigner(signer.key))
+		.filter(signer => !this.Keychain.isEncrypted(signer.key));
 
 		let weight = 0;
 		signers.forEach((signer) => {

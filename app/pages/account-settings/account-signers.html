@@ -4,7 +4,7 @@
 	<div class="list">
 		<div class="item item-divider"></div>
 		<div class="item" ng-repeat="signer in vm.getSigners()">
-			<account-name id="{{::signer.public_key}}" network="{{::vm.account.network}}"></account-name>
+			<account-name id="{{::signer.key}}" network="{{::vm.account.network}}"></account-name>
 			<span class="pull-right">{{::signer.weight}}</span>
 		</div>
 	</div>
