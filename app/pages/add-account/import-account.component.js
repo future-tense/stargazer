@@ -24,6 +24,7 @@ export default class ImportAccountController {
 			this.isScanned = true;
 			this.account.seed = data.key;
 			this.account.network = data.account.network;
+			this.onChange();
 
 			if (!this.isEncrypted) {
 				this.state = 2;
