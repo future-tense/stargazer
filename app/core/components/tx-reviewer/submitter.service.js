@@ -18,7 +18,6 @@ export default /* @ngInject */ function (Modal, Constellation, Transactions) {
 	}
 
 	function submitSigningRequest(context, hash) {
-		context.tx.signatures.push(...context.signatures);
 		const txenv = encodeTransaction(context.tx);
 
 		return Constellation.submitTransaction(txenv, context.network)
@@ -36,7 +35,6 @@ export default /* @ngInject */ function (Modal, Constellation, Transactions) {
 	}
 
 	function submitTransaction(context) {
-		context.tx.signatures.push(...context.signatures);
 		const server = horizon.getServer(context.network);
 		return server.submitTransaction(context.tx);
 	}
