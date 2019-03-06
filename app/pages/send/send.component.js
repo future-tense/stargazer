@@ -1,8 +1,12 @@
 
 import StellarSdk from 'stellar-sdk';
+
 import memoDestinations from './memo-destinations';
+import pathFinder from './pathfinder';
+
 import horizon from '../../core/services/horizon.js';
 import {sortAssets} from '../../core/services/account';
+
 
 const createAsset = (json, prefix) => {
 	if (!prefix) {
@@ -268,12 +272,19 @@ export default class SendController {
 		}
 
 		const destInfo = this.send.destInfo;
-		const asset = createAsset(this.send.asset);
 		const dest = destInfo.id;
 
-		const res = await currentAccount.horizon()
-		.paths(source, dest, asset, this.send.amount)
-		.call();
+		let res;
+		if (currentAccount.network === horizon.public) {
+			res = await pathFinder.paths(source, this.send.asset, this.send.amount);
+		} else {
+			const asset = createAsset(this.send.asset);
+			res = await currentAccount.horizon()
+				.paths(source, dest, asset, this.send.amount)
+				.call();
+		}
+
+
 
 		this.isPathPending = false;
 
