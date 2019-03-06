@@ -59,6 +59,7 @@ export default class CreatePersonalController {
 					destination: publicKey,
 					startingBalance: this.account.amount.toString()
 				}))
+				.setTimeout(0)
 				.build();
 
 				return {

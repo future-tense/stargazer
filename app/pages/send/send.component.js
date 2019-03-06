@@ -373,7 +373,8 @@ export default class SendController {
 
 			const builder = new StellarSdk
 			.TransactionBuilder(account)
-			.addOperation(operation);
+			.addOperation(operation)
+			.setTimeout(0);
 
 			if (this.send.memo_type) {
 				const memo = StellarSdk.Memo[this.send.memo_type](this.send.memo.toString());

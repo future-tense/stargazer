@@ -54,11 +54,12 @@ export default class InflationDestinationController {
 		this.account.horizon().loadAccount(source)
 		.then(account => {
 
-			const builder = new StellarSdk.TransactionBuilder(account);
-			builder.addOperation(StellarSdk.Operation.setOptions({
+			const tx = new StellarSdk.TransactionBuilder(account)
+			.addOperation(StellarSdk.Operation.setOptions({
 				inflationDest: destination
-			}));
-			const tx = builder.build();
+			}))
+			.setTimeout(0)
+			.build();
 
 			return {
 				tx: tx,

@@ -27,8 +27,8 @@
     "sjcl": "^1.0.7",
     "stellar-base": "^0.8.1",
     "stellar-hd-wallet": "^0.0.7",
-    "stellar-sdk": "^0.10.0",
     "toml-j0.4": "^1.1.1"
+    "stellar-sdk": "^0.14.0",
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

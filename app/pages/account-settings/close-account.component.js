@@ -43,13 +43,13 @@ export default class CloseAccountController {
 		.loadAccount(this.account.id)
 		.then((account) => {
 
-			const builder = new StellarSdk.TransactionBuilder(account);
-			builder.addOperation(StellarSdk.Operation.accountMerge({
+			const tx = new StellarSdk.TransactionBuilder(account)
+			.addOperation(StellarSdk.Operation.accountMerge({
 				source: this.account.id,
 				destination: this.data.destInfo.id
-			}));
-
-			const tx = builder.build();
+			}))
+			.setTimeout(0)
+			.build();
 
 			return {
 				tx: tx,

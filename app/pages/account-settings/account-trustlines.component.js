@@ -68,7 +68,8 @@ export default class AccountTrustlinesController {
 
 	createTransaction(account) {
 
-		const builder = new StellarSdk.TransactionBuilder(account);
+		const builder = new StellarSdk.TransactionBuilder(account)
+		.setTimeout(0);
 
 		function addOperation(trustline) {
 			const object = trustline.object;

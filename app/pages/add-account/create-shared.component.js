@@ -110,7 +110,8 @@ export default class CreateSharedController {
 				.addOperation(StellarSdk.Operation.createAccount({
 					destination: newAccount.publicKey(),
 					startingBalance: this.account.amount.toString()
-				}));
+				}))
+				.setTimeout(0);
 
 				this.signers.forEach((signer) => {
 					const op = StellarSdk.Operation.setOptions({
