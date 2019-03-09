@@ -11,7 +11,7 @@
     "build": "grunt copy && webpack --mode=none"
   },
   "dependencies": {
-    "@futuretense/stellar-multisig": "0.0.4",
+    "@futuretense/stellar-multisig": "^0.1.1",
     "angular-route": "1.5.11",
     "bip39": "^2.5.0",
     "crypto-js": "^3.1.9-1",
