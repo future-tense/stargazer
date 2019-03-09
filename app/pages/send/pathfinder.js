@@ -3,7 +3,7 @@
 import 'isomorphic-fetch';
 import withQuery from 'with-query';
 
-const base = 'https://pathfinder.futuretense.io';
+const base = 'https://pathfinder.futuretense.io/';
 
 const paths = async (sourceAccount, destAsset, destAmount) => {
 
@@ -24,10 +24,14 @@ const paths = async (sourceAccount, destAsset, destAmount) => {
 	}
 
 	const response = await fetch(withQuery(`${base}/paths`, params));
+	if (!response.ok) {
+		throw response;
+	}
+
 	const data = await response.json();
 
 	// eslint-disable-next-line no-underscore-dangle
-	return  data._embedded;
+	return data._embedded;
 };
 
 export default {

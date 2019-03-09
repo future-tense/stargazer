@@ -276,15 +276,25 @@ export default class SendController {
 
 		let res;
 		if (currentAccount.network === horizon.public) {
-			res = await pathFinder.paths(source, this.send.asset, this.send.amount);
-		} else {
+
+			try {
+				res = await pathFinder.paths(source, this.send.asset, this.send.amount);
+			} catch (err) {
+				if ((err.status / 100).toFixed() === '5') {
+					const asset = createAsset(this.send.asset);
+					res = await currentAccount.horizon()
+						.paths(source, dest, asset, this.send.amount)
+						.call();
+				}
+			}
+		}
+
+		else {
 			const asset = createAsset(this.send.asset);
 			res = await currentAccount.horizon()
 				.paths(source, dest, asset, this.send.amount)
 				.call();
 		}
-
-
 
 		this.isPathPending = false;
 
