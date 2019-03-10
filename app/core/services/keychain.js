@@ -73,7 +73,7 @@ angular.module('app.service.keychain', [])
 	}
 
 	function getKeyInfo(signer) {
-		return keychain[signer];
+		return (signer in keychain) ? keychain[signer] : storage.getItem(`key.${signer}`);
 	}
 
 	function idFromKey(key, password) {
@@ -105,22 +105,24 @@ angular.module('app.service.keychain', [])
 	}
 
 	function isValidPasswordForSigner(signer, password) {
-		const keyStore = keychain[signer];
+		const keyStore = (signer in keychain) ? keychain[signer] : storage.getItem(`key.${signer}`);
 		return isValidPassword(keyStore, password);
 	}
 
 	function removePassword(signer, password) {
-		let keyStore = keychain[signer];
-		keyStore = crypto.decrypt(keyStore, password);
-		keychain[signer] = keyStore;
-		storage.setItem(`key.${signer}`, keyStore);
+		const cypher = (signer in keychain) ? keychain[signer] : storage.getItem(`key.${signer}`);
+		const plain  = crypto.decrypt(cypher, password);
+		keychain[signer] = plain;
+		storage.setItem(`key.${signer}`, plain);
+		storage.setItem('keys', Object.keys(keychain));
 	}
 
 	function setPassword(signer, password) {
-		let keyStore = keychain[signer];
-		keyStore = crypto.encrypt(keyStore, password);
-		keychain[signer] = keyStore;
-		storage.setItem(`key.${signer}`, keyStore);
+		const plain = (signer in keychain) ? keychain[signer] : storage.getItem(`key.${signer}`);
+		const cypher  = crypto.encrypt(plain, password);
+		keychain[signer] = cypher;
+		storage.setItem(`key.${signer}`, cypher);
+		storage.setItem('keys', Object.keys(keychain));
 	}
 
 	function signMessage(signer, message) {
