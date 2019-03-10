@@ -3,7 +3,7 @@
 import 'isomorphic-fetch';
 import withQuery from 'with-query';
 
-const base = 'https://pathfinder.futuretense.io/';
+const base = 'https://pathfinder.futuretense.io';
 
 const paths = async (sourceAccount, destAsset, destAmount) => {
 
