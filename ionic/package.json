@@ -1,21 +1,30 @@
 {
   "name": "stargazer-wallet",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "ionic: An Ionic project",
   "dependencies": {
+    "com.verso.cordova.clipboard": "https://github.com/VersoSolutions/CordovaClipboard.git",
+    "cordova-android": "^6.2.1",
+    "cordova-plugin-device": "~1.1.5",
+    "cordova-plugin-inappbrowser": "~1.7.0",
+    "cordova-plugin-statusbar": "~2.2.2",
+    "cordova-plugin-whitelist": "~1.3.2",
     "gulp": "^3.5.6",
-    "gulp-sass": "^2.0.4",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",
-    "gulp-rename": "^1.2.0"
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^2.0.4",
+    "ionic-plugin-keyboard": "~2.2.1",
+    "phonegap-plugin-barcodescanner": "~6.0.6"
   },
   "devDependencies": {
+    "@ionic/v1-toolkit": "1.0.17",
     "bower": "^1.3.3",
     "gulp-util": "^2.2.14",
     "shelljs": "^0.3.0"
   },
   "scripts": {
-    "start": "npm run clean && npm run copy-app && ionic run android",
+    "start": "npm run clean && npm run copy-app && ionic cordova run android",
     "copy-app": "cp -R ../dist/* www",
     "clean": "rm -rf www/*"
   },
@@ -30,5 +39,19 @@
   ],
   "cordovaPlatforms": [
     "android"
-  ]
+  ],
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "com.verso.cordova.clipboard": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-whitelist": {},
+      "ionic-plugin-keyboard": {},
+      "phonegap-plugin-barcodescanner": {}
+    }
+  }
 }
