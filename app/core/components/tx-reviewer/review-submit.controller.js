@@ -38,6 +38,9 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 		const localSigners = context.signers.filter(Keychain.isLocalSigner);
 		for (const signer of localSigners) {
 			await reviewSigner(signer);
+			if (Signer.isApproved(context)) {
+				break;
+			}
 		}
 		context.id = localSigners;
 	}
