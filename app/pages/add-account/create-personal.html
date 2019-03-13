@@ -36,7 +36,7 @@
 				<input type="text" ng-model="vm.account.funder" placeholder="{{'account.funding.placeholder' | translate}}" valid-funder network="vm.account.network">
 			</label>
 
-			<label class="item item-input item-stacked-label" ng-show="vm.hasValidFunder()">
+			<label class="item item-input item-stacked-label" ng-show="vm.hasValidFunder() && vm.account.funder !== 'Friendbot'">
 				<span class="input-label">
 					{{'account.funding.amount.label' | translate}}
 				</span>

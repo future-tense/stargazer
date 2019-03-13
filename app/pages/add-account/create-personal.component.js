@@ -2,6 +2,7 @@
 import StellarSdk from 'stellar-sdk';
 import StellarHDWallet from 'stellar-hd-wallet';
 import shuffle from 'shuffle-array';
+import withQuery from 'with-query';
 
 import horizon from '../../core/services/horizon.js';
 import translate from '../../core/services/translate.service.js';
@@ -10,11 +11,12 @@ import selectFunderModal from './select-funder.html';
 export default class CreatePersonalController {
 
 	/* @ngInject */
-	constructor($location, Modal, Reviewer, Wallet) {
+	constructor($location, $ionicLoading, Modal, Reviewer, Wallet) {
 		this.$location = $location;
 		this.Modal = Modal;
 		this.Reviewer = Reviewer;
 		this.Wallet = Wallet;
+		this.$loading = $ionicLoading;
 
 		this.state = 1;
 
@@ -28,7 +30,7 @@ export default class CreatePersonalController {
 		}
 	}
 
-	createAccount() {
+	async createAccount() {
 
 		const wallet = StellarHDWallet.fromMnemonic(this.mnemonic);
 		const publicKey = wallet.getPublicKey(0);
@@ -45,6 +47,18 @@ export default class CreatePersonalController {
 			}
 			this.$location.path('/');
 		};
+
+		if (this.account.funder === 'Friendbot') {
+			this.$loading.show();
+			return fetch(withQuery('https://friendbot.stellar.org', {addr: publicKey}))
+			.then(storeAccount)
+			.catch(err => {
+				console.error('ERROR!', err);
+			})
+			.then(() => {
+				this.$loading.hide();
+			});
+		}
 
 		const funder = this.Wallet.accountList.find(item => {
 			return item.alias === this.account.funder && item.network === network;
@@ -79,7 +93,11 @@ export default class CreatePersonalController {
 	hasValidFunder() {
 		const name = this.account.funder;
 		const network = this.account.network;
-		return this.Wallet.hasAccount(name, network);
+		if ((name === 'Friendbot') && (horizon.getNetwork(network).name === 'Testnet')) {
+			return true;
+		} else {
+			return this.Wallet.hasAccount(name, network);
+		}
 	}
 
 	tap1(index) {
@@ -123,7 +141,8 @@ export default class CreatePersonalController {
 	selectFunder() {
 		const data = {
 			network: this.account.network,
-			minimum: this.minBalance
+			minimum: this.minBalance,
+			friendbot: true
 		};
 
 		this.Modal.show(selectFunderModal, data)
