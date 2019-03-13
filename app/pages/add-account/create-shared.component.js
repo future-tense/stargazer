@@ -1,6 +1,6 @@
 
 import StellarSdk from 'stellar-sdk';
-import multisig from '@futuretense/stellar-multisig';
+import * as multisig from '@futuretense/stellar-multisig';
 
 import horizon from '../../core/services/horizon';
 import storage from '../../core/services/storage';
@@ -138,7 +138,7 @@ export default class CreateSharedController {
 
 				const tx = builder.build();
 				const networkId = horizon.getNetworkId(network);
-				const hash = multisig.getTransactionHash(tx, networkId);
+				const hash = multisig.getTransactionHashRaw(tx, networkId);
 				const sig = newAccount.signDecorated(hash);
 				tx.signatures.push(sig);
 
