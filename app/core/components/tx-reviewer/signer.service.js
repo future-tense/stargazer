@@ -1,6 +1,6 @@
 /* global Promise */
 
-import multisig from '@futuretense/stellar-multisig';
+import * as multisig from '@futuretense/stellar-multisig';
 import horizon from '../../services/horizon';
 
 export default /* @ngInject */ function (Keychain, Wallet) {
