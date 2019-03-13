@@ -111,7 +111,7 @@ angular.module('app.service.commands', [])
 		if (!(account.id in Wallet.accounts) && !contacts.lookup(account.id, account.network)) {
 			/* eslint-disable camelcase */
 			const data = {
-				id:			account.id,
+				address:	account.id,
 				meta:		account.meta,
 				meta_type:	account.meta_type
 			};

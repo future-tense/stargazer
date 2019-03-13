@@ -15,21 +15,21 @@
 				<span class="input-label">
 					{{'modal.contact.name.label' | translate}}
 				</span>
-				<input type="text" ng-model="model.name" placeholder="{{'modal.contact.name.placeholder' | translate}}" required unique-name>
+				<input type="text" ng-model="data.name" placeholder="{{'modal.contact.name.placeholder' | translate}}" required unique-name>
 			</label>
 
 			<label class="item item-input item-stacked-label">
 				<span class="input-label">
 					{{'modal.contact.address.label' | translate}}
 				</span>
-				<input type="text" ng-model="model.address" ng-model-options="{debounce: 200}" placeholder="{{'modal.contact.address.placeholder' | translate}}" required autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="onValidAddress(res)">
+				<input type="text" ng-model="data.address" ng-model-options="{debounce: 200}" placeholder="{{'modal.contact.address.placeholder' | translate}}" required autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" valid-address="onValidAddress(res)">
 			</label>
 
 			<advanced-toggle flag="advanced"></advanced-toggle>
 
 			<div ng-show="advanced">
-				<network-selector network="model.network"></network-selector>
-				<memo-selector type="model.memo_type" memo="model.memo"></memo-selector>
+				<network-selector network="data.network"></network-selector>
+				<memo-selector type="data.memo_type" memo="data.memo"></memo-selector>
 			</div>
 		</form>
 		<div style="padding-left:16px;padding-right:16px">

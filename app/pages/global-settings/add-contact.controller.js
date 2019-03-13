@@ -8,18 +8,17 @@ export default /* @ngInject */ function ($route, $scope) {
 	$scope.onValidAddress = onValidAddress;
 
 	$scope.advanced		= false;
-	$scope.model		= {};
 
 	function cancel() {
 		$scope.closeModalService();
 	}
 
 	function onValidAddress(destInfo) {
-		if (destInfo && destInfo.id !== $scope.model.id && destInfo.memo_type !== '') {
-			$scope.model.destInfo = destInfo;
+		if (destInfo && destInfo.id !== $scope.data.id && destInfo.memo_type !== '') {
+			$scope.data.destInfo = destInfo;
 			/* eslint-disable camelcase */
-			$scope.model.memo		= destInfo.memo;
-			$scope.model.memo_type	= destInfo.memo_type;
+			$scope.data.memo		= destInfo.memo;
+			$scope.data.memo_type	= destInfo.memo_type;
 			/* eslint-enable camelcase */
 		}
 	}
@@ -27,21 +26,21 @@ export default /* @ngInject */ function ($route, $scope) {
 	function saveContact() {
 
 		const contact = {
-			id:			$scope.model.destInfo.id,
-			network:	$scope.model.network
+			id:			$scope.data.destInfo.id,
+			network:	$scope.data.network
 		};
 
-		if ($scope.model.memo) {
-			contact.memo = $scope.model.memo;
+		if ($scope.data.memo) {
+			contact.memo = $scope.data.memo;
 		}
 
-		if ($scope.model.memo_type) {
+		if ($scope.data.memo_type) {
 			/* eslint-disable camelcase */
-			contact.memo_type = $scope.model.memo_type;
+			contact.memo_type = $scope.data.memo_type;
 			/* eslint-enable camelcase */
 		}
 
-		contacts.add($scope.model.name, contact);
+		contacts.add($scope.data.name, contact);
 		$scope.closeModalService();
 		$route.reload();
 	}
