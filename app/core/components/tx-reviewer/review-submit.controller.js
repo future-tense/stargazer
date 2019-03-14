@@ -19,9 +19,13 @@ export default /* @ngInject */ function ($scope, Keychain, Signer, Submitter, Tr
 			$scope.operations = humanizer.parse(context.tx);
 			$scope.state = 'signed';
 		} else {
-			await Signer.init(context);
-			await interactiveSign(context);
-			submit();
+			try {
+				await Signer.init(context);
+				await interactiveSign(context);
+				submit();
+			} catch (err) {
+				close();
+			}
 		}
 	}
 
