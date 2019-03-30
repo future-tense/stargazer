@@ -74,6 +74,7 @@ npm run start
 ```
 cd ionic
 npm install -g ionic
+npm install -g cordova
 npm install
 
 ionic cordova resources android --icon
@@ -84,12 +85,16 @@ npm run start
 
 ## License
 
-**Stargazer** is released under the **GNU Affero General Public License v3** (AGPL), except for the following files:
+Apart from the following files:
 
 * app/core/controllers/scanner.js
 * app/core/directives/qr-scanner.js
 * app/core/services/platform-info.js
 
-which originate from **Copay**, and are made available under the terms of the **MIT License**.
+which originate from **Copay**, and are made available under the terms of the **MIT License**,
+**Stargazer** is *not* open source.
+
+Contact <hello@futuretense.io> for inquiries about commercial licensing, white labeling, etc.
+
 
 Copyright &copy; 2016-2019 Future Tense, LLC
