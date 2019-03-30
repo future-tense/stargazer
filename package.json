@@ -10,7 +10,7 @@
     "build": "grunt copy && webpack --mode=none"
   },
   "dependencies": {
-    "@futuretense/stellar-multisig": "^0.1.1",
+    "@futuretense/stellar-multisig": "^0.1.2",
     "angular-route": "1.5.11",
     "bip39": "^2.5.0",
     "crypto-js": "^3.1.9-1",
@@ -24,8 +24,8 @@
     "qrcode_js": "^1.0.0",
     "shuffle-array": "^1.0.1",
     "sjcl": "^1.0.8",
-    "stellar-hd-wallet": "^0.0.7",
-    "stellar-sdk": "^0.14.0",
+    "stellar-hd-wallet": "git+https://github.com/future-tense/stellar-hd-wallet.git#678df88",
+    "stellar-sdk": "^0.15.0",
     "toml-j0.4": "^1.1.1",
     "with-query": "^1.1.2"
   },
