@@ -4,7 +4,6 @@
   "version": "1.7.0",
   "author": "Future Tense <johan.sten@gmail.com>",
   "main": "index.js",
-  "license": "AGPL-3.0",
   "scripts": {
     "start": "npm run clean && npm run copy-app && electron .",
     "copy-app": "cp -R ../dist app",

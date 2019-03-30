@@ -5,7 +5,6 @@
   "main": "dist/index.html",
   "private": true,
   "single-instance": false,
-  "license": "AGPL-3.0",
   "scripts": {
     "clean": "rm -rf dist",
     "build": "grunt copy && webpack --mode=none"
