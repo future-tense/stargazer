@@ -3,7 +3,7 @@
 import 'ionic-sdk/release/js/ionic.bundle';
 
 import StellarSdk from 'stellar-sdk';
-import multisig from '@futuretense/stellar-multisig';
+import * as multisig from '@futuretense/stellar-multisig';
 
 import storage from './storage';
 import horizon from './horizon';
