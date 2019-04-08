@@ -37,7 +37,7 @@ const languages = {
 		locale:	'pl-PL'
 	},
 	ru: {	/* russian */
-		name:	'русский язык',
+		name:	'Русский язык',
 		locale:	'ru-RU'
 	},
 	sv: {
