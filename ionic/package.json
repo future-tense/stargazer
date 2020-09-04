@@ -6,7 +6,7 @@
     "com.verso.cordova.clipboard": "https://github.com/VersoSolutions/CordovaClipboard.git",
     "cordova-android": "^6.2.1",
     "cordova-plugin-device": "~1.1.5",
-    "cordova-plugin-inappbrowser": "~1.7.0",
+    "cordova-plugin-inappbrowser": "~4.0.0",
     "cordova-plugin-statusbar": "~2.2.2",
     "cordova-plugin-whitelist": "~1.3.2",
     "gulp": "^3.5.6",
